@@ -71,14 +71,14 @@ export class AsideLeftComponent implements OnInit, AfterViewInit {
 
 		const config = this.layoutConfigService.getConfig();
 
-		if (objectPath.get(config, 'aside.menu.dropdown') !== true && objectPath.get(config, 'aside.self.fixed')) {
+		if (objectPath.get(config, 'backend.aside.menu.dropdown') !== true && objectPath.get(config, 'backend.aside.self.fixed')) {
 			this.render.setAttribute(this.asideMenu.nativeElement, 'data-ktmenu-scroll', '1');
 		}
 
-		if (objectPath.get(config, 'aside.menu.dropdown')) {
+		if (objectPath.get(config, 'backend.aside.menu.dropdown')) {
 			this.render.setAttribute(this.asideMenu.nativeElement, 'data-ktmenu-dropdown', '1');
 			// tslint:disable-next-line:max-line-length
-			this.render.setAttribute(this.asideMenu.nativeElement, 'data-ktmenu-dropdown-timeout', objectPath.get(config, 'aside.menu.submenu.dropdown.hover-timeout'));
+			this.render.setAttribute(this.asideMenu.nativeElement, 'data-ktmenu-dropdown-timeout', objectPath.get(config, 'backend.aside.menu.submenu.dropdown.hover-timeout'));
 		}
 	}
 

@@ -24,6 +24,9 @@ import {
 	MatTabsModule
 } from '@angular/material';
 import { NgPipesModule } from 'ngx-pipes';
+import { SettingsLayoutComponent } from './settings/settings-layout/settings-layout.component';
+import { LayoutConfigTreeComponent } from './settings/settings-layout/layout-config-tree/layout-config-tree.component';
+import { TagInputModule } from 'ngx-chips';
 
 @NgModule({
 	imports: [
@@ -42,7 +45,8 @@ import { NgPipesModule } from 'ngx-pipes';
 		MatListModule,
 		MatSelectModule,
 		MatTabsModule,
-		NgPipesModule
+		NgPipesModule,
+		TagInputModule
 	],
 	declarations: [
 		SettingsComponent,
@@ -57,7 +61,9 @@ import { NgPipesModule } from 'ngx-pipes';
 		SettingsMailingComponent,
 		SettingsUrlshorteningComponent,
 		SettingsSocialSignInComponent,
-		SettingsSocialNetworksComponent
+		SettingsSocialNetworksComponent,
+		SettingsLayoutComponent,
+		LayoutConfigTreeComponent
 	],
 	providers: [
 		ApplicationResolver,

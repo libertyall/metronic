@@ -20,7 +20,6 @@ import {
 } from './core/_base/layout';
 import { AuthModule } from './views/pages/auth/auth.module';
 import { HttpUtilsService, LayoutUtilsService, TypesUtilsService } from './core/_base/crud';
-import { LayoutConfig } from './core/_config/default/layout.config';
 import { HIGHLIGHT_OPTIONS, HighlightLanguage } from 'ngx-highlightjs';
 import * as typescript from 'highlight.js/lib/languages/typescript';
 import * as scss from 'highlight.js/lib/languages/scss';
@@ -46,11 +45,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	maxScrollbarLength: 300
 };
 
-export function initializeLayoutConfig(appConfig: LayoutConfigService) {
+export function initializeLayoutConfig(appConfig: LayoutConfigService, applicationService: ApplicationService) {
 	return () => {
-		if (appConfig.getConfig() === null) {
-			appConfig.loadConfigs(new LayoutConfig().configs);
-		}
+		return applicationService.getConfiguration(appConfig).toPromise();
 	};
 }
 
@@ -110,7 +107,7 @@ export function hljsLanguages(): HighlightLanguage[] {
 		{
 			provide: APP_INITIALIZER,
 			useFactory: initializeLayoutConfig,
-			deps: [LayoutConfigService],
+			deps: [LayoutConfigService, ApplicationService],
 			multi: true
 		},
 		{
@@ -124,8 +121,7 @@ export function hljsLanguages(): HighlightLanguage[] {
 		TypesUtilsService,
 		LayoutUtilsService,
 		{
-			provide:
-			FirestoreSettingsToken,
+			provide: FirestoreSettingsToken,
 			useValue: {}
 		}
 	],

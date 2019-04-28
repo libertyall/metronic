@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { ICategory } from '../../../../shared/interfaces/category.interface';
 import { Title } from '@angular/platform-browser';
 import { ApplicationService } from '../../../../shared/services/application.service';
+import { LayoutConfigService } from '../../../../core/_base/layout';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -20,6 +21,7 @@ export class SettingsComponent implements OnInit {
 
 	constructor(private title: Title,
 				private route: ActivatedRoute,
+				public layoutService: LayoutConfigService,
 				private applicationService: ApplicationService) {
 	}
 
@@ -39,6 +41,7 @@ export class SettingsComponent implements OnInit {
 	}
 
 	saveApplication(application: IApplication) {
+		console.log(application);
 		this.application = Object.assign({}, this.application, application);
 		this.applicationService.updateApplication(application.id, application)
 			.then(() => {
@@ -46,10 +49,10 @@ export class SettingsComponent implements OnInit {
 					if (this.title.getTitle() !== application.page.title) {
 						this.title.setTitle(application.page.title);
 					}
-
+					console.log('saved');
 					// this.alertService.showSnackBar('success', 'general.applications.updateMessage');
-				}
-				// (error: any) => this.alertService.showSnackBar('error', error.message)
+				},
+				(error: any) => console.log(error) // this.alertService.showSnackBar('error', error.message)
 			);
 	}
 }

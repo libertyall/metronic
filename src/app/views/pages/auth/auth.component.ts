@@ -21,7 +21,7 @@ export class AuthComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.translationService.setLanguage(this.translationService.getSelectedLanguage());
-		this.headerLogo = this.layoutConfigService.getLogo();
+		this.headerLogo = this.layoutConfigService.getLogo('backend');
 		this.splashScreenService.hide();
 	}
 }

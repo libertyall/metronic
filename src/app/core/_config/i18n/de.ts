@@ -4,6 +4,73 @@ export const locale = {
 	data: {
 		general: {
 			settings: {
+				calendar: {
+					addCalendar: 'Kalender hinzufügen',
+					cssTitle: 'Farbe zur Anzeige der Termine',
+					deleteCalendar: 'Kalender löschen',
+					fieldTitle: 'Name des Kalenders',
+					isActive: 'Ist der Kalender aktiviert?',
+					link: 'Link zum Google Kalender',
+					title: 'Eingebundene Kalender'
+				},
+				calendarTitle: 'Kalender',
+				description: 'Hier können globale Einstellungen zur Seite vorgenommen werden.',
+				downtime: {
+					isActive: 'Wartungsmodus aktiviert?',
+					message: 'Nachricht an die Benutzer',
+					messageDescription: 'Diese Nachricht wird den Benutzern im Frontend angezeigt. Die' +
+						' Administrations-Oberfläche ist weiterhin erreichbar.',
+					title: 'Wartungsmodus'
+				},
+				layout: {
+					input: {
+						title: 'Layout',
+						description: 'Wie soll das Layout aufgebaut werden?'
+					},
+					title: {
+						frontend: 'Frontend-Seite',
+						backend: 'Administrationbereich'
+					},
+					wizard: {
+						self: {
+							description: '',
+							title: 'Self'
+						},
+						portlet: {
+							description: '',
+							title: 'Portlets'
+						},
+						loader: {
+							description: '',
+							title: 'Laden-Anzeige'
+						},
+						colors: {
+							description: '',
+							title: 'Farbgebung'
+						},
+						header: {
+							description: '',
+							title: 'Erste Kopfzeile'
+						},
+						subheader: {
+							description: '',
+							title: 'Zweite Kopfzeile'
+						},
+						brand: {
+							description: '',
+							title: 'Branding'
+						},
+						aside: {
+							description: '',
+							title: 'Seitliche Navigation'
+						},
+						footer: {
+							description: '',
+							title: 'Fußzeile'
+						}
+					}
+				},
+				layoutTitle: 'Layout Optionen',
 				mailing: {
 					addMailList: 'Neuen Verteiler anlegen',
 					addEmail: 'E-Mail hinzufügen',
@@ -11,7 +78,22 @@ export const locale = {
 					fieldTitle: 'Name des Verteilers',
 					isActive: 'Aktiviert?',
 					title: 'E-Mail Verteiler'
-				}
+				},
+				mailingTitle: 'E-Mail Optionen',
+				page: {
+					description: 'Beschreibung',
+					descriptionDescription: 'Beschreibung der Seite im Kopfbereich',
+					emailDescription: 'E-Mail Adresse, die im Kopfbereich der Seite angezeigt wird.',
+					emailTitle: 'E-Mail',
+					keywords: 'Keywords der Seite',
+					keywordsDescription: 'Keywords, die als Standard im Kopfbereich angezeigt werden.',
+					name: 'Name der Seite',
+					nameDescription: 'Name der Seite, wie er in der Titelleiste angezeigt wird.',
+					title: 'Titel der Seite',
+					titleDescription: 'Standard-Titel, der im Kopfbereich angezeigt wird.'
+				},
+				pageTitle: 'Seiteneinstellungen',
+				title: 'Administration der Seite'
 			}
 		},
 		TRANSLATOR: {

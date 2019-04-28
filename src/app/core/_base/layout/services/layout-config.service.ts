@@ -7,8 +7,14 @@ import { LayoutConfigModel } from '..';
 @Injectable()
 export class LayoutConfigService {
 
-	onConfigUpdated$: Subject<LayoutConfigModel>;
-	layoutConfig: LayoutConfigModel;
+	onConfigUpdated$: Subject<{
+		backend: LayoutConfigModel,
+		frontend: any
+	}>;
+	layoutConfig: {
+		backend: LayoutConfigModel,
+		frontend: any
+	};
 
 	/**
 	 * Servcie constructor
@@ -21,7 +27,12 @@ export class LayoutConfigService {
 	 * Save layout config to the local storage
 	 * @param layoutConfig
 	 */
-	saveConfig(layoutConfig: LayoutConfigModel): void {
+	saveConfig(layoutConfig: {
+		backend: LayoutConfigModel,
+		frontend: any
+	}): void {
+		console.log(layoutConfig.backend);
+		console.log(JSON.stringify(layoutConfig.backend));
 		if (layoutConfig) {
 			localStorage.setItem('layoutConfig', JSON.stringify(layoutConfig));
 		}
@@ -30,7 +41,10 @@ export class LayoutConfigService {
 	/**
 	 * Get layout config from local storage
 	 */
-	getSavedConfig(): LayoutConfigModel {
+	getSavedConfig(): {
+		backend: LayoutConfigModel,
+		frontend: any
+	} {
 		const config = localStorage.getItem('layoutConfig');
 		return JSON.parse(config);
 	}
@@ -70,9 +84,9 @@ export class LayoutConfigService {
 	/**
 	 * Get brand logo
 	 */
-	getLogo(): string {
-		const menuAsideLeftSkin = objectPath.get(this.layoutConfig, 'brand.self.skin');
-		const logoObject = objectPath.get(this.layoutConfig, 'self.logo');
+	getLogo(type: string): string {
+		const menuAsideLeftSkin = objectPath.get(this.layoutConfig, type + '.brand.self.skin');
+		const logoObject = objectPath.get(this.layoutConfig, type + '.self.logo');
 
 		let logo;
 		if (typeof logoObject === 'string') {
@@ -83,10 +97,9 @@ export class LayoutConfigService {
 		}
 		if (typeof logo === 'undefined') {
 			try {
-				const logos = objectPath.get(this.layoutConfig, 'self.logo');
+				const logos = objectPath.get(this.layoutConfig, type + '.self.logo');
 				logo = logos[Object.keys(logos)[0]];
-			}
-			catch (e) {
+			} catch (e) {
 				console.log(e);
 			}
 		}
@@ -96,10 +109,10 @@ export class LayoutConfigService {
 	/**
 	 * Returns sticky logo
 	 */
-	getStickyLogo(): string {
-		let logo = objectPath.get(this.layoutConfig, 'self.logo.sticky');
+	getStickyLogo(type: string): string {
+		let logo = objectPath.get(this.layoutConfig, type + '.self.logo.sticky');
 		if (typeof logo === 'undefined') {
-			logo = this.getLogo();
+			logo = this.getLogo(type);
 		}
 		return logo + '';
 	}
@@ -108,9 +121,12 @@ export class LayoutConfigService {
 	 * Initialize layout config
 	 * @param config
 	 */
-	loadConfigs(config: LayoutConfigModel) {
+	loadConfigs(config: {
+		backend: LayoutConfigModel,
+		frontend: any
+	}) {
 		this.layoutConfig = this.getSavedConfig();
-		if (!this.layoutConfig || objectPath.get(this.layoutConfig, 'demo') !== config.demo) {
+		if (!this.layoutConfig) {
 			this.layoutConfig = config;
 		}
 		this.saveConfig(this.layoutConfig);
@@ -119,7 +135,10 @@ export class LayoutConfigService {
 	/**
 	 * Reload current layout config to the state of latest saved config
 	 */
-	reloadConfigs(): LayoutConfigModel {
+	reloadConfigs(): {
+		backend: LayoutConfigModel,
+		frontend: any
+	} {
 		this.layoutConfig = this.getSavedConfig();
 		this.onConfigUpdated$.next(this.layoutConfig);
 		return this.layoutConfig;

@@ -1,25 +1,21 @@
-// Angular
 import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-// RxJS
 import { filter } from 'rxjs/operators';
-// Object-Path
 import * as objectPath from 'object-path';
-// Layout
-import { LayoutConfigService, MenuConfigService, MenuHorizontalService, MenuOptions } from '../../../../../core/_base/layout';
-// Metronic
+import {
+	LayoutConfigService, MenuConfigService, MenuHorizontalService, MenuOptions
+} from '../../../../../core/_base/layout';
 import { OffcanvasOptions } from '../../../../../core/_base/metronic';
-// HTML Class
 import { HtmlClassService } from '../../html-class.service';
 
 @Component({
 	selector: 'kt-menu-horizontal',
 	templateUrl: './menu-horizontal.component.html',
 	styleUrls: ['./menu-horizontal.component.scss'],
-	changeDetection: ChangeDetectionStrategy.OnPush,
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MenuHorizontalComponent implements OnInit, AfterViewInit {
-	// Public properties
+
 	currentRouteUrl: any = '';
 
 	rootArrowEnabled: boolean;
@@ -46,17 +42,7 @@ export class MenuHorizontalComponent implements OnInit, AfterViewInit {
 		}
 	};
 
-	/**
-	 * Component Conctructor
-	 *
-	 * @param el: ElementRef
-	 * @param htmlClassService: HtmlClassService
-	 * @param menuHorService: MenuHorService
-	 * @param menuConfigService: MenuConfigService
-	 * @param layoutConfigService: LayouConfigService
-	 * @param router: Router
-	 * @param render: Renderer2
-	 */
+
 	constructor(
 		private el: ElementRef,
 		public htmlClassService: HtmlClassService,
@@ -68,21 +54,12 @@ export class MenuHorizontalComponent implements OnInit, AfterViewInit {
 	) {
 	}
 
-	/**
-	 * @ Lifecycle sequences => https://angular.io/guide/lifecycle-hooks
-	 */
-
-	/**
-	 * After view init
-	 */
 	ngAfterViewInit(): void {
 	}
 
-	/**
-	 * On init
-	 */
+
 	ngOnInit(): void {
-		this.rootArrowEnabled = this.layoutConfigService.getConfig('header.menu.self.root-arrow');
+		this.rootArrowEnabled = this.layoutConfigService.getConfig('backend.header.menu.self.root-arrow');
 
 		this.currentRouteUrl = this.router.url;
 		this.router.events
@@ -92,18 +69,12 @@ export class MenuHorizontalComponent implements OnInit, AfterViewInit {
 			});
 	}
 
-	/**
-	 * Mouse Leave event
-	 * @param event: MouseEvent
-	 */
+
 	mouseLeave(event: MouseEvent) {
 		this.render.removeClass(event.target, 'kt-menu__item--hover');
 	}
 
-	/**
-	 * Return Css Class Name
-	 * @param item: any
-	 */
+
 	getItemCssClasses(item) {
 		let classes = 'kt-menu__item';
 
@@ -137,10 +108,6 @@ export class MenuHorizontalComponent implements OnInit, AfterViewInit {
 		return classes;
 	}
 
-	/**
-	 * Returns Attribute SubMenu Toggle
-	 * @param item: any
-	 */
 	getItemAttrSubmenuToggle(item) {
 		let toggle = 'hover';
 		if (objectPath.get(item, 'toggle') === 'click') {
@@ -154,10 +121,6 @@ export class MenuHorizontalComponent implements OnInit, AfterViewInit {
 		return toggle;
 	}
 
-	/**
-	 * Returns Submenu CSS Class Name
-	 * @param item: any
-	 */
 	getItemMenuSubmenuClass(item) {
 		let classes = '';
 
@@ -187,10 +150,7 @@ export class MenuHorizontalComponent implements OnInit, AfterViewInit {
 		return classes;
 	}
 
-	/**
-	 * Check Menu is active
-	 * @param item: any
-	 */
+
 	isMenuItemIsActive(item): boolean {
 		if (item.submenu) {
 			return this.isMenuRootItemIsActive(item);
@@ -203,10 +163,6 @@ export class MenuHorizontalComponent implements OnInit, AfterViewInit {
 		return this.currentRouteUrl.indexOf(item.page) !== -1;
 	}
 
-	/**
-	 * Check Menu Root Item is active
-	 * @param item: any
-	 */
 	isMenuRootItemIsActive(item): boolean {
 		if (item.submenu.items) {
 			for (const subItem of item.submenu.items) {

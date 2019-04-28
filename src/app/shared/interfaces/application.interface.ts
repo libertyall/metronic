@@ -3,43 +3,50 @@ import { ISocialPage } from './social-page.interface';
 import { IGoogleCalendar } from './calendar/google-calendar.interface';
 import { IMailList } from './mail-list.interface';
 import { ISocialNetwork } from './social-network.interface';
+import { LayoutConfig } from '../../core/_config/default/layout.config';
+import { LayoutConfigModel } from '../../core/_base/layout';
 
 export interface IApplication {
-  id?: string;
+	id?: string;
 
-  assignedCalendars?: IGoogleCalendar[];
+	assignedCalendars?: IGoogleCalendar[];
 
-  isCurrentApplication: boolean;
+	isCurrentApplication: boolean;
 
-  page: {
-    isEnabled: boolean;
-    name: string;
-    title?: string;
-    description?: string;
-    email?: string;
-    assignedKeywords?: string;
-  };
+	page: {
+		isEnabled: boolean;
+		name: string;
+		title?: string;
+		description?: string;
+		email?: string;
+		assignedKeywords?: string;
+	};
 
-  urlShortening: {
-    title: string,
-    key: string
-  } | number;
+	urlShortening: {
+		title: string,
+		key: string
+	} | number;
 
-  registration: string;
+	registration: string;
 
-  downtime: {
-    isEnabled: boolean;
-    message?: string;
-  };
+	downtime: {
+		isEnabled: boolean;
+		message?: string;
+	};
 
-  mailing?: IMailList[];
+	mailing?: IMailList[];
 
-  staticPages?: IStaticPage[];
-  social?: ISocialPage[];
-  socialNetworks?: ISocialNetwork[];
+	staticPages?: IStaticPage[];
+	social?: ISocialPage[];
+	socialNetworks?: ISocialNetwork[];
 
-  signInProviders?: {
-    title: string,
-    isEnabled: boolean
-  }[];
+	signInProviders?: {
+		title: string,
+		isEnabled: boolean
+	}[];
+
+	configuration?: {
+		backend: LayoutConfigModel,
+		frontend: any
+	};
 }

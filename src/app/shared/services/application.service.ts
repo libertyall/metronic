@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { map } from 'rxjs/operators';
 import { IApplication } from '../interfaces/application.interface';
+import { LayoutConfigService } from '../../core/_base/layout';
+import { LayoutConfig } from '../../core/_config/default/layout.config';
 
 @Injectable()
 export class ApplicationService {
@@ -14,8 +16,8 @@ export class ApplicationService {
 	public currentApplication$: Observable<IApplication>;
 
 	constructor(private afs: AngularFirestore) {
-		this.collectionRef = this.afs.collection<IApplication>(this.path);
-		this.applications$ = this.collectionRef.valueChanges();
+		// this.collectionRef = this.afs.collection<IApplication>(this.path);
+		// this.applications$ = this.collectionRef.valueChanges();
 	}
 
 	getCurrentApplication(): Observable<IApplication> {
@@ -31,6 +33,20 @@ export class ApplicationService {
 			);
 		}
 		return this.currentApplication$;
+	}
+
+	getConfiguration(appConfig: LayoutConfigService): Observable<void> {
+		if (appConfig.getConfig() === null) {
+			return this.getCurrentApplication().pipe(
+				map((app: IApplication) => {
+					if (!app.configuration) {
+						const defaultConfig =  new LayoutConfig().configs;
+						appConfig.loadConfigs(defaultConfig);
+					}
+				})
+			);
+		}
+		return of();
 	}
 
 	createApplication(application: IApplication): Promise<IApplication> {

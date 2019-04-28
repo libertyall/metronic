@@ -1,0 +1,81 @@
+<mat-card>
+	<mat-card-header>
+		<mat-card-title>{{'general.settings.layout.title.' + pageType | translate}}</mat-card-title>
+	</mat-card-header>
+	<hr/>
+	<mat-card-content>
+		<div class="kt-grid kt-wizard-v2 kt-wizard-v2--white" id="kt_wizard_v2"
+			 data-ktwizard-state="step-first">
+
+			<div class="kt-grid__item kt-wizard-v2__aside">
+				<div class="kt-wizard-v2__nav">
+					<div class="kt-wizard-v2__nav-items">
+						<a class="kt-wizard-v2__nav-item"
+						   *ngFor="let item of configuration[pageType] | keys; let i = index"
+						   [ngClass]="wizardStep === i ? 'current' : ''"
+						   (click)="setWizardStep(i)"
+						   data-ktwizard-type="step"
+						   data-ktwizard-state="current">
+							<div class="kt-wizard-v2__nav-body">
+								<div class="kt-wizard-v2__nav-icon">
+									<i class="flaticon-globe"></i>
+								</div>
+								<div class="kt-wizard-v2__nav-label">
+									<div class="kt-wizard-v2__nav-label-title">
+										{{ 'general.settings.layout.wizard.' + item + '.title' | translate }}
+									</div>
+									<div class="kt-wizard-v2__nav-label-desc">
+										{{ 'general.settings.layout.wizard.' + item + '.description' | translate }}
+									</div>
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="kt-grid__item kt-grid__item--fluid kt-wizard-v2__wrapper">
+
+				<div class="kt-wizard-v2__content"
+					 *ngFor="let item of configuration[pageType] | keys; let i = index; let first = first; let last =
+					  last"
+					 [ngClass]="wizardStep === i ? 'current' : ''">
+					<ng-container *ngIf="wizardStep === i">
+						<div class="kt-heading kt-heading--md">
+							{{ 'general.settings.layout.wizard.' + item + '.title' | translate }}
+						</div>
+						<div class="kt-form__section">
+							<div class="kt-wizard-v2__form">
+								<kt-layout-config-tree [addedPlaceholderText]="item"
+													   [node]="configuration[ pageType ][ item ]">
+								</kt-layout-config-tree>
+							</div>
+						</div>
+					</ng-container>
+				</div>
+
+				<div class="kt-wizard-v2__wrapper__actions">
+					<button class="btn btn-primary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+							(click)="setWizardStep(wizardStep - 1)"
+							[disabled]="wizardStep === 0">
+						Previous
+					</button>
+					<div class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+						 data-ktwizard-type="action-submit">
+						Submit
+					</div>
+					<button class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+							(click)="setWizardStep(wizardStep +  1)"
+							[disabled]="wizardStep === (configuration[pageType] | keys).length - 1">
+						Next Step
+					</button>
+				</div>
+			</div>
+
+		</div>
+	</mat-card-content>
+
+	<mat-card-actions class="text-right">
+		<button type="reset" mat-raised-button color="warn" (click)="resetDefaults()">Reset</button>
+	</mat-card-actions>
+</mat-card>

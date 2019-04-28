@@ -37,28 +37,27 @@ export class BaseComponent implements OnInit, OnDestroy {
 		private permissionsService: NgxPermissionsService) {
 		// this.loadRolesWithPermissions();
 
-		this.layoutConfigService.loadConfigs(new LayoutConfig().configs);
 		this.menuConfigService.loadConfigs(new MenuConfig().configs);
 		this.pageConfigService.loadConfigs(new PageConfig().configs);
 
 		this.htmlClassService.setConfig(this.layoutConfigService.getConfig());
 
-		const layoutSubdscription = this.layoutConfigService.onConfigUpdated$.subscribe(layoutConfig => {
+		const layoutSubscription = this.layoutConfigService.onConfigUpdated$.subscribe(layoutConfig => {
 			document.body.className = '';
 			this.htmlClassService.setConfig(layoutConfig);
 		});
-		this.unsubscribe.push(layoutSubdscription);
+		this.unsubscribe.push(layoutSubscription);
 	}
 
 	ngOnInit(): void {
 		const config = this.layoutConfigService.getConfig();
-		this.selfLayout = objectPath.get(config, 'self.layout');
-		this.asideDisplay = objectPath.get(config, 'aside.self.display');
-		this.subheaderDisplay = objectPath.get(config, 'subheader.display');
+		this.selfLayout = objectPath.get(config, 'backend.self.layout');
+		this.asideDisplay = objectPath.get(config, 'backend.aside.self.display');
+		this.subheaderDisplay = objectPath.get(config, 'backend.subheader.display');
 
 		const layoutConfigSubscription = this.layoutConfigService.onConfigUpdated$.subscribe(cfg => {
 			setTimeout(() => {
-				this.selfLayout = objectPath.get(cfg, 'self.layout');
+				this.selfLayout = objectPath.get(cfg, 'backend.self.layout');
 			});
 		});
 		this.unsubscribe.push(layoutConfigSubscription);

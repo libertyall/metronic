@@ -31,14 +31,13 @@ export class AppComponent implements OnInit, OnDestroy {
 				private layoutConfigService: LayoutConfigService,
 				private splashScreenService: SplashScreenService) {
 		this.translationService.loadTranslations(enLang, chLang, esLang, jpLang, deLang, frLang);
-		this.applicationService.getCurrentApplication().subscribe(app => console.log(app));
 	}
 
 	ngOnInit(): void {
-		this.loader = this.layoutConfigService.getConfig('loader.enabled');
+		this.loader = this.layoutConfigService.getConfig('backend.loader.enabled');
 
 		const routerSubscription = this.router.events.subscribe(event => {
-			if (event instanceof NavigationEnd) {
+			if (this.loader && event instanceof NavigationEnd) {
 				this.splashScreenService.hide();
 				window.scrollTo(0, 0);
 			}

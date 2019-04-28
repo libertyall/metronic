@@ -1,0 +1,55 @@
+<ng-container [formGroup]="form">
+
+	<ng-container *ngFor="let childNode of node | keys">
+
+		<div class="form-group row" *ngIf="getType(node[childNode]) === 'string'">
+			<div class="col-12 d-flex">
+				<mat-form-field class="w-100">
+					<input matInput
+						   placeholder="{{'general.settings.' + getPlaceHolderText() +   childNode + '.input.title' |
+						     translate}}"
+						   [formControlName]="childNode"/>
+					<mat-hint>{{'general.settings.' + childNode + '.input.description' | translate}}</mat-hint>
+				</mat-form-field>
+			</div>
+		</div>
+
+		<div class="form-group row" *ngIf="getType(node[childNode]) === 'number'">
+			<div class="col-12 d-flex">
+				<mat-form-field class="w-100">
+					<input matInput type="number"
+						   placeholder="{{'general.settings.' + getPlaceHolderText() +   childNode + '.input.title' |
+						     translate}}"
+						   [formControlName]="childNode"/>
+					<mat-hint>{{'general.settings.' + childNode + '.input.description' | translate}}</mat-hint>
+				</mat-form-field>
+			</div>
+		</div>
+
+		<div class="form-group row" *ngIf="getType(node[childNode]) === 'boolean'">
+			<div class="col-12 d-flex">
+				<mat-checkbox class="w-100" [formControlName]="childNode">
+					{{'general.settings.' + getPlaceHolderText() + childNode + '.input.title' | translate}}
+				</mat-checkbox>
+			</div>
+		</div>
+
+		<kt-layout-config-tree *ngIf="getType(node[childNode]) === 'object'"
+							   [addedPlaceholderText]="childNode"
+							   [node]="node[childNode]">
+		</kt-layout-config-tree>
+
+		<div class="form-group row" *ngIf="getType(node[childNode]) === 'array'">
+			<div class="col-12 d-flex">
+				<tag-input class="w-100"
+						   [theme]="'bootstrap'"
+						   [modelAsStrings]="true"
+						   [formControlName]="childNode"
+						   [editable]="true">
+				</tag-input>
+			</div>
+		</div>
+
+	</ng-container>
+
+</ng-container>

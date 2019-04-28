@@ -1,10 +1,6 @@
-// Angular
 import { Injectable } from '@angular/core';
-// Object-Path
 import * as objectPath from 'object-path';
-// RxJS
 import { BehaviorSubject } from 'rxjs';
-// Layout
 import { LayoutConfigModel } from '../../../core/_base/layout';
 
 export interface ClassType {
@@ -16,16 +12,14 @@ export interface ClassType {
 
 @Injectable()
 export class HtmlClassService {
-	// Public properties
-	config: LayoutConfigModel;
+
+	config: {
+		backend: LayoutConfigModel,
+		frontend: any
+	};
 	classes: ClassType;
 	onClassesUpdated$: BehaviorSubject<ClassType>;
-	// Private properties
-	private loaded: string[] = [];
 
-	/**
-	 * Component constructor
-	 */
 	constructor() {
 		this.onClassesUpdated$ = new BehaviorSubject(this.classes);
 	}
@@ -34,7 +28,10 @@ export class HtmlClassService {
 	 * Build html element classes from layout config
 	 * @param layoutConfig
 	 */
-	setConfig(layoutConfig: LayoutConfigModel) {
+	setConfig(layoutConfig: {
+		backend: LayoutConfigModel,
+		frontend: any
+	}) {
 		this.config = layoutConfig;
 
 		// scope list of classes
@@ -42,7 +39,7 @@ export class HtmlClassService {
 			header: [],
 			header_mobile: [],
 			header_menu: [],
-			aside_menu: [],
+			aside_menu: []
 		};
 
 		// init base layout
@@ -65,12 +62,6 @@ export class HtmlClassService {
 		this.onClassesUpdated$.next(this.classes);
 	}
 
-	/**
-	 * Returns Classes
-	 *
-	 * @param path: string
-	 * @param toStringL boolean
-	 */
 	getClasses(path?: string, toString?: boolean): ClassType | string[] | string {
 		if (path) {
 			const classes = objectPath.get(this.classes, path) || '';
@@ -82,9 +73,6 @@ export class HtmlClassService {
 		return this.classes;
 	}
 
-	/**
-	 * Init Layout
-	 */
 	private initLayout() {
 		if (objectPath.has(this.config, 'self.body.class')) {
 			document.body.classList.add(objectPath.get(this.config, 'self.body.class'));
@@ -94,15 +82,9 @@ export class HtmlClassService {
 		}
 	}
 
-	/**
-	 * Init Loader
-	 */
 	private initLoader() {
 	}
 
-	/**
-	 * Init Header
-	 */
 	private initHeader() {
 		// Fixed header
 		if (objectPath.get(this.config, 'header.self.fixed.desktop')) {
@@ -122,9 +104,6 @@ export class HtmlClassService {
 		}
 	}
 
-	/**
-	 * Inin Subheader
-	 */
 	private initSubheader() {
 		// Fixed content head
 		if (objectPath.get(this.config, 'subheader.fixed')) {
@@ -140,9 +119,6 @@ export class HtmlClassService {
 		}
 	}
 
-	/**
-	 * Init Aside
-	 */
 	private initAside() {
 		if (objectPath.get(this.config, 'aside.self.display') !== true) {
 			return;
@@ -171,10 +147,6 @@ export class HtmlClassService {
 		}
 	}
 
-	/**
-	 * Note yet implementd
-	 * Init Aside Secondary
-	 */
 	private initAsideSecondary() {
 		if (objectPath.get(this.config, 'aside-secondary.self.display')) {
 			document.body.classList.add('kt-aside-secondary--enabled');
@@ -190,9 +162,6 @@ export class HtmlClassService {
 		}
 	}
 
-	/**
-	 * Init Content
-	 */
 	private initContent() {
 	}
 

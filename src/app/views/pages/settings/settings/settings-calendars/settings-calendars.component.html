@@ -1,62 +1,70 @@
 <mat-card [formGroup]="form">
-  <mat-card-title>{{'general.applications.calendars.title' | translate}}</mat-card-title>
-  <hr/>
-  <mat-card-content formArrayName="assignedCalendars">
+	<mat-card-header>
+		<mat-card-title>{{'general.settings.calendar.title' | translate}}</mat-card-title>
+	</mat-card-header>
 
-    <div *ngFor="let control of form.get('assignedCalendars')['controls']; let i = index">
-      <div fxLayout="column"
-           fxLayout.gt-sm="row"
-           fxLayoutGap="10px"
-           [formGroupName]="i">
+	<hr/>
+	<mat-card-content formArrayName="assignedCalendars">
 
-        <mat-form-field fxFlex="15">
-          <input matInput
-                 placeholder="{{'general.applications.calendars.fieldTitle' | translate}}"
-                 formControlName="title"/>
-        </mat-form-field>
+		<ng-container *ngFor="let control of form.get('assignedCalendars')['controls']; let i = index">
+			<ng-container [formGroupName]="i">
+				<div class="row mt-5">
+					<div class="col-lg-3 d-flex">
+						<mat-form-field class="w-100">
+							<input matInput
+								   placeholder="{{'general.settings.calendar.fieldTitle' | translate}}"
+								   formControlName="title"/>
+						</mat-form-field>
+					</div>
+					<div class="col-lg-2 d-flex">
+						<mat-form-field class="w-100">
+							<input matInput
+								   placeholder="{{'general.settings.calendar.cssTitle' | translate}}"
+								   formControlName="cssTitle"/>
+						</mat-form-field>
+					</div>
+					<div class="col-lg-2 d-flex">
+						<mat-checkbox formControlName="isActive">
+							{{'general.settings.calendar.isActive' | translate}}
+						</mat-checkbox>
+					</div>
+					<div class="col-lg-3 d-flex">
+						<mat-form-field class="w-100">
+							<input matInput
+								   placeholder="{{'general.settings.calendar.link' | translate}}"
+								   formControlName="link"/>
+						</mat-form-field>
+					</div>
+					<div class="col-lg-2 text-right">
+						<button mat-raised-button
+								type="button"
+								color="warn"
+								(click)="deleteCalendar(i)">
+							{{'general.settings.calendar.deleteCalendar' | translate}}
+						</button>
+					</div>
 
-        <mat-form-field fxFlex="15">
-          <input matInput
-                 placeholder="{{'general.applications.calendars.cssTitle' | translate}}"
-                 formControlName="cssTitle"/>
-        </mat-form-field>
+					<div class="col-12 text-center">
+						<hr class="my-3 w-50"/>
+					</div>
 
-        <div fxFlex="10">
-          <mat-checkbox formControlName="isActive">
-            {{'general.applications.calendars.isActive' | translate}}
-          </mat-checkbox>
-        </div>
+				</div>
+			</ng-container>
+		</ng-container>
 
-        <mat-form-field fxFlex="40">
-          <input matInput
-                 placeholder="{{'general.applications.calendars.link' | translate}}"
-                 formControlName="link"/>
-        </mat-form-field>
-
-        <div fxFlex="25">
-          <button mat-raised-button
-                  type="button"
-                  color="warn"
-                  (click)="deleteCalendar(i)">
-            {{'general.applications.calendars.deleteCalendar' | translate}}
-          </button>
-        </div>
-
-      </div>
-    </div>
-  </mat-card-content>
-  <mat-card-actions>
-    <div fxLayout="column"
-         fxLayout.gt-sm="row"
-         fxLayoutGap="10px">
-      <span></span>
-      <span fxFlex=""></span>
-      <button mat-raised-button
-              type="button"
-              color="primary"
-              (click)="addCalendar()">
-        {{'general.applications.calendars.addCalendar' | translate}}
-      </button>
-    </div>
-  </mat-card-actions>
+	</mat-card-content>
+	<mat-card-actions>
+		<div fxLayout="column"
+			 fxLayout.gt-sm="row"
+			 fxLayoutGap="10px">
+			<span></span>
+			<span fxFlex=""></span>
+			<button mat-raised-button
+					type="button"
+					color="primary"
+					(click)="addCalendar()">
+				{{'general.settings.calendar.addCalendar' | translate}}
+			</button>
+		</div>
+	</mat-card-actions>
 </mat-card>
