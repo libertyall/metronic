@@ -3,8 +3,7 @@ import { ISocialPage } from './social-page.interface';
 import { IGoogleCalendar } from './calendar/google-calendar.interface';
 import { IMailList } from './mail-list.interface';
 import { ISocialNetwork } from './social-network.interface';
-import { LayoutConfig } from '../../core/_config/default/layout.config';
-import { LayoutConfigModel } from '../../core/_base/layout';
+import { BackendLayoutConfigModel } from '../../core/_base/layout';
 
 export interface IApplication {
 	id?: string;
@@ -46,7 +45,7 @@ export interface IApplication {
 	}[];
 
 	configuration?: {
-		backend: LayoutConfigModel,
+		backend: BackendLayoutConfigModel,
 		frontend: any
 	};
 }

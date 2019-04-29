@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IApplication } from '../../../../../shared/interfaces/application.interface';
-import { LayoutConfigModel, LayoutConfigService } from '../../../../../core/_base/layout';
+import { BackendLayoutConfigModel, LayoutConfigService } from '../../../../../core/_base/layout';
 
 @Component({
 	selector: 'kt-settings-layout',
@@ -15,13 +15,13 @@ export class SettingsLayoutComponent implements OnInit {
 	@Output() saveApplication: EventEmitter<IApplication> = new EventEmitter<IApplication>(false);
 
 	wizardStep = 0;
-	configuration: LayoutConfigModel;
+	configuration: BackendLayoutConfigModel;
 
 	constructor(private layoutConfigService: LayoutConfigService) {
 	}
 
 	ngOnInit() {
-		this.configuration = this.application.configuration || this.layoutConfigService.getConfig();
+		this.configuration = this.layoutConfigService.getConfig(); // this.application.configuration ||
 	}
 
 	resetDefaults(): void {

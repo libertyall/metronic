@@ -1,19 +1,39 @@
-export interface LayoutConfigModel {
+export interface IInputField {
+	type: string;
+	options?: any | any[];
+	selected: boolean | string | number | string[];
+}
+
+
+export interface BackendLayoutConfigModel {
 	self: {
-		layout?: string;
+		layout?: IInputField;
 		body?: {
-			'background-image'?: string
+			'background-image'?: {
+				type: string;
+				options: string[],
+				selected: string
+			}
 		};
-		logo: any | string;
+		logo?: {
+			type: string;
+			selected: {
+				title: string;
+				value: string;
+			}[]
+		};
 	};
-	portlet?: {
+	/* portlet?: {
 		sticky: {
-			offset: number
+			offset: IInputField;
 		}
 	};
 	loader: {
-		enabled: boolean;
-		type?: string | 'default' | 'spinner-message' | 'spinner-logo';
+		enabled: {
+			type: string;
+			selected: boolean;
+		};
+		type?: IInputField;
 		logo?: string;
 		message?: string;
 	};
@@ -29,8 +49,8 @@ export interface LayoutConfigModel {
 			danger: string;
 		};
 		base: {
-			label: string[];
-			shape: string[]
+			label: IInputField;
+			shape: IInputField;
 		}
 	};
 	width?: string;
@@ -39,71 +59,71 @@ export interface LayoutConfigModel {
 			skin?: string;
 			layout?: string;
 			fixed: {
-				desktop: any;
-				mobile: boolean
+				desktop: IInputField;
+				mobile: IInputField;
 			}
 		};
 		topbar: {
 			search: {
-				display: boolean;
-				layout: 'offcanvas' | 'dropdown';
+				display: IInputField;
+				layout: IInputField;
 				dropdown?: {
-					style: 'light' | 'dark';
+					style: IInputField;
 				}
 			};
 			notifications: {
-				display: boolean;
-				layout: 'offcanvas' | 'dropdown';
+				display: IInputField;
+				layout: IInputField;
 				dropdown: {
-					style: 'light' | 'dark';
+					style: IInputField;
 				}
 			};
 			'quick-actions': {
-				display: boolean;
-				layout: 'offcanvas' | 'dropdown';
+				display: IInputField;
+				layout: IInputField;
 				dropdown: {
-					style: 'light' | 'dark';
+					style: IInputField;
 				}
 			};
 			user: {
-				display: boolean;
-				layout: 'offcanvas' | 'dropdown';
+				display: IInputField;
+				layout: IInputField;
 				dropdown: {
-					style: 'light' | 'dark';
+					style: IInputField;
 				}
 			};
 			languages: {
-				display: boolean
+				display: IInputField;
 			};
 			cart?: {
-				display: boolean
+				display: IInputField;
 			};
 			'my-cart'?: any
 			'quick-panel': {
-				display: boolean
+				display: IInputField;
 			}
 		};
 		search?: {
-			display: boolean
+			display: IInputField;
 		};
 		menu?: {
 			self: {
-				display: boolean;
+				display: IInputField;
 				layout?: string;
-				'root-arrow'?: boolean;
+				'root-arrow'?: IInputField;
 			};
 			desktop: {
-				arrow: boolean;
+				arrow: IInputField;
 				toggle: string;
 				submenu: {
 					skin?: string;
-					arrow: boolean
+					arrow: IInputField;
 				}
 			};
 			mobile: {
 				submenu: {
 					skin: string;
-					accordion: boolean
+					accordion: IInputField;
 				}
 			}
 		}
@@ -116,25 +136,25 @@ export interface LayoutConfigModel {
 	aside?: {
 		self: {
 			skin?: string;
-			display: boolean;
-			fixed?: boolean | any;
+			display: IInputField;
+			fixed?: IInputField;
 			minimize?: {
-				toggle: boolean;
-				default: boolean
+				toggle: IInputField;
+				default: IInputField;
 			}
 		};
 		footer?: {
 			self: {
-				display: boolean
+				display: IInputField;
 			}
 		};
 		menu: {
-			dropdown: boolean;
-			scroll: boolean;
+			dropdown: IInputField;
+			scroll: IInputField;
 			submenu: {
-				accordion: boolean;
+				accordion: IInputField;
 				dropdown: {
-					arrow: boolean;
+					arrow: IInputField;
 					'hover-timeout': number
 				}
 			}
@@ -142,17 +162,17 @@ export interface LayoutConfigModel {
 	};
 	'aside-secondary'?: {
 		self: {
-			display: boolean;
+			display: IInputField;
 			layout: string
 		}
 	};
 	subheader?: {
-		display: boolean;
-		fixed?: boolean;
-		layout?: 'subheader-v1' | 'subheader-v2' | 'subheader-v3' | 'subheader-v4' | 'subheader-v5' | 'subheader-v6';
-		style?: 'light' | 'solid' | 'transparent';
+		display: IInputField;
+		fixed?: IInputField;
+		layout?: IInputField;
+		style?: IInputField;
 		daterangepicker?: {
-			display: boolean
+			display: IInputField;
 		}
 	};
 	content?: any;
@@ -160,6 +180,6 @@ export interface LayoutConfigModel {
 		self?: any;
 	};
 	'quick-panel'?: {
-		display?: boolean
-	};
+		display?: IInputField;
+	}; */
 }

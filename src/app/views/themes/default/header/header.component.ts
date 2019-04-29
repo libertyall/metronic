@@ -41,9 +41,9 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
 	ngOnInit(): void {
 		const config = this.layoutConfigService.getConfig();
-		this.menuHeaderDisplay = objectPath.get(config, 'backend.header.menu.self.display');
+		this.menuHeaderDisplay = objectPath.get(config, 'backend.header.menu.self.display.selected');
 
-		if (objectPath.get(config, 'backend.header.self.fixed.desktop.enabled') || objectPath.get(config, 'backend.header.self.fixed.desktop')) {
+		if (objectPath.get(config, 'backend.header.self.fixed.desktop.enabled.selected') || objectPath.get(config, 'backend.header.self.fixed.desktop')) {
 			// header minimize on scroll down
 			this.ktHeader.nativeElement.setAttribute('data-ktheader-minimize', '1');
 		}

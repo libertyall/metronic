@@ -2,17 +2,17 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import * as objectPath from 'object-path';
 import { merge } from 'lodash';
-import { LayoutConfigModel } from '..';
+import { BackendLayoutConfigModel } from '..';
 
 @Injectable()
 export class LayoutConfigService {
 
 	onConfigUpdated$: Subject<{
-		backend: LayoutConfigModel,
+		backend: BackendLayoutConfigModel,
 		frontend: any
 	}>;
 	layoutConfig: {
-		backend: LayoutConfigModel,
+		backend: BackendLayoutConfigModel,
 		frontend: any
 	};
 
@@ -28,11 +28,9 @@ export class LayoutConfigService {
 	 * @param layoutConfig
 	 */
 	saveConfig(layoutConfig: {
-		backend: LayoutConfigModel,
+		backend: BackendLayoutConfigModel,
 		frontend: any
 	}): void {
-		console.log(layoutConfig.backend);
-		console.log(JSON.stringify(layoutConfig.backend));
 		if (layoutConfig) {
 			localStorage.setItem('layoutConfig', JSON.stringify(layoutConfig));
 		}
@@ -42,7 +40,7 @@ export class LayoutConfigService {
 	 * Get layout config from local storage
 	 */
 	getSavedConfig(): {
-		backend: LayoutConfigModel,
+		backend: BackendLayoutConfigModel,
 		frontend: any
 	} {
 		const config = localStorage.getItem('layoutConfig');
@@ -60,7 +58,7 @@ export class LayoutConfigService {
 	 * Get all config or by object path
 	 * @param path | object path separated by dot
 	 */
-	getConfig(path?: string): LayoutConfigModel | any {
+	getConfig(path?: string): BackendLayoutConfigModel | any {
 		this.layoutConfig = this.getSavedConfig();
 		if (path) {
 			return objectPath.get(this.layoutConfig, path);
@@ -122,7 +120,7 @@ export class LayoutConfigService {
 	 * @param config
 	 */
 	loadConfigs(config: {
-		backend: LayoutConfigModel,
+		backend: BackendLayoutConfigModel,
 		frontend: any
 	}) {
 		this.layoutConfig = this.getSavedConfig();
@@ -136,7 +134,7 @@ export class LayoutConfigService {
 	 * Reload current layout config to the state of latest saved config
 	 */
 	reloadConfigs(): {
-		backend: LayoutConfigModel,
+		backend: BackendLayoutConfigModel,
 		frontend: any
 	} {
 		this.layoutConfig = this.getSavedConfig();

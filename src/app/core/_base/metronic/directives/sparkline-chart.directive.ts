@@ -80,7 +80,7 @@ export class SparklineChartDirective implements AfterViewInit {
 					pointHoverBorderWidth: 12,
 					pointBackgroundColor: Chart.helpers.color('#000000').alpha(0).rgbString(),
 					pointBorderColor: Chart.helpers.color('#000000').alpha(0).rgbString(),
-					pointHoverBackgroundColor: this.layoutConfigService.getConfig('colors.state.danger'),
+					pointHoverBackgroundColor: this.layoutConfigService.getConfig('backend.colors.state.danger'),
 					pointHoverBorderColor: Chart.helpers.color('#000000').alpha(0.1).rgbString(),
 					fill: false,
 					data: data,

@@ -13,6 +13,6 @@ export class SubheaderComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.layout = this.layoutConfigService.getConfig('subheader.layout');
+		this.layout = this.layoutConfigService.getConfig('backend.subheader.layout');
 	}
 }

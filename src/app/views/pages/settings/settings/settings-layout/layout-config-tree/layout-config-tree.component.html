@@ -2,26 +2,102 @@
 
 	<ng-container *ngFor="let childNode of node | keys">
 
-		<div class="form-group row" *ngIf="getType(node[childNode]) === 'string'">
-			<div class="col-12 d-flex">
-				<mat-form-field class="w-100">
-					<input matInput
-						   placeholder="{{'general.settings.' + getPlaceHolderText() +   childNode + '.input.title' |
-						     translate}}"
-						   [formControlName]="childNode"/>
-					<mat-hint>{{'general.settings.' + childNode + '.input.description' | translate}}</mat-hint>
-				</mat-form-field>
-			</div>
-		</div>
+		<!--
+		<div class="form-group row" *ngIf="node[childNode].type && node[childNode].type === 'select' ||
+		node[childNode].type === 'multi-select'">
+			<mat-form-field class="mat-form-field-fluid">
+				<mat-select placeholder="{{'general.settings.layout.form.' + getPlaceHolderText() +   childNode  | translate}}"
+							[multiple]="node[childNode].type === 'multi-select'"
+							[formControlName]="childNode">
+					<mat-option *ngFor="let option of node[childNode].options"
+								value="{{ option }}">
+						{{option}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+		</div>-->
 
+		<ng-container *ngIf="node[childNode].type">
+
+			<div class="form-group row" *ngIf="node[childNode].type === 'checkbox-list'">
+
+				<div class="col-12">
+					<h3>{{'general.settings.layout.form.' + getPlaceHolderText() + childNode}}</h3>
+				</div>
+
+				<div class="col-12">
+					<div class="form-group row">
+						<div class="col-6 d-flex" *ngFor="let option of node[childNode].options; let i = index">
+							<mat-checkbox [formControlName]="childNode"><!-- [formControlName]="option" -->
+								{{option}}
+							</mat-checkbox>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="form-group row" *ngIf="node[childNode].type === 'select'">
+				<div class="col-12">
+					<mat-form-field class="mat-form-field-fluid">
+						<mat-select [formControlName]="childNode"
+									placeholder="{{'general.settings.layout.form.' + getPlaceHolderText() +   childNode  | translate}}">
+							<mat-option *ngFor="let option of node[childNode].options"
+										value="{{ option }}">{{option}}</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+			</div>
+
+			<!--<div class="form-group row" *ngIf="node[childNode].type && node[childNode].type === 'string'">
+                <div class="col-12 d-flex">
+                    <mat-form-field class="w-100">
+                        <input matInput
+                               placeholder="{{'general.settings.layout.form.' + getPlaceHolderText() +   childNode  | translate}}"
+                               [formControlName]="childNode"/>
+                    </mat-form-field>
+                </div>
+            </div>-->
+
+			<ng-container *ngIf="node[childNode].type === 'list'" [formGroupName]="childNode">
+
+				<div class="form-group row">
+					<div class="col-12">
+						<h3>{{'general.settings.layout.form.' + getPlaceHolderText() + childNode}}</h3>
+					</div>
+				</div>
+
+				<div class="form-group row" *ngFor="let option of node[childNode].selected; let i = index">
+					<ng-container [formGroupName]="i">
+
+						<div class="col-6">
+							<mat-form-field class="mat-form-field-fluid">
+								<input matInput
+									   placeholder="{{'general.settings.layout.form.' + getPlaceHolderText() + childNode + '.title'  | translate}}"
+									   formControlName="title"/>
+							</mat-form-field>
+						</div>
+						<div class="col-6">
+							<mat-form-field class="mat-form-field-fluid">
+								<input matInput
+									   placeholder="{{'general.settings.layout.form.' + getPlaceHolderText() + childNode + '.value'  | translate}}"
+									   formControlName="value"/>
+							</mat-form-field>
+						</div>
+					</ng-container>
+				</div>
+			</ng-container>
+
+
+		</ng-container>
+
+		<!--
 		<div class="form-group row" *ngIf="getType(node[childNode]) === 'number'">
 			<div class="col-12 d-flex">
 				<mat-form-field class="w-100">
 					<input matInput type="number"
-						   placeholder="{{'general.settings.' + getPlaceHolderText() +   childNode + '.input.title' |
-						     translate}}"
+						   placeholder="{{'general.settings.layout.form.' + getPlaceHolderText() +   childNode  |  translate}}"
 						   [formControlName]="childNode"/>
-					<mat-hint>{{'general.settings.' + childNode + '.input.description' | translate}}</mat-hint>
 				</mat-form-field>
 			</div>
 		</div>
@@ -29,15 +105,10 @@
 		<div class="form-group row" *ngIf="getType(node[childNode]) === 'boolean'">
 			<div class="col-12 d-flex">
 				<mat-checkbox class="w-100" [formControlName]="childNode">
-					{{'general.settings.' + getPlaceHolderText() + childNode + '.input.title' | translate}}
+					{{'general.settings.layout.form.' + getPlaceHolderText() + childNode  | translate}}
 				</mat-checkbox>
 			</div>
 		</div>
-
-		<kt-layout-config-tree *ngIf="getType(node[childNode]) === 'object'"
-							   [addedPlaceholderText]="childNode"
-							   [node]="node[childNode]">
-		</kt-layout-config-tree>
 
 		<div class="form-group row" *ngIf="getType(node[childNode]) === 'array'">
 			<div class="col-12 d-flex">
@@ -48,7 +119,15 @@
 						   [editable]="true">
 				</tag-input>
 			</div>
-		</div>
+		</div>-->
+
+		<kt-layout-config-tree *ngIf="!node[childNode].type"
+							   [parentNode]="node"
+							   [pageType]="pageType"
+							   [configuration]="configuration"
+							   [addedPlaceholderText]="childNode"
+							   [node]="node[childNode]">
+		</kt-layout-config-tree>
 
 	</ng-container>
 

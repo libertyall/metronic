@@ -41,14 +41,14 @@ export class Widget12Component implements OnInit {
 					{
 						fill: true,
 						// borderWidth: 0,
-						backgroundColor: color(this.layoutConfigService.getConfig('colors.state.brand')).alpha(0.6).rgbString(),
-						borderColor: color(this.layoutConfigService.getConfig('colors.state.brand')).alpha(0).rgbString(),
+						backgroundColor: color(this.layoutConfigService.getConfig('backend.colors.state.brand')).alpha(0.6).rgbString(),
+						borderColor: color(this.layoutConfigService.getConfig('backend.colors.state.brand')).alpha(0).rgbString(),
 
 						pointHoverRadius: 4,
 						pointHoverBorderWidth: 12,
 						pointBackgroundColor: Chart.helpers.color('#000000').alpha(0).rgbString(),
 						pointBorderColor: Chart.helpers.color('#000000').alpha(0).rgbString(),
-						pointHoverBackgroundColor: this.layoutConfigService.getConfig('colors.state.brand'),
+						pointHoverBackgroundColor: this.layoutConfigService.getConfig('backend.colors.state.brand'),
 						pointHoverBorderColor: Chart.helpers.color('#000000').alpha(0.1).rgbString(),
 
 						data: [20, 40, 50, 25, 35, 60, 30]
@@ -56,14 +56,14 @@ export class Widget12Component implements OnInit {
 					{
 						fill: true,
 						// borderWidth: 0,
-						backgroundColor: color(this.layoutConfigService.getConfig('colors.state.brand')).alpha(0.2).rgbString(),
-						borderColor: color(this.layoutConfigService.getConfig('colors.state.brand')).alpha(0).rgbString(),
+						backgroundColor: color(this.layoutConfigService.getConfig('backend.colors.state.brand')).alpha(0.2).rgbString(),
+						borderColor: color(this.layoutConfigService.getConfig('backend.colors.state.brand')).alpha(0).rgbString(),
 
 						pointHoverRadius: 4,
 						pointHoverBorderWidth: 12,
 						pointBackgroundColor: Chart.helpers.color('#000000').alpha(0).rgbString(),
 						pointBorderColor: Chart.helpers.color('#000000').alpha(0).rgbString(),
-						pointHoverBackgroundColor: this.layoutConfigService.getConfig('colors.state.brand'),
+						pointHoverBackgroundColor: this.layoutConfigService.getConfig('backend.colors.state.brand'),
 						pointHoverBorderColor: Chart.helpers.color('#000000').alpha(0.1).rgbString(),
 
 						data: [25, 45, 55, 30, 40, 65, 35]
@@ -98,7 +98,7 @@ export class Widget12Component implements OnInit {
 						ticks: {
 							display: true,
 							beginAtZero: true,
-							fontColor: this.layoutConfigService.getConfig('colors.base.shape.3'),
+							fontColor: this.layoutConfigService.getConfig('backend.colors.base.shape.3'),
 							fontSize: 13,
 							padding: 10
 						}
@@ -112,13 +112,13 @@ export class Widget12Component implements OnInit {
 							labelString: 'Value'
 						},
 						gridLines: {
-							color: this.layoutConfigService.getConfig('colors.base.shape.2'),
+							color: this.layoutConfigService.getConfig('backend.colors.base.shape.2'),
 							drawBorder: false,
 							offsetGridLines: false,
 							drawTicks: false,
 							borderDash: [3, 4],
 							zeroLineWidth: 1,
-							zeroLineColor: this.layoutConfigService.getConfig('colors.base.shape.2'),
+							zeroLineColor: this.layoutConfigService.getConfig('backend.colors.base.shape.2'),
 							zeroLineBorderDash: [3, 4]
 						},
 						ticks: {
@@ -126,7 +126,7 @@ export class Widget12Component implements OnInit {
 							stepSize: 10,
 							display: true,
 							beginAtZero: true,
-							fontColor: this.layoutConfigService.getConfig('colors.base.shape.3'),
+							fontColor: this.layoutConfigService.getConfig('backend.colors.base.shape.3'),
 							fontSize: 13,
 							padding: 10
 						}
@@ -147,7 +147,7 @@ export class Widget12Component implements OnInit {
 					xPadding: 10,
 					caretPadding: 0,
 					displayColors: false,
-					backgroundColor: this.layoutConfigService.getConfig('colors.state.brand'),
+					backgroundColor: this.layoutConfigService.getConfig('backend.colors.state.brand'),
 					titleFontColor: '#ffffff',
 					cornerRadius: 4,
 					footerSpacing: 0,

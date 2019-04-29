@@ -37,17 +37,20 @@
 			<div class="kt-grid__item kt-grid__item--fluid kt-wizard-v2__wrapper">
 
 				<div class="kt-wizard-v2__content"
-					 *ngFor="let item of configuration[pageType] | keys; let i = index; let first = first; let last =
+					 *ngFor="let node of configuration[pageType] | keys; let i = index; let first = first; let last =
 					  last"
 					 [ngClass]="wizardStep === i ? 'current' : ''">
 					<ng-container *ngIf="wizardStep === i">
 						<div class="kt-heading kt-heading--md">
-							{{ 'general.settings.layout.wizard.' + item + '.title' | translate }}
+							{{ 'general.settings.layout.wizard.' + node + '.title' | translate }}
 						</div>
 						<div class="kt-form__section">
 							<div class="kt-wizard-v2__form">
-								<kt-layout-config-tree [addedPlaceholderText]="item"
-													   [node]="configuration[ pageType ][ item ]">
+								<kt-layout-config-tree [addedPlaceholderText]="node"
+													   [parentNode]="node"
+													   [configuration]="configuration"
+													   [pageType]="pageType"
+													   [node]="configuration[ pageType ][ node ]">
 								</kt-layout-config-tree>
 							</div>
 						</div>

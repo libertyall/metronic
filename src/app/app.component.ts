@@ -34,7 +34,7 @@ export class AppComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit(): void {
-		this.loader = this.layoutConfigService.getConfig('backend.loader.enabled');
+		this.loader = this.layoutConfigService.getConfig('backend.loader.enabled.selected');
 
 		const routerSubscription = this.router.events.subscribe(event => {
 			if (this.loader && event instanceof NavigationEnd) {

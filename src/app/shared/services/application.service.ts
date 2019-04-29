@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { IApplication } from '../interfaces/application.interface';
-import { LayoutConfigService } from '../../core/_base/layout';
+import { BackendLayoutConfigModel, LayoutConfigService } from '../../core/_base/layout';
 import { LayoutConfig } from '../../core/_config/default/layout.config';
 
 @Injectable()
@@ -41,7 +41,7 @@ export class ApplicationService {
 				map((app: IApplication) => {
 					if (!app.configuration) {
 						const defaultConfig =  new LayoutConfig().configs;
-						appConfig.loadConfigs(defaultConfig);
+						return appConfig.loadConfigs(defaultConfig);
 					}
 				})
 			);

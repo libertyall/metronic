@@ -23,6 +23,28 @@ export const locale = {
 					title: 'Wartungsmodus'
 				},
 				layout: {
+					form: {
+						body: {
+							'background-image': 'Hintergrundbild'
+						},
+						loader: {
+							logo: 'Bild, das beim Laden angezeigt wird',
+							message: 'Nachricht beim Laden',
+							type: 'Wähle zwischen: spinner-logo, spinner-message und default'
+						},
+						logo: {
+							brand: 'Brand-Logo',
+							dark: 'Logo bei dunklem Design',
+							green: 'Logo bei grünem Hintergrund',
+							light: 'Logo bei hellem Hintergrund'
+						},
+						self: {
+							layout: 'Fluid oder fixed Design?'
+						},
+						sticky: {
+							offset: 'Porlets offset'
+						}
+					},
 					input: {
 						title: 'Layout',
 						description: 'Wie soll das Layout aufgebaut werden?'
