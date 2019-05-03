@@ -30,7 +30,6 @@ export class SettingsMainComponent implements OnInit {
       })
     });
 
-
     this.form.valueChanges.pipe(
       debounceTime(1000),
       distinctUntilChanged()

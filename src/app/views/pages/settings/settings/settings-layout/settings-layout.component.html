@@ -46,12 +46,13 @@
 						</div>
 						<div class="kt-form__section">
 							<div class="kt-wizard-v2__form">
-								<kt-layout-config-tree [addedPlaceholderText]="node"
+								<kt-layout-config-tree [rootData]="configuration[ pageType ][ node ]"></kt-layout-config-tree>
+								<!-- [addedPlaceholderText]="node"
 													   [parentNode]="node"
+
 													   [configuration]="configuration"
 													   [pageType]="pageType"
-													   [node]="configuration[ pageType ][ node ]">
-								</kt-layout-config-tree>
+													   -->
 							</div>
 						</div>
 					</ng-container>
