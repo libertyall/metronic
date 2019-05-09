@@ -44,6 +44,7 @@ import {
 } from '@angular/material';
 import { usersReducer } from '../../../core/auth/_reducers/user.reducers';
 import { UserEffects } from '../../../core/auth/_effects/user.effects';
+import { PortletModule } from '../../partials/content/general/portlet/portlet.module';
 
 const routes: Routes = [
 	{
@@ -96,6 +97,7 @@ const routes: Routes = [
 		StoreModule.forFeature('users', usersReducer),
         EffectsModule.forFeature([UserEffects]),
 		FormsModule,
+		PortletModule,
 		ReactiveFormsModule,
 		TranslateModule.forChild(),
 		MatButtonModule,

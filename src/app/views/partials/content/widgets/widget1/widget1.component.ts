@@ -1,7 +1,4 @@
-// Angular
 import { Component, Input, OnInit } from '@angular/core';
-// Lodash
-import { shuffle } from 'lodash';
 
 export interface Widget1Data {
 	title: string;
@@ -16,18 +13,10 @@ export interface Widget1Data {
 	styleUrls: ['./widget1.component.scss']
 })
 export class Widget1Component implements OnInit {
-	// Public properties
 	@Input() data: Widget1Data[];
 
-	/**
-	 * @ Lifecycle sequences => https://angular.io/guide/lifecycle-hooks
-	 */
-
-	/**
-	 * On init
-	 */
 	ngOnInit() {
-		if (!this.data) {
+		/* if (!this.data) {
 			this.data = shuffle([
 				{
 					title: 'Member Profit',
@@ -46,7 +35,7 @@ export class Widget1Component implements OnInit {
 					valueClass: 'kt-font-success'
 				}
 			]);
-		}
+		} */
 	}
 
 }

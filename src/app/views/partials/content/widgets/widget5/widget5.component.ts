@@ -1,6 +1,4 @@
-// Angular
 import { Component, Input, OnInit } from '@angular/core';
-// Lodash
 import { shuffle } from 'lodash';
 
 export interface Widget5Data {
@@ -18,18 +16,11 @@ export interface Widget5Data {
 	styleUrls: ['./widget5.component.scss']
 })
 export class Widget5Component implements OnInit {
-	// Public properties
+
 	@Input() data: Widget5Data[];
 
-	/**
-	 * @ Lifecycle sequences => https://angular.io/guide/lifecycle-hooks
-	 */
-
-	/**
-	 * On init
-	 */
 	ngOnInit() {
-		if (!this.data) {
+		/* if (!this.data) {
 			this.data = shuffle([
 				{
 					pic: './assets/media/products/product6.jpg',
@@ -77,6 +68,7 @@ export class Widget5Component implements OnInit {
 						' </div>'
 				},
 			]);
-		}
+		} */
 	}
+
 }

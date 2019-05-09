@@ -16,51 +16,51 @@ const routes: Routes = [
 			}, /*
 			{
 				path: 'articles',
-				loadChildren: '../../content/article/article.module#ArticleModule'
-			},
+				loadChildren: 'app/views/pages/article/article.module#ArticleModule'
+			}, */
 			{
 				path: 'categories',
-				loadChildren: '../../content/category/category.module#CategoryModule'
+				loadChildren: 'app/views/pages/category/category.module#CategoryModule'
 			},
 			{
 				path: 'calendar',
-				loadChildren: '../../content/sfw-calendar/sfw-calendar.module#SFWCalendarModule'
-			},
+				loadChildren: 'app/views/pages/sfw-calendar/sfw-calendar.module#SFWCalendarModule'
+			}, /*
 			{
 				path: 'clubs',
-				loadChildren: '../../content/club/club.module#ClubModule'
+				loadChildren: 'app/views/pages/club/club.module#ClubModule'
 			},
 			{
 				path: 'locations',
-				loadChildren: '../../content/location/location.module#LocationModule'
+				loadChildren: 'app/views/pages/location/location.module#LocationModule'
 			},
 			{
 				path: 'matches',
-				loadChildren: '../../content/match/match.module#MatchModule'
+				loadChildren: 'app/views/pages/match/match.module#MatchModule'
 			},
 			{
 				path: 'members',
-				loadChildren: '../../content/member/member.module#MemberModule'
+				loadChildren: 'app/views/pages/member/member.module#MemberModule'
 			},
 			{
 				path: 'uploader',
-				loadChildren: '../../content/uploader/uploader.module#UploaderModule'
-			},*/
+				loadChildren: 'app/views/pages/uploader/uploader.module#UploaderModule'
+			},
 			{
 				path: 'settings',
 				loadChildren: '../../pages/settings/settings.module#SettingsModule'
-			}, /*
+			},
 			{
 				path: 'sponsors',
-				loadChildren: '../../content/sponsor/sponsor.module#SponsorModule'
+				loadChildren: 'app/views/pages/sponsor/sponsor.module#SponsorModule'
 			},
 			{
 				path: 'teams',
-				loadChildren: '../../content/team/team.module#TeamModule'
+				loadChildren: 'app/views/pages/team/team.module#TeamModule'
 			},
 			{
 				path: 'users',
-				loadChildren: '../../content/user/user.module#UserModule'
+				loadChildren: 'app/views/pages/user/user.module#UserModule'
 			}, */
 			{
 				path: 'error/403',

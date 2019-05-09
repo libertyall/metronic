@@ -1,4 +1,3 @@
-// Angular
 import { Component, Input, OnInit } from '@angular/core';
 
 export interface Timeline2Data {
@@ -14,18 +13,10 @@ export interface Timeline2Data {
 	styleUrls: ['./timeline2.component.scss']
 })
 export class Timeline2Component implements OnInit {
-	// Public properties
 	@Input() data: Timeline2Data[];
 
-	/**
-	 * @ Lifecycle sequences => https://angular.io/guide/lifecycle-hooks
-	 */
-
-	/**
-	 * On init
-	 */
 	ngOnInit() {
-		if (!this.data) {
+		/* if (!this.data) {
 			this.data = [
 				{
 					time: '10:00',
@@ -66,6 +57,6 @@ export class Timeline2Component implements OnInit {
 					text: 'Received a new feedback on <a href="$event.preventDefault();" class="kt-link kt-link--brand kt-font-bolder">FinancePro App</a> product.',
 				},
 			];
-		}
+		} */
 	}
 }

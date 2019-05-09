@@ -1,0 +1,69 @@
+<mat-card *ngIf="category">
+	<mat-card-title>
+		<mat-icon>details</mat-icon>
+		{{'general.menu.category.detail' | translate}}
+	</mat-card-title>
+
+	<mat-card-content>
+
+		<mat-card class="shadow-none"
+				  *ngIf="categoryTypes$ | async as categoryTypes; else loadingTemplate">
+			<mat-card-header>
+				<mat-card-subtitle> {{'general.categories.list.colTitles.title' | translate}}</mat-card-subtitle>
+				<mat-card-title>{{category.title}}</mat-card-title>
+			</mat-card-header>
+
+			<mat-card-header>
+				<mat-card-subtitle>{{'general.categories.list.colTitles.category' | translate}}</mat-card-subtitle>
+				<mat-card-title>
+          <span *ngFor="let categoryType of categoryTypes | filterBy: ['id'] : category.assignedCategoryType">
+            {{ 'general.menu.' + categoryType.link + '.main' | translate}}
+          </span>
+
+					<span
+						*ngIf="category.isMainCategory">{{'general.categories.edit.isMainCategory' | translate }}</span>
+				</mat-card-title>
+			</mat-card-header>
+
+			<mat-card-header>
+				<mat-card-subtitle>{{'general.tables.colTitles.creation' | translate}}</mat-card-subtitle>
+				<mat-card-title>
+					<span *ngIf="category.creationBy === 'system'"
+						  translate>{{'general.tables.importedViaScript'}}</span>
+					<creation-date [creation]="category.creationAt"></creation-date>
+				</mat-card-title>
+			</mat-card-header>
+
+			<mat-card-header>
+				<mat-card-subtitle>{{'general.tables.colTitles.description' | translate}}</mat-card-subtitle>
+				<mat-card-title [innerHtml]="category.description"></mat-card-title>
+			</mat-card-header>
+
+		</mat-card>
+	</mat-card-content>
+
+	<mat-card-actions>
+			<button type="button"
+					mat-raised-button
+					color="primary"
+					[routerLink]="['/categories']">
+				{{'general.menu.category.list' | translate}}
+			</button>
+			<button type="button"
+					mat-raised-button
+					color="accent"
+					[routerLink]="['/categories/edit', category.id]">
+				{{'general.edit' | translate }}
+			</button>
+			<button type="button"
+					mat-raised-button
+					color="warn"
+					(click)="removeCategory(category)">
+				{{'general.delete' | translate }}
+			</button>
+	</mat-card-actions>
+</mat-card>
+
+<ng-template #loadingTemplate>
+	Loading ...
+</ng-template>

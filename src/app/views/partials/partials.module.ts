@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatProgressSpinnerModule } from '@angular/material';
+import {
+	MatDialogModule, MatPaginatorModule, MatProgressSpinnerModule, MatSnackBarModule, MatSortModule
+} from '@angular/material';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { CoreModule } from '../../core/core.module';
@@ -95,7 +97,9 @@ import { RouterModule } from '@angular/router';
 		PerfectScrollbarModule,
 		InlineSVGModule,
 		// Suheader-Includes
-		RouterModule
+		RouterModule,
+		MatDialogModule,
+		MatSnackBarModule,
 		/* FormsModule,
 		ReactiveFormsModule,
 		PortletModule,
@@ -111,14 +115,10 @@ import { RouterModule } from '@angular/router';
 		MatNativeDateModule,
 		MatProgressBarModule,
 		MatDatepickerModule,
-		MatCardModule,
-		MatPaginatorModule,
-		MatSortModule,
+		MatCardModule,,
 		MatCheckboxModule,
-		MatSnackBarModule,
 		MatTabsModule,
-		MatTooltipModule,
-		MatDialogModule, */
+		MatTooltipModule, */
 	]
 })
 export class PartialsModule {

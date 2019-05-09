@@ -13,11 +13,12 @@ import { Widget12Component } from './widget12/widget12.component';
 import { Widget14Component } from './widget14/widget14.component';
 import { Widget26Component } from './widget26/widget26.component';
 import { Timeline2Component } from './timeline2/timeline2.component';
+import { SparklineChartDirective } from '../../../../core/_base/metronic';
 
 @NgModule({
 	declarations: [
 		DataTableComponent,
-		// Widgets
+		SparklineChartDirective,
 		Widget1Component,
 		Widget4Component,
 		Widget5Component,

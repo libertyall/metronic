@@ -1,5 +1,5 @@
 export interface IMailList {
-  title: string;
-  emails: string[];
-  isActive?: boolean;
+	title: string;
+	emails: string[];
+	isActive?: boolean;
 }

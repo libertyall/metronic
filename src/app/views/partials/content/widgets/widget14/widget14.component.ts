@@ -1,8 +1,5 @@
-// Angular
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-// Layout
 import { LayoutConfigService } from '../../../../../core/_base/layout';
-// Charts
 import { Chart } from 'chart.js';
 
 @Component({
@@ -11,27 +8,15 @@ import { Chart } from 'chart.js';
 	styleUrls: ['./widget14.component.scss'],
 })
 export class Widget14Component implements OnInit {
-	// Public properties
+
 	@Input() title: string;
 	@Input() desc: string;
 	@Input() data: { labels: string[]; datasets: any[] };
 	@ViewChild('chart') chart: ElementRef;
 
-	/**
-	 * Component constructor
-	 *
-	 * @param layoutConfigService: LayoutConfigService
-	 */
 	constructor(private layoutConfigService: LayoutConfigService) {
 	}
 
-	/**
-	 * @ Lifecycle sequences => https://angular.io/guide/lifecycle-hooks
-	 */
-
-	/**
-	 * On init
-	 */
 	ngOnInit() {
 		if (!this.data) {
 			this.data = {
@@ -57,12 +42,8 @@ export class Widget14Component implements OnInit {
 		this.initChartJS();
 	}
 
-	/** Init chart */
 	initChartJS() {
-		// For more information about the chartjs, visit this link
-		// https://www.chartjs.org/docs/latest/getting-started/usage.html
-
-		const chart = new Chart(this.chart.nativeElement, {
+		const config: Chart.ChartConfiguration = {
 			type: 'bar',
 			data: this.data,
 			options: {
@@ -81,18 +62,21 @@ export class Widget14Component implements OnInit {
 				},
 				responsive: true,
 				maintainAspectRatio: false,
-				barRadius: 4,
+				// barRadius: 4,
+				// gridLines: false,
 				scales: {
-					xAxes: [{
-						display: false,
-						gridLines: false,
-						stacked: true
-					}],
-					yAxes: [{
-						display: false,
-						stacked: true,
-						gridLines: false
-					}]
+					xAxes: [
+						{
+							display: false,
+							stacked: true
+						}
+					],
+					yAxes: [
+						{
+							display: false,
+							stacked: true,
+						}
+					]
 				},
 				layout: {
 					padding: {
@@ -103,6 +87,8 @@ export class Widget14Component implements OnInit {
 					}
 				}
 			}
-		});
+		};
+
+		const chart = new Chart(this.chart.nativeElement, config);
 	}
 }

@@ -36,7 +36,7 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { metaReducers, reducers } from './core/reducers';
 import { NgxPermissionsModule } from 'ngx-permissions';
-import { ApplicationService } from './shared/services/application.service';
+import { ApplicationService } from './shared/services/application/application.service';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	wheelSpeed: 0.5,

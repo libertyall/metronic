@@ -9,7 +9,7 @@ import { locale as esLang } from './core/_config/i18n/es';
 import { locale as jpLang } from './core/_config/i18n/jp';
 import { locale as deLang } from './core/_config/i18n/de';
 import { locale as frLang } from './core/_config/i18n/fr';
-import { ApplicationService } from './shared/services/application.service';
+import { ApplicationService } from './shared/services/application/application.service';
 
 @Component({
 	// tslint:disable-next-line:component-selector

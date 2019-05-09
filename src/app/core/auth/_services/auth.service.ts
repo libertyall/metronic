@@ -6,6 +6,7 @@ import { User } from 'firebase';
 import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs';
 import { Role } from '../_interfaces/role.interface';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class AuthService {
@@ -118,5 +119,18 @@ export class AuthService {
 	// Permissions
 	getPermissions() {
 		return this.permissions$;
+	}
+
+	getCreationBy(): string {
+		console.log('get CreationBy - AuthService');
+		return 'TODO';
+		/* return this.afAuth.user.pipe(
+			map(user => {
+				return user.uid;
+		}); */
+	}
+
+	getCreationAt(): any {
+		return firebase.firestore.FieldValue.serverTimestamp();
 	}
 }

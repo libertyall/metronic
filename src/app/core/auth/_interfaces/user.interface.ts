@@ -4,6 +4,7 @@ import { SocialNetworks } from './social-networks.interface';
 import { Role } from './role.interface';
 
 export interface IUser extends BaseModel {
+	id?: string;
 	emailVerified?: boolean;
 	isDisabled?: boolean;
 

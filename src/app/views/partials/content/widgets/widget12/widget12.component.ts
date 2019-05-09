@@ -1,11 +1,7 @@
-// Angular
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-// Layout config
 import { LayoutConfigService } from '../../../../../core/_base/layout';
+import { Chart } from 'chart.js';
 
-/**
- * Sample components with sample data
- */
 @Component({
 	selector: 'kt-widget12',
 	templateUrl: './widget12.component.html',
@@ -13,27 +9,15 @@ import { LayoutConfigService } from '../../../../../core/_base/layout';
 })
 export class Widget12Component implements OnInit {
 
-	// Public properties
 	@Input() data: { labels: string[], datasets: any[] };
 	@Input() type: string = 'line';
 	@ViewChild('chart') chart: ElementRef;
 
-	/**
-	 * Component constructor
-	 * @param layoutConfigService
-	 */
 	constructor(private layoutConfigService: LayoutConfigService) {
 	}
 
-	/**
-	 * @ Lifecycle sequences => https://angular.io/guide/lifecycle-hooks
-	 */
-
-	/**
-	 * On init
-	 */
 	ngOnInit(): void {
-		if (!this.data) {
+		/* if (!this.data) {
 			const color = Chart.helpers.color;
 			this.data = {
 				labels: ['1 Jan', '2 Jan', '3 Jan', '4 Jan', '5 Jan', '6 Jan', '7 Jan'],
@@ -70,67 +54,67 @@ export class Widget12Component implements OnInit {
 					}
 				]
 			};
-		}
+		} */
 		this.initChart();
 	}
 
 	private initChart() {
-		// For more information about the chartjs, visit this link
-		// https://www.chartjs.org/docs/latest/getting-started/usage.html
-
-		const chart = new Chart(this.chart.nativeElement, {
+		const config: Chart.ChartConfiguration = {
 			type: this.type,
 			data: this.data,
 			options: {
 				responsive: true,
 				maintainAspectRatio: false,
-				legend: false,
+				// legend: false,
 				scales: {
-					xAxes: [{
-						categoryPercentage: 0.35,
-						barPercentage: 0.70,
-						display: true,
-						scaleLabel: {
-							display: false,
-							labelString: 'Month'
-						},
-						gridLines: false,
-						ticks: {
+					xAxes: [
+						{
+							categoryPercentage: 0.35,
+							barPercentage: 0.70,
 							display: true,
-							beginAtZero: true,
-							fontColor: this.layoutConfigService.getConfig('backend.colors.base.shape.3'),
-							fontSize: 13,
-							padding: 10
+							scaleLabel: {
+								display: false,
+								labelString: 'Month'
+							},
+							ticks: {
+								display: true,
+								beginAtZero: true,
+								fontColor: this.layoutConfigService.getConfig('backend.colors.base.shape.3'),
+								fontSize: 13,
+								padding: 10
+							}
 						}
-					}],
-					yAxes: [{
-						categoryPercentage: 0.35,
-						barPercentage: 0.70,
-						display: true,
-						scaleLabel: {
-							display: false,
-							labelString: 'Value'
-						},
-						gridLines: {
-							color: this.layoutConfigService.getConfig('backend.colors.base.shape.2'),
-							drawBorder: false,
-							offsetGridLines: false,
-							drawTicks: false,
-							borderDash: [3, 4],
-							zeroLineWidth: 1,
-							zeroLineColor: this.layoutConfigService.getConfig('backend.colors.base.shape.2'),
-							zeroLineBorderDash: [3, 4]
-						},
-						ticks: {
-							max: 70,
-							stepSize: 10,
+					],
+					yAxes: [
+						{
+							maxBarThickness: 0.35,
+							barThickness: 0.70,
 							display: true,
-							beginAtZero: true,
-							fontColor: this.layoutConfigService.getConfig('backend.colors.base.shape.3'),
-							fontSize: 13,
-							padding: 10
+							scaleLabel: {
+								display: false,
+								labelString: 'Value'
+							},
+							gridLines: {
+								color: this.layoutConfigService.getConfig('backend.colors.base.shape.2'),
+								drawBorder: false,
+								offsetGridLines: false,
+								drawTicks: false,
+								borderDash: [3, 4],
+								zeroLineWidth: 1,
+								zeroLineColor: this.layoutConfigService.getConfig('backend.colors.base.shape.2'),
+								zeroLineBorderDash: [3, 4]
+							},
+							ticks: {
+								max: 70,
+								stepSize: 10,
+								display: true,
+								beginAtZero: true,
+								fontColor: this.layoutConfigService.getConfig('backend.colors.base.shape.3'),
+								fontSize: 13,
+								padding: 10
+							}
 						}
-					}]
+					]
 				},
 				title: {
 					display: false
@@ -162,6 +146,8 @@ export class Widget12Component implements OnInit {
 					}
 				}
 			}
-		});
+		};
+
+		const chart = new Chart(this.chart.nativeElement, config);
 	}
 }
