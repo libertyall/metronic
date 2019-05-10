@@ -1,11 +1,9 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import {
-	MatDialogModule, MatPaginatorModule, MatProgressSpinnerModule, MatSnackBarModule, MatSortModule
-} from '@angular/material';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { CoreModule } from '../../core/core.module';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {MatDialogModule, MatProgressBarModule, MatProgressSpinnerModule, MatSnackBarModule} from '@angular/material';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
+import {CoreModule} from '../../core/core.module';
 import {
 	LanguageSelectorComponent,
 	NotificationComponent,
@@ -16,13 +14,16 @@ import {
 	SearchResultComponent,
 	SplashScreenComponent,
 	StickyToolbarComponent,
-	Subheader1Component, Subheader2Component, Subheader3Component,
+	Subheader1Component,
+	Subheader2Component,
+	Subheader3Component,
 	UserProfileComponent,
 } from './layout';
-import { InlineSVGModule } from 'ng-inline-svg';
-import { CartComponent } from './layout/topbar/cart/cart.component';
-import { ErrorComponent } from './content/general/error/error.component';
-import { RouterModule } from '@angular/router';
+import {InlineSVGModule} from 'ng-inline-svg';
+import {CartComponent} from './layout/topbar/cart/cart.component';
+import {ErrorComponent} from './content/general/error/error.component';
+import {RouterModule} from '@angular/router';
+import {DeleteEntityDialogComponent} from './content/crud';
 
 @NgModule({
 	declarations: [
@@ -40,13 +41,13 @@ import { RouterModule } from '@angular/router';
 		LanguageSelectorComponent,
 		UserProfileComponent,
 		Subheader1Component,
-		 Subheader2Component,
-		 Subheader3Component,
-		ErrorComponent
+		Subheader2Component,
+		Subheader3Component,
+		ErrorComponent,
 
+		DeleteEntityDialogComponent,
 		/* NoticeComponent,
 		ActionNotificationComponent,
-		DeleteEntityDialogComponent,
 		FetchEntityDialogComponent,
 		UpdateStatusDialogComponent,
 		AlertComponent,
@@ -72,13 +73,13 @@ import { RouterModule } from '@angular/router';
 		Subheader1Component,
 		Subheader2Component,
 		Subheader3Component,
-		ErrorComponent
+		ErrorComponent,
+		DeleteEntityDialogComponent,
 
 		/*WidgetModule,
 		PortletModule,
 		NoticeComponent,
 		ActionNotificationComponent,
-		DeleteEntityDialogComponent,
 		FetchEntityDialogComponent,
 		UpdateStatusDialogComponent,
 		AlertComponent,
@@ -92,6 +93,7 @@ import { RouterModule } from '@angular/router';
 	imports: [
 		CommonModule,
 		CoreModule,
+		MatProgressBarModule,
 		MatProgressSpinnerModule,
 		NgbModule,
 		PerfectScrollbarModule,
@@ -119,6 +121,9 @@ import { RouterModule } from '@angular/router';
 		MatCheckboxModule,
 		MatTabsModule,
 		MatTooltipModule, */
+	],
+	entryComponents: [
+		DeleteEntityDialogComponent
 	]
 })
 export class PartialsModule {

@@ -1,6 +1,6 @@
 import { select, Store } from '@ngrx/store';
-import { BaseDataSource, QueryResultsModel } from '../../../../core/_base/crud';
-import { AppState } from '../../../../core/reducers';
+import { BaseDataSource, QueryResultsModel } from '../../_base/crud';
+import { AppState } from '../../reducers';
 import {
 	selectCategoriesInStore, selectCategoriesPageLoading, selectCategoriesShowInitWaitingMessage
 } from '../_selectors/category.selectors';
@@ -22,7 +22,6 @@ export class CategoriesDataSource extends BaseDataSource {
 		this.store.pipe(
 			select(selectCategoriesInStore)
 		).subscribe((response: QueryResultsModel) => {
-			console.log(response);
 			this.paginatorTotalSubject.next(response.totalCount);
 			this.entitySubject.next(response.items);
 		});

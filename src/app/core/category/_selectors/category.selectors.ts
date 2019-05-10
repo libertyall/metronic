@@ -1,15 +1,15 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { CategoriesState } from '../_reducers/Category.reducers';
+import { CategoriesState } from '../_reducers/category.reducers';
 import { each } from 'lodash';
-import { ICategory } from '../../../../shared/interfaces/category.interface';
-import { HttpExtenstionsModel, QueryResultsModel } from '../../../../core/_base/crud';
+import { ICategory } from '../../../shared/interfaces/category.interface';
+import { HttpExtenstionsModel, QueryResultsModel } from '../../_base/crud';
 import * as fromCategory from '../_reducers/category.reducers';
 
 export const selectCategoriesState = createFeatureSelector<CategoriesState>('categories');
 
-export const selectCategoryById = (CategoryId: number) => createSelector(
+export const selectCategoryById = (categoryId: string) => createSelector(
     selectCategoriesState,
-    categoriesState => categoriesState.entities[CategoryId]
+    categoriesState => categoriesState.entities[categoryId]
 );
 
 export const selectCategoriesPageLoading = createSelector(

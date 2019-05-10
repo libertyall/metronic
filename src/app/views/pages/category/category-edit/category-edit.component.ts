@@ -42,6 +42,7 @@ export class CategoryEditComponent implements OnInit {
 
 	ngOnInit() {
 		this.route.data.subscribe((data: { category: ICategory }) => {
+			console.log(data);
 			this.category = data.category;
 			this.savedCategory = Object.freeze(Object.assign({}, this.category));
 		});

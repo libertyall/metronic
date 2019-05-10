@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { fromEvent, merge, Subscription } from 'rxjs';
+import {fromEvent, merge, of, Subscription} from 'rxjs';
 import { ICategory } from '../../../../shared/interfaces/category.interface';
 import { MatPaginator, MatSort } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -8,10 +8,10 @@ import { select, Store } from '@ngrx/store';
 import { AppState } from '../../../../core/reducers';
 import { LayoutUtilsService, MessageType, QueryParamsModel } from '../../../../core/_base/crud';
 import { SubheaderService } from '../../../../core/_base/layout';
-import { debounceTime, distinctUntilChanged, skip, tap } from 'rxjs/operators';
-import { CategoriesDataSource } from '../_data-sources/categories.data-source';
-import { selectAllCategories } from '../_selectors/category.selectors';
-import { CategoriesPageRequested, CategoryDeleted } from '../_actions/category.actions';
+import {debounceTime, delay, distinctUntilChanged, skip, tap} from 'rxjs/operators';
+import { CategoriesDataSource } from '../../../../core/category/_data-sources/categories.data-source';
+import { selectAllCategories } from '../../../../core/category/_selectors/category.selectors';
+import { CategoriesPageRequested, CategoryDeleted } from '../../../../core/category/_actions/category.actions';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -50,16 +50,11 @@ export class CategoryListComponent implements OnInit, OnDestroy {
 		const sortSubscription = this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
 		this.subscriptions.push(sortSubscription);
 
-		const paginatorSubscriptions = merge(this.sort.sortChange, this.paginator.page).pipe(
-			tap(() => {
-				this.loadCategoryList();
-			})
-		)
-			.subscribe();
+		const paginatorSubscriptions = merge(this.sort.sortChange, this.paginator.page).pipe(tap(() => this.loadCategoryList())).subscribe();
 		this.subscriptions.push(paginatorSubscriptions);
 
 		const searchSubscription = fromEvent(this.searchInput.nativeElement, 'keyup').pipe(
-			debounceTime(150),
+			debounceTime(500),
 			distinctUntilChanged(),
 			tap(() => {
 				this.paginator.pageIndex = 0;
@@ -79,7 +74,6 @@ export class CategoryListComponent implements OnInit, OnDestroy {
 			this.categoriesResult = res;
 		});
 		this.subscriptions.push(entitiesSubscription);
-
 		this.loadCategoryList();
 	}
 
@@ -102,13 +96,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
 
 	filterConfiguration(): any {
 		const filter: any = {};
-		const searchText: string = this.searchInput.nativeElement.value;
-
-		filter.title = searchText;
-
-		// filter.assignedCategoryType = searchText;
-		// filter.email = searchText;
-		// filter.fillname = searchText;
+		filter.title = this.searchInput.nativeElement.value;
 		return filter;
 	}
 
@@ -156,7 +144,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
 	}
 
 	editCategory(id: string): void {
-		this.router.navigate(['./categories/edit', id], { relativeTo: this.activatedRoute }).then(() => console.log('edit category'));
+		this.router.navigate(['/categories/edit', id]).then(() => console.log('edit category'));
 	}
 
 }

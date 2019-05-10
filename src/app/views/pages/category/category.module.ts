@@ -1,28 +1,41 @@
-import { NgModule } from '@angular/core';
-import { categoryRoutes } from './category-routing.module';
-import { CategoryResolver } from './category.resolver';
-import { RouterModule } from '@angular/router';
-import { CategoriesByCategoryTypeComponent } from './categories-by-category-type/categories-by-category-type.component';
-import { ChartsModule } from 'ng2-charts';
-import { CategoryDetailComponent } from './category-detail/category-detail.component';
+import {NgModule} from '@angular/core';
+import {categoryRoutes} from './category-routing.module';
+import {CategoryResolver} from './category.resolver';
+import {RouterModule} from '@angular/router';
+import {CategoriesByCategoryTypeComponent} from './categories-by-category-type/categories-by-category-type.component';
+import {ChartsModule} from 'ng2-charts';
+import {CategoryDetailComponent} from './category-detail/category-detail.component';
 import {
-	MAT_DIALOG_DEFAULT_OPTIONS, MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatListModule,
-	MatOptionModule, MatProgressSpinnerModule, MatSelectModule, MatSortModule, MatTabsModule, MatTooltipModule
+	MAT_DIALOG_DEFAULT_OPTIONS,
+	MatButtonModule,
+	MatCheckboxModule,
+	MatFormFieldModule,
+	MatInputModule,
+	MatListModule,
+	MatOptionModule,
+	MatProgressSpinnerModule,
+	MatSelectModule,
+	MatSortModule,
+	MatTabsModule,
+	MatTooltipModule
 } from '@angular/material';
-import { CategoryEditComponent } from './category-edit/category-edit.component';
-import { CategoryStatisticsComponent } from './category-statistics/category-statistics.component';
-import { CategoryService } from '../../../shared/services/category/category.service';
-import { CategoryTypeService } from '../../../shared/services/category-type/category-type.service';
-import { CreationModule } from '../../../shared/components/creation/creation.module';
-import { UserService } from '../../../shared/services/user/user.service';
-import { SharedModule } from '../shared.module';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
-import { categoriesReducer } from './_reducers/category.reducers';
-import { CategoryEffects } from './_effects/category.effects';
-import { HttpUtilsService, InterceptService, TypesUtilsService } from '../../../core/_base/crud';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { CategoryListComponent } from './category-list/category-list.component';
+import {CategoryEditComponent} from './category-edit/category-edit.component';
+import {CategoryStatisticsComponent} from './category-statistics/category-statistics.component';
+import {CategoryService} from '../../../shared/services/category/category.service';
+import {CategoryTypeService} from '../../../shared/services/category-type/category-type.service';
+import {CreationModule} from '../../../shared/components/creation/creation.module';
+import {UserService} from '../../../shared/services/user/user.service';
+import {SharedModule} from '../shared.module';
+import {StoreModule} from '@ngrx/store';
+import {EffectsModule} from '@ngrx/effects';
+import {categoriesReducer} from '../../../core/category/_reducers/category.reducers';
+import {CategoryEffects} from '../../../core/category/_effects/category.effects';
+import {HttpUtilsService, InterceptService, TypesUtilsService} from '../../../core/_base/crud';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {CategoryListComponent} from './category-list/category-list.component';
+import {CategoryTypesResolver} from '../category-types/category-types.resolver';
+import {DeleteEntityDialogComponent} from '../../partials/content/crud';
+import {PartialsModule} from '../../partials/partials.module';
 
 @NgModule({
 	imports: [
@@ -40,6 +53,7 @@ import { CategoryListComponent } from './category-list/category-list.component';
 		MatProgressSpinnerModule,
 		MatTabsModule,
 		MatTooltipModule,
+		PartialsModule,
 		RouterModule.forChild(categoryRoutes),
 		SharedModule,
 		StoreModule.forFeature('categories', categoriesReducer)
@@ -53,6 +67,7 @@ import { CategoryListComponent } from './category-list/category-list.component';
 	],
 	providers: [
 		CategoryResolver,
+		CategoryTypesResolver,
 		CategoryService,
 		CategoryTypeService,
 		UserService,

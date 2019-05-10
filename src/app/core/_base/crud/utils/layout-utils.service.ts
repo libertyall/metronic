@@ -1,7 +1,5 @@
-// Angular
 import { Injectable } from '@angular/core';
 import { MatSnackBar, MatDialog } from '@angular/material';
-// Partials for CRUD
 import { ActionNotificationComponent,
 	DeleteEntityDialogComponent,
 	FetchEntityDialogComponent,
@@ -17,26 +15,10 @@ export enum MessageType {
 
 @Injectable()
 export class LayoutUtilsService {
-	/**
-	 * Service constructor
-	 *
-	 * @param snackBar: MatSnackBar
-	 * @param dialog: MatDialog
-	 */
+
 	constructor(private snackBar: MatSnackBar,
 		private dialog: MatDialog) { }
 
-	/**
-	 * Showing (Mat-Snackbar) Notification
-	 *
-	 * @param message: string
-	 * @param type: MessageType
-	 * @param duration: number
-	 * @param showCloseButton: boolean
-	 * @param showUndoButton: boolean
-	 * @param undoButtonDuration: number
-	 * @param verticalPosition: 'top' | 'bottom' = 'top'
-	 */
 	showActionNotification(
 		_message: string,
 		_type: MessageType = MessageType.Create,
@@ -63,25 +45,13 @@ export class LayoutUtilsService {
 		});
 	}
 
-	/**
-	 * Showing Confirmation (Mat-Dialog) before Entity Removing
-	 *
-	 * @param title: stirng
-	 * @param description: stirng
-	 * @param waitDesciption: string
-	 */
-	deleteElement(title: string = '', description: string = '', waitDesciption: string = '') {
+	deleteElement(title: string = '', description: string = '', waitDescription: string = '') {
 		return this.dialog.open(DeleteEntityDialogComponent, {
-			data: { title, description, waitDesciption },
+			data: { title, description, waitDescription },
 			width: '440px'
 		});
 	}
 
-	/**
-	 * Showing Fetching Window(Mat-Dialog)
-	 *
-	 * @param _data: any
-	 */
 	fetchElements(_data) {
 		return this.dialog.open(FetchEntityDialogComponent, {
 			data: _data,
@@ -89,13 +59,6 @@ export class LayoutUtilsService {
 		});
 	}
 
-	/**
-	 * Showing Update Status for Entites Window
-	 *
-	 * @param title: string
-	 * @param statuses: string[]
-	 * @param messages: string[]
-	 */
 	updateStatusForEntities(title, statuses, messages) {
 		return this.dialog.open(UpdateStatusDialogComponent, {
 			data: { title, statuses, messages },

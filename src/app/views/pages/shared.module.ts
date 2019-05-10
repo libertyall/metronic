@@ -4,7 +4,13 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AlertService } from '../../shared/services/alert/alert.service';
 import {
-	MatCardModule, MatIconModule, MatPaginatorModule, MatSnackBarModule, MatSortModule, MatTableModule
+	MatCardModule,
+	MatIconModule,
+	MatPaginatorModule,
+	MatProgressBarModule,
+	MatSnackBarModule,
+	MatSortModule,
+	MatTableModule
 } from '@angular/material';
 import { NgPipesModule } from 'ngx-pipes';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
@@ -34,7 +40,8 @@ import { PortletModule } from '../partials/content/general/portlet/portlet.modul
 		TranslateModule
 	],
 	imports: [
-		CommonModule
+		CommonModule,
+		MatProgressBarModule,
 	],
 	providers: [
 		AlertService

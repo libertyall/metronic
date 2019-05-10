@@ -1,9 +1,11 @@
 import { BackendLayoutConfigModel } from '../../_base/layout';
 
+console.log('layout config BackendLayoutConfigModel');
+
 export class LayoutConfig {
 
 	public defaults: {
-		backend: BackendLayoutConfigModel,
+		backend: any,
 		frontend: any
 	} = {
 		backend: {

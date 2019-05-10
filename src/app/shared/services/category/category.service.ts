@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { ICategory } from '../../interfaces/category.interface';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { CategoryTypeService } from '../category-type/category-type.service';
-import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { AuthService } from '../../../core/auth/_services/auth.service';
-import { QueryParamsModel } from '../../../core/_base/crud';
+import {Injectable} from '@angular/core';
+import {ICategory} from '../../interfaces/category.interface';
+import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
+import {CategoryTypeService} from '../category-type/category-type.service';
+import {Observable, of} from 'rxjs';
+import {map, take} from 'rxjs/operators';
+import {AuthService} from '../../../core/auth/_services/auth.service';
+import {QueryParamsModel} from '../../../core/_base/crud';
 
 @Injectable()
 export class CategoryService {
@@ -22,9 +22,37 @@ export class CategoryService {
 		this.categories$ = this.collectionRef.valueChanges();
 	}
 
-	getCategories(page: QueryParamsModel): Observable<ICategory[]> {
-		console.log('Page is called', page);
-		return this.categories$;
+	getCategories(page: QueryParamsModel): Observable<any> {
+		console.log(page);
+		const {filter, pageNumber, pageSize, sortField, sortOrder} = page;
+		return this.categories$.pipe(map(categories => {
+			console.log(categories.length);
+			// Filter by search input
+			const filteredItems = filter && filter.title !== '' ? categories.filter(category => {
+				return category.title.indexOf(filter.title) > -1;
+			}) : categories;
+			console.log(pageNumber * pageSize, pageSize);
+			// const paginatedItems = filteredItems; // .splice(pageNumber * pageSize, pageSize);
+			// sort
+			const sortedItems = this.sortData(filteredItems, sortField, sortOrder);
+			// paginate
+			console.log(sortedItems);
+			return {
+				items: sortedItems,
+				totalCount: categories.length,
+				errorMessage: ''
+			};
+		}), take(1));
+	}
+
+	sortData(items, sortField, sortOrder) {
+		if (!sortField || !sortOrder || !items) {
+			return items;
+		}
+
+		return items.sort((a, b) => {
+			return (a[sortField] < b[sortField] ? -1 : 1) * (sortOrder === 'asc' ? 1 : -1);
+		});
 	}
 
 	createCategory(category: ICategory): Promise<ICategory> {
@@ -46,6 +74,14 @@ export class CategoryService {
 
 	getCategoryById(categoryId: string): Observable<ICategory> {
 		return this.afs.doc<ICategory>(this.path + '/' + categoryId).valueChanges();
+	}
+
+	sortCategories(filteredCategories, sortField, sortOrder) {
+		console.log('ToDo');
+		console.log(filteredCategories);
+		console.log(sortField);
+		console.log(sortOrder);
+		return filteredCategories;
 	}
 
 	/* getCategoryByTitle(title: string): Observable<ICategory> {

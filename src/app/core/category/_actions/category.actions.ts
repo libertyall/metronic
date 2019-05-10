@@ -1,20 +1,39 @@
-import { Action } from '@ngrx/store';
-import { Update } from '@ngrx/entity';
-import { ICategory } from '../../../../shared/interfaces/category.interface';
-import { QueryParamsModel } from '../../../../core/_base/crud';
+import {Action} from '@ngrx/store';
+import {Update} from '@ngrx/entity';
+import {ICategory} from '../../../shared/interfaces/category.interface';
+import {QueryParamsModel} from '../../_base/crud';
 
 export enum CategoryActionTypes {
-	AllCategoriesRequested        = '[Categories Module] All Categories Requested',
-	AllCategoriesLoaded           = '[Categories API] All Categories Loaded',
-	CategoryOnServerCreated       = '[Edit Category Component] Category On Server Created',
-	CategoryCreated               = '[Edit Category Dialog] Category Created',
-	CategoryUpdated               = '[Edit Category Dialog] Category Updated',
-	CategoryDeleted               = '[Categories List Page] Category Deleted',
-	CategoriesPageRequested       = '[Categories List Page] Categories Page Requested',
-	CategoriesPageLoaded          = '[Categories API] Categories Page Loaded',
-	CategoriesPageCancelled       = '[Categories API] Categories Page Cancelled',
-	CategoriesPageToggleLoading   = '[Categories] Categories Page Toggle Loading',
+	AllCategoriesRequested = '[Categories Module] All Categories Requested',
+	AllCategoriesLoaded = '[Categories API] All Categories Loaded',
+	CategoryRequested = '[View Category Page] Category Requested',
+	CategoryOnServerCreated = '[Edit Category Component] Category On Server Created',
+	CategoryCreated = '[Edit Category Dialog] Category Created',
+	CategoryUpdated = '[Edit Category Dialog] Category Updated',
+	CategoryDeleted = '[Categories List Page] Category Deleted',
+	CategoriesPageRequested = '[Categories List Page] Categories Page Requested',
+	CategoriesPageLoaded = '[Categories API] Categories Page Loaded',
+	CategoryLoaded = '[Categories API] Category Loaded',
+	CategoriesPageCancelled = '[Categories API] Categories Page Cancelled',
+	CategoriesPageToggleLoading = '[Categories] Categories Page Toggle Loading',
 	CategoriesActionToggleLoading = '[Categories] Categories Action Toggle Loading'
+}
+
+export class CategoryRequested implements Action {
+
+	readonly type = CategoryActionTypes.CategoryRequested;
+
+	constructor(public payload: { categoryId: string }) {
+
+	}
+}
+
+export class CategoryLoaded implements Action {
+
+	readonly type = CategoryActionTypes.CategoryLoaded;
+
+	constructor(public payload: { category: ICategory }) {
+	}
 }
 
 export class AllCategoriesRequested implements Action {
@@ -98,10 +117,12 @@ export class CategoriesActionToggleLoading implements Action {
 
 export type CategoryActions = AllCategoriesRequested
 	| AllCategoriesLoaded
+	| CategoryRequested
 	| CategoryCreated
 	| CategoryUpdated
 	| CategoryDeleted
 	| CategoryOnServerCreated
+	| CategoryLoaded
 	| CategoriesPageLoaded
 	| CategoriesPageCancelled
 	| CategoriesPageToggleLoading
