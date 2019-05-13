@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 // RxJS
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 // NGRX
 import { select, Store } from '@ngrx/store';
 // Auth reducers and selectors
@@ -18,10 +18,13 @@ export class UnAuthGuard implements CanActivate {
         return this.store
             .pipe(
                 select(isLoggedIn),
-                tap(loggedIn => {
+                map(loggedIn => {
                     if (loggedIn) {
-                        this.router.navigateByUrl('/dashboard').then(() => console.log('redirected because already logged in!'));
-                    }
+                        this.router.navigate(['/dashboard']).then(() => console.log('redirected because already logged in!'));
+                    	return false;
+                    } else {
+                    	return true;
+					}
                 })
             );
     }
