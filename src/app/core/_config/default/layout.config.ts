@@ -13,9 +13,10 @@ export class LayoutConfig {
 				body: {
 					'background-image': {
 						type: 'checkbox-list',
-						options: ['./assets/media/misc/bg-1.jpg', './assets/media/misc/bg-2.jpg', './assets/media/misc/bg-3.jpg', './assets/media/misc/bg-4.jpg', './assets/media/misc/bg-5.jpg'],
-						selected: './assets/media/misc/bg-3.jpg'
-					}
+						options: ['./assets/media/misc/bg-1.jpg', './assets/media/misc/bg-2.jpg'], // , './assets/media/misc/bg-3.jpg', './assets/media/misc/bg-4.jpg', './assets/media/misc/bg-5.jpg'
+						selected: './assets/media/misc/bg-2.jpg'
+					},
+					class: ''
 				},
 				layout: {
 					type: 'select',
@@ -42,6 +43,14 @@ export class LayoutConfig {
 							value: './assets/media/logos/logo-light.png'
 						}
 					]
+				},
+				mainLogo: {
+					type: 'select',
+					options: ['./assets/media/logos/logo-dark.png', './assets/media/logos/logo-light.png', './assets/media/logos/logo-4.png'],
+					selected: './assets/media/logos/logo-light.png'
+				},
+				page: {
+					title: 'Administration | SF Winterbach'
 				}
 			},
 			portlet: {
@@ -63,7 +72,7 @@ export class LayoutConfig {
 					options: ['default', 'spinner-message', 'spinner-logo'],
 					selected: 'spinner-logo'
 				},
-				logo: './assets/media/logos/logo-mini-md.png',
+				logo:  './assets/media/logos/logo-mini-md.png',
 				message: 'Please wait...'
 			},
 			colors: {
@@ -92,21 +101,25 @@ export class LayoutConfig {
 			},
 			header: {
 				self: {
-					'skin': 'light',
-					'fixed': {
-						'desktop': {
+					skin: {
+						type: 'select',
+						options: ['dark', 'light'],
+						selected: 'light'
+					},
+					fixed: {
+						desktop: {
 							type: 'checkbox',
 							selected: true
 						},
-						'mobile': {
+						mobile: {
 							type: 'checkbox',
 							selected: true
 						}
 					}
 				},
-				'topbar': {
-					'search': {
-						'display': {
+				topbar: {
+					search: {
+						display: {
 							type: 'checkbox',
 							selected: false
 						},
@@ -116,18 +129,18 @@ export class LayoutConfig {
 							selected: 'dropdown'
 						}
 					},
-					'notifications': {
+					notifications: {
 						display: {
 							type: 'checkbox',
 							selected: true
 						},
-						'layout': {
+						layout: {
 							type: 'select',
 							options: ['offcanvas', 'dropdown'],
 							selected: 'dropdown'
 						},
-						'dropdown': {
-							'style': {
+						dropdown: {
+							style: {
 								type: 'select',
 								options: ['light', 'dark'],
 								selected: 'dark'
@@ -139,89 +152,99 @@ export class LayoutConfig {
 							type: 'checkbox',
 							selected: true
 						},
-						'layout': {
+						layout: {
 							type: 'select',
 							options: ['offcanvas', 'dropdown'],
 							selected: 'dropdown'
 						},
-						'dropdown': {
-							'style': {
+						dropdown: {
+							style: {
 								type: 'select',
 								options: ['light', 'dark'],
 								selected: 'dark'
 							}
 						}
 					},
-					'user': {
-						'display': {
+					user: {
+						display: {
 							type: 'checkbox',
 							selected: true
 						},
-						'layout': {
+						layout: {
 							type: 'select',
 							options: ['offcanvas', 'dropdown'],
 							selected: 'dropdown'
 						},
-						'dropdown': {
-							'style': {
+						dropdown: {
+							style: {
 								type: 'select',
 								options: ['light', 'dark'],
 								selected: 'dark'
 							}
 						}
 					},
-					'languages': {
-						'display': {
+					languages: {
+						display: {
 							type: 'checkbox',
 							selected: true
 						}
 					},
 					'my-cart': {
-						'display': {
+						display: {
 							type: 'checkbox',
 							selected: false
 						},
-						'layout': 'dropdown',
-						'dropdown': {
-							'style': 'light'
+						layout: 'dropdown',
+						dropdown: {
+							type: 'select',
+							options: ['dark', 'light'],
+							selected: 'light'
 						}
 					},
 					'quick-panel': {
-						'display': {
+						display: {
 							type: 'checkbox',
 							selected: true
 						}
 					}
 				},
-				'menu': {
-					'self': {
-						'display': {
+				menu: {
+					self: {
+						display: {
 							type: 'checkbox',
 							selected: true
 						},
-						'layout': 'default',
+						layout: 'default',
 						'root-arrow': {
 							type: 'checkbox',
 							selected: false
 						}
 					},
-					'desktop': {
-						'arrow': {
+					desktop: {
+						arrow: {
 							type: 'checkbox',
 							selected: true
 						},
-						'toggle': 'click',
-						'submenu': {
-							'skin': 'light',
-							'arrow': {
+						toggle: 'click',
+						submenu: {
+							skin: {
+								type: 'select',
+								options: ['dark', 'light'],
+								selected: 'light'
+							},
+							arrow: {
 								type: 'checkbox',
 								selected: true
 							}
 						}
 					},
-					'mobile': {
-						'submenu': {
-							'skin': 'dark',
+					mobile: {
+						submenu: {
+							skin: {
+								type: 'select',
+								options: ['dark', 'light'],
+								selected: 'dark'
+							},
 							'accordion': {
 								type: 'checkbox',
 								selected: true
@@ -252,12 +275,20 @@ export class LayoutConfig {
 			},
 			brand: {
 				self: {
-					skin: 'dark'
+					skin: {
+						type: 'select',
+						options: ['dark', 'light'],
+						selected: 'light'
+					},
 				}
 			},
 			aside: {
 				self: {
-					skin: 'dark',
+					skin: {
+						type: 'select',
+						options: ['dark', 'light'],
+						selected: 'light'
+					},
 					display: {
 						type: 'checkbox',
 						selected: true
@@ -304,7 +335,10 @@ export class LayoutConfig {
 								type: 'checkbox',
 								selected: true
 							},
-							'hover-timeout': 500
+							'hover-timeout': {
+								type: 'number',
+								value: 500
+							}
 						}
 					}
 				}
@@ -314,7 +348,8 @@ export class LayoutConfig {
 					fixed: {
 						type: 'checkbox',
 						selected: true
-					}
+					},
+					copyright: 'Sportfreunde Winterbach e.V.'
 				}
 			}
 		},

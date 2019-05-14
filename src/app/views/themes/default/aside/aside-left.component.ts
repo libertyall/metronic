@@ -1,4 +1,6 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import {
+	AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnInit, Renderer2, ViewChild
+} from '@angular/core';
 import { filter } from 'rxjs/operators';
 import { NavigationEnd, Router } from '@angular/router';
 import * as objectPath from 'object-path';
@@ -38,7 +40,7 @@ export class AsideLeftComponent implements OnInit, AfterViewInit {
 		submenu: {
 			desktop: {
 				// by default the menu mode set to accordion in desktop mode
-				default: 'dropdown',
+				default: 'dropdown'
 			},
 			tablet: 'accordion', // menu set to accordion in tablet mode
 			mobile: 'accordion' // menu set to accordion in mobile mode
@@ -50,12 +52,11 @@ export class AsideLeftComponent implements OnInit, AfterViewInit {
 		}
 	};
 
-	constructor(
-		public htmlClassService: HtmlClassService,
-		public menuAsideService: MenuAsideService,
-		public layoutConfigService: LayoutConfigService,
-		private router: Router,
-		private render: Renderer2
+	constructor(public htmlClassService: HtmlClassService,
+				public menuAsideService: MenuAsideService,
+				public layoutConfigService: LayoutConfigService,
+				private router: Router,
+				private render: Renderer2
 	) {
 	}
 

@@ -10,6 +10,7 @@ import { AuthNotice } from '../../../../core/auth/auth-notice/auth-notice.interf
 export class AuthNoticeComponent implements OnInit, OnDestroy {
 	@Output() type: any;
 	@Output() message: any = '';
+	@Output() code: any;
 
 	private subscriptions: Subscription[] = [];
 
@@ -22,6 +23,7 @@ export class AuthNoticeComponent implements OnInit, OnDestroy {
 			(notice: AuthNotice) => {
 				notice = Object.assign({}, { message: '', type: '' }, notice);
 				this.message = notice.message;
+				this.code = notice.code;
 				this.type = notice.type;
 				this.cdr.detectChanges();
 			}

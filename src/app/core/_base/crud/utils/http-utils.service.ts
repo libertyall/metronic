@@ -21,7 +21,6 @@ export class HttpUtilsService {
 			.set('sortField', queryParams.sortField)
 			.set('pageNumber', queryParams.pageNumber.toString())
 			.set('pageSize', queryParams.pageSize.toString());
-
 		return params;
 	}
 

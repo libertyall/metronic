@@ -18,6 +18,7 @@ import { authReducer } from '../../../core/auth/_reducers/auth.reducers';
 import { AuthEffects } from '../../../core/auth/_effects/auth.effects';
 import { AuthService } from '../../../core/auth/_services/auth.service';
 import { AuthGuard } from '../../../core/auth/_guards/auth.guard';
+import { ApplicationService } from '../../../shared/services/application/application.service';
 
 const routes: Routes = [
 	{
@@ -68,6 +69,7 @@ const routes: Routes = [
 			useClass: InterceptService,
 			multi: true
 		},
+		ApplicationService
 	],
 	exports: [ AuthComponent ],
 	declarations: [

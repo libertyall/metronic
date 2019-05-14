@@ -51,13 +51,14 @@ export class BaseComponent implements OnInit, OnDestroy {
 
 	ngOnInit(): void {
 		const config = this.layoutConfigService.getConfig();
-		this.selfLayout = objectPath.get(config, 'backend.self.layout');
-		this.asideDisplay = objectPath.get(config, 'backend.aside.self.display');
-		this.subheaderDisplay = objectPath.get(config, 'backend.subheader.display');
+
+		this.selfLayout = objectPath.get(config, 'backend.self.layout.selected');
+		this.asideDisplay = objectPath.get(config, 'backend.aside.self.display.selected');
+		this.subheaderDisplay = objectPath.get(config, 'backend.subheader.display.selected');
 
 		const layoutConfigSubscription = this.layoutConfigService.onConfigUpdated$.subscribe(cfg => {
 			setTimeout(() => {
-				this.selfLayout = objectPath.get(cfg, 'backend.self.layout');
+				this.selfLayout = objectPath.get(cfg, 'backend.self.layout.selected');
 			});
 		});
 		this.unsubscribe.push(layoutConfigSubscription);

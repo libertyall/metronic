@@ -37,6 +37,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { metaReducers, reducers } from './core/reducers';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { ApplicationService } from './shared/services/application/application.service';
+import { AppStoreModule } from './store/app-store.module';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	wheelSpeed: 0.5,
@@ -63,6 +64,7 @@ export function hljsLanguages(): HighlightLanguage[] {
 @NgModule({
 	declarations: [AppComponent],
 	imports: [
+		AppStoreModule,
 		BrowserAnimationsModule,
 		BrowserModule,
 		AppRoutingModule,
@@ -71,15 +73,10 @@ export function hljsLanguages(): HighlightLanguage[] {
 		PartialsModule,
 		CoreModule,
 		OverlayModule,
-		StoreModule.forRoot(reducers, { metaReducers }),
-		EffectsModule.forRoot([]),
-		StoreRouterConnectingModule.forRoot({ stateKey: 'router' }),
-		StoreDevtoolsModule.instrument(),
 		AuthModule.forRoot(),
 		AngularFireModule.initializeApp(environment.firebaseConfig),
 		AngularFirestoreModule.enablePersistence(),
 		AngularFireAuthModule,
-		// NgbModule,
 		TranslateModule.forRoot(),
 		MatProgressSpinnerModule,
 		InlineSVGModule.forRoot()
@@ -117,7 +114,7 @@ export function hljsLanguages(): HighlightLanguage[] {
 		SubheaderService,
 		MenuHorizontalService,
 		MenuAsideService,
-		HttpUtilsService,
+		// HttpUtilsService,
 		TypesUtilsService,
 		LayoutUtilsService,
 		{

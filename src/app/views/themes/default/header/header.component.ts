@@ -17,12 +17,11 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 	menuHeaderDisplay: boolean;
 	@ViewChild('ktHeader') ktHeader: ElementRef;
 
-	constructor(
-		private router: Router,
-		private layoutRefService: LayoutRefService,
-		private layoutConfigService: LayoutConfigService,
-		public loader: LoadingBarService,
-		public htmlClassService: HtmlClassService) {
+	constructor(private router: Router,
+				private layoutRefService: LayoutRefService,
+				private layoutConfigService: LayoutConfigService,
+				public loader: LoadingBarService,
+				public htmlClassService: HtmlClassService) {
 		this.router.events.subscribe(event => {
 			if (event instanceof NavigationStart) {
 				this.loader.start();

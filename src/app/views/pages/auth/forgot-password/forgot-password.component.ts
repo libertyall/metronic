@@ -16,6 +16,8 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 	forgotPasswordForm: FormGroup;
 	loading = false;
 	errors: any = [];
+	length6 = 6;
+	length320 = 320;
 
 	private unsubscribe: Subject<any>;
 
@@ -43,8 +45,8 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 			email: [ '', Validators.compose([
 				Validators.required,
 				Validators.email,
-				Validators.minLength(3),
-				Validators.maxLength(320)
+				Validators.minLength(this.length6),
+				Validators.maxLength(this.length320)
 			])
 			]
 		});

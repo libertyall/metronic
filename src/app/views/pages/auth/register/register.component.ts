@@ -17,9 +17,14 @@ import { Register } from '../../../../core/auth/_actions/auth.actions';
 	encapsulation: ViewEncapsulation.None
 })
 export class RegisterComponent implements OnInit, OnDestroy {
+
 	registerForm: FormGroup;
 	loading = false;
 	errors: any = [];
+
+	length3 = 3;
+	length100 = 100;
+	length320 = 320;
 
 	private unsubscribe: Subject<any>;
 
@@ -44,44 +49,50 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
 	initRegisterForm() {
 		this.registerForm = this.fb.group({
-			lastName: [ '', Validators.compose([
-				Validators.required,
-				Validators.minLength(3),
-				Validators.maxLength(100)
-			])
+			lastName: [
+				'', Validators.compose([
+					Validators.required,
+					Validators.minLength(this.length3),
+					Validators.maxLength(this.length100)
+				])
 			],
-			firstName: [ '', Validators.compose([
-				Validators.required,
-				Validators.minLength(3),
-				Validators.maxLength(100)
-			])
+			firstName: [
+				'', Validators.compose([
+					Validators.required,
+					Validators.minLength(this.length3),
+					Validators.maxLength(this.length100)
+				])
 			],
-			email: [ '', Validators.compose([
-				Validators.required,
-				Validators.email,
-				Validators.minLength(3),
-				Validators.maxLength(320)
-			]),
+			email: [
+				'', Validators.compose([
+					Validators.required,
+					Validators.email,
+					Validators.minLength(this.length3),
+					Validators.maxLength(this.length320)
+				])
 			],
-			displayName: [ '', Validators.compose([
-				Validators.required,
-				Validators.minLength(3),
-				Validators.maxLength(100)
-			]),
+			displayName: [
+				'', Validators.compose([
+					Validators.required,
+					Validators.minLength(this.length3),
+					Validators.maxLength(this.length100)
+				])
 			],
-			password: [ '', Validators.compose([
-				Validators.required,
-				Validators.minLength(3),
-				Validators.maxLength(100)
-			])
+			password: [
+				'', Validators.compose([
+					Validators.required,
+					Validators.minLength(this.length3),
+					Validators.maxLength(this.length100)
+				])
 			],
-			confirmPassword: [ '', Validators.compose([
-				Validators.required,
-				Validators.minLength(3),
-				Validators.maxLength(100)
-			])
+			confirmPassword: [
+				'', Validators.compose([
+					Validators.required,
+					Validators.minLength(this.length3),
+					Validators.maxLength(this.length100)
+				])
 			],
-			agree: [ false, Validators.compose([ Validators.required ]) ]
+			agree: [false, Validators.compose([Validators.required])]
 		}, {
 			validator: ConfirmPasswordValidator.MatchPassword
 		});
@@ -93,42 +104,40 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
 		if (this.registerForm.invalid) {
 			Object.keys(controls).forEach(controlName =>
-				controls[ controlName ].markAsTouched()
+				controls[controlName].markAsTouched()
 			);
 			return;
 		}
 
-		this.loading = true;
-
-		if (!controls[ 'agree' ].value) {
-			this.authNoticeService.setNotice('You must agree the terms and condition', 'danger');
+		if (!controls['agree'].value) {
+			this.authNoticeService.setNotice(this.translate.instant('AUTH.VALIDATION.ACCEPTTERMS'), 'danger');
 			return;
 		}
 
+		this.loading = true;
 		const _user: IUser = {
-			email: controls[ 'email' ].value,
-			displayName: controls[ 'displayName' ].value,
-			firstName: controls[ 'firstName' ].value,
-			lastName: controls[ 'lastName' ].value,
-			password: controls[ 'password' ].value,
+			email: controls['email'].value,
+			displayName: controls['displayName'].value,
+			firstName: controls['firstName'].value,
+			lastName: controls['lastName'].value,
+			password: controls['password'].value,
 			assignedRoles: [],
 			lastSignInTime: null
 		};
 		this.auth.register(_user).then(() => {
 			this.store.dispatch(new Register());
-			// pass notice message to the login page
 			this.authNoticeService.setNotice(this.translate.instant('AUTH.REGISTER.SUCCESS'), 'success');
 			this.router.navigateByUrl('/auth/login').then(() => console.log('register successful'));
 			this.loading = false;
 		}).catch((error) => {
 			console.log(error);
-			this.authNoticeService.setNotice(this.translate.instant('AUTH.VALIDATION.INVALID_LOGIN'), 'danger');
+			this.authNoticeService.setNotice(this.translate.instant('AUTH.VALIDATION.SIGNUP.' + error.code), 'danger');
 			this.loading = false;
 		});
 	}
 
 	isControlHasError(controlName: string, validationType: string): boolean {
-		const control = this.registerForm.controls[ controlName ];
+		const control = this.registerForm.controls[controlName];
 		if (!control) {
 			return false;
 		}

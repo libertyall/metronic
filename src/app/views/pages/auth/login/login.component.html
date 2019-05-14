@@ -1,5 +1,5 @@
 <div class="kt-login__head">
-	<span class="kt-login__signup-label">{{ 'sfw.auth.noAccountQuestion' | translate }}</span>&nbsp;&nbsp;
+	<span class="kt-login__signup-label">{{ 'global.login.noAccountQuestion' | translate }}</span>&nbsp;&nbsp;
 	<a [routerLink]="'/auth/register'"
 	   class="kt-link kt-login__signup-link">{{ 'AUTH.GENERAL.SIGNUP_BUTTON' | translate }}</a>
 </div>
@@ -8,7 +8,7 @@
 
 	<div class="kt-login__form">
 		<div class="kt-login__title">
-			<h3>Sign In</h3>
+			<h3>{{ 'global.login.title' | translate}}</h3>
 		</div>
 
 		<kt-auth-notice></kt-auth-notice>
@@ -65,7 +65,7 @@
 		<div class="kt-login__divider">
 			<div class="kt-divider">
 				<span></span>
-				<span>{{ 'sfw.general.or' | translate }}</span>
+				<span>{{ 'global.login.or' | translate}}</span>
 				<span></span>
 			</div>
 		</div>

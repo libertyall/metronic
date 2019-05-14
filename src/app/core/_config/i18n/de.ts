@@ -118,6 +118,15 @@ export const locale = {
 				title: 'Administration der Seite'
 			}
 		},
+		global: {
+			description: 'Dies ist ein geschützter Bereich.',
+			login: {
+				noAccountQuestion: 'Noch kein Account?',
+				or: 'oder über',
+				title: 'Anmeldung'
+			},
+			title: 'Administration'
+		},
 		TRANSLATOR: {
 			SELECT: 'Wähle deine Sprache',
 		},
@@ -200,9 +209,12 @@ export const locale = {
 			}
 		},
 		AUTH: {
+			AGREE: {
+				TEXT: 'Ich aktzeptiere die ',
+			},
 			GENERAL: {
 				OR: 'Oder',
-				SUBMIT_BUTTON: 'einreichen',
+				SUBMIT_BUTTON: 'Registrieren!',
 				NO_ACCOUNT: 'Hast du kein Konto?',
 				SIGNUP_BUTTON: 'Anmelden',
 				FORGOT_BUTTON: 'Passwort vergessen',
@@ -218,7 +230,8 @@ export const locale = {
 			FORGOT: {
 				TITLE: 'Passwort vergessen?',
 				DESC: 'Bitte gib Deine Email zum Zurücksetzen Deines Passwortes an.',
-				SUCCESS: 'Eine E-Mail wurde zum Zurücksetzen wurde versendet.'
+				SUCCESS: 'Eine E-Mail wurde zum Zurücksetzen wurde versendet.',
+				SUBMIT_BUTTON: 'Erinnerung senden'
 			},
 			REGISTER: {
 				TITLE: 'Registrierung',
@@ -227,24 +240,32 @@ export const locale = {
 			},
 			INPUT: {
 				EMAIL: 'E-Mail',
+				DISPLAYNAME: 'Anzeigename',
 				FIRSTNAME: 'Vorname',
 				LASTNAME: 'Nachname',
 				PASSWORD: 'Passwort',
+				PASSWORDNOMATCH: 'Die beiden Passwörter stimmen nicht überein',
 				CONFIRM_PASSWORD: 'Passwort bestätigen',
 				USERNAME: 'Nutzername'
-			}/* ,
+			},
 			VALIDATION: {
+				ACCEPTTERMS: 'Du musst noch den Nutzungs- und Datenschutzbestimmungen zustimmen.',
 				INVALID: '{{name}} is not valid',
 				REQUIRED: '{{name}} is required',
 				MIN_LENGTH: '{{name}} minimum length is {{min}}',
 				AGREEMENT_REQUIRED: 'Accepting terms & conditions are required',
-				NOT_FOUND: 'The requested {{name}} is not found',
+				NOT_FOUND: 'Die angegebene {{name}} wurde nicht gefunden.',
 				INVALID_LOGIN: 'The login detail is incorrect',
-				REQUIRED_FIELD: 'Required field',
+				SIGNUP: {
+					'auth/email-already-in-use': 'Die angegebene E-Mail Adresse wird bereits benutzt. Benutz´ doch' +
+						' die "Passwort vergessen" Funktion zum Senden einer Erinnerung.',
+					'auth/weak-password': 'Dein Passwort ist zu schwach. Es werden mindestens 6 Zeichen benötigt.'
+				},
+				REQUIRED_FIELD: 'Eingabe fehlt',
 				MIN_LENGTH_FIELD: 'Minimum field length:',
 				MAX_LENGTH_FIELD: 'Maximum field length:',
-				INVALID_FIELD: 'Field is not valid',
-			} */
+				INVALID_FIELD: 'Diese Eingabe ist fehlerhaft.',
+			}
 		}
 	}
 };

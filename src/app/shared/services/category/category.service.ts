@@ -1,11 +1,11 @@
-import {Injectable} from '@angular/core';
-import {ICategory} from '../../interfaces/category.interface';
-import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
-import {CategoryTypeService} from '../category-type/category-type.service';
-import {Observable, of} from 'rxjs';
-import {map, take} from 'rxjs/operators';
-import {AuthService} from '../../../core/auth/_services/auth.service';
-import {QueryParamsModel} from '../../../core/_base/crud';
+import { Injectable } from '@angular/core';
+import { ICategory } from '../../interfaces/category.interface';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { CategoryTypeService } from '../category-type/category-type.service';
+import { Observable, of } from 'rxjs';
+import { map, take } from 'rxjs/operators';
+import { AuthService } from '../../../core/auth/_services/auth.service';
+import { QueryParamsModel } from '../../../core/_base/crud';
 
 @Injectable()
 export class CategoryService {
@@ -24,7 +24,7 @@ export class CategoryService {
 
 	getCategories(page: QueryParamsModel): Observable<any> {
 		console.log(page);
-		const {filter, pageNumber, pageSize, sortField, sortOrder} = page;
+		const { filter, pageNumber, pageSize, sortField, sortOrder } = page;
 		return this.categories$.pipe(map(categories => {
 			console.log(categories.length);
 			// Filter by search input
