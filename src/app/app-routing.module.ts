@@ -3,10 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { environment } from '../environments/environment';
 
 const routes: Routes = [
-	/* {
+	{
 		path: 'auth',
-		loadChildren: 'app/views/pages/auth/auth.module#AuthModule'
-	},*/
+		loadChildren: 'app/views/pages/auth/auth.module#AuthModule',
+	},
 	{
 		path: '',
 		loadChildren: 'app/views/themes/default/theme.module#ThemeModule'

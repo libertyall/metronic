@@ -41,12 +41,15 @@ export class AuthService {
 		const signInAction = await this.afAuth.auth.signInWithEmailAndPassword(email, password);
 		if (signInAction.user) {
 			const myUser: IUser = {
-				...signInAction.user, ...{
+				id: signInAction.user.uid,
+				emailVerified: signInAction.user.emailVerified,
+				...{
 					email: email,
 					password: password,
 					lastSignInTime: firebase.firestore.FieldValue.serverTimestamp()
 				}
 			};
+			console.log(myUser);
 			await this.updateUser(myUser);
 		}
 		return signInAction.user;
