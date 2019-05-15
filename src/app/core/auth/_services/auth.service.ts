@@ -48,7 +48,6 @@ export class AuthService {
 					lastSignInTime: firebase.firestore.FieldValue.serverTimestamp()
 				}
 			};
-			console.log(myUser);
 			await this.updateUser(myUser);
 		}
 		return signInAction.user;

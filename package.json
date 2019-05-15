@@ -27,6 +27,7 @@
 		"@fullcalendar/angular": "^4.1.0",
 		"@fullcalendar/core": "^4.1.0",
 		"@fullcalendar/daygrid": "^4.1.0",
+		"@larscom/ngrx-store-storagesync": "^5.4.1",
 		"@ng-bootstrap/ng-bootstrap": "^4.0.4",
 		"@ngrx/effects": "^7.4.0",
 		"@ngrx/entity": "^7.4.0",
