@@ -125,10 +125,11 @@ export class AuthService {
 		return this.permissions$;
 	}
 
-	getCreationBy(): Observable<User> {
-		return this.afAuth.user.pipe(map(user => {
+	getCreationBy(): string {
+		return 'asdasd';
+		/* return this.afAuth.user.pipe(map(user => {
 			return user;
-		}));
+		})); */
 	}
 
 	getCreationAt(): any {
