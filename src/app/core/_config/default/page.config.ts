@@ -6,6 +6,12 @@ export class PageConfig {
 				'desc': 'Latest updates and statistic charts'
 			}
 		},
+		categories: {
+			page: {
+				'title': 'Dashboard 123',
+				'desc': 'Latest updates and statistic charts'
+			}
+		},
 		settings: {
 			page: {title: 'Settings', desc: ''}
 		},

@@ -83,8 +83,8 @@ export class LayoutConfigService {
 	 * Get brand logo
 	 */
 	getLogo(type: string): string {
-		const menuAsideLeftSkin = objectPath.get(this.layoutConfig, type + '.brand.self.skin');
-		const logoObject = objectPath.get(this.layoutConfig, type + '.self.logo');
+		const menuAsideLeftSkin = objectPath.get(this.layoutConfig, type + '.brand.self.skin.selected');
+		const logoObject = objectPath.get(this.layoutConfig, type + '.self.mainLogo.selected');
 
 		let logo;
 		if (typeof logoObject === 'string') {
@@ -95,7 +95,7 @@ export class LayoutConfigService {
 		}
 		if (typeof logo === 'undefined') {
 			try {
-				const logos = objectPath.get(this.layoutConfig, type + '.self.logo');
+				const logos = objectPath.get(this.layoutConfig, type + '.self.mainLogo.selected');
 				logo = logos[Object.keys(logos)[0]];
 			} catch (e) {
 				console.log(e);
@@ -108,7 +108,7 @@ export class LayoutConfigService {
 	 * Returns sticky logo
 	 */
 	getStickyLogo(type: string): string {
-		let logo = objectPath.get(this.layoutConfig, type + '.self.logo.sticky');
+		let logo = objectPath.get(this.layoutConfig, type + '.self.logo.stickyLogo.selected');
 		if (typeof logo === 'undefined') {
 			logo = this.getLogo(type);
 		}

@@ -23,33 +23,23 @@ export class CategoryService {
 	}
 
 	getCategories(page: QueryParamsModel): Observable<any> {
-		console.log(page);
 		const { filter, pageNumber, pageSize, sortField, sortOrder } = page;
 		return this.categories$.pipe(map(categories => {
-			console.log(categories.length);
-			// Filter by search input
+			const totalItems = categories.length;
 			const filteredItems = filter && filter.title !== '' ? categories.filter(category => {
 				return category.title.indexOf(filter.title) > -1;
 			}) : categories;
-			console.log(pageNumber * pageSize, pageSize);
-			// const paginatedItems = filteredItems; // .splice(pageNumber * pageSize, pageSize);
-			// sort
 			const sortedItems = this.sortData(filteredItems, sortField, sortOrder);
-			// paginate
-			console.log(sortedItems);
+			const paginatedItems = sortedItems.splice(pageNumber * pageSize, pageSize);
 			return {
-				items: sortedItems,
-				totalCount: categories.length,
+				items: paginatedItems,
+				totalCount: totalItems,
 				errorMessage: ''
 			};
 		}), take(1));
 	}
 
-	sortData(items, sortField, sortOrder) {
-		if (!sortField || !sortOrder || !items) {
-			return items;
-		}
-
+	sortData(items, sortField = 'title', sortOrder = 'asc') {
 		return items.sort((a, b) => {
 			return (a[sortField] < b[sortField] ? -1 : 1) * (sortOrder === 'asc' ? 1 : -1);
 		});
@@ -76,14 +66,6 @@ export class CategoryService {
 		return this.afs.doc<ICategory>(this.path + '/' + categoryId).valueChanges();
 	}
 
-	sortCategories(filteredCategories, sortField, sortOrder) {
-		console.log('ToDo');
-		console.log(filteredCategories);
-		console.log(sortField);
-		console.log(sortOrder);
-		return filteredCategories;
-	}
-
 	/* getCategoryByTitle(title: string): Observable<ICategory> {
 	 return this.afs.collection<ICategory>(this.path, ref => ref.where('title', '==', title)).valueChanges().pipe(
 	 map((categories: ICategory[]) => {
@@ -94,7 +76,7 @@ export class CategoryService {
 	 );
 	 } */
 
-	setNewCategory(): Observable<ICategory> {
+	initNewCategory(): Observable<ICategory> {
 		const category: ICategory = {
 			isImported: false,
 			title: '',

@@ -1,14 +1,10 @@
-// Angular
-import { Injectable } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
-// RxJS
-import { BehaviorSubject, Subject } from 'rxjs';
-import { filter } from 'rxjs/operators';
-// Object-Path
+import {Injectable} from '@angular/core';
+import {NavigationEnd, Router} from '@angular/router';
+import {BehaviorSubject, Subject} from 'rxjs';
+import {filter} from 'rxjs/operators';
 import * as objectPath from 'object-path';
-// Services
-import { PageConfigService } from './page-config.service';
-import { MenuConfigService } from './menu-config.service';
+import {PageConfigService} from './page-config.service';
+import {MenuConfigService} from './menu-config.service';
 
 export interface Breadcrumb {
 	title: string;
@@ -22,12 +18,10 @@ export interface BreadcrumbTitle {
 
 @Injectable()
 export class SubheaderService {
-	// Public properties
 	title$: BehaviorSubject<BreadcrumbTitle> = new BehaviorSubject<BreadcrumbTitle>({title: '', desc: ''});
 	breadcrumbs$: BehaviorSubject<Breadcrumb[]> = new BehaviorSubject<Breadcrumb[]>([]);
 	disabled$: Subject<boolean> = new Subject<boolean>();
 
-	// Private properties
 	private manualBreadcrumbs: any = {};
 	private appendingBreadcrumbs: any = {};
 	private manualTitle: any = {};
@@ -36,25 +30,16 @@ export class SubheaderService {
 	private headerMenus: any;
 	private pageConfig: any;
 
-	/**
-	 * Service Constructor
-	 *
-	 * @param router: Router
-	 * @param pageConfigService: PageConfigServie
-	 * @param menuConfigService: MenuConfigService
-	 */
 	constructor(
 		private router: Router,
 		private pageConfigService: PageConfigService,
 		private menuConfigService: MenuConfigService) {
 		const initBreadcrumb = () => {
-			// get updated title current page config
 			this.pageConfig = this.pageConfigService.getCurrentPageConfig();
 
 			this.headerMenus = objectPath.get(this.menuConfigService.getMenus(), 'header');
 			this.asideMenus = objectPath.get(this.menuConfigService.getMenus(), 'aside');
 
-			// update breadcrumb on initial page load
 			this.updateBreadcrumbs();
 
 			if (objectPath.get(this.manualTitle, this.router.url)) {
@@ -161,9 +146,14 @@ export class SubheaderService {
 	 *
 	 * @param title: string
 	 */
-	setTitle(title: string) {
-		this.manualTitle[this.router.url] = title;
-		this.title$.next({title: title});
+	setTitle(page: string | { title: string, desc: string }) {
+		if (typeof page === 'string') {
+			this.manualTitle[this.router.url] = page;
+			this.title$.next({title: page});
+		} else {
+			this.manualTitle[this.router.url] = page.title;
+			this.title$.next({title: page.title, desc: page.desc});
+		}
 	}
 
 	/**

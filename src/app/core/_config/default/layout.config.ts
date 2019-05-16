@@ -16,7 +16,7 @@ export class LayoutConfig {
 						options: ['./assets/media/misc/bg-1.jpg', './assets/media/misc/bg-2.jpg'], // , './assets/media/misc/bg-3.jpg', './assets/media/misc/bg-4.jpg', './assets/media/misc/bg-5.jpg'
 						selected: './assets/media/misc/bg-2.jpg'
 					},
-					class: ''
+					class: 'fixed'
 				},
 				layout: {
 					type: 'select',
@@ -48,6 +48,11 @@ export class LayoutConfig {
 					type: 'select',
 					options: ['./assets/media/logos/logo-dark.png', './assets/media/logos/logo-light.png', './assets/media/logos/logo-4.png'],
 					selected: './assets/media/logos/logo-light.png'
+				},
+				stickyLogo: {
+					type: 'select',
+					options: ['./assets/media/logos/logo-dark.png', './assets/media/logos/logo-light.png', './assets/media/logos/logo-4.png'],
+					selected: './assets/media/logos/logo-dark.png'
 				},
 				page: {
 					title: 'Administration | SF Winterbach'

@@ -4,15 +4,15 @@ import {Observable} from 'rxjs';
 import {ICategory} from '../../../shared/interfaces/category.interface';
 import {CategoryService} from '../../../shared/services/category/category.service';
 import {select, Store} from '@ngrx/store';
-import {AppState} from '../../../core/reducers';
-import {filter, first, tap} from 'rxjs/operators';
+import {filter, first, map, tap} from 'rxjs/operators';
 import {selectCategoryById} from '../../../core/category/_selectors/category.selectors';
-import {CategoryRequested} from '../../../core/category/_actions/category.actions';
+import {CategoryOnServerCreated} from '../../../core/category/_actions/category.actions';
+import {AppState} from '../../../core/reducers';
 
 @Injectable()
 export class CategoryResolver implements Resolve<ICategory> {
 
-	constructor(private categoryService: CategoryService,
+	constructor(private categoryService: CategoryService, 
 				private store: Store<AppState>) {
 	}
 
@@ -21,16 +21,18 @@ export class CategoryResolver implements Resolve<ICategory> {
 	}
 
 	waitForCategoryToLoad(categoryId: string): Observable<ICategory> {
-		return this.store.pipe(
 			select(selectCategoryById(categoryId)),
-			tap(category => {
+			map(category => {
 				if (!category) {
-					return this.store.dispatch(new CategoryRequested({categoryId}));
+					return this.categoryService.initNewCategory().pipe(map((newCategory: ICategory) => {
+							return this.store.dispatch(new CategoryOnServerCreated({category: newCategory}));
+						})
+					);
 				}
+				return category;
 			}),
-			filter(category => !!category),
-			first()
-		);
+			// filter(category => !!category),
+			first();
 	}
 
 }

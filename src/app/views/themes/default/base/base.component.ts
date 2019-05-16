@@ -1,21 +1,21 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {Observable, Subscription} from 'rxjs';
 import * as objectPath from 'object-path';
-import { Permission } from '../../../../core/auth/_interfaces/permission.interface';
-import { LayoutConfigService, MenuConfigService, PageConfigService } from '../../../../core/_base/layout';
-import { HtmlClassService } from '../html-class.service';
-import { AppState } from '../../../../core/reducers';
-import { select, Store } from '@ngrx/store';
-import { NgxPermissionsService } from 'ngx-permissions';
-import { LayoutConfig } from '../../../../core/_config/default/layout.config';
-import { MenuConfig } from '../../../../core/_config/default/menu.config';
-import { PageConfig } from '../../../../core/_config/default/page.config';
-import { currentUserPermissions } from '../../../../core/auth/_selectors/auth.selectors';
+import {Permission} from '../../../../core/auth/_interfaces/permission.interface';
+import {LayoutConfigService, MenuConfigService, PageConfigService} from '../../../../core/_base/layout';
+import {HtmlClassService} from '../html-class.service';
+import {AppState} from '../../../../core/reducers';
+import {select, Store} from '@ngrx/store';
+import {NgxPermissionsService} from 'ngx-permissions';
+import {MenuConfig} from '../../../../core/_config/default/menu.config';
+import {PageConfig} from '../../../../core/_config/default/page.config';
+import {currentUser, isLoggedIn, selectAuthState} from "../../../../core/auth/_selectors/auth.selectors";
+import {Login} from "../../../../core/auth/_actions/auth.actions";
 
 @Component({
 	selector: 'kt-base',
 	templateUrl: './base.component.html',
-	styleUrls: [ './base.component.scss' ],
+	styleUrls: ['./base.component.scss'],
 	encapsulation: ViewEncapsulation.None
 })
 export class BaseComponent implements OnInit, OnDestroy {
@@ -28,13 +28,15 @@ export class BaseComponent implements OnInit, OnDestroy {
 	private unsubscribe: Subscription[] = [];
 	private currentUserPermissions$: Observable<Permission[]>;
 
-	constructor(
-		private layoutConfigService: LayoutConfigService,
-		private menuConfigService: MenuConfigService,
-		private pageConfigService: PageConfigService,
-		private htmlClassService: HtmlClassService,
-		private store: Store<AppState>,
-		private permissionsService: NgxPermissionsService) {
+	constructor(private layoutConfigService: LayoutConfigService,
+				private menuConfigService: MenuConfigService,
+				private pageConfigService: PageConfigService,
+				private htmlClassService: HtmlClassService,
+				private store: Store<AppState>,
+				private permissionsService: NgxPermissionsService) {
+
+		// this.store.pipe(select(currentUser)).pipe(t => console.log(t));
+
 		// this.loadRolesWithPermissions();
 
 		this.menuConfigService.loadConfigs(new MenuConfig().configs);

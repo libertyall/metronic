@@ -1,12 +1,6 @@
-// RxJS
-import { of } from 'rxjs';
-import { catchError, finalize, tap, debounceTime, delay, distinctUntilChanged } from 'rxjs/operators';
-// NGRX
 import { Store, select } from '@ngrx/store';
-// CRUD
 import { BaseDataSource, QueryResultsModel } from '../../_base/crud';
-// State
-import { AppState } from '../../../core/reducers';
+import { AppState } from '../../reducers';
 import { selectUsersInStore, selectUsersPageLoading, selectUsersShowInitWaitingMessage } from '../_selectors/user.selectors';
 
 

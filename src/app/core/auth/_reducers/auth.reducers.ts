@@ -34,14 +34,14 @@ export function authReducer(state = initialAuthState, action: AuthActions): Auth
         case AuthActionTypes.Logout:
             return initialAuthState;
 
-        case AuthActionTypes.UserLoaded: {
-            // const _user: IUser = action.payload.user;
-            return {
-                ...state,
-                // user: _user,
-                isUserLoaded: true
-            };
-        }
+		case AuthActionTypes.UserLoaded: {
+			// const _user: IUser = action.payload.user;
+			return {
+				...state,
+				// user: _user,
+				isUserLoaded: true
+			};
+		}
 
         default:
             return state;

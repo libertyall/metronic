@@ -1,22 +1,23 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import {fromEvent, merge, of, Subscription} from 'rxjs';
-import { ICategory } from '../../../../shared/interfaces/category.interface';
-import { MatPaginator, MatSort } from '@angular/material';
-import { SelectionModel } from '@angular/cdk/collections';
-import { ActivatedRoute, Router } from '@angular/router';
-import { select, Store } from '@ngrx/store';
-import { AppState } from '../../../../core/reducers';
-import { LayoutUtilsService, MessageType, QueryParamsModel } from '../../../../core/_base/crud';
-import { SubheaderService } from '../../../../core/_base/layout';
-import {debounceTime, delay, distinctUntilChanged, skip, tap} from 'rxjs/operators';
-import { CategoriesDataSource } from '../../../../core/category/_data-sources/categories.data-source';
-import { selectAllCategories } from '../../../../core/category/_selectors/category.selectors';
-import { CategoriesPageRequested, CategoryDeleted } from '../../../../core/category/_actions/category.actions';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {fromEvent, merge, Subscription} from 'rxjs';
+import {ICategory} from '../../../../shared/interfaces/category.interface';
+import {MatPaginator, MatSort, MatSortable} from '@angular/material';
+import {SelectionModel} from '@angular/cdk/collections';
+import {ActivatedRoute, Router} from '@angular/router';
+import {select, Store} from '@ngrx/store';
+import {AppState} from '../../../../core/reducers';
+import {LayoutUtilsService, MessageType, QueryParamsModel} from '../../../../core/_base/crud';
+import {SubheaderService} from '../../../../core/_base/layout';
+import {debounceTime, distinctUntilChanged, skip, tap} from 'rxjs/operators';
+import {CategoriesDataSource} from '../../../../core/category/_data-sources/categories.data-source';
+import {selectAllCategories} from '../../../../core/category/_selectors/category.selectors';
+import {CategoriesPageRequested, CategoryDeleted} from '../../../../core/category/_actions/category.actions';
 
 @Component({
 	// tslint:disable-next-line:component-selector
 	selector: 'categories',
-	templateUrl: './category-list.component.html'
+	templateUrl: './category-list.component.html',
+	styleUrls: ['./category-list.component.scss']
 })
 
 export class CategoryListComponent implements OnInit, OnDestroy {
@@ -33,6 +34,9 @@ export class CategoryListComponent implements OnInit, OnDestroy {
 	categoriesResult: ICategory[] = [];
 	allCategories: ICategory[] = [];
 
+	pageSizes: number[] = [3, 5, 10];
+	selectedPageSize: number = 10;
+
 	private subscriptions: Subscription[] = [];
 
 	constructor(
@@ -44,6 +48,8 @@ export class CategoryListComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit() {
+		this.sort.sort(({id: 'title', start: 'asc'}) as MatSortable);
+
 		const categoriesSubscription = this.store.pipe(select(selectAllCategories)).subscribe(res => this.allCategories = res);
 		this.subscriptions.push(categoriesSubscription);
 
@@ -64,7 +70,10 @@ export class CategoryListComponent implements OnInit, OnDestroy {
 			.subscribe();
 		this.subscriptions.push(searchSubscription);
 
-		this.subheaderService.setTitle('Category List');
+		this.subheaderService.setTitle({
+			title: 'category.subheader.title',
+			desc: 'category.subheader.desc'
+		});
 
 		this.dataSource = new CategoriesDataSource(this.store);
 		const entitiesSubscription = this.dataSource.entitySubject.pipe(
@@ -90,7 +99,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
 			this.paginator.pageIndex,
 			this.paginator.pageSize
 		);
-		this.store.dispatch(new CategoriesPageRequested({ page: queryParams }));
+		this.store.dispatch(new CategoriesPageRequested({page: queryParams}));
 		this.selection.clear();
 	}
 
@@ -112,7 +121,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
 				return;
 			}
 
-			this.store.dispatch(new CategoryDeleted({ id: _item.id }));
+			this.store.dispatch(new CategoryDeleted({id: _item.id}));
 			this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Delete);
 		});
 	}
@@ -121,7 +130,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
 		const messages = [];
 		this.selection.selected.forEach(elem => {
 			messages.push({
-				text: `${ elem.title }`, // ${ elem.email }, ${ elem.lastName }, ${ elem.displayName }
+				text: `${elem.title}`, // ${ elem.email }, ${ elem.lastName }, ${ elem.displayName }
 				id: elem.id.toString(),
 				status: elem.title
 			});

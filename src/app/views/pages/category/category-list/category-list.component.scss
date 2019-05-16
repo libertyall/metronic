@@ -1,0 +1,38 @@
+@media(max-width: 768px) {
+	.mat-table__wrapper  {
+		width: 100%;
+		overflow: hidden;
+	}
+	.mat-column-id, .mat-column-select {
+		display: none;
+	}
+
+	.mat-column-title {
+		flex: 0 0 30%;
+	}
+
+	.mat-column-actions {
+		flex: 0 0 15%;
+	}
+}
+
+
+@media screen and (min-width: 769px) {
+	.mat-column-id, .mat-column-select {
+		display: flex;
+	}
+
+	.mat-column-id {
+		flex: 0 0 20%;
+	}
+
+	.mat-column-title {
+		flex: 0 0 30%;
+	}
+
+	.mat-table__wrapper {
+		overflow: hidden;
+		display: inline;
+	}
+
+}

@@ -42,7 +42,6 @@ export class CategoryEffects {
 				return forkJoin(requestToServer, lastQuery);
 			}),
 			map((response: any) => {
-				console.log(response);
 				const result: QueryResultsModel = response[0];
 				const lastQuery: QueryParamsModel = response[1];
 				return new CategoriesPageLoaded({

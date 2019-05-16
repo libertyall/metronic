@@ -2,19 +2,94 @@
 export const locale = {
 	lang: 'en',
 	data: {
+		global: {
+			description: 'This restricted area is for admin purposes only!',
+			login: {
+				noAccountQuestion: 'No account yet?',
+				or: 'or',
+				title: 'Login'
+			},
+			title: 'Administration'
+		},
 		TRANSLATOR: {
 			SELECT: 'Select your language',
 		},
 		MENU: {
-			NEW: 'new',
-			ACTIONS: 'Actions',
-			CREATE_POST: 'Create New Post',
-			PAGES: 'Pages',
-			FEATURES: 'Features',
-			APPS: 'Apps',
-			DASHBOARD: 'Dashboard',
+			ARTICLE: {
+				CREATE: 'Create Article',
+				DASHBOARD: 'Dashboard',
+				LIST: 'All Articles',
+				MAIN: 'Article'
+			},
+			CALENDAR: 'Calendar',
+			CATEGORY: {
+				MAIN: 'Categories'
+			},
+			CLUB: {
+				MAIN: 'Club',
+				SECTION: 'Club Management'
+			},
+			CONTENT: 'Content',
+			DASHBOARD: 'Homepage',
+			LOCATION: {
+				CREATE: 'Crete Location',
+				DASHBOARD: 'Dashboard',
+				LIST: 'All Locations',
+				MAIN: 'Locations',
+				MAP: 'Map View'
+			},
+			MATCH: {
+				CREATE: 'Create Match',
+				DASHBOARD: 'Dashboard',
+				IMPORT: 'Import Matches',
+				LIST: 'All Matches',
+				MAIN: 'Matches'
+			},
+			MEMBER: {
+				CREATE: 'Create Member',
+				DASHBOARD: 'Dashboard',
+				LIST: 'All Members',
+				MAIN: 'Members',
+				MOTW: 'Member of the Week'
+			},
+			NEWSLETTER: {
+				CREATE: 'Write Newsletter',
+				DASHBOARD: 'Dashboard',
+				SETTINGS: 'Settings',
+				LIST: 'Newsletter History',
+				MAIN: 'Newsletter'
+			},
+			SETTINGS: {
+				ANALYTICS: 'Analytics',
+				SECTION: 'Page-Administration',
+				SETTINGS: 'Settings',
+				USER: 'Users'
+			},
+			SPONSOR: {
+				MAIN: 'Sponsors'
+			},
+			TEAM: {
+				CREATE: 'Add Team',
+				DASHBOARD: 'Dashboard',
+				LIST: 'All Teams',
+				MAIN: 'Teams',
+				TOTM: 'Team of the Month'
+			},
+			UPLOAD: {
+				DASHBOARD: 'Dashboard',
+				FILES: 'Uploaded Files',
+				GALLERY: {
+					MAIN: 'Galleries',
+					LIST: 'All Galleries',
+					CREATE: 'Add Gallery'
+				},
+				MAIN: 'Media Center'
+			}
 		},
 		AUTH: {
+			AGREE: {
+				TEXT: 'I accept the '
+			},
 			GENERAL: {
 				OR: 'Or',
 				SUBMIT_BUTTON: 'Submit',
@@ -31,6 +106,7 @@ export const locale = {
 				BUTTON: 'Sign In',
 			},
 			FORGOT: {
+				SUBMIT_BUTTON: 'Request Password',
 				TITLE: 'Forgotten Password?',
 				DESC: 'Enter your email to reset your password',
 				SUCCESS: 'Your account has been successfully reset.'
@@ -42,7 +118,9 @@ export const locale = {
 			},
 			INPUT: {
 				EMAIL: 'Email',
-				FULLNAME: 'Fullname',
+				FIRSTNAME: 'Firstname',
+				LASTNAME: 'Lastname',
+				DISPLAYNAME: 'Displayname',
 				PASSWORD: 'Password',
 				CONFIRM_PASSWORD: 'Confirm Password',
 				USERNAME: 'Username'

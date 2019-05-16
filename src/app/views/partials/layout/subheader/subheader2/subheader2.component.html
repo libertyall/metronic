@@ -1,9 +1,9 @@
 <!-- begin:: Content Head -->
 <div class="kt-subheader kt-grid__item" [hidden]="subheaderService.disabled$ | async" id="kt_subheader">
 	<div class="kt-subheader__main">
-		<h3 *ngIf="title" class="kt-subheader__title">{{title}}</h3>
+		<h3 *ngIf="title" class="kt-subheader__title">{{title | translate}}</h3>
 		<span class="kt-subheader__separator kt-subheader__separator--v"></span>
-		<span *ngIf="desc" class="kt-subheader__desc">{{desc}}</span>
+		<span *ngIf="desc" class="kt-subheader__desc">{{desc | translate}} 123</span>
 		<a href="javascript:;" class="btn btn-label-primary btn-bold btn-icon-h">
 			Add New
 		</a>
@@ -53,7 +53,7 @@
 					<i class="flaticon2-plus"></i>
 				</a>
 				<div ngbDropdownMenu class="dropdown-menu dropdown-menu-right">
-					<a class="dropdown-item" href="javascript:;"><i class="la la-plus"></i> New Report</a>
+					<a class="dropdown-item" [routerLink]="['create']"><i class="la la-plus"></i> New Report</a>
 					<a class="dropdown-item" href="javascript:;"><i class="la la-user"></i> Add Customer</a>
 					<a class="dropdown-item" href="javascript:;"><i class="la la-cloud-download"></i> New Download</a>
 					<div class="dropdown-divider"></div>

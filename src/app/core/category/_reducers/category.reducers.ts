@@ -26,6 +26,7 @@ export const initialCategoriesState: CategoriesState = adapter.getInitialState({
 });
 
 export function categoriesReducer(state = initialCategoriesState, action: CategoryActions): CategoriesState {
+
 	switch (action.type) {
 
 		case CategoryActionTypes.CategoriesPageToggleLoading:

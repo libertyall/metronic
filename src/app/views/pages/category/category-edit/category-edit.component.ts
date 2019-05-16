@@ -46,16 +46,16 @@ export class CategoryEditComponent implements OnInit {
 			this.category = data.category;
 			this.savedCategory = Object.freeze(Object.assign({}, this.category));
 		});
-
+		/*
 		this.form = this.fb.group({
-			title: [this.category.title, [Validators.required, Validators.minLength(3), Validators.maxLength(this.titleMaxLength)]],
+			title: [this.category.title ? this.category.title : '', [Validators.required, Validators.minLength(3), Validators.maxLength(this.titleMaxLength)]],
 			assignedCategoryType: [this.category.assignedCategoryType, [Validators.required]],
 			description: this.category.description,
 			creation: this.initCreation(),
 			isMainCategory: this.category.isMainCategory
 		});
 
-		this.form.valueChanges.pipe(
+		/* this.form.valueChanges.pipe(
 			debounceTime(1500),
 			distinctUntilChanged()
 		).subscribe((changes: ICategory) => {
@@ -70,7 +70,7 @@ export class CategoryEditComponent implements OnInit {
 			this.form.get('title').disable();
 			this.form.get('assignedCategoryType').disable();
 			this.form.get('creation').disable();
-		}
+		} */
 	}
 
 	initCreation() {

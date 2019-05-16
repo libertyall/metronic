@@ -1,11 +1,14 @@
-import { Injectable } from '@angular/core';
-import { IUser } from '../_interfaces/user.interface';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { User } from 'firebase';
+import {Injectable} from '@angular/core';
+import {IUser} from '../_interfaces/user.interface';
+import {AngularFireAuth} from '@angular/fire/auth';
+import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from '@angular/fire/firestore';
+import {User} from 'firebase';
 import * as firebase from 'firebase/app';
-import { Observable } from 'rxjs';
-import { Role } from '../_interfaces/role.interface';
+import {Observable} from 'rxjs';
+import {Role} from '../_interfaces/role.interface';
+import {map} from "rxjs/operators";
+import {Store} from "@ngrx/store";
+import {AppState} from "../../reducers";
 
 @Injectable()
 export class AuthService {
@@ -24,6 +27,7 @@ export class AuthService {
 	private permissionCollectionRef: AngularFirestoreCollection<any>;
 
 	constructor(private afAuth: AngularFireAuth,
+				private store: Store<AppState>,
 				private afs: AngularFirestore) {
 
 		this.userCollectionRef = this.afs.collection<IUser>(this.userPath);
@@ -88,14 +92,9 @@ export class AuthService {
 		return this.afAuth.auth.sendPasswordResetEmail(email);
 	}
 
-	/**
-	 * Update a user with new data
-	 *
-	 * @param {IUser} data
-	 */
 	updateUser(data: IUser): Promise<void> {
-		const userRef: AngularFirestoreDocument<IUser> = this.afs.doc(`users/${ data.id }`);
-		return userRef.set(data, { merge: true });
+		const userRef: AngularFirestoreDocument<IUser> = this.afs.doc(`users/${data.id}`);
+		return userRef.set(data, {merge: true});
 	}
 
 	// Roles
@@ -121,18 +120,15 @@ export class AuthService {
 		return role;
 	}
 
-	// Permissions
+	// Permissions/**/
 	getPermissions() {
 		return this.permissions$;
 	}
 
-	getCreationBy(): string {
-		console.log('get CreationBy - AuthService');
-		return 'TODO';
-		/* return this.afAuth.user.pipe(
-		 map(user => {
-		 return user.uid;
-		 }); */
+	getCreationBy(): Observable<User> {
+		return this.afAuth.user.pipe(map(user => {
+			return user;
+		}));
 	}
 
 	getCreationAt(): any {

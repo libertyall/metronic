@@ -24,6 +24,7 @@ import {CartComponent} from './layout/topbar/cart/cart.component';
 import {ErrorComponent} from './content/general/error/error.component';
 import {RouterModule} from '@angular/router';
 import {DeleteEntityDialogComponent} from './content/crud';
+import {TranslateModule} from "@ngx-translate/core";
 
 @NgModule({
 	declarations: [
@@ -102,6 +103,7 @@ import {DeleteEntityDialogComponent} from './content/crud';
 		RouterModule,
 		MatDialogModule,
 		MatSnackBarModule,
+		TranslateModule.forChild()
 		/* FormsModule,
 		ReactiveFormsModule,
 		PortletModule,

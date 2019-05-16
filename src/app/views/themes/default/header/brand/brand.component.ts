@@ -1,13 +1,13 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { LayoutConfigService } from '../../../../../core/_base/layout';
-import { ToggleOptions } from '../../../../../core/_base/metronic';
-import { HtmlClassService } from '../../html-class.service';
+import {Component, OnInit} from '@angular/core';
+import {LayoutConfigService} from '../../../../../core/_base/layout';
+import {ToggleOptions} from '../../../../../core/_base/metronic';
+import {HtmlClassService} from '../../html-class.service';
 
 @Component({
 	selector: 'kt-brand',
 	templateUrl: './brand.component.html'
 })
-export class BrandComponent implements OnInit, AfterViewInit {
+export class BrandComponent implements OnInit {
 
 	headerLogo: string;
 	headerStickyLogo: string;
@@ -24,8 +24,5 @@ export class BrandComponent implements OnInit, AfterViewInit {
 	ngOnInit(): void {
 		this.headerLogo = this.layoutConfigService.getLogo('backend');
 		this.headerStickyLogo = this.layoutConfigService.getStickyLogo('backend');
-	}
-
-	ngAfterViewInit(): void {
 	}
 }
