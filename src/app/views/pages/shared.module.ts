@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AlertService } from '../../shared/services/alert/alert.service';
 import {
 	MatCardModule,
-	MatIconModule,
+	MatIconModule, MatPaginatorIntl,
 	MatPaginatorModule,
 	MatProgressBarModule,
 	MatSnackBarModule,
@@ -18,6 +18,7 @@ import { SnackbarComponent } from '../../shared/components/snackbar/snackbar.com
 import { SharedMediaModule } from '../../shared/components/media/shared-media.module';
 import { LinkModule } from '../../shared/components/links/link.module';
 import { PortletModule } from '../partials/content/general/portlet/portlet.module';
+import {PaginatorI18n} from "../../shared/classes/paginator-i18n.class";
 
 @NgModule({
 	declarations: [
@@ -44,7 +45,11 @@ import { PortletModule } from '../partials/content/general/portlet/portlet.modul
 		MatProgressBarModule,
 	],
 	providers: [
-		AlertService
+		AlertService,
+		{
+			provide: MatPaginatorIntl, deps: [TranslateService],
+			useFactory: (translateService: TranslateService) => new PaginatorI18n(translateService).getPaginatorIntl()
+		}
 	]
 })
 export class SharedModule {

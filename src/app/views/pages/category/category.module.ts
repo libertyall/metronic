@@ -34,7 +34,6 @@ import {HttpUtilsService, InterceptService, TypesUtilsService} from '../../../co
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {CategoryListComponent} from './category-list/category-list.component';
 import {CategoryTypesResolver} from '../category-types/category-types.resolver';
-import {DeleteEntityDialogComponent} from '../../partials/content/crud';
 import {PartialsModule} from '../../partials/partials.module';
 
 @NgModule({

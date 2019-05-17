@@ -2,6 +2,90 @@
 export const locale = {
 	lang: 'de',
 	data: {
+		AUTH: {
+			AGREE: {
+				TEXT: 'Ich aktzeptiere die ',
+			},
+			GENERAL: {
+				OR: 'Oder',
+				SUBMIT_BUTTON: 'Registrieren!',
+				NO_ACCOUNT: 'Hast du kein Konto?',
+				SIGNUP_BUTTON: 'Anmelden',
+				FORGOT_BUTTON: 'Passwort vergessen',
+				BACK_BUTTON: 'Zurück',
+				PRIVACY: 'Privatsphäre',
+				LEGAL: 'Legal',
+				CONTACT: 'Kontakt',
+			},
+			LOGIN: {
+				TITLE: 'Account erstellen',
+				BUTTON: 'Anmelden',
+			},
+			FORGOT: {
+				TITLE: 'Passwort vergessen?',
+				DESC: 'Bitte gib Deine Email zum Zurücksetzen Deines Passwortes an.',
+				SUCCESS: 'Eine E-Mail wurde zum Zurücksetzen wurde versendet.',
+				SUBMIT_BUTTON: 'Erinnerung senden'
+			},
+			REGISTER: {
+				TITLE: 'Registrierung',
+				DESC: 'Fülle das Formular zur Anmeldung aus.',
+				SUCCESS: 'Du hast Dich erfolgreich registriert. Bitte überprüfe Dein E-Mail Postfach.'
+			},
+			INPUT: {
+				EMAIL: 'E-Mail',
+				DISPLAYNAME: 'Anzeigename',
+				FIRSTNAME: 'Vorname',
+				LASTNAME: 'Nachname',
+				PASSWORD: 'Passwort',
+				PASSWORDNOMATCH: 'Die beiden Passwörter stimmen nicht überein',
+				CONFIRM_PASSWORD: 'Passwort bestätigen',
+				USERNAME: 'Nutzername'
+			},
+			VALIDATION: {
+				ACCEPTTERMS: 'Du musst noch den Nutzungs- und Datenschutzbestimmungen zustimmen.',
+				INVALID: '{{name}} is not valid',
+				REQUIRED: '{{name}} is required',
+				MIN_LENGTH: '{{name}} minimum length is {{min}}',
+				AGREEMENT_REQUIRED: 'Accepting terms & conditions are required',
+				NOT_FOUND: 'Die angegebene {{name}} wurde nicht gefunden.',
+				INVALID_LOGIN: 'The login detail is incorrect',
+				SIGNUP: {
+					'auth/email-already-in-use': 'Die angegebene E-Mail Adresse wird bereits benutzt. Benutz´ doch' +
+						' die "Passwort vergessen" Funktion zum Senden einer Erinnerung.',
+					'auth/weak-password': 'Dein Passwort ist zu schwach. Es werden mindestens 6 Zeichen benötigt.'
+				},
+				REQUIRED_FIELD: 'Eingabe fehlt',
+				MIN_LENGTH_FIELD: 'Minimum field length:',
+				MAX_LENGTH_FIELD: 'Maximum field length:',
+				INVALID_FIELD: 'Diese Eingabe ist fehlerhaft.',
+			}
+		},
+		category: {
+			subheader: {
+				title: 'Kategorien',
+				desc: ''
+			},
+			list: {
+				add: {
+					short: 'Neue Kategorie',
+					full: 'Neue Kategorie erstellen'
+				},
+				delete: 'Kategorie löschen',
+				edit: 'Kategorie editieren',
+				noEntries: 'Es wurden noch keine Kategorien gespeichert.',
+				search: {
+					hint: 'Suche nach dem Titel einer Kategorie',
+					placeholder: 'Kategorien durchsuchen'
+				},
+				table: {
+					actions: 'Aktionen',
+					id: 'ID',
+					title: 'Titel'
+				},
+				title: 'Alle Kategorien'
+			}
+		},
 		general: {
 			settings: {
 				calendar: {
@@ -127,9 +211,11 @@ export const locale = {
 			},
 			title: 'Administration'
 		},
-		TRANSLATOR: {
-			SELECT: 'Wähle deine Sprache',
-		},
+		ITEMS_PER_PAGE_LABEL: 'Einträge pro Seite',
+		FIRST_PAGE_LABEL: 'Zur ersten Seite',
+		LAST_PAGE_LABEL: 'Zur letzten Seite',
+		NEXT_PAGE_LABEL: 'Nächste Seite anzeigen',
+		PREVIOUS_PAGE_LABEL: 'Eine Seite zurückblättern',
 		MENU: {
 			// NEW: 'Neu',
 			// ACTIONS: 'Aktionen',
@@ -208,64 +294,9 @@ export const locale = {
 				MAIN: 'Mediencenter'
 			}
 		},
-		AUTH: {
-			AGREE: {
-				TEXT: 'Ich aktzeptiere die ',
-			},
-			GENERAL: {
-				OR: 'Oder',
-				SUBMIT_BUTTON: 'Registrieren!',
-				NO_ACCOUNT: 'Hast du kein Konto?',
-				SIGNUP_BUTTON: 'Anmelden',
-				FORGOT_BUTTON: 'Passwort vergessen',
-				BACK_BUTTON: 'Zurück',
-				PRIVACY: 'Privatsphäre',
-				LEGAL: 'Legal',
-				CONTACT: 'Kontakt',
-			},
-			LOGIN: {
-				TITLE: 'Account erstellen',
-				BUTTON: 'Anmelden',
-			},
-			FORGOT: {
-				TITLE: 'Passwort vergessen?',
-				DESC: 'Bitte gib Deine Email zum Zurücksetzen Deines Passwortes an.',
-				SUCCESS: 'Eine E-Mail wurde zum Zurücksetzen wurde versendet.',
-				SUBMIT_BUTTON: 'Erinnerung senden'
-			},
-			REGISTER: {
-				TITLE: 'Registrierung',
-				DESC: 'Fülle das Formular zur Anmeldung aus.',
-				SUCCESS: 'Du hast Dich erfolgreich registriert. Bitte überprüfe Dein E-Mail Postfach.'
-			},
-			INPUT: {
-				EMAIL: 'E-Mail',
-				DISPLAYNAME: 'Anzeigename',
-				FIRSTNAME: 'Vorname',
-				LASTNAME: 'Nachname',
-				PASSWORD: 'Passwort',
-				PASSWORDNOMATCH: 'Die beiden Passwörter stimmen nicht überein',
-				CONFIRM_PASSWORD: 'Passwort bestätigen',
-				USERNAME: 'Nutzername'
-			},
-			VALIDATION: {
-				ACCEPTTERMS: 'Du musst noch den Nutzungs- und Datenschutzbestimmungen zustimmen.',
-				INVALID: '{{name}} is not valid',
-				REQUIRED: '{{name}} is required',
-				MIN_LENGTH: '{{name}} minimum length is {{min}}',
-				AGREEMENT_REQUIRED: 'Accepting terms & conditions are required',
-				NOT_FOUND: 'Die angegebene {{name}} wurde nicht gefunden.',
-				INVALID_LOGIN: 'The login detail is incorrect',
-				SIGNUP: {
-					'auth/email-already-in-use': 'Die angegebene E-Mail Adresse wird bereits benutzt. Benutz´ doch' +
-						' die "Passwort vergessen" Funktion zum Senden einer Erinnerung.',
-					'auth/weak-password': 'Dein Passwort ist zu schwach. Es werden mindestens 6 Zeichen benötigt.'
-				},
-				REQUIRED_FIELD: 'Eingabe fehlt',
-				MIN_LENGTH_FIELD: 'Minimum field length:',
-				MAX_LENGTH_FIELD: 'Maximum field length:',
-				INVALID_FIELD: 'Diese Eingabe ist fehlerhaft.',
-			}
+		pleaseWait: 'Bitte warten',
+		TRANSLATOR: {
+			SELECT: 'Wähle deine Sprache',
 		}
 	}
 };

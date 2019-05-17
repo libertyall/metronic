@@ -76,7 +76,7 @@ export class CategoryService {
 	 );
 	 } */
 
-	initNewCategory(): Observable<ICategory> {
+	initNewCategory(): ICategory {
 		const category: ICategory = {
 			isImported: false,
 			title: '',
@@ -86,7 +86,7 @@ export class CategoryService {
 			creationBy: this.authService.getCreationBy(),
 			isMainCategory: false
 		};
-		return of(category);
+		return category;
 	}
 
 	/*

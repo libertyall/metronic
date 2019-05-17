@@ -25,11 +25,9 @@ export class CategoryResolver implements Resolve<ICategory> {
 			select(selectCategoryById(categoryId)),
 			map(category => {
 				/*if (!category) {
-					return this.categoryService.initNewCategory().pipe(map((newCategory: ICategory) => {
-							return this.store.dispatch(new CategoryOnServerCreated({category: newCategory}));
-						})
-					);
-				} */
+					const newCategory = this.categoryService.initNewCategory();
+					return this.store.dispatch(new CategoryOnServerCreated({category: newCategory}));
+				}*/
 				return category;
 			}),
 			first()
