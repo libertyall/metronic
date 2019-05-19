@@ -4,7 +4,7 @@ export const locale = {
 	data: {
 		AUTH: {
 			AGREE: {
-				TEXT: 'Ich aktzeptiere die ',
+				TEXT: 'Ich akzeptiere die ',
 			},
 			GENERAL: {
 				OR: 'Oder',
@@ -217,12 +217,6 @@ export const locale = {
 		NEXT_PAGE_LABEL: 'Nächste Seite anzeigen',
 		PREVIOUS_PAGE_LABEL: 'Eine Seite zurückblättern',
 		MENU: {
-			// NEW: 'Neu',
-			// ACTIONS: 'Aktionen',
-			// CREATE_POST: 'Erstellen Sie einen neuen Beitrag',
-			// PAGES: 'Pages',
-			// FEATURES: 'Eigenschaften',
-			// APPS: 'Apps',
 			ARTICLE: {
 				CREATE: 'Artikel schreiben',
 				DASHBOARD: 'Übersicht',

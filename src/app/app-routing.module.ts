@@ -13,7 +13,7 @@ const routes: Routes = [
 	{
 		path: '',
 		loadChildren: 'app/views/themes/default/theme.module#ThemeModule',
-		canActivate: [AuthGuard]
+		// canActivate: [AuthGuard]
 	},
 	{
 		path: '**',

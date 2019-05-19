@@ -64,7 +64,11 @@ export class UserEditComponent implements OnInit, OnDestroy {
 				});
 			} else {
 				this.user = {
-					email: ''
+					email: '',
+					displayName: '',
+					photoURL: '',
+					phoneNumber: '',
+					uid: ''
 				};
 
 				this.rolesSubject.next(this.user.assignedRoles);
@@ -168,7 +172,9 @@ export class UserEditComponent implements OnInit, OnDestroy {
 			firstName: controls[ 'firstName' ].value,
 			lastName: controls[ 'lastName' ].value,
 			displayName: controls[ 'displayName' ].value,
-			password: this.user.password
+			password: this.user.password,
+			phoneNumber: '',
+			photoURL: ''
 		};
 	}
 
@@ -189,9 +195,6 @@ export class UserEditComponent implements OnInit, OnDestroy {
 	}
 
 	updateUser(_user: IUser, withBack: boolean = false) {
-		// Update User
-		// tslint:disable-next-line:prefer-const
-
 		const updatedUser: Update<IUser> = {
 			id: _user.id,
 			changes: _user

@@ -7,7 +7,7 @@ import { IUser } from '../_interfaces/user.interface';
 // tslint:disable-next-line:no-empty-interface
 export interface UsersState extends EntityState<IUser> {
 	listLoading: boolean;
-	actionsloading: boolean;
+	actionsLoading: boolean;
 	totalCount: number;
 	lastCreatedUserId: string;
 	lastQuery: QueryParamsModel;
@@ -18,7 +18,7 @@ export const adapter: EntityAdapter<IUser> = createEntityAdapter<IUser>();
 
 export const initialUsersState: UsersState = adapter.getInitialState({
 	listLoading: false,
-	actionsloading: false,
+	actionsLoading: false,
 	totalCount: 0,
 	lastQuery: new QueryParamsModel({}),
 	lastCreatedUserId: undefined,
@@ -33,7 +33,7 @@ export function usersReducer(state = initialUsersState, action: UserActions): Us
 			};
 		case UserActionTypes.UsersActionToggleLoading:
 			return {
-				...state, actionsloading: action.payload.isLoading
+				...state, actionsLoading: action.payload.isLoading
 			};
 		case UserActionTypes.UserOnServerCreated:
 			return {

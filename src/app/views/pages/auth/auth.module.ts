@@ -14,17 +14,22 @@ import { RegisterComponent } from './register/register.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { AuthNoticeComponent } from './auth-notice/auth-notice.component';
 import { UnAuthGuard } from '../../../core/auth/_guards/unauth.guard';
-import { authReducer } from '../../../core/auth/_reducers/auth.reducers';
-import { AuthEffects } from '../../../core/auth/_effects/auth.effects';
 import { AuthService } from '../../../core/auth/_services/auth.service';
 import { AuthGuard } from '../../../core/auth/_guards/auth.guard';
 import { ApplicationService } from '../../../shared/services/application/application.service';
+import { EmailHandlerEffects } from '../../../core/auth/_effects/email-handler.effects';
+import { LoginEffects } from '../../../core/auth/_effects/login.effects';
+import { ReAuthenticationEffects } from '../../../core/auth/_effects/re-authentication.effects';
+import { RegistrationEffects } from '../../../core/auth/_effects/registration.effects';
+import { ProvidersManagementEffects } from '../../../core/auth/_effects/providers-management.effects';
+import { PasswordManagementEffects } from '../../../core/auth/_effects/password-management.effects';
+import { reducers } from '../../../core/auth/_reducers/auth.reducer';
 
 const routes: Routes = [
 	{
 		path: '',
 		component: AuthComponent,
-		canActivate: [ UnAuthGuard ],
+		canActivate: [UnAuthGuard],
 		children: [
 			{
 				path: '',
@@ -41,7 +46,7 @@ const routes: Routes = [
 			},
 			{
 				path: 'forgot-password',
-				component: ForgotPasswordComponent,
+				component: ForgotPasswordComponent
 			}
 		]
 	}
@@ -59,8 +64,15 @@ const routes: Routes = [
 		MatFormFieldModule,
 		MatCheckboxModule,
 		TranslateModule.forChild(),
-		StoreModule.forFeature('auth', authReducer),
-		EffectsModule.forFeature([ AuthEffects ])
+		StoreModule.forFeature('auth', reducers),
+		EffectsModule.forFeature([
+			EmailHandlerEffects,
+			LoginEffects,
+			ReAuthenticationEffects,
+			RegistrationEffects,
+			ProvidersManagementEffects,
+			PasswordManagementEffects
+		])
 	],
 	providers: [
 		InterceptService,
@@ -71,7 +83,7 @@ const routes: Routes = [
 		},
 		ApplicationService
 	],
-	exports: [ AuthComponent ],
+	exports: [AuthComponent],
 	declarations: [
 		AuthComponent,
 		LoginComponent,

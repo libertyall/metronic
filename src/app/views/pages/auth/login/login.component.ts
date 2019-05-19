@@ -7,7 +7,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../../../core/reducers';
 import { AuthService } from '../../../../core/auth/_services/auth.service';
 import { AuthNoticeService } from '../../../../core/auth/auth-notice/auth-notice.service';
-import { Login } from '../../../../core/auth/_actions/auth.actions';
+import { CredentialsLogin } from '../../../../core/auth/_actions/auth.actions';
 
 
 @Component({
@@ -79,8 +79,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 		};
 		this.auth
 			.login(authData.email, authData.password)
-			.then(() => {
-				this.store.dispatch(new Login());
+			.then((user) => {
+				this.store.dispatch(new CredentialsLogin(authData.email, authData.password));
 				this.router.navigateByUrl('/').then(() => console.log('navigate to dashboard'));
 				this.loading = false;
 			})

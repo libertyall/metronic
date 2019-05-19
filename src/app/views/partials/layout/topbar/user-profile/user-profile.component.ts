@@ -8,7 +8,7 @@ import { Logout } from '../../../../../core/auth/_actions/auth.actions';
 
 @Component({
 	selector: 'kt-user-profile',
-	templateUrl: './user-profile.component.html',
+	templateUrl: './user-profile.component.html'
 })
 export class UserProfileComponent implements OnInit {
 

@@ -9,7 +9,7 @@ import { ConfirmPasswordValidator } from './confirm-password.validator';
 import { AuthNoticeService } from '../../../../core/auth/auth-notice/auth-notice.service';
 import { AuthService } from '../../../../core/auth/_services/auth.service';
 import { IUser } from '../../../../core/auth/_interfaces/user.interface';
-import { Register } from '../../../../core/auth/_actions/auth.actions';
+import { CredentialsRegistration } from '../../../../core/auth/_actions/auth.actions';
 
 @Component({
 	selector: 'kt-register',
@@ -122,10 +122,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
 			lastName: controls['lastName'].value,
 			password: controls['password'].value,
 			assignedRoles: [],
-			lastSignInTime: null
+			lastSignInTime: null,
+			phoneNumber: '',
+			photoURL: ''
 		};
 		this.auth.register(_user).then(() => {
-			this.store.dispatch(new Register());
+			this.store.dispatch(new CredentialsRegistration(_user));
 			this.authNoticeService.setNotice(this.translate.instant('AUTH.REGISTER.SUCCESS'), 'success');
 			this.router.navigateByUrl('/auth/login').then(() => console.log('register successful'));
 			this.loading = false;

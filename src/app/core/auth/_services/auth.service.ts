@@ -2,13 +2,11 @@ import {Injectable} from '@angular/core';
 import {IUser} from '../_interfaces/user.interface';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from '@angular/fire/firestore';
-import {User} from 'firebase';
 import * as firebase from 'firebase/app';
 import {Observable} from 'rxjs';
 import {Role} from '../_interfaces/role.interface';
-import {map} from "rxjs/operators";
-import {Store} from "@ngrx/store";
-import {AppState} from "../../reducers";
+import { Store } from '@ngrx/store';
+import { AppState } from '../../reducers';
 
 @Injectable()
 export class AuthService {
@@ -40,12 +38,22 @@ export class AuthService {
 		this.permissions$ = this.permissionCollectionRef.valueChanges();
 	}
 
-	async login(email: string, password: string): Promise<User> {
+	getAuthState() {
+		return this.afAuth.authState;
+	}
+
+	getAuthUser(): Observable<IUser> {
+		return this.afAuth.user;
+	}
+
+	async login(email: string, password: string): Promise<IUser> {
 		const signInAction = await this.afAuth.auth.signInWithEmailAndPassword(email, password);
 		if (signInAction.user) {
 			const myUser: IUser = {
 				id: signInAction.user.uid,
 				emailVerified: signInAction.user.emailVerified,
+				photoURL: '',
+				phoneNumber: '',
 				...{
 					email: email,
 					password: password,
@@ -65,14 +73,7 @@ export class AuthService {
 		// const registrationData = await this.applicationService.getAppData().toPromise();
 		const registerAction = await this.afAuth.auth.createUserWithEmailAndPassword(values.email, values.password);
 		const sendVerificationMail = await this.sendVerificationMail();
-		const updateUser = this.updateUser({
-			id: registerAction.user.uid,
-			emailVerified: registerAction.user.emailVerified,
-			email: registerAction.user.email,
-			creationAt: registerAction.user.metadata.creationTime,
-			lastSignInTime: registerAction.user.metadata.lastSignInTime,
-			assignedRoles: [] // ToDO: Set Default Role
-		});
+		const updateUser = this.updateUser(values);
 		return Promise.all([registerAction, sendVerificationMail, updateUser]);
 	}
 

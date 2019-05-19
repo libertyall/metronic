@@ -19,7 +19,7 @@ import {
 	PageConfigService, SplashScreenService, SubheaderService
 } from './core/_base/layout';
 import { AuthModule } from './views/pages/auth/auth.module';
-import { HttpUtilsService, LayoutUtilsService, TypesUtilsService } from './core/_base/crud';
+import { LayoutUtilsService, TypesUtilsService } from './core/_base/crud';
 import { HIGHLIGHT_OPTIONS, HighlightLanguage } from 'ngx-highlightjs';
 import * as typescript from 'highlight.js/lib/languages/typescript';
 import * as scss from 'highlight.js/lib/languages/scss';
@@ -30,11 +30,6 @@ import { AngularFireModule } from '@angular/fire';
 import { AuthService } from './core/auth/_services/auth.service';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { UnAuthGuard } from './core/auth/_guards/unauth.guard';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
-import { StoreRouterConnectingModule } from '@ngrx/router-store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { metaReducers, reducers } from './core/reducers';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { ApplicationService } from './shared/services/application/application.service';
 import { AppStoreModule } from './store/app-store.module';
@@ -114,7 +109,6 @@ export function hljsLanguages(): HighlightLanguage[] {
 		SubheaderService,
 		MenuHorizontalService,
 		MenuAsideService,
-		// HttpUtilsService,
 		TypesUtilsService,
 		LayoutUtilsService,
 		{

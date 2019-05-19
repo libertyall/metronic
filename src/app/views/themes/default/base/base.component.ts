@@ -9,8 +9,6 @@ import {select, Store} from '@ngrx/store';
 import {NgxPermissionsService} from 'ngx-permissions';
 import {MenuConfig} from '../../../../core/_config/default/menu.config';
 import {PageConfig} from '../../../../core/_config/default/page.config';
-import {currentUser, isLoggedIn, selectAuthState} from "../../../../core/auth/_selectors/auth.selectors";
-import {Login} from "../../../../core/auth/_actions/auth.actions";
 
 @Component({
 	selector: 'kt-base',
