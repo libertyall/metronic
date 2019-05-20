@@ -7,7 +7,9 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../../../core/reducers';
 import { AuthService } from '../../../../core/auth/_services/auth.service';
 import { AuthNoticeService } from '../../../../core/auth/auth-notice/auth-notice.service';
-import { CredentialsLogin } from '../../../../core/auth/_actions/auth.actions';
+import {
+	CredentialsLogin, FacebookLogin, GoogleLogin, TwitterLogin
+} from '../../../../core/auth/_actions/auth.actions';
 
 
 @Component({
@@ -58,7 +60,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 				Validators.minLength(3),
 				Validators.maxLength(100)
 			])
-			]
+			],
+			rememberMe: [true]
 		});
 	}
 
@@ -75,12 +78,13 @@ export class LoginComponent implements OnInit, OnDestroy {
 
 		const authData = {
 			email: controls[ 'email' ].value,
-			password: controls[ 'password' ].value
+			password: controls[ 'password' ].value,
+			rememberMe: controls['rememberMe'].value
 		};
 		this.auth
-			.login(authData.email, authData.password)
+			.doLoginWithCredentials(authData)
 			.then((user) => {
-				this.store.dispatch(new CredentialsLogin(authData.email, authData.password));
+				this.store.dispatch(new CredentialsLogin(authData.email, authData.password, authData.rememberMe));
 				this.router.navigateByUrl('/').then(() => console.log('navigate to dashboard'));
 				this.loading = false;
 			})
@@ -97,5 +101,17 @@ export class LoginComponent implements OnInit, OnDestroy {
 			return false;
 		}
 		return control.hasError(validationType) && (control.dirty || control.touched);
+	}
+
+	googleLogin(): void {
+		this.store.dispatch(new GoogleLogin());
+	}
+
+	facebookLogin(): void {
+		this.store.dispatch(new FacebookLogin());
+	}
+
+	twitterLogin(): void {
+		this.store.dispatch(new TwitterLogin());
 	}
 }

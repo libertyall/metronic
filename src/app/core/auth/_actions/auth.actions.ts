@@ -1,32 +1,35 @@
-import {Action} from '@ngrx/store';
+import { Action } from '@ngrx/store';
 import { IUser } from '../_interfaces/user.interface';
 
 export enum AuthActionTypes {
-	Authenticated = '[Auth] Authenticated',
-	AuthError = '[Auth] Error',
-	CredentialsLogin = '[Auth] Credentials Login Attempt',
+	Authenticated               = '[Auth] Authenticated',
+	AuthError                   = '[Auth] Error',
+	CredentialsLogin            = '[Auth] Credentials Login Attempt',
 	CredentialsReAuthentication = '[Auth] Credentials ReAuthentication attempt',
-	CredentialsRegistration = '[Auth] Credentials Registration Attempt',
-	DeleteAccount = '[Auth] Delete Account',
-	DeleteAccountSuccess = '[Auth] Delete Account Success',
-	DeleteAccountError = '[Auth] Delete Account Error',
-	FacebookLogin = '[Auth] Facebook Login Attempt',
-	FacebookReAuthentication = '[Auth] Facebook ReAuthentication Attempt',
-	FacebookRegistration = '[Auth] Facebook Registration Attempt',
-	GetUser = '[Auth] Get User',
-	GoogleLogin = '[Auth] Google Login Attempt',
-	GoogleReAuthentication = '[Auth] Google ReAuthentication Attempt',
-	GoogleRegistration = '[Auth] Google Registration Attempt',
-	Logout = '[Auth] Logout',
-	NotAuthenticated = '[Auth] Not Authenticated',
-	SendVerificationEmail = '[Auth] Send Verification Email',
-	ReAuthenticationError = '[Auth] ReAuthentication Error',
-	ReAuthenticationSuccess = '[Auth] ReAuthentication Success',
-	RefreshToken = '[Auth] ReFresh Token',
-	RegistrationSuccess = '[Auth] Registration Success',
-	ResetAuthState = '[Auth] Reset State',
-	VerificationEmailError = '[Auth] Verification Email Error',
-	VerificationEmailSent = '[Auth] Verification Email Sent'
+	CredentialsRegistration     = '[Auth] Credentials Registration Attempt',
+	DeleteAccount               = '[Auth] Delete Account',
+	DeleteAccountSuccess        = '[Auth] Delete Account Success',
+	DeleteAccountError          = '[Auth] Delete Account Error',
+	FacebookLogin               = '[Auth] Facebook Login Attempt',
+	FacebookReAuthentication    = '[Auth] Facebook ReAuthentication Attempt',
+	FacebookRegistration        = '[Auth] Facebook Registration Attempt',
+	TwitterLogin                = '[Auth] Twitter Login Attempt',
+	TwitterReAuthentication     = '[Auth] Twitter ReAuthentication Attempt',
+	TwitterRegistration         = '[Auth] Twitter Registration Attempt',
+	GetUser                     = '[Auth] Get User',
+	GoogleLogin                 = '[Auth] Google Login Attempt',
+	GoogleReAuthentication      = '[Auth] Google ReAuthentication Attempt',
+	GoogleRegistration          = '[Auth] Google Registration Attempt',
+	Logout                      = '[Auth] Logout',
+	NotAuthenticated            = '[Auth] Not Authenticated',
+	SendVerificationEmail       = '[Auth] Send Verification Email',
+	ReAuthenticationError       = '[Auth] ReAuthentication Error',
+	ReAuthenticationSuccess     = '[Auth] ReAuthentication Success',
+	RefreshToken                = '[Auth] ReFresh Token',
+	RegistrationSuccess         = '[Auth] Registration Success',
+	ResetAuthState              = '[Auth] Reset State',
+	VerificationEmailError      = '[Auth] Verification Email Error',
+	VerificationEmailSent       = '[Auth] Verification Email Sent'
 }
 
 export class GetUser implements Action {
@@ -40,7 +43,6 @@ export class Authenticated implements Action {
 	readonly type = AuthActionTypes.Authenticated;
 
 	constructor(public payload: { user: IUser }) {
-
 	}
 }
 
@@ -60,6 +62,13 @@ export class AuthError implements Action {
 
 export class GoogleRegistration implements Action {
 	readonly type = AuthActionTypes.GoogleRegistration;
+
+	constructor(public payload?: any) {
+	}
+}
+
+export class TwitterRegistration implements Action {
+	readonly type = AuthActionTypes.TwitterRegistration;
 
 	constructor(public payload?: any) {
 	}
@@ -107,6 +116,13 @@ export class FacebookLogin implements Action {
 	}
 }
 
+export class TwitterLogin implements Action {
+	readonly type = AuthActionTypes.TwitterLogin;
+
+	constructor(public payload?: any) {
+	}
+}
+
 export class CredentialsLogin implements Action {
 	readonly type = AuthActionTypes.CredentialsLogin;
 
@@ -123,6 +139,13 @@ export class GoogleReAuthentication implements Action {
 
 export class FacebookReAuthentication implements Action {
 	readonly type = AuthActionTypes.FacebookReAuthentication;
+
+	constructor(public payload?: any) {
+	}
+}
+
+export class TwitterReAuthentication implements Action {
+	readonly type = AuthActionTypes.TwitterReAuthentication;
 
 	constructor(public payload?: any) {
 	}
@@ -158,6 +181,7 @@ export class SendVerificationEmail implements Action {
 
 export class VerificationEmailError implements Action {
 	readonly type = AuthActionTypes.VerificationEmailError;
+
 	constructor(public payload: { code: string, message: string }) {
 	}
 }
@@ -209,14 +233,17 @@ export type AuthActions
 	| ReAuthenticationError
 	| GoogleReAuthentication
 	| FacebookReAuthentication
+	| TwitterReAuthentication
 	| CredentialsReAuthentication
 	| GoogleLogin
 	| FacebookLogin
+	| TwitterLogin
 	| CredentialsLogin
 	| AuthError
 	| Logout
 	| GoogleRegistration
 	| FacebookRegistration
+	| TwitterRegistration
 	| CredentialsRegistration
 	| RegistrationSuccess
 	| SendVerificationEmail

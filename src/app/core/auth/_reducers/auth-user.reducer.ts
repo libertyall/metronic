@@ -42,11 +42,14 @@ export function reducer(state: State = defaultState, action: Action): State {
 
 		case AuthActionTypes.GoogleLogin:
 		case AuthActionTypes.FacebookLogin:
+		case AuthActionTypes.TwitterLogin:
 		case AuthActionTypes.GoogleRegistration:
 		case AuthActionTypes.FacebookRegistration:
+		case AuthActionTypes.TwitterRegistration:
 		case AuthActionTypes.CredentialsLogin:
 		case AuthActionTypes.CredentialsRegistration:
 		case AuthActionTypes.FacebookReAuthentication:
+		case AuthActionTypes.TwitterReAuthentication:
 		case AuthActionTypes.CredentialsReAuthentication:
 		case AuthActionTypes.GoogleReAuthentication:
 			return {...state, loading: true, success: false};

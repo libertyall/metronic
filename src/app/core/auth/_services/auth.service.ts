@@ -1,12 +1,17 @@
-import {Injectable} from '@angular/core';
-import {IUser} from '../_interfaces/user.interface';
-import {AngularFireAuth} from '@angular/fire/auth';
-import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from '@angular/fire/firestore';
+import { Injectable } from '@angular/core';
+import { IUser } from '../_interfaces/user.interface';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
-import {Observable} from 'rxjs';
-import {Role} from '../_interfaces/role.interface';
+import { Observable } from 'rxjs';
+import { Role } from '../_interfaces/role.interface';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../reducers';
+import { User } from 'firebase';
+import UserCredential = firebase.auth.UserCredential;
+import Auth = firebase.auth.Auth;
+import { FirebaseAuth } from '@angular/fire';
+import { AuthState } from '../_reducers/auth.reducer';
 
 @Injectable()
 export class AuthService {
@@ -15,6 +20,8 @@ export class AuthService {
 	private rolesPath = `user-roles`;
 	private permissionsPath = `user-permissions`;
 
+	currentUser: User;
+	authState: any;
 
 	users$: Observable<IUser[]>;
 	roles$: Observable<Role[]>;
@@ -38,31 +45,24 @@ export class AuthService {
 		this.permissions$ = this.permissionCollectionRef.valueChanges();
 	}
 
-	getAuthState() {
-		return this.afAuth.authState;
-	}
-
-	getAuthUser(): Observable<IUser> {
-		return this.afAuth.user;
-	}
-
-	async login(email: string, password: string): Promise<IUser> {
-		const signInAction = await this.afAuth.auth.signInWithEmailAndPassword(email, password);
-		if (signInAction.user) {
-			const myUser: IUser = {
-				id: signInAction.user.uid,
-				emailVerified: signInAction.user.emailVerified,
-				photoURL: '',
-				phoneNumber: '',
-				...{
-					email: email,
-					password: password,
-					lastSignInTime: firebase.firestore.FieldValue.serverTimestamp()
+	doLoginWithCredentials(credentials: { email: string, password: string, remember?: boolean }): Promise<UserCredential> {
+		if (credentials.remember) {
+			return this.afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(async () => {
+				const signInAction = await this.afAuth.auth.signInWithEmailAndPassword(credentials.email, credentials.password);
+				if (signInAction.user) {
+					await this.updateUser(signInAction.user);
 				}
-			};
-			await this.updateUser(myUser);
+				return signInAction;
+			});
+		} else {
+			return this.afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).then(async () => {
+				const signInAction = await this.afAuth.auth.signInWithEmailAndPassword(credentials.email, credentials.password);
+				if (signInAction.user) {
+					await this.updateUser(signInAction.user);
+				}
+				return signInAction;
+			});
 		}
-		return signInAction.user;
 	}
 
 	signOut(): Promise<void> {
@@ -85,17 +85,23 @@ export class AuthService {
 		return this.afs.doc<IUser>(this.userPath + '/' + userId).valueChanges();
 	}
 
-	getUsers(): Observable<IUser[]> {
-		return this.users$;
-	}
-
 	public requestPassword(email: string): Promise<void> {
 		return this.afAuth.auth.sendPasswordResetEmail(email);
 	}
 
 	updateUser(data: IUser): Promise<void> {
-		const userRef: AngularFirestoreDocument<IUser> = this.afs.doc(`users/${data.id}`);
-		return userRef.set(data, {merge: true});
+		const myUser: IUser = {
+			id: data.uid,
+			emailVerified: data.emailVerified,
+			photoURL: '',
+			phoneNumber: '',
+			...{
+				email: data.email,
+				lastSignInTime: firebase.firestore.FieldValue.serverTimestamp()
+			}
+		};
+		const userRef: AngularFirestoreDocument<IUser> = this.afs.doc(`users/${ data.uid }`);
+		return userRef.set(myUser, { merge: true });
 	}
 
 	// Roles
@@ -129,11 +135,31 @@ export class AuthService {
 	getCreationBy(): string {
 		return 'asdasd';
 		/* return this.afAuth.user.pipe(map(user => {
-			return user;
-		})); */
+		 return user;
+		 })); */
 	}
 
 	getCreationAt(): any {
 		return firebase.firestore.FieldValue.serverTimestamp();
 	}
+
+
+	doFacebookLogin(): Promise<UserCredential> {
+		const provider = new firebase.auth.FacebookAuthProvider();
+		return this.afAuth.auth.signInWithPopup(provider);
+	}
+
+	doTwitterLogin(): Promise<UserCredential> {
+		const provider = new firebase.auth.TwitterAuthProvider();
+		return this.afAuth.auth.signInWithPopup(provider);
+	}
+
+	doGoogleLogin(): Promise<UserCredential> {
+		const provider = new firebase.auth.GoogleAuthProvider();
+		provider.setCustomParameters({
+			prompt: 'select_account'
+		});
+		return this.afAuth.auth.signInWithPopup(provider);
+	}
+
 }

@@ -32,6 +32,7 @@ export const locale = {
 				DESC: 'Fülle das Formular zur Anmeldung aus.',
 				SUCCESS: 'Du hast Dich erfolgreich registriert. Bitte überprüfe Dein E-Mail Postfach.'
 			},
+			REMEMBERME: 'An mich erinnern?',
 			INPUT: {
 				EMAIL: 'E-Mail',
 				DISPLAYNAME: 'Anzeigename',

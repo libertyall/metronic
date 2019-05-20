@@ -5,6 +5,8 @@ import { AppState } from '../../../../../core/reducers';
 import { IUser } from '../../../../../core/auth/_interfaces/user.interface';
 import { currentUser } from '../../../../../core/auth/_selectors/auth.selectors';
 import { Logout } from '../../../../../core/auth/_actions/auth.actions';
+import { Router } from '@angular/router';
+import { getUser, getUserState } from '../../../../../core/auth/_reducers/auth.reducer';
 
 @Component({
 	selector: 'kt-user-profile',
@@ -14,14 +16,18 @@ export class UserProfileComponent implements OnInit {
 
 	user$: Observable<IUser>;
 
-	constructor(private store: Store<AppState>) {
+	constructor(private router: Router,
+				private store: Store<AppState>) {
 	}
 
 	ngOnInit(): void {
-		this.user$ = this.store.pipe(select(currentUser));
+		this.user$ = this.store.pipe(select(getUser));
+		this.store.pipe(select(getUser)).subscribe(t => console.log(t));
+		this.store.pipe(select(getUserState)).subscribe(t => console.log(t));
 	}
 
 	logout() {
 		this.store.dispatch(new Logout());
+		this.router.navigate(['/auth/login']).then(() => 'successfully logged out');
 	}
 }

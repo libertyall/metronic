@@ -29,7 +29,6 @@ const routes: Routes = [
 	{
 		path: '',
 		component: AuthComponent,
-		canActivate: [UnAuthGuard],
 		children: [
 			{
 				path: '',
