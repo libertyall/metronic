@@ -26,36 +26,38 @@ export class LoginEffects {
 	getUser: Observable<Action> = this.actions$.pipe(
 		ofType(AuthActionTypes.GetUser),
 		map((action: GetUser) => action.payload),
-		exhaustMap(() => this.authService.authState.pipe(
-			take(1),
-			switchMap((authData: User) => {
-				console.log(authData);
-				if (authData) {
-					return zip(from(authData.getIdToken(true))).pipe(
-						switchMap(() => {
-							const providers = authData.providerData.reduce((prev, current) => {
-								const key = PROVIDERS_MAP[current.providerId];
-								if (key) {
-									prev[key] = true;
-								}
-								return prev;
-							}, {});
-							const user: IUser = {
-								uid: authData.uid,
-								displayName: authData.displayName,
-								email: authData.email,
-								phoneNumber: authData.phoneNumber,
-								photoURL: authData.photoURL,
-								emailVerified: authData.emailVerified
-							};
-							console.log(user);
-							return from([new SetProviders(providers), new Authenticated({ user })]);
-						})
-					);
-				} else {
-					return of(new NotAuthenticated());
-				}
-			}))
+		exhaustMap(() => {
+			return from(this.authService.authState).pipe(
+					take(1),
+					switchMap((authData: User) => {
+						console.log(authData);
+						if (authData) {
+							return zip(from(authData.getIdToken(true))).pipe(
+								switchMap(() => {
+									const providers = authData.providerData.reduce((prev, current) => {
+										const key = PROVIDERS_MAP[current.providerId];
+										if (key) {
+											prev[key] = true;
+										}
+										return prev;
+									}, {});
+									const user: IUser = {
+										uid: authData.uid,
+										displayName: authData.displayName,
+										email: authData.email,
+										phoneNumber: authData.phoneNumber,
+										photoURL: authData.photoURL,
+										emailVerified: authData.emailVerified
+									};
+									console.log(user);
+									return from([new SetProviders(providers), new Authenticated({ user })]);
+								})
+							);
+						} else {
+							return of(new NotAuthenticated());
+						}
+					}))
+			}
 		)
 	);
 
