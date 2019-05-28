@@ -27,10 +27,10 @@ export class LoginEffects {
 		ofType(AuthActionTypes.GetUser),
 		map((action: GetUser) => action.payload),
 		exhaustMap(() => {
-			return from(this.authService.authState).pipe(
+			console.log(1);
+			return from(this.authService.afAuth.authState).pipe(
 					take(1),
 					switchMap((authData: User) => {
-						console.log(authData);
 						if (authData) {
 							return zip(from(authData.getIdToken(true))).pipe(
 								switchMap(() => {
@@ -50,13 +50,14 @@ export class LoginEffects {
 										emailVerified: authData.emailVerified
 									};
 									console.log(user);
+									console.log(providers);
 									return from([new SetProviders(providers), new Authenticated({ user })]);
 								})
 							);
 						} else {
 							return of(new NotAuthenticated());
 						}
-					}))
+					}));
 			}
 		)
 	);
@@ -116,6 +117,7 @@ export class LoginEffects {
 		exhaustMap(credentials => {
 			return from(this.authService.doLoginWithCredentials(credentials)).pipe(
 				map(() => {
+					console.log('loginWithCredentials');
 					return new GetUser();
 				}),
 				catchError(error => of(new AuthError(error)))

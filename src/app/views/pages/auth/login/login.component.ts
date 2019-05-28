@@ -1,15 +1,13 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subject } from 'rxjs';
-import { TranslateService } from '@ngx-translate/core';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../../../core/reducers';
-import { AuthService } from '../../../../core/auth/_services/auth.service';
-import { AuthNoticeService } from '../../../../core/auth/auth-notice/auth-notice.service';
-import {
-	CredentialsLogin, FacebookLogin, GoogleLogin, TwitterLogin
-} from '../../../../core/auth/_actions/auth.actions';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {Router} from '@angular/router';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Subject} from 'rxjs';
+import {TranslateService} from '@ngx-translate/core';
+import {Store} from '@ngrx/store';
+import {AppState} from '../../../../core/reducers';
+import {AuthService} from '../../../../core/auth/_services/auth.service';
+import {AuthNoticeService} from '../../../../core/auth/auth-notice/auth-notice.service';
+import {CredentialsLogin, FacebookLogin, GoogleLogin, TwitterLogin} from '../../../../core/auth/_actions/auth.actions';
 
 
 @Component({
@@ -48,14 +46,14 @@ export class LoginComponent implements OnInit, OnDestroy {
 	initLoginForm() {
 
 		this.loginForm = this.fb.group({
-			email: [ '', Validators.compose([
+			email: ['', Validators.compose([
 				Validators.required,
 				Validators.email,
 				Validators.minLength(3),
 				Validators.maxLength(320)
 			])
 			],
-			password: [ '', Validators.compose([
+			password: ['', Validators.compose([
 				Validators.required,
 				Validators.minLength(3),
 				Validators.maxLength(100)
@@ -69,7 +67,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 		const controls = this.loginForm.controls;
 		if (this.loginForm.invalid) {
 			Object.keys(controls).forEach(controlName =>
-				controls[ controlName ].markAsTouched()
+				controls[controlName].markAsTouched()
 			);
 			return;
 		}
@@ -77,15 +75,17 @@ export class LoginComponent implements OnInit, OnDestroy {
 		this.loading = true;
 
 		const authData = {
-			email: controls[ 'email' ].value,
-			password: controls[ 'password' ].value,
+			email: controls['email'].value,
+			password: controls['password'].value,
 			rememberMe: controls['rememberMe'].value
 		};
 		this.auth
 			.doLoginWithCredentials(authData)
 			.then((user) => {
+				console.log(user);
+				console.log(authData);
 				this.store.dispatch(new CredentialsLogin(authData.email, authData.password, authData.rememberMe));
-				this.router.navigateByUrl('/').then(() => console.log('navigate to dashboard'));
+				// this.router.navigateByUrl('/').then(() => console.log('navigate to dashboard'));
 				this.loading = false;
 			})
 			.catch((error) => {
@@ -96,7 +96,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 	}
 
 	isControlHasError(controlName: string, validationType: string): boolean {
-		const control = this.loginForm.controls[ controlName ];
+		const control = this.loginForm.controls[controlName];
 		if (!control) {
 			return false;
 		}

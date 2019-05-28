@@ -18,6 +18,7 @@ export class UnAuthGuard implements CanActivate {
 			.pipe(
 				select(getUser),
 				map(user => {
+					console.log(user);
 					if (user) {
 						this.router.navigateByUrl('/dashboard').then(() => console.log('already logged in'));
 					}

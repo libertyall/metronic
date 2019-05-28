@@ -1,12 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { select, Store } from '@ngrx/store';
-import { AppState } from '../../../../../core/reducers';
-import { IUser } from '../../../../../core/auth/_interfaces/user.interface';
-import { currentUser } from '../../../../../core/auth/_selectors/auth.selectors';
-import { Logout } from '../../../../../core/auth/_actions/auth.actions';
-import { Router } from '@angular/router';
-import { getUser, getUserState } from '../../../../../core/auth/_reducers/auth.reducer';
+import {Component, OnInit} from '@angular/core';
+import {Observable} from 'rxjs';
+import {select, Store} from '@ngrx/store';
+import {AppState} from '../../../../../core/reducers';
+import {IUser} from '../../../../../core/auth/_interfaces/user.interface';
+import {Logout} from '../../../../../core/auth/_actions/auth.actions';
+import {Router} from '@angular/router';
+import {getUser, getUserState} from '../../../../../core/auth/_reducers/auth.reducer';
 
 @Component({
 	selector: 'kt-user-profile',

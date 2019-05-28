@@ -21,7 +21,6 @@ export class AuthService {
 	private permissionsPath = `user-permissions`;
 
 	currentUser: User;
-	authState: any;
 
 	users$: Observable<IUser[]>;
 	roles$: Observable<Role[]>;
@@ -31,7 +30,7 @@ export class AuthService {
 	private roleCollectionRef: AngularFirestoreCollection<Role>;
 	private permissionCollectionRef: AngularFirestoreCollection<any>;
 
-	constructor(private afAuth: AngularFireAuth,
+	constructor(public afAuth: AngularFireAuth,
 				private store: Store<AppState>,
 				private afs: AngularFirestore) {
 
@@ -45,8 +44,9 @@ export class AuthService {
 		this.permissions$ = this.permissionCollectionRef.valueChanges();
 	}
 
-	doLoginWithCredentials(credentials: { email: string, password: string, remember?: boolean }): Promise<UserCredential> {
-		if (credentials.remember) {
+	doLoginWithCredentials(credentials: { email: string, password: string, rememberMe?: boolean }): Promise<UserCredential> {
+		if (credentials.rememberMe) {
+			console.log('remember');
 			return this.afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(async () => {
 				const signInAction = await this.afAuth.auth.signInWithEmailAndPassword(credentials.email, credentials.password);
 				if (signInAction.user) {
