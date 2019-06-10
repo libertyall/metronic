@@ -95,6 +95,7 @@ export class LayoutConfigService {
 		}
 		if (typeof logo === 'undefined') {
 			try {
+				console.log(this.layoutConfig);
 				const logos = objectPath.get(this.layoutConfig, type + '.self.mainLogo.selected');
 				logo = logos[Object.keys(logos)[0]];
 			} catch (e) {

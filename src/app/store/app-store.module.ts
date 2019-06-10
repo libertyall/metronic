@@ -6,10 +6,10 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { DefaultDataServiceFactory, PersistenceResultHandler } from 'ngrx-data';
 import { FirestorePersistenceResultHandler } from './firestore/firestore-persistence-result-handler.service';
 import { FirestoreDataServiceFactory } from './firestore/firestore-entity-collection-data.service';
-import { AppState } from '../core/reducers';
+import { appReducer, AppState } from '../core/reducers';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { EffectsModule } from '@ngrx/effects';
-import { reducers } from '../core/auth/_reducers/auth.reducer';
+import { CategoryEffects } from '../core/category/effects/category.effects';
 
 /* export function storageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
 	return storageSync<AppState>({
@@ -28,7 +28,7 @@ const metaReducers: Array<MetaReducer<any, any>> = [storageSyncReducer]; */
 	imports: [
 		EffectsModule.forRoot([]),
 		environment.production ? [] : StoreDevtoolsModule.instrument(),
-		StoreModule.forRoot(reducers), // , { metaReducers }
+		StoreModule.forRoot(appReducer), // , { metaReducers }
 		StoreRouterConnectingModule.forRoot({ stateKey: 'router' })
 	],
 	providers: [

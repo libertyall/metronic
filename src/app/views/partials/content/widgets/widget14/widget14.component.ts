@@ -12,7 +12,7 @@ export class Widget14Component implements OnInit {
 	@Input() title: string;
 	@Input() desc: string;
 	@Input() data: { labels: string[]; datasets: any[] };
-	@ViewChild('chart') chart: ElementRef;
+	@ViewChild('chart', {static: true}) chart: ElementRef;
 
 	constructor(private layoutConfigService: LayoutConfigService) {
 	}

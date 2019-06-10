@@ -1,12 +1,14 @@
-import { ICategoryType } from './category-type.interface';
-
 export interface ICategory {
 	id?: string;
 	title: string;
 	description: string;
 	isImported: boolean;
 	isMainCategory: boolean;
-	assignedCategoryType?: ICategoryType | string;
-	creationAt: any;
+	creationAt?: any;
 	creationBy: string;
+
+	assignedCategoryType?: {
+		title: string;
+		id: string;
+	};
 }

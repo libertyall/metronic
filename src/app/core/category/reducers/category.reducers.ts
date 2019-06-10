@@ -1,6 +1,6 @@
 import {createFeatureSelector} from '@ngrx/store';
 import {createEntityAdapter, EntityAdapter, EntityState} from '@ngrx/entity';
-import {CategoryActions, CategoryActionTypes} from '../_actions/category.actions';
+import {CategoryActions, CategoryActionTypes} from '../actions/category.actions';
 import {ICategory} from '../../../shared/interfaces/category.interface';
 import {QueryParamsModel} from '../../_base/crud';
 
@@ -25,7 +25,7 @@ export const initialCategoriesState: CategoriesState = adapter.getInitialState({
 	showInitWaitingMessage: true
 });
 
-export function categoriesReducer(state = initialCategoriesState, action: CategoryActions): CategoriesState {
+export function categoryReducer(state = initialCategoriesState, action: CategoryActions): CategoriesState {
 
 	switch (action.type) {
 

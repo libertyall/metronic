@@ -9,9 +9,10 @@ import {AppState} from '../../../../core/reducers';
 import {LayoutUtilsService, MessageType, QueryParamsModel} from '../../../../core/_base/crud';
 import {SubheaderService} from '../../../../core/_base/layout';
 import {debounceTime, distinctUntilChanged, skip, tap} from 'rxjs/operators';
-import {CategoriesDataSource} from '../../../../core/category/_data-sources/categories.data-source';
-import {selectAllCategories} from '../../../../core/category/_selectors/category.selectors';
-import {CategoriesPageRequested, CategoryDeleted} from '../../../../core/category/_actions/category.actions';
+import {CategoriesDataSource} from '../../../../core/category/data-sources/categories.data-source';
+import {selectAllCategories} from '../../../../core/category/selectors/category.selectors';
+import {CategoriesPageRequested, CategoryDeleted} from '../../../../core/category/actions/category.actions';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -25,10 +26,10 @@ export class CategoryListComponent implements OnInit, OnDestroy {
 	dataSource: CategoriesDataSource;
 	displayedColumns = ['select', 'id', 'title', 'actions'];
 
-	@ViewChild(MatPaginator) paginator: MatPaginator;
-	@ViewChild('sort1') sort: MatSort;
+	@ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+	@ViewChild('sort1', {static: true}) sort: MatSort;
 
-	@ViewChild('searchInput') searchInput: ElementRef;
+	@ViewChild('searchInput', {static: true}) searchInput: ElementRef;
 
 	selection = new SelectionModel<ICategory>(true, []);
 	categoriesResult: ICategory[] = [];
@@ -39,9 +40,9 @@ export class CategoryListComponent implements OnInit, OnDestroy {
 
 	private subscriptions: Subscription[] = [];
 
-	constructor(
-		private activatedRoute: ActivatedRoute,
+	constructor(private activatedRoute: ActivatedRoute,
 		private store: Store<AppState>,
+		private translateService: TranslateService,
 		private router: Router,
 		private layoutUtilsService: LayoutUtilsService,
 		private subheaderService: SubheaderService) {
@@ -110,7 +111,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
 	}
 
 	deleteCategory(_item: ICategory) {
-		const _title: string = 'Category Delete';
+		const _title: string = 'Category Delete' + _item.title;
 		const _description: string = 'Are you sure to permanently delete this category?';
 		const _waitDescription: string = 'Deleting Category ' + _item.title;
 		const _deleteMessage = `Category has been deleted`;
@@ -153,7 +154,11 @@ export class CategoryListComponent implements OnInit, OnDestroy {
 	}
 
 	editCategory(id: string): void {
-		this.router.navigate(['/categories/edit', id]).then(() => console.log('edit category'));
+		this.router.navigate(['/categories/edit', id]).then();
+	}
+
+	showCategory(id: string): void {
+		this.router.navigate(['/categories/detail', id]).then();
 	}
 
 }

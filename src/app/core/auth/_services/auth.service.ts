@@ -9,9 +9,6 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../reducers';
 import { User } from 'firebase';
 import UserCredential = firebase.auth.UserCredential;
-import Auth = firebase.auth.Auth;
-import { FirebaseAuth } from '@angular/fire';
-import { AuthState } from '../_reducers/auth.reducer';
 
 @Injectable()
 export class AuthService {
@@ -46,7 +43,6 @@ export class AuthService {
 
 	doLoginWithCredentials(credentials: { email: string, password: string, rememberMe?: boolean }): Promise<UserCredential> {
 		if (credentials.rememberMe) {
-			console.log('remember');
 			return this.afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(async () => {
 				const signInAction = await this.afAuth.auth.signInWithEmailAndPassword(credentials.email, credentials.password);
 				if (signInAction.user) {

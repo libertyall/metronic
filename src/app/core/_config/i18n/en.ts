@@ -90,6 +90,7 @@ export const locale = {
 			AGREE: {
 				TEXT: 'I accept the '
 			},
+			REMEMBERME: 'Remember me',
 			GENERAL: {
 				OR: 'Or',
 				SUBMIT_BUTTON: 'Submit',

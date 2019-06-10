@@ -21,8 +21,6 @@ export class UserProfileComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.user$ = this.store.pipe(select(getUser));
-		this.store.pipe(select(getUser)).subscribe(t => console.log(t));
-		this.store.pipe(select(getUserState)).subscribe(t => console.log(t));
 	}
 
 	logout() {

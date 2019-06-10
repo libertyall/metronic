@@ -62,10 +62,53 @@ export const locale = {
 				INVALID_FIELD: 'Diese Eingabe ist fehlerhaft.',
 			}
 		},
+		forms: {
+			errors: {
+				required: 'Hier ist eine Eingabe erforderlich.',
+				minLength: 'Deine Eingabe ist zu kurz. Es werden mindestens {{minLength}} Zeichen benötigt.',
+				maxLength: 'Deine Eingabe ist zu lang. Es können maximal {{maxLength}} Zeichen eingegeben werden.',
+				title: 'Hoppla!',
+				description: 'Deine Eingaben sind noch fehlerhaft. Bitte überprüfe das Formular noch einmal auf Fehler.'
+			}
+		},
 		category: {
+			delete: {
+				description: 'Die Kategorie kann danach nicht wieder hergestellt werden. Alle verknüpften Einträge' +
+					' verlieren dann ihre Gültigkeit.',
+				title: 'Möchtest Du wirklich die Kategorie ´{{title}}` löschen?'
+			},
+			deleted: 'Die Kategorie wurde unwiderruflich gelöscht.',
+			deleteInProgress: 'Die Kategorie wird gelöscht. Bitte warten ...',
+			createTitle: 'Eine neue Kategorie erstellen',
+			editTitle: 'Kategorie {{title}} editieren',
+			backToList: 'Zur Liste mit allen Kategorien',
 			subheader: {
 				title: 'Kategorien',
 				desc: ''
+			},
+			edit: {
+				goToList: 'Zur Liste aller Kategorien',
+				isImported: 'Kategorie wurde importiert',
+				isMainCategory: 'Ja, es handelt sich um eine Hauptkategorie',
+				hints: {
+					description: 'Eine kurze Info / Beschreibung dieser Kategorie',
+					isImported: 'Wurde diese Kategorie durch ein Skript importiert?',
+					mainCategory: 'Soll die Kategorie als Hauptkategorie (z.B. im Menü) angezeigt werden?',
+					title: 'Bitte den Namen der Kategorie eingeben',
+					assignedCategoryType: 'Zu welcher übergeordneten Kategorie gehört der Eintrag?'
+				},
+				inputs: {
+					categoryType: 'Hauptkategorie',
+					title: 'Name der Kategorie'
+				},
+				tabs: {
+					creation: {
+						title: 'Erstellung und Veröffentlichung'
+					},
+					main: {
+						title: 'Wichtigste Daten'
+					}
+				},
 			},
 			list: {
 				add: {
@@ -73,6 +116,7 @@ export const locale = {
 					full: 'Neue Kategorie erstellen'
 				},
 				delete: 'Kategorie löschen',
+				detail: 'Details anzeigen',
 				edit: 'Kategorie editieren',
 				noEntries: 'Es wurden noch keine Kategorien gespeichert.',
 				search: {
@@ -290,6 +334,17 @@ export const locale = {
 			}
 		},
 		pleaseWait: 'Bitte warten',
+		back: 'Zurück',
+		reset: 'Zurücksetzen',
+		resetDescription: 'Das Formular zurücksetzen',
+		save: 'Speichern',
+		saveDescription: 'Speichern und Fortfahren',
+		saveToList: 'Speichern und zur Übersicht',
+		saveToListDescription: 'Speichern und zur Listenansicht zurückkehren',
+		cancel: 'Abbrechen',
+		delete: 'Löschen',
+		undo: 'Rückgängig machen',
+		required: 'erforderlich',
 		TRANSLATOR: {
 			SELECT: 'Wähle deine Sprache',
 		}

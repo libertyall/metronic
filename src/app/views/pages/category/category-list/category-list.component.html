@@ -16,7 +16,9 @@
 				<div class="row align-items-center">
 					<div class="col-md-2 kt-margin-bottom-10-mobile">
 						<mat-form-field class="mat-form-field-fluid">
-							<input matInput placeholder="{{ 'category.list.search.placeholder' | translate}}" #searchInput>
+							<label>
+								<input matInput placeholder="{{ 'category.list.search.placeholder' | translate}}" #searchInput>
+							</label>
 							<mat-hint align="start">
 								{{ 'category.list.search.hint' | translate}}
 							</mat-hint>
@@ -49,7 +51,6 @@
 		</div>
 		<div class="mat-table__wrapper">
 			<mat-table class="lmat-elevation-z8"
-					   #table
 					   [dataSource]="dataSource"
 					   matSort
 					   #sort1="matSort"
@@ -84,6 +85,10 @@
 				<ng-container matColumnDef="actions">
 					<mat-header-cell *matHeaderCellDef>{{ 'category.list.table.actions' | translate}}</mat-header-cell>
 					<mat-cell *matCellDef="let category">
+						<button (click)="showCategory(category.id)" mat-icon-button color="warn"
+								matTooltip="{{ 'category.list.detail' | translate}}">
+							<mat-icon>info</mat-icon>
+						</button>
 						<button (click)="editCategory(category.id)" mat-icon-button color="primary"
 								matTooltip="{{ 'category.list.edit' | translate}}">
 							<mat-icon>create</mat-icon>

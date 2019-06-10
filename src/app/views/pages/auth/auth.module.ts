@@ -23,7 +23,7 @@ import { ReAuthenticationEffects } from '../../../core/auth/_effects/re-authenti
 import { RegistrationEffects } from '../../../core/auth/_effects/registration.effects';
 import { ProvidersManagementEffects } from '../../../core/auth/_effects/providers-management.effects';
 import { PasswordManagementEffects } from '../../../core/auth/_effects/password-management.effects';
-import { reducers } from '../../../core/auth/_reducers/auth.reducer';
+import { authReducer } from '../../../core/auth/_reducers/auth.reducer';
 
 const routes: Routes = [
 	{
@@ -63,7 +63,7 @@ const routes: Routes = [
 		MatFormFieldModule,
 		MatCheckboxModule,
 		TranslateModule.forChild(),
-		StoreModule.forFeature('auth', reducers),
+		StoreModule.forFeature('auth', authReducer),
 		EffectsModule.forFeature([
 			EmailHandlerEffects,
 			LoginEffects,

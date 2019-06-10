@@ -23,11 +23,11 @@ import { UserDeleted, UsersPageRequested } from '../../../../../core/auth/_actio
 export class UsersListComponent implements OnInit, OnDestroy {
 
 	dataSource: UsersDataSource;
-	displayedColumns = [ 'select', 'id', 'username', 'email', 'fullname', '_roles', 'actions' ];
-	@ViewChild(MatPaginator) paginator: MatPaginator;
-	@ViewChild('sort1') sort: MatSort;
+	displayedColumns = ['select', 'id', 'username', 'email', 'fullname', '_roles', 'actions'];
+	@ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+	@ViewChild('sort1', {static: true}) sort: MatSort;
 
-	@ViewChild('searchInput') searchInput: ElementRef;
+	@ViewChild('searchInput', {static: true}) searchInput: ElementRef;
 
 	selection = new SelectionModel<IUser>(true, []);
 	usersResult: IUser[] = [];
@@ -35,12 +35,11 @@ export class UsersListComponent implements OnInit, OnDestroy {
 
 	private subscriptions: Subscription[] = [];
 
-	constructor(
-		private activatedRoute: ActivatedRoute,
-		private store: Store<AppState>,
-		private router: Router,
-		private layoutUtilsService: LayoutUtilsService,
-		private subheaderService: SubheaderService) {
+	constructor(private activatedRoute: ActivatedRoute,
+				private store: Store<AppState>,
+				private router: Router,
+				private layoutUtilsService: LayoutUtilsService,
+				private subheaderService: SubheaderService) {
 	}
 
 	ngOnInit() {
@@ -167,6 +166,6 @@ export class UsersListComponent implements OnInit, OnDestroy {
 	}
 
 	editUser(id) {
-		this.router.navigate([ '../users/edit', id ], { relativeTo: this.activatedRoute }).then(() => console.log('edit user'));
+		this.router.navigate(['../users/edit', id], { relativeTo: this.activatedRoute }).then(() => console.log('edit user'));
 	}
 }

@@ -21,10 +21,10 @@ export class RolesListComponent implements OnInit, OnDestroy {
 
 	dataSource: RolesDataSource;
 	displayedColumns = [ 'select', 'id', 'title', 'actions' ];
-	@ViewChild(MatPaginator) paginator: MatPaginator;
-	@ViewChild('sort1') sort: MatSort;
+	@ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+	@ViewChild('sort1', {static: true}) sort: MatSort;
 
-	@ViewChild('searchInput') searchInput: ElementRef;
+	@ViewChild('searchInput', {static: true}) searchInput: ElementRef;
 
 	selection = new SelectionModel<Role>(true, []);
 	rolesResult: Role[] = [];

@@ -43,9 +43,10 @@ export class CategoriesByCategoryTypeComponent implements OnChanges {
 			for (let i = 0; i < this.categoryTypes.length; i++) {
 				let categoryCounter = 0;
 				for (let j = 0; j < this.categories.length; j++) {
-					if (this.categories[j].assignedCategoryType === this.categoryTypes[i].id) {
+					/* if (this.categories[j].assignedCategoryType === this.categoryTypes[i].id) {
 						categoryCounter++;
-					}
+					} */
+					console.log('TODO');
 				}
 				this.translateService.get('general.menu.' + this.categoryTypes[i].link + '.main').subscribe(
 					(translation: string) => this.doughnutChartLabels.push(translation)

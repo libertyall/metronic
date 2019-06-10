@@ -12,7 +12,7 @@ export interface AuthState {
 	customEmailHandler: fromEmailHandler.State;
 }
 
-export const reducers: ActionReducerMap<AuthState> = {
+export const authReducer: ActionReducerMap<AuthState, any> = {
 	user: fromUser.reducer,
 	changePassword: fromChangePassword.reducer,
 	providers: fromProviders.reducer,

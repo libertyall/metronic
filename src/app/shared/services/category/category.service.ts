@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ICategory } from '../../interfaces/category.interface';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { CategoryTypeService } from '../category-type/category-type.service';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { AuthService } from '../../../core/auth/_services/auth.service';
 import { QueryParamsModel } from '../../../core/_base/crud';
@@ -16,8 +15,7 @@ export class CategoryService {
 	categories$: Observable<ICategory[]>;
 
 	constructor(private afs: AngularFirestore,
-				private authService: AuthService,
-				private categoryTypeService: CategoryTypeService) {
+				private authService: AuthService) {
 		this.collectionRef = this.afs.collection<ICategory>(this.path);
 		this.categories$ = this.collectionRef.valueChanges();
 	}
@@ -77,16 +75,19 @@ export class CategoryService {
 	 } */
 
 	initNewCategory(): ICategory {
-		const category: ICategory = {
+		return {
+			id: '',
 			isImported: false,
 			title: '',
 			description: ' ',
-			assignedCategoryType: '',
+			assignedCategoryType: {
+				title: '',
+				id: ''
+			},
 			creationAt: this.authService.getCreationAt(),
 			creationBy: this.authService.getCreationBy(),
 			isMainCategory: false
 		};
-		return category;
 	}
 
 	/*

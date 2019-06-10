@@ -4,6 +4,7 @@ import {CategoryDetailComponent} from './category-detail/category-detail.compone
 import {CategoryEditComponent} from './category-edit/category-edit.component';
 import {CategoryStatisticsComponent} from './category-statistics/category-statistics.component';
 import {CategoryListComponent} from './category-list/category-list.component';
+import { CategoryTypesResolver } from '../category-types/category-types.resolver';
 
 export const categoryRoutes: Routes = [
 
@@ -24,14 +25,16 @@ export const categoryRoutes: Routes = [
 		path: 'edit/:categoryId',
 		component: CategoryEditComponent,
 		resolve: {
-			category: CategoryResolver
+			category: CategoryResolver,
+			// categoryTypes: CategoryTypesResolver
 		}
 	},
 	{
 		path: 'detail/:categoryId',
 		component: CategoryDetailComponent,
 		resolve: {
-			category: CategoryResolver
+			category: CategoryResolver,
+			// categoryTypes: CategoryTypesResolver
 		}
 	},
 	{

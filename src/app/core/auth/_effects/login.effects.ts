@@ -27,7 +27,6 @@ export class LoginEffects {
 		ofType(AuthActionTypes.GetUser),
 		map((action: GetUser) => action.payload),
 		exhaustMap(() => {
-			console.log(1);
 			return from(this.authService.afAuth.authState).pipe(
 					take(1),
 					switchMap((authData: User) => {
@@ -49,8 +48,6 @@ export class LoginEffects {
 										photoURL: authData.photoURL,
 										emailVerified: authData.emailVerified
 									};
-									console.log(user);
-									console.log(providers);
 									return from([new SetProviders(providers), new Authenticated({ user })]);
 								})
 							);
@@ -117,7 +114,6 @@ export class LoginEffects {
 		exhaustMap(credentials => {
 			return from(this.authService.doLoginWithCredentials(credentials)).pipe(
 				map(() => {
-					console.log('loginWithCredentials');
 					return new GetUser();
 				}),
 				catchError(error => of(new AuthError(error)))

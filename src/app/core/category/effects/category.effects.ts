@@ -14,7 +14,7 @@ import {
 	CategoryOnServerCreated,
 	CategoryRequested,
 	CategoryUpdated
-} from '../_actions/category.actions';
+} from '../actions/category.actions';
 import {QueryParamsModel, QueryResultsModel} from '../../_base/crud';
 import {forkJoin, of} from 'rxjs';
 import {CategoryService} from '../../../shared/services/category/category.service';

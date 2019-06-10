@@ -12,20 +12,20 @@ const routes: Routes = [
 		children: [
 			{
 				path: 'dashboard',
-				loadChildren: 'app/views/pages/dashboard/dashboard.module#DashboardModule'
-			}, /*
+				loadChildren: () => import('app/views/pages/dashboard/dashboard.module').then(m => m.DashboardModule)
+			}, /* ,
 			{
 				path: 'articles',
-				loadChildren: 'app/views/pages/article/article.module#ArticleModule'
+				loadChildren: () => import('app/views/pages/article/article.module').then(m => m.AuthModule),
 			}, */
 			{
 				path: 'categories',
-				loadChildren: 'app/views/pages/category/category.module#CategoryModule'
+				loadChildren: () => import('app/views/pages/category/category.module').then(m => m.CategoryModule)
 			},
-			{
+			/*{
 				path: 'calendar',
 				loadChildren: 'app/views/pages/sfw-calendar/sfw-calendar.module#SFWCalendarModule'
-			}, /*
+			},
 			{
 				path: 'clubs',
 				loadChildren: 'app/views/pages/club/club.module#ClubModule'
@@ -57,11 +57,11 @@ const routes: Routes = [
 			{
 				path: 'teams',
 				loadChildren: 'app/views/pages/team/team.module#TeamModule'
-			},
+			}, */
 			{
 				path: 'users',
 				loadChildren: 'app/views/pages/user/user.module#UserModule'
-			}, */
+			},
 			{
 				path: 'error/403',
 				component: ErrorPageComponent,

@@ -1,16 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {TranslateModule, TranslateService} from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AlertService } from '../../shared/services/alert/alert.service';
 import {
-	MatCardModule,
-	MatIconModule, MatPaginatorIntl,
-	MatPaginatorModule,
-	MatProgressBarModule,
+	MatCardModule, MatIconModule, MatMenuModule, MatPaginatorIntl, MatPaginatorModule, MatProgressBarModule,
 	MatSnackBarModule,
-	MatSortModule,
-	MatTableModule
+	MatSortModule, MatTableModule
 } from '@angular/material';
 import { NgPipesModule } from 'ngx-pipes';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
@@ -18,7 +14,7 @@ import { SnackbarComponent } from '../../shared/components/snackbar/snackbar.com
 import { SharedMediaModule } from '../../shared/components/media/shared-media.module';
 import { LinkModule } from '../../shared/components/links/link.module';
 import { PortletModule } from '../partials/content/general/portlet/portlet.module';
-import {PaginatorI18n} from "../../shared/classes/paginator-i18n.class";
+import { MatPaginatorI18nService } from '../../shared/services/application/mat-paginator-i18n.service';
 
 @NgModule({
 	declarations: [
@@ -30,6 +26,7 @@ import {PaginatorI18n} from "../../shared/classes/paginator-i18n.class";
 		MatCardModule,
 		MatSnackBarModule,
 		MatIconModule,
+		MatMenuModule,
 		MatPaginatorModule,
 		MatSortModule,
 		MatTableModule,
@@ -42,13 +39,14 @@ import {PaginatorI18n} from "../../shared/classes/paginator-i18n.class";
 	],
 	imports: [
 		CommonModule,
-		MatProgressBarModule,
+		MatIconModule,
+		MatProgressBarModule
 	],
 	providers: [
 		AlertService,
 		{
 			provide: MatPaginatorIntl, deps: [TranslateService],
-			useFactory: (translateService: TranslateService) => new PaginatorI18n(translateService).getPaginatorIntl()
+			useClass: MatPaginatorI18nService
 		}
 	]
 })

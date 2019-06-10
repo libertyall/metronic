@@ -18,7 +18,7 @@ export class Widget4Component implements OnInit {
 
 	@Input() data: Widget4Data[];
 
-	@ContentChild('actionTemplate') actionTemplate: TemplateRef<any>;
+	@ContentChild('actionTemplate', {static: true}) actionTemplate: TemplateRef<any>;
 
 	constructor() {
 	}
