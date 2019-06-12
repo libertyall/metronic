@@ -38,7 +38,9 @@ export class RegistrationEffects {
 						email: authData.email,
 						phoneNumber: authData.phoneNumber,
 						emailVerified: authData.emailVerified,
-						photoURL: authData.photoURL
+						photoURL: authData.photoURL,
+						creationTime: authData.metadata.creationTime,
+						providerId: authData.providerData[0].providerId
 					};
 					return from([new SetProviders({ google: true }), new RegistrationSuccess({ user })]);
 				}),
@@ -63,7 +65,9 @@ export class RegistrationEffects {
 						email: authData.email,
 						phoneNumber: authData.phoneNumber,
 						emailVerified: authData.emailVerified,
-						photoURL: authData.photoURL
+						photoURL: authData.photoURL,
+						creationTime: authData.metadata.creationTime,
+						providerId: authData.providerData[0].providerId
 					};
 					return from([new SetProviders({ facebook: true }), new RegistrationSuccess({ user })]);
 				}),
@@ -93,7 +97,9 @@ export class RegistrationEffects {
 						email: authData.email,
 						phoneNumber: authData.phoneNumber,
 						emailVerified: authData.emailVerified,
-						photoURL: authData.photoURL
+						photoURL: authData.photoURL,
+						creationTime: authData.metadata.creationTime,
+						providerId: authData.providerData[0].providerId
 					};
 					return new RegistrationSuccess({ user });
 				}),

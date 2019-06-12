@@ -4,7 +4,7 @@ export const locale = {
 	data: {
 		AUTH: {
 			AGREE: {
-				TEXT: 'Ich akzeptiere die ',
+				TEXT: 'Ich akzeptiere die '
 			},
 			GENERAL: {
 				OR: 'Oder',
@@ -15,11 +15,11 @@ export const locale = {
 				BACK_BUTTON: 'Zurück',
 				PRIVACY: 'Privatsphäre',
 				LEGAL: 'Legal',
-				CONTACT: 'Kontakt',
+				CONTACT: 'Kontakt'
 			},
 			LOGIN: {
 				TITLE: 'Account erstellen',
-				BUTTON: 'Anmelden',
+				BUTTON: 'Anmelden'
 			},
 			FORGOT: {
 				TITLE: 'Passwort vergessen?',
@@ -59,7 +59,7 @@ export const locale = {
 				REQUIRED_FIELD: 'Eingabe fehlt',
 				MIN_LENGTH_FIELD: 'Minimum field length:',
 				MAX_LENGTH_FIELD: 'Maximum field length:',
-				INVALID_FIELD: 'Diese Eingabe ist fehlerhaft.',
+				INVALID_FIELD: 'Diese Eingabe ist fehlerhaft.'
 			}
 		},
 		forms: {
@@ -108,7 +108,7 @@ export const locale = {
 					main: {
 						title: 'Wichtigste Daten'
 					}
-				},
+				}
 			},
 			list: {
 				add: {
@@ -131,120 +131,123 @@ export const locale = {
 				title: 'Alle Kategorien'
 			}
 		},
-		general: {
-			settings: {
-				calendar: {
-					addCalendar: 'Kalender hinzufügen',
-					cssTitle: 'Farbe zur Anzeige der Termine',
-					deleteCalendar: 'Kalender löschen',
-					fieldTitle: 'Name des Kalenders',
-					isActive: 'Ist der Kalender aktiviert?',
-					link: 'Link zum Google Kalender',
-					title: 'Eingebundene Kalender'
-				},
-				calendarTitle: 'Kalender',
-				description: 'Hier können globale Einstellungen zur Seite vorgenommen werden.',
-				downtime: {
-					isActive: 'Wartungsmodus aktiviert?',
-					message: 'Nachricht an die Benutzer',
-					messageDescription: 'Diese Nachricht wird den Benutzern im Frontend angezeigt. Die' +
-						' Administrations-Oberfläche ist weiterhin erreichbar.',
-					title: 'Wartungsmodus'
-				},
-				layout: {
-					form: {
-						body: {
-							'background-image': 'Hintergrundbild'
-						},
-						loader: {
-							logo: 'Bild, das beim Laden angezeigt wird',
-							message: 'Nachricht beim Laden',
-							type: 'Wähle zwischen: spinner-logo, spinner-message und default'
-						},
-						logo: {
-							brand: 'Brand-Logo',
-							dark: 'Logo bei dunklem Design',
-							green: 'Logo bei grünem Hintergrund',
-							light: 'Logo bei hellem Hintergrund'
-						},
-						self: {
-							layout: 'Fluid oder fixed Design?'
-						},
-						sticky: {
-							offset: 'Porlets offset'
-						}
+		settings: {
+			/* calendar: {
+				addCalendar: 'Kalender hinzufügen',
+				cssTitle: 'Farbe zur Anzeige der Termine',
+				deleteCalendar: 'Kalender löschen',
+				fieldTitle: 'Name des Kalenders',
+				isActive: 'Ist der Kalender aktiviert?',
+				link: 'Link zum Google Kalender',
+				title: 'Eingebundene Kalender'
+			},
+			calendarTitle: 'Kalender',
+			description: 'Hier können globale Einstellungen zur Seite vorgenommen werden.',
+			downtime: {
+				isActive: 'Wartungsmodus aktiviert?',
+				message: 'Nachricht an die Benutzer',
+				messageDescription: 'Diese Nachricht wird den Benutzern im Frontend angezeigt. Die' +
+					' Administrations-Oberfläche ist weiterhin erreichbar.',
+				title: 'Wartungsmodus'
+			},
+			layout: {
+				form: {
+					body: {
+						'background-image': 'Hintergrundbild'
 					},
-					input: {
-						title: 'Layout',
-						description: 'Wie soll das Layout aufgebaut werden?'
+					loader: {
+						logo: 'Bild, das beim Laden angezeigt wird',
+						message: 'Nachricht beim Laden',
+						type: 'Wähle zwischen: spinner-logo, spinner-message und default'
 					},
-					title: {
-						frontend: 'Frontend-Seite',
-						backend: 'Administrationbereich'
+					logo: {
+						brand: 'Brand-Logo',
+						dark: 'Logo bei dunklem Design',
+						green: 'Logo bei grünem Hintergrund',
+						light: 'Logo bei hellem Hintergrund'
 					},
-					wizard: {
-						self: {
-							description: '',
-							title: 'Self'
-						},
-						portlet: {
-							description: '',
-							title: 'Portlets'
-						},
-						loader: {
-							description: '',
-							title: 'Laden-Anzeige'
-						},
-						colors: {
-							description: '',
-							title: 'Farbgebung'
-						},
-						header: {
-							description: '',
-							title: 'Erste Kopfzeile'
-						},
-						subheader: {
-							description: '',
-							title: 'Zweite Kopfzeile'
-						},
-						brand: {
-							description: '',
-							title: 'Branding'
-						},
-						aside: {
-							description: '',
-							title: 'Seitliche Navigation'
-						},
-						footer: {
-							description: '',
-							title: 'Fußzeile'
-						}
+					self: {
+						layout: 'Fluid oder fixed Design?'
+					},
+					sticky: {
+						offset: 'Porlets offset'
 					}
 				},
-				layoutTitle: 'Layout Optionen',
-				mailing: {
-					addMailList: 'Neuen Verteiler anlegen',
-					addEmail: 'E-Mail hinzufügen',
-					deleteMailList: 'Verteiler löschen',
-					fieldTitle: 'Name des Verteilers',
-					isActive: 'Aktiviert?',
-					title: 'E-Mail Verteiler'
+				input: {
+					title: 'Layout',
+					description: 'Wie soll das Layout aufgebaut werden?'
 				},
-				mailingTitle: 'E-Mail Optionen',
-				page: {
-					description: 'Beschreibung',
-					descriptionDescription: 'Beschreibung der Seite im Kopfbereich',
-					emailDescription: 'E-Mail Adresse, die im Kopfbereich der Seite angezeigt wird.',
-					emailTitle: 'E-Mail',
-					keywords: 'Keywords der Seite',
-					keywordsDescription: 'Keywords, die als Standard im Kopfbereich angezeigt werden.',
-					name: 'Name der Seite',
-					nameDescription: 'Name der Seite, wie er in der Titelleiste angezeigt wird.',
-					title: 'Titel der Seite',
-					titleDescription: 'Standard-Titel, der im Kopfbereich angezeigt wird.'
+				title: {
+					frontend: 'Frontend-Seite',
+					backend: 'Administrationbereich'
 				},
-				pageTitle: 'Seiteneinstellungen',
-				title: 'Administration der Seite'
+				wizard: {
+					self: {
+						description: '',
+						title: 'Self'
+					},
+					portlet: {
+						description: '',
+						title: 'Portlets'
+					},
+					loader: {
+						description: '',
+						title: 'Laden-Anzeige'
+					},
+					colors: {
+						description: '',
+						title: 'Farbgebung'
+					},
+					header: {
+						description: '',
+						title: 'Erste Kopfzeile'
+					},
+					subheader: {
+						description: '',
+						title: 'Zweite Kopfzeile'
+					},
+					brand: {
+						description: '',
+						title: 'Branding'
+					},
+					aside: {
+						description: '',
+						title: 'Seitliche Navigation'
+					},
+					footer: {
+						description: '',
+						title: 'Fußzeile'
+					}
+				}
+			},
+			layoutTitle: 'Layout Optionen',
+			mailing: {
+				addMailList: 'Neuen Verteiler anlegen',
+				addEmail: 'E-Mail hinzufügen',
+				deleteMailList: 'Verteiler löschen',
+				fieldTitle: 'Name des Verteilers',
+				isActive: 'Aktiviert?',
+				title: 'E-Mail Verteiler'
+			},
+			mailingTitle: 'E-Mail Optionen',
+			page: {
+				description: 'Beschreibung',
+				descriptionDescription: 'Beschreibung der Seite im Kopfbereich',
+				emailDescription: 'E-Mail Adresse, die im Kopfbereich der Seite angezeigt wird.',
+				emailTitle: 'E-Mail',
+				keywords: 'Keywords der Seite',
+				keywordsDescription: 'Keywords, die als Standard im Kopfbereich angezeigt werden.',
+				name: 'Name der Seite',
+				nameDescription: 'Name der Seite, wie er in der Titelleiste angezeigt wird.',
+				title: 'Titel der Seite',
+				titleDescription: 'Standard-Titel, der im Kopfbereich angezeigt wird.'
+			},
+			pageTitle: 'Seiteneinstellungen',
+			title: 'Administration der Seite'
+			*/
+			subheader: {
+				title: 'Einstellungen',
+				desc: '---'
 			}
 		},
 		global: {
@@ -346,7 +349,7 @@ export const locale = {
 		undo: 'Rückgängig machen',
 		required: 'erforderlich',
 		TRANSLATOR: {
-			SELECT: 'Wähle deine Sprache',
+			SELECT: 'Wähle deine Sprache'
 		}
 	}
 };

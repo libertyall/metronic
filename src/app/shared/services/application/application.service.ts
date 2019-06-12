@@ -58,8 +58,8 @@ export class ApplicationService {
 		);
 	}
 
-	updateApplication(applicationId: string, application: IApplication): Promise<any> {
-		return this.afs.collection(this.path).doc(applicationId).update(application);
+	updateApplication(application: IApplication): Promise<any> {
+		return this.afs.collection(this.path).doc(application.id).update(application);
 	}
 
 	/* getAppData(): Observable<IApplication> {

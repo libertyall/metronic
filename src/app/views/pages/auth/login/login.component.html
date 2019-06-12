@@ -11,6 +11,13 @@
 			<h3>{{ 'global.login.title' | translate}}</h3>
 		</div>
 
+
+		<div>
+			isLoggedIn: {{isLoggedIn$ | async | json}}<br/>
+			user: {{user$ | async | json}}<br/>
+			loading: {{isLoading$ | async | json}}<br/>
+		</div>
+
 		<kt-auth-notice></kt-auth-notice>
 
 		<!--begin::Form-->
@@ -51,7 +58,7 @@
 				</mat-form-field>
 			</div>
 			<div class="form-group">
-				<mat-checkbox formControlName="rememberMe">
+				<mat-checkbox formControlName="rememberMe" checked>
 					{{ 'AUTH.REMEMBERME' | translate }}
 				</mat-checkbox>
 			</div>

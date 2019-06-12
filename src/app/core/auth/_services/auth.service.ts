@@ -3,7 +3,7 @@ import { IUser } from '../_interfaces/user.interface';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
-import { Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { Role } from '../_interfaces/role.interface';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../reducers';
@@ -16,8 +16,6 @@ export class AuthService {
 	private userPath = `users`;
 	private rolesPath = `user-roles`;
 	private permissionsPath = `user-permissions`;
-
-	currentUser: User;
 
 	users$: Observable<IUser[]>;
 	roles$: Observable<Role[]>;
@@ -41,22 +39,32 @@ export class AuthService {
 		this.permissions$ = this.permissionCollectionRef.valueChanges();
 	}
 
+	getAuthState() {
+		return this.afAuth.authState;
+	}
+
+	getCurrentUser() {
+		return this.afAuth.auth.currentUser;
+	}
+
 	doLoginWithCredentials(credentials: { email: string, password: string, rememberMe?: boolean }): Promise<UserCredential> {
 		if (credentials.rememberMe) {
-			return this.afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(async () => {
-				const signInAction = await this.afAuth.auth.signInWithEmailAndPassword(credentials.email, credentials.password);
-				if (signInAction.user) {
+			return this.afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(() => {
+				return this.afAuth.auth.signInWithEmailAndPassword(credentials.email, credentials.password);
+				/* if (signInAction.user) {
+					console.log(signInAction.user);
 					await this.updateUser(signInAction.user);
 				}
-				return signInAction;
+				return signInAction; */
 			});
 		} else {
-			return this.afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).then(async () => {
-				const signInAction = await this.afAuth.auth.signInWithEmailAndPassword(credentials.email, credentials.password);
-				if (signInAction.user) {
+			return this.afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).then(() => {
+				return this.afAuth.auth.signInWithEmailAndPassword(credentials.email, credentials.password);
+				/* if (signInAction.user) {
+					console.log(signInAction.user);
 					await this.updateUser(signInAction.user);
 				}
-				return signInAction;
+				return signInAction; */
 			});
 		}
 	}
@@ -66,10 +74,9 @@ export class AuthService {
 	}
 
 	async register(values: IUser): Promise<any> {
-		// const registrationData = await this.applicationService.getAppData().toPromise();
 		const registerAction = await this.afAuth.auth.createUserWithEmailAndPassword(values.email, values.password);
 		const sendVerificationMail = await this.sendVerificationMail();
-		const updateUser = this.updateUser(values);
+		const updateUser = this.saveUser(values);
 		return Promise.all([registerAction, sendVerificationMail, updateUser]);
 	}
 
@@ -85,19 +92,23 @@ export class AuthService {
 		return this.afAuth.auth.sendPasswordResetEmail(email);
 	}
 
-	updateUser(data: IUser): Promise<void> {
-		const myUser: IUser = {
+	saveUser(data: IUser): Observable<void> {
+		/* const myUser: IUser = {
 			id: data.uid,
 			emailVerified: data.emailVerified,
-			photoURL: '',
-			phoneNumber: '',
+			photoURL: data.photoURL,
+			phoneNumber: data.phoneNumber,
+			providerData: data.providerData,
+			assignedRoles: data.assignedRoles,
+			creationTime: data.creationTime,
 			...{
 				email: data.email,
 				lastSignInTime: firebase.firestore.FieldValue.serverTimestamp()
 			}
-		};
+		}; */
+		console.log(data);
 		const userRef: AngularFirestoreDocument<IUser> = this.afs.doc(`users/${ data.uid }`);
-		return userRef.set(myUser, { merge: true });
+		return from(userRef.set(data, { merge: true }));
 	}
 
 	// Roles

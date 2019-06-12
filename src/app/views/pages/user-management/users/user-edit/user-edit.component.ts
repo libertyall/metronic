@@ -68,7 +68,9 @@ export class UserEditComponent implements OnInit, OnDestroy {
 					displayName: '',
 					photoURL: '',
 					phoneNumber: '',
-					uid: ''
+					uid: '',
+					assignedRoles: [],
+					providerId: 'password'
 				};
 
 				this.rolesSubject.next(this.user.assignedRoles);
@@ -164,7 +166,6 @@ export class UserEditComponent implements OnInit, OnDestroy {
 	prepareUser(): IUser {
 		const controls = this.userForm.controls;
 		return {
-			assignedRoles: this.rolesSubject.value,
 			address: this.addressSubject.value,
 			socialNetworks: this.socialNetworksSubject.value,
 			id: this.user.id,
@@ -174,7 +175,8 @@ export class UserEditComponent implements OnInit, OnDestroy {
 			displayName: controls[ 'displayName' ].value,
 			password: this.user.password,
 			phoneNumber: '',
-			photoURL: ''
+			photoURL: '',
+			providerId: ''
 		};
 	}
 

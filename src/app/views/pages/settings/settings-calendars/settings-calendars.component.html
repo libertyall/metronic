@@ -1,0 +1,56 @@
+<mat-card [formGroup]="form">
+  <mat-card-title>{{'general.applications.calendars.title' | translate}}</mat-card-title>
+  <hr/>
+  <mat-card-content formArrayName="assignedCalendars">
+
+    <div *ngFor="let control of form.get('assignedCalendars')['controls']; let i = index">
+      <div fxLayout="column"
+           fxLayout.gt-sm="row"
+           fxLayoutGap="10px"
+           [formGroupName]="i">
+
+        <!--<mat-form-field fxFlex="15">
+          <input matInput
+                 placeholder="{{'general.applications.calendars.fieldTitle' | translate}}"
+                 formControlName="title"/>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="15">
+          <input matInput
+                 placeholder="{{'general.applications.calendars.cssTitle' | translate}}"
+                 formControlName="cssTitle"/>
+        </mat-form-field>
+
+        <div fxFlex="10">
+          <mat-checkbox formControlName="isActive">
+            {{'general.applications.calendars.isActive' | translate}}
+          </mat-checkbox>
+        </div>
+
+        <mat-form-field fxFlex="40">
+          <input matInput
+                 placeholder="{{'general.applications.calendars.link' | translate}}"
+                 formControlName="link"/>
+        </mat-form-field>-->
+
+        <div fxFlex="25">
+          <button mat-raised-button
+                  type="button"
+                  color="warn"
+                  (click)="deleteCalendar(i)">
+            {{'general.applications.calendars.deleteCalendar' | translate}}
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+      <button mat-raised-button
+              type="button"
+              color="primary"
+              (click)="addCalendar()">
+        {{'general.applications.calendars.addCalendar' | translate}}
+      </button>
+  </mat-card-actions>
+</mat-card>

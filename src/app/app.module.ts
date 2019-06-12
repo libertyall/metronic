@@ -33,6 +33,7 @@ import { UnAuthGuard } from './core/auth/_guards/unauth.guard';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { ApplicationService } from './shared/services/application/application.service';
 import { AppStoreModule } from './store/app-store.module';
+import { GravatarService } from './core/auth/_services/gravatar.service';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	wheelSpeed: 0.5,
@@ -80,6 +81,7 @@ export function hljsLanguages(): HighlightLanguage[] {
 	providers: [
 		ApplicationService,
 		AuthService,
+		GravatarService,
 		LayoutConfigService,
 		LayoutRefService,
 		MenuConfigService,

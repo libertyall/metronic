@@ -38,7 +38,10 @@ export const isUserLogged = createSelector(
 
 export const getUser = createSelector(
 	getAuthState,
-	state => state.user.user
+	state => {
+		console.log(state);
+		return state.user.user;
+	}
 );
 
 export const getAuthError = createSelector(

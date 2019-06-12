@@ -18,9 +18,15 @@ export interface IUser extends BaseModel {
 	phoneNumber: string;
 	photoURL: string;
 
-	assignedRoles?: Role[];
+	assignedRoles?: [];
 	lastSignInTime?: any;
+	creationTime?: any;
+
+	isNewUser?: boolean;
+	isOnline?: boolean;
 
 	address?: Address;
 	socialNetworks?: SocialNetworks;
+
+	providerId: any;
 }

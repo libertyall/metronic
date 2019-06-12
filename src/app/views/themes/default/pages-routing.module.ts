@@ -45,12 +45,12 @@ const routes: Routes = [
 			{
 				path: 'uploader',
 				loadChildren: 'app/views/pages/uploader/uploader.module#UploaderModule'
-			},
+			},*/
 			{
 				path: 'settings',
-				loadChildren: '../../pages/settings/settings.module#SettingsModule'
+				loadChildren: () => import('../../pages/settings/settings.module').then(m => m.SettingsModule)
 			},
-			{
+			/* {
 				path: 'sponsors',
 				loadChildren: 'app/views/pages/sponsor/sponsor.module#SponsorModule'
 			},

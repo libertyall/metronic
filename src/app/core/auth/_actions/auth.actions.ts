@@ -4,6 +4,8 @@ import { IUser } from '../_interfaces/user.interface';
 export enum AuthActionTypes {
 	Authenticated               = '[Auth] Authenticated',
 	AuthError                   = '[Auth] Error',
+	SaveUser                  	= '[Auth] Save User',
+	SaveUserSuccess				= '[Auth] Save User Success',
 	CredentialsLogin            = '[Auth] Credentials Login Attempt',
 	CredentialsReAuthentication = '[Auth] Credentials ReAuthentication attempt',
 	CredentialsRegistration     = '[Auth] Credentials Registration Attempt',
@@ -126,7 +128,7 @@ export class TwitterLogin implements Action {
 export class CredentialsLogin implements Action {
 	readonly type = AuthActionTypes.CredentialsLogin;
 
-	constructor(public email: string, public password: string, public remember?: boolean) {
+	constructor(public email: string, public password: string, public rememberMe?: boolean) {
 	}
 }
 
@@ -154,7 +156,7 @@ export class TwitterReAuthentication implements Action {
 export class CredentialsReAuthentication implements Action {
 	readonly type = AuthActionTypes.CredentialsReAuthentication;
 
-	constructor(public email: string, public password: string, public remember?: boolean) {
+	constructor(public email: string, public password: string, public rememberMe?: boolean) {
 	}
 }
 
@@ -222,7 +224,19 @@ export class ResetAuthState implements Action {
 
 export class RefreshToken implements Action {
 	readonly type = AuthActionTypes.RefreshToken;
+}
 
+export class SaveUser implements Action {
+	readonly type = AuthActionTypes.SaveUser;
+
+	constructor(public payload: { user: IUser }) {
+	}
+}
+
+export class SaveUserSuccess implements Action {
+	readonly type = AuthActionTypes.SaveUserSuccess;
+
+	constructor(public payload: { user: IUser }) {}
 }
 
 export type AuthActions
@@ -253,4 +267,6 @@ export type AuthActions
 	| DeleteAccountError
 	| DeleteAccountSuccess
 	| ResetAuthState
-	| RefreshToken;
+	| RefreshToken
+	| SaveUserSuccess
+	| SaveUser;

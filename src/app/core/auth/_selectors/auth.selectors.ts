@@ -9,7 +9,24 @@ export const selectAuthState = state =>  state.auth;
 
 export const isLoggedIn = createSelector(
 	selectAuthState,
-	auth => auth.loggedIn
+	auth => {
+		return auth.user.loggedIn;
+	}
+);
+
+export const getIsLoading = createSelector(
+	selectAuthState,
+	auth => auth.user.loading
+);
+
+export const getIsAdmin = createSelector(
+	selectAuthState,
+	auth => auth.user.isAdmin
+);
+
+export const getError = createSelector(
+	selectAuthState,
+	auth => auth.error
 );
 
 export const isLoggedOut = createSelector(
@@ -25,8 +42,7 @@ export const isUserLoaded = createSelector(
 export const currentUser = createSelector(
 	selectAuthState,
 	auth => {
-		console.log(auth);
-		return auth.user;
+		return auth.user.user;
 	}
 );
 
