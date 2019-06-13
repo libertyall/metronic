@@ -15,8 +15,8 @@ export interface IUser extends BaseModel {
 	lastName?: string;
 	displayName?: string;
 	gender?: string;
-	phoneNumber: string;
-	photoURL: string;
+	phoneNumber?: string;
+	photoURL?: string;
 
 	assignedRoles?: [];
 	lastSignInTime?: any;
@@ -28,5 +28,5 @@ export interface IUser extends BaseModel {
 	address?: Address;
 	socialNetworks?: SocialNetworks;
 
-	providerId: any;
+	providerId?: string;
 }

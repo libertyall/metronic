@@ -7,11 +7,15 @@ import { catchError, map, take } from 'rxjs/operators';
 import { User } from 'firebase';
 import { AuthService } from '../_services/auth.service';
 import { Logout } from '../_actions/auth.actions';
+import { AuthNoticeService } from '../auth-notice/auth-notice.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
 export class UnAuthGuard implements CanActivate {
 
 	constructor(private router: Router,
+				private authNoticeService: AuthNoticeService,
+				private translate: TranslateService,
 				private authService: AuthService,
 				private store: Store<AppState>) {
 	}
@@ -20,11 +24,13 @@ export class UnAuthGuard implements CanActivate {
 		return this.authService.getAuthState().pipe(
 			take(1),
 			map((user: User) => {
-				if (user) {
+				if (user && user.emailVerified) {
 					this.router.navigateByUrl('/dashboard').then(() => console.log('already logged in'));
 					return false;
 				}
-
+				if (user && !user.emailVerified) {
+					this.authNoticeService.setNotice(this.translate.instant('AUTH.LOGIN.VERIFYEMAIL'), 'danger');
+				}
 				return true;
 			}),
 			catchError((error: any) => {

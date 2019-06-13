@@ -120,12 +120,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 			displayName: controls['displayName'].value,
 			firstName: controls['firstName'].value,
 			lastName: controls['lastName'].value,
-			password: controls['password'].value,
-			assignedRoles: [],
-			lastSignInTime: null,
-			phoneNumber: '',
-			photoURL: '',
-			providerId: 'password'
+			password: controls['password'].value
 		};
 		this.auth.register(_user).then(() => {
 			this.store.dispatch(new CredentialsRegistration(_user));

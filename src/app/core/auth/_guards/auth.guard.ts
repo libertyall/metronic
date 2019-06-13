@@ -6,11 +6,15 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../reducers';
 import { AuthService } from '../_services/auth.service';
 import { User } from 'firebase';
+import { TranslateService } from '@ngx-translate/core';
+import { AuthNoticeService } from '../auth-notice/auth-notice.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
 
 	constructor(private authService: AuthService,
+				private translate: TranslateService,
+				private authNoticeService: AuthNoticeService,
 				private store: Store<AppState>,
 				private router: Router) {
 	}
@@ -21,6 +25,11 @@ export class AuthGuard implements CanActivate {
 			map((user: User) => {
 				if (!user) {
 					this.router.navigateByUrl('/auth/login').then();
+					return false;
+				}
+				if (user && !user.emailVerified) {
+					this.authNoticeService.setNotice(this.translate.instant('AUTH.LOGIN.VERIFYEMAIL'), 'danger');
+					this.router.navigateByUrl('/auth/login').then(() => console.log('email verification needed'));
 					return false;
 				}
 				return true;

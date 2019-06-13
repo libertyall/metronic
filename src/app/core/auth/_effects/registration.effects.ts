@@ -6,12 +6,17 @@ import { from, Observable, of } from 'rxjs';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import {
-	AuthActions, AuthActionTypes, AuthError, CredentialsRegistration, FacebookRegistration, GoogleRegistration,
-	RegistrationSuccess, VerificationEmailError, VerificationEmailSent
+	AuthActions, AuthActionTypes, Authenticated, AuthError, CredentialsRegistration, FacebookRegistration,
+	GoogleRegistration,
+	RegistrationSuccess, SaveUser, SaveUserSuccess, VerificationEmailError, VerificationEmailSent
 } from '../_actions/auth.actions';
 import { ProvidersManagementActions, SetProviders } from '../_actions/providers.management.actions';
 import { IUser } from '../_interfaces/user.interface';
 import UserCredential = firebase.auth.UserCredential;
+import { GravatarService } from '../_services/gravatar.service';
+import { AuthService } from '../_services/auth.service';
+import { LoginEffects } from './login.effects';
+import * as auth from '../_effects/login.effects';
 
 export type Action = AuthActions | ProvidersManagementActions;
 
@@ -19,6 +24,9 @@ export type Action = AuthActions | ProvidersManagementActions;
 export class RegistrationEffects {
 
 	constructor(private actions: Actions,
+				private loginEffects: LoginEffects,
+				private authService: AuthService,
+				private gravatarService: GravatarService,
 				private afAuth: AngularFireAuth) {
 	}
 
@@ -38,7 +46,7 @@ export class RegistrationEffects {
 						email: authData.email,
 						phoneNumber: authData.phoneNumber,
 						emailVerified: authData.emailVerified,
-						photoURL: authData.photoURL,
+						photoURL: authData.photoURL || this.gravatarService.getUserGravatar(authData.email),
 						creationTime: authData.metadata.creationTime,
 						providerId: authData.providerData[0].providerId
 					};
@@ -53,7 +61,7 @@ export class RegistrationEffects {
 	facebookSignUp: Observable<Action> = this.actions.pipe(
 		ofType(AuthActionTypes.FacebookRegistration),
 		map((action: FacebookRegistration) => action.payload),
-		exhaustMap(payload => {
+		exhaustMap(() => {
 			return from(this.doFacebookRegistration()).pipe(
 				switchMap(credential => {
 					// tslint:disable-next-line:no-console
@@ -65,7 +73,7 @@ export class RegistrationEffects {
 						email: authData.email,
 						phoneNumber: authData.phoneNumber,
 						emailVerified: authData.emailVerified,
-						photoURL: authData.photoURL,
+						photoURL: authData.photoURL || this.gravatarService.getUserGravatar(authData.email),
 						creationTime: authData.metadata.creationTime,
 						providerId: authData.providerData[0].providerId
 					};
@@ -82,31 +90,58 @@ export class RegistrationEffects {
 		map((action: CredentialsRegistration) => {
 			return {
 				email: action.payload.email,
-				password: action.payload.password
+				password: action.payload.password,
+				firstName: action.payload.firstName,
+				lastName: action.payload.lastName,
+				displayName: action.payload.displayName
 			};
 		}),
 		exhaustMap(credentials => {
 			return from(this.doSignUpWithCredentials(credentials)).pipe(
 				map(credential => {
-					// tslint:disable-next-line:no-console
-					console.debug('doSignUpWithCredentials', credential);
+					console.log(this.authService.afAuth.auth.currentUser.uid);
+					console.log(credential.user);
+					console.log(credentials);
 					const authData = credential.user;
 					const user: IUser = {
-						uid: authData.uid,
+						id: authData.uid,
 						displayName: authData.displayName,
 						email: authData.email,
-						phoneNumber: authData.phoneNumber,
-						emailVerified: authData.emailVerified,
-						photoURL: authData.photoURL,
-						creationTime: authData.metadata.creationTime,
-						providerId: authData.providerData[0].providerId
+						// irstName: action.payload.firstName,
+						// lastName: authData.lastName,
+						photoURL: authData.photoURL || this.gravatarService.getUserGravatar(authData.email),
+						creationTime: new Date(),
+						providerId: 'password'
 					};
+					console.log(user);
+					return from([
+						new SaveUser({ user }),
+						new Authenticated({ user })
+					]);
+				}),
+				map((user) => {
+					console.log(user);
 					return new RegistrationSuccess({ user });
 				}),
+				/* switchMap( (user: any) => {
+					return new RegistrationSuccess({ user });
+					if (user.isNewUser) {
+						return [
+							new auth.LoginEffects.({ user }),
+							new auth.SaveUser( { uid: user.uid, name: user.displayName }),
+							new auth.CheckUserRole( {uid: user.uid })
+						];
+					} else {
+						return [ new auth.LoginSuccess( {user }), new auth.CheckUserRole({ uid: user.uid })];
+					}
+				}), */
+					// return new RegistrationSuccess();
+				// }),
 				catchError(error => of(new AuthError(error)))
 			);
 		})
 	);
+
 
 	@Effect()
 	sendVerificationEmail$: Observable<Action> = this.actions.pipe(

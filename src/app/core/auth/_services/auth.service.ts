@@ -93,20 +93,8 @@ export class AuthService {
 	}
 
 	saveUser(data: IUser): Observable<void> {
-		/* const myUser: IUser = {
-			id: data.uid,
-			emailVerified: data.emailVerified,
-			photoURL: data.photoURL,
-			phoneNumber: data.phoneNumber,
-			providerData: data.providerData,
-			assignedRoles: data.assignedRoles,
-			creationTime: data.creationTime,
-			...{
-				email: data.email,
-				lastSignInTime: firebase.firestore.FieldValue.serverTimestamp()
-			}
-		}; */
-		const userRef: AngularFirestoreDocument<IUser> = this.afs.doc(`users/${ data.uid }`);
+		data.id = this.afAuth.auth.currentUser.uid;
+		const userRef: AngularFirestoreDocument<IUser> = this.afs.doc(`/users/${ data.id }`);
 		return from(userRef.set(data, { merge: true }));
 	}
 

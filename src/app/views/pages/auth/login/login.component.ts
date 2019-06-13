@@ -111,7 +111,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 		this.auth
 			.doLoginWithCredentials(authData)
 			.then((user) => {
-				console.log(user);
 				this.store.dispatch(new CredentialsLogin(authData.email, authData.password, authData.rememberMe));
 				this.router.navigateByUrl('/').then(() => console.log('navigate to dashboard'));
 				this.loading = false;
