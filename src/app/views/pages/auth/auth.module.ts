@@ -24,6 +24,7 @@ import { RegistrationEffects } from '../../../core/auth/_effects/registration.ef
 import { ProvidersManagementEffects } from '../../../core/auth/_effects/providers-management.effects';
 import { PasswordManagementEffects } from '../../../core/auth/_effects/password-management.effects';
 import { authReducer } from '../../../core/auth/_reducers/auth.reducer';
+import { PartialsModule } from '../../partials/partials.module';
 
 const routes: Routes = [
 	{
@@ -71,7 +72,8 @@ const routes: Routes = [
 			RegistrationEffects,
 			ProvidersManagementEffects,
 			PasswordManagementEffects
-		])
+		]),
+		PartialsModule
 	],
 	providers: [
 		InterceptService,

@@ -100,16 +100,21 @@ export class LoginEffects {
 										creationTime: authData.metadata.creationTime,
 										emailVerified: authData.emailVerified
 									};
-									return from([new SetProviders(providers), new SaveUser({ user }), new Authenticated({ user })]);
+									return from([
+										new SetProviders(providers),
+										new SaveUser({ user }),
+										new Authenticated({ user })
+									]);
 								})
 							);
 						} else {
 							return of(new NotAuthenticated());
 						}
-					}),
-					tap((u) => {
-						this.router.navigateByUrl('');
 					})
+					/* tap(() => {
+					 console.log(3);
+					 // this.router.navigateByUrl('');
+					 }) */
 				);
 			}
 		)
@@ -119,7 +124,7 @@ export class LoginEffects {
 	saveUser$ = this.actions$.pipe(
 		ofType(AuthActionTypes.SaveUser),
 		map((action: SaveUser) => action.payload),
-		switchMap((payload: any) => this.authService.saveUser(payload.user))
+		switchMap((payload: any) => from(this.authService.saveUser(payload.user)))
 	);
 
 	@Effect()

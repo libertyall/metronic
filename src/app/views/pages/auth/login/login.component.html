@@ -1,4 +1,5 @@
 <div class="kt-login__head">
+	<!--<kt-language-selector></kt-language-selector>-->
 	<span class="kt-login__signup-label">{{ 'global.login.noAccountQuestion' | translate }}</span>&nbsp;&nbsp;
 	<a [routerLink]="'/auth/register'"
 	   class="kt-link kt-login__signup-link">{{ 'AUTH.GENERAL.SIGNUP_BUTTON' | translate }}</a>
@@ -11,6 +12,7 @@
 			<h3>{{ 'global.login.title' | translate}}</h3>
 		</div>
 
+		<a [routerLink]="'/dashboard'">Dashboard</a>
 
 		<div>
 			isLoggedIn: {{isLoggedIn$ | async | json}}<br/>

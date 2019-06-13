@@ -67,6 +67,7 @@ export class UserEffects {
             ofType<UserUpdated>(UserActionTypes.UserUpdated),
             mergeMap(( { payload } ) => {
                 this.store.dispatch(this.showActionLoadingDistpatcher);
+                console.log('updateUser');
                 return this.auth.saveUser(payload.user);
             }),
             map(() => {

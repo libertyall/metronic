@@ -3,6 +3,8 @@ import { LayoutConfigService, SplashScreenService } from '../../../core/_base/la
 import { TranslationService } from '../../../core/_base/metronic';
 import * as objectPath from 'object-path';
 import { Title } from '@angular/platform-browser';
+import { Observable } from 'rxjs';
+import { IArticle } from '../../../shared/interfaces/article.interface';
 
 @Component({
 	selector: 'kt-auth',
@@ -19,8 +21,11 @@ export class AuthComponent implements OnInit {
 	mainLogo: string = '';
 	pageTitle: string = '';
 
+	public articles$: Observable<IArticle[]>;
+
 	constructor(private layoutConfigService: LayoutConfigService,
 				private translationService: TranslationService,
+				// private articleService: ArticleService,
 				private title: Title,
 				private splashScreenService: SplashScreenService) {
 	}

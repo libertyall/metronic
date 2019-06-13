@@ -106,7 +106,6 @@ export class AuthService {
 				lastSignInTime: firebase.firestore.FieldValue.serverTimestamp()
 			}
 		}; */
-		console.log(data);
 		const userRef: AngularFirestoreDocument<IUser> = this.afs.doc(`users/${ data.uid }`);
 		return from(userRef.set(data, { merge: true }));
 	}

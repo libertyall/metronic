@@ -124,7 +124,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
 			assignedRoles: [],
 			lastSignInTime: null,
 			phoneNumber: '',
-			photoURL: ''
+			photoURL: '',
+			providerId: 'password'
 		};
 		this.auth.register(_user).then(() => {
 			this.store.dispatch(new CredentialsRegistration(_user));

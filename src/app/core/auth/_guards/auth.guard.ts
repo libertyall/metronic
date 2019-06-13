@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { catchError, switchMap, take, tap } from 'rxjs/operators';
+import { catchError, map, take } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../reducers';
 import { AuthService } from '../_services/auth.service';
@@ -18,15 +18,15 @@ export class AuthGuard implements CanActivate {
 	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
 		return this.authService.getAuthState().pipe(
 			take(1),
-			switchMap((user: User) => {
+			map((user: User) => {
+				console.log(user);
 				if (!user) {
-					this.router.navigateByUrl('/auth/login');
-					return of(false);
+					this.router.navigateByUrl('/auth/login').then();
 				}
+				return of(user);
 			}),
 			catchError((error: any) => {
-				console.log(error);
-				this.router.navigateByUrl('/auth/login');
+				this.router.navigateByUrl('/auth/login').then(() => console.log(error));
 				return of(false);
 			})
 		);

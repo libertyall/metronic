@@ -1,9 +1,6 @@
-// Angular
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
-// RxJS
 import { filter } from 'rxjs/operators';
-// Translate
 import { TranslationService } from '../../../../../core/_base/metronic';
 
 interface LanguageFlag {
@@ -15,10 +12,10 @@ interface LanguageFlag {
 
 @Component({
 	selector: 'kt-language-selector',
-	templateUrl: './language-selector.component.html',
+	templateUrl: './language-selector.component.html'
 })
 export class LanguageSelectorComponent implements OnInit {
-	// Public properties
+
 	@HostBinding('class') classes = '';
 
 	language: LanguageFlag;
@@ -29,48 +26,15 @@ export class LanguageSelectorComponent implements OnInit {
 			flag: './assets/media/flags/012-uk.svg'
 		},
 		{
-			lang: 'ch',
-			name: 'Mandarin',
-			flag: './assets/media/flags/015-china.svg'
-		},
-		{
-			lang: 'es',
-			name: 'Spanish',
-			flag: './assets/media/flags/016-spain.svg'
-		},
-		{
-			lang: 'jp',
-			name: 'Japanese',
-			flag: './assets/media/flags/014-japan.svg'
-		},
-		{
 			lang: 'de',
 			name: 'German',
 			flag: './assets/media/flags/017-germany.svg'
-		},
-		{
-			lang: 'fr',
-			name: 'French',
-			flag: './assets/media/flags/019-france.svg'
-		},
+		}
 	];
 
-	/**
-	 * Component constructor
-	 *
-	 * @param translationService: TranslationService
-	 * @param router: Router
-	 */
 	constructor(private translationService: TranslationService, private router: Router) {
 	}
 
-	/**
-	 * @ Lifecycle sequences => https://angular.io/guide/lifecycle-hooks
-	 */
-
-	/**
-	 * On init
-	 */
 	ngOnInit() {
 		this.setSelectedLanguage();
 		this.router.events
@@ -80,11 +44,6 @@ export class LanguageSelectorComponent implements OnInit {
 			});
 	}
 
-	/**
-	 * Set language
-	 *
-	 * @param lang: any
-	 */
 	setLanguage(lang) {
 		this.languages.forEach((language: LanguageFlag) => {
 			if (language.lang === lang) {
@@ -97,9 +56,6 @@ export class LanguageSelectorComponent implements OnInit {
 		this.translationService.setLanguage(lang);
 	}
 
-	/**
-	 * Set selected language
-	 */
 	setSelectedLanguage(): any {
 		this.setLanguage(this.translationService.getSelectedLanguage());
 	}

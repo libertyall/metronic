@@ -20,9 +20,9 @@
 						© {{today|date:'yyyy'}} {{copyright}}
 					</div>
 					<div class="kt-login__menu">
-						<a [routerLink]="['/start']" class="kt-link">Privacy</a>
-						<a [routerLink]="['/start']" class="kt-link">Legal</a>
-						<a [routerLink]="['/start']" class="kt-link">Contact</a>
+						<ng-container *ngFor="let article of articles$ | async">
+							<a [routerLink]="['/articles/', article.id]" class="kt-link">{{article.title | translate}}</a>
+						</ng-container>
 					</div>
 				</div>
 			</div>
