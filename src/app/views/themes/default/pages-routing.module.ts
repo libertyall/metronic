@@ -8,11 +8,11 @@ const routes: Routes = [
 	{
 		path: '',
 		component: BaseComponent,
-		// canActivate: [ AuthGuard ],
+		canActivate: [ AuthGuard ],
 		children: [
 			{
 				path: 'dashboard',
-				loadChildren: () => import('app/views/pages/dashboard/dashboard.module').then(m => m.DashboardModule)
+				loadChildren: () => import('app/views/pages/dashboard/dashboard.module').then(m => m.DashboardModule),
 			}, /* ,
 			{
 				path: 'articles',
