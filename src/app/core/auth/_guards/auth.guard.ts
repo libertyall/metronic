@@ -27,7 +27,7 @@ export class AuthGuard implements CanActivate {
 					this.router.navigateByUrl('/auth/login').then();
 					return false;
 				}
-				if (user && !user.emailVerified) {
+				if (user && user.providerId === 'password' && !user.emailVerified) {
 					this.authNoticeService.setNotice(this.translate.instant('AUTH.LOGIN.VERIFYEMAIL'), 'danger');
 					this.router.navigateByUrl('/auth/login').then(() => console.log('email verification needed'));
 					return false;

@@ -9,6 +9,8 @@ import { locale as esLang } from './core/_config/i18n/es';
 import { locale as jpLang } from './core/_config/i18n/jp';
 import { locale as deLang } from './core/_config/i18n/de';
 import { locale as frLang } from './core/_config/i18n/fr';
+import { Title } from '@angular/platform-browser';
+import * as objectPath from 'object-path';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -19,7 +21,7 @@ import { locale as frLang } from './core/_config/i18n/fr';
 })
 export class AppComponent implements OnInit, OnDestroy {
 
-	title = 'Admin';
+	pageTitle: string;
 	loader: boolean;
 
 	private unsubscribe: Subscription[] = [];
@@ -27,6 +29,7 @@ export class AppComponent implements OnInit, OnDestroy {
 	constructor(private translationService: TranslationService,
 				private router: Router,
 				private layoutConfigService: LayoutConfigService,
+				private title: Title,
 				private splashScreenService: SplashScreenService) {
 		this.translationService.loadTranslations(enLang, chLang, esLang, jpLang, deLang, frLang);
 	}
@@ -41,6 +44,11 @@ export class AppComponent implements OnInit, OnDestroy {
 			}
 		});
 		this.unsubscribe.push(routerSubscription);
+
+		const config = this.layoutConfigService.getConfig();
+		this.pageTitle = objectPath.get(config, 'backend.self.page.title');
+
+		this.title.setTitle(this.pageTitle);
 	}
 
 	ngOnDestroy() {

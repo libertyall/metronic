@@ -48,6 +48,9 @@ import { MatPaginatorI18nService } from '../../shared/services/application/mat-p
 			provide: MatPaginatorIntl, deps: [TranslateService],
 			useClass: MatPaginatorI18nService
 		}
+	],
+	entryComponents: [
+		SnackbarComponent
 	]
 })
 export class SharedModule {

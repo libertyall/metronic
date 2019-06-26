@@ -3,16 +3,17 @@ import { QueryParamsModel } from '../../_base/crud';
 import { Role } from '../_interfaces/role.interface';
 
 export enum RoleActionTypes {
-	AllRolesRequested = '[Roles Home Page] All Roles Requested',
-	AllRolesLoaded = '[Roles API] All Roles Loaded',
-	RoleOnServerCreated = '[Edit Role Dialog] Role On Server Created',
-	RoleCreated = '[Edit Roles Dialog] Roles Created',
-	RoleUpdated = '[Edit Role Dialog] Role Updated',
-	RoleDeleted = '[Roles List Page] Role Deleted',
-	RolesPageRequested = '[Roles List Page] Roles Page Requested',
-	RolesPageLoaded = '[Roles API] Roles Page Loaded',
-	RolesPageCancelled = '[Roles API] Roles Page Cancelled',
-	RolesPageToggleLoading = '[Roles page] Roles Page Toggle Loading',
+	AllRolesRequested        = '[Roles Home Page] All Roles Requested',
+	AllRolesLoaded           = '[Roles API] All Roles Loaded',
+	RoleOnServerCreated      = '[Edit Role Dialog] Role On Server Created',
+	RoleCreated              = '[Edit Roles Dialog] Roles Created',
+	RoleCreateError          = '[Create Role Dialog] Role NOT created',
+	RoleUpdated              = '[Edit Role Dialog] Role Updated',
+	RoleDeleted              = '[Roles List Page] Role Deleted',
+	RolesPageRequested       = '[Roles List Page] Roles Page Requested',
+	RolesPageLoaded          = '[Roles API] Roles Page Loaded',
+	RolesPageCancelled       = '[Roles API] Roles Page Cancelled',
+	RolesPageToggleLoading   = '[Roles page] Roles Page Toggle Loading',
 	RolesActionToggleLoading = '[Roles] Roles Action Toggle Loading'
 }
 
@@ -23,14 +24,23 @@ export class RoleOnServerCreated implements Action {
 	}
 }
 
+export class RoleCreateError implements Action {
+	readonly type = RoleActionTypes.RoleCreateError;
+
+	constructor(public payload: { error: any }) {
+	}
+}
+
 export class RoleCreated implements Action {
 	readonly type = RoleActionTypes.RoleCreated;
+
 	constructor(public payload: { role: Role }) {
 	}
 }
 
 export class RoleUpdated implements Action {
 	readonly type = RoleActionTypes.RoleUpdated;
+
 	constructor(public payload: { role: Role }) {
 	}
 }
@@ -62,6 +72,9 @@ export class RolesPageCancelled implements Action {
 
 export class AllRolesRequested implements Action {
 	readonly type = RoleActionTypes.AllRolesRequested;
+
+	constructor() {
+	}
 }
 
 export class AllRolesLoaded implements Action {
@@ -86,6 +99,7 @@ export class RolesActionToggleLoading implements Action {
 }
 
 export type RoleActions = RoleCreated
+	| RoleCreateError
 	| RoleUpdated
 	| RoleDeleted
 	| RolesPageRequested

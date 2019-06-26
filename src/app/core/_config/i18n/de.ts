@@ -2,9 +2,15 @@
 export const locale = {
 	lang: 'de',
 	data: {
+		actions: 'Aktionen',
 		AUTH: {
 			AGREE: {
 				TEXT: 'Ich akzeptiere die '
+			},
+			ERRORS: {
+				'auth/wrong-password': 'Das eingegebene Passwort ist nicht korrekt.',
+				'auth/user-not-found': 'Es wurde kein Benutzer mit diesen Daten gefunden.',
+				'auth/user-disabled': 'Dein Benutzeraccount wurde deaktiviert.'
 			},
 			GENERAL: {
 				OR: 'Oder',
@@ -19,7 +25,9 @@ export const locale = {
 			},
 			LOGIN: {
 				TITLE: 'Account erstellen',
-				BUTTON: 'Anmelden'
+				BUTTON: 'Anmelden',
+				VERIFYEMAIL: 'Du musst Deine E-Mail Adresse noch bestätigen. Erst danach kannst Du Dich am System' +
+					' anmelden.'
 			},
 			FORGOT: {
 				TITLE: 'Passwort vergessen?',
@@ -62,15 +70,9 @@ export const locale = {
 				INVALID_FIELD: 'Diese Eingabe ist fehlerhaft.'
 			}
 		},
-		forms: {
-			errors: {
-				required: 'Hier ist eine Eingabe erforderlich.',
-				minLength: 'Deine Eingabe ist zu kurz. Es werden mindestens {{minLength}} Zeichen benötigt.',
-				maxLength: 'Deine Eingabe ist zu lang. Es können maximal {{maxLength}} Zeichen eingegeben werden.',
-				title: 'Hoppla!',
-				description: 'Deine Eingaben sind noch fehlerhaft. Bitte überprüfe das Formular noch einmal auf Fehler.'
-			}
-		},
+		back: 'Zurück',
+		cancel: 'Abbrechen',
+		cancelTooltip: 'Verwerfen und Vorgang abbrechen!',
 		category: {
 			delete: {
 				description: 'Die Kategorie kann danach nicht wieder hergestellt werden. Alle verknüpften Einträge' +
@@ -131,123 +133,21 @@ export const locale = {
 				title: 'Alle Kategorien'
 			}
 		},
-		settings: {
-			/* calendar: {
-				addCalendar: 'Kalender hinzufügen',
-				cssTitle: 'Farbe zur Anzeige der Termine',
-				deleteCalendar: 'Kalender löschen',
-				fieldTitle: 'Name des Kalenders',
-				isActive: 'Ist der Kalender aktiviert?',
-				link: 'Link zum Google Kalender',
-				title: 'Eingebundene Kalender'
-			},
-			calendarTitle: 'Kalender',
-			description: 'Hier können globale Einstellungen zur Seite vorgenommen werden.',
-			downtime: {
-				isActive: 'Wartungsmodus aktiviert?',
-				message: 'Nachricht an die Benutzer',
-				messageDescription: 'Diese Nachricht wird den Benutzern im Frontend angezeigt. Die' +
-					' Administrations-Oberfläche ist weiterhin erreichbar.',
-				title: 'Wartungsmodus'
-			},
-			layout: {
-				form: {
-					body: {
-						'background-image': 'Hintergrundbild'
-					},
-					loader: {
-						logo: 'Bild, das beim Laden angezeigt wird',
-						message: 'Nachricht beim Laden',
-						type: 'Wähle zwischen: spinner-logo, spinner-message und default'
-					},
-					logo: {
-						brand: 'Brand-Logo',
-						dark: 'Logo bei dunklem Design',
-						green: 'Logo bei grünem Hintergrund',
-						light: 'Logo bei hellem Hintergrund'
-					},
-					self: {
-						layout: 'Fluid oder fixed Design?'
-					},
-					sticky: {
-						offset: 'Porlets offset'
-					}
-				},
-				input: {
-					title: 'Layout',
-					description: 'Wie soll das Layout aufgebaut werden?'
-				},
-				title: {
-					frontend: 'Frontend-Seite',
-					backend: 'Administrationbereich'
-				},
-				wizard: {
-					self: {
-						description: '',
-						title: 'Self'
-					},
-					portlet: {
-						description: '',
-						title: 'Portlets'
-					},
-					loader: {
-						description: '',
-						title: 'Laden-Anzeige'
-					},
-					colors: {
-						description: '',
-						title: 'Farbgebung'
-					},
-					header: {
-						description: '',
-						title: 'Erste Kopfzeile'
-					},
-					subheader: {
-						description: '',
-						title: 'Zweite Kopfzeile'
-					},
-					brand: {
-						description: '',
-						title: 'Branding'
-					},
-					aside: {
-						description: '',
-						title: 'Seitliche Navigation'
-					},
-					footer: {
-						description: '',
-						title: 'Fußzeile'
-					}
-				}
-			},
-			layoutTitle: 'Layout Optionen',
-			mailing: {
-				addMailList: 'Neuen Verteiler anlegen',
-				addEmail: 'E-Mail hinzufügen',
-				deleteMailList: 'Verteiler löschen',
-				fieldTitle: 'Name des Verteilers',
-				isActive: 'Aktiviert?',
-				title: 'E-Mail Verteiler'
-			},
-			mailingTitle: 'E-Mail Optionen',
-			page: {
-				description: 'Beschreibung',
-				descriptionDescription: 'Beschreibung der Seite im Kopfbereich',
-				emailDescription: 'E-Mail Adresse, die im Kopfbereich der Seite angezeigt wird.',
-				emailTitle: 'E-Mail',
-				keywords: 'Keywords der Seite',
-				keywordsDescription: 'Keywords, die als Standard im Kopfbereich angezeigt werden.',
-				name: 'Name der Seite',
-				nameDescription: 'Name der Seite, wie er in der Titelleiste angezeigt wird.',
-				title: 'Titel der Seite',
-				titleDescription: 'Standard-Titel, der im Kopfbereich angezeigt wird.'
-			},
-			pageTitle: 'Seiteneinstellungen',
-			title: 'Administration der Seite'
-			*/
-			subheader: {
-				title: 'Einstellungen',
-				desc: '---'
+		delete: 'Löschen',
+		dialog: {
+			canceledMessage: 'Der Vorgang wurde auf Deinen Wunsch hin abgebrochen.',
+			formErrorMessage: 'Hoppla! Es scheint, als wären nicht alle Angaben korrekt. Bitte überprüfe Deine' +
+				' Eingaben.',
+			titleIs: 'Der Titel ist '
+		},
+		FIRST_PAGE_LABEL: 'Zur ersten Seite',
+		forms: {
+			errors: {
+				required: 'Hier ist eine Eingabe erforderlich.',
+				minLength: 'Deine Eingabe ist zu kurz. Es werden mindestens {{minLength}} Zeichen benötigt.',
+				maxLength: 'Deine Eingabe ist zu lang. Es können maximal {{maxLength}} Zeichen eingegeben werden.',
+				title: 'Hoppla!',
+				description: 'Deine Eingaben sind noch fehlerhaft. Bitte überprüfe das Formular noch einmal auf Fehler.'
 			}
 		},
 		global: {
@@ -260,10 +160,7 @@ export const locale = {
 			title: 'Administration'
 		},
 		ITEMS_PER_PAGE_LABEL: 'Einträge pro Seite',
-		FIRST_PAGE_LABEL: 'Zur ersten Seite',
 		LAST_PAGE_LABEL: 'Zur letzten Seite',
-		NEXT_PAGE_LABEL: 'Nächste Seite anzeigen',
-		PREVIOUS_PAGE_LABEL: 'Eine Seite zurückblättern',
 		MENU: {
 			ARTICLE: {
 				CREATE: 'Artikel schreiben',
@@ -309,6 +206,7 @@ export const locale = {
 				LIST: 'Bisherige Newsletter',
 				MAIN: 'Newsletter'
 			},
+			PAGES: 'Seiten',
 			SETTINGS: {
 				ANALYTICS: 'Auswertungen',
 				SECTION: 'Seiten-Administration',
@@ -334,22 +232,223 @@ export const locale = {
 					CREATE: 'Neue Galerie'
 				},
 				MAIN: 'Mediencenter'
+			},
+			USER: {
+				LIST: 'Benutzerliste',
+				ROLES: 'Rollen'
 			}
 		},
+		NEXT_PAGE_LABEL: 'Nächste Seite anzeigen',
 		pleaseWait: 'Bitte warten',
-		back: 'Zurück',
+		PREVIOUS_PAGE_LABEL: 'Eine Seite zurückblättern',
+		required: 'erforderlich',
 		reset: 'Zurücksetzen',
 		resetDescription: 'Das Formular zurücksetzen',
 		save: 'Speichern',
 		saveDescription: 'Speichern und Fortfahren',
 		saveToList: 'Speichern und zur Übersicht',
 		saveToListDescription: 'Speichern und zur Listenansicht zurückkehren',
-		cancel: 'Abbrechen',
-		delete: 'Löschen',
-		undo: 'Rückgängig machen',
-		required: 'erforderlich',
+		settings: {
+			/* calendar: {
+			 addCalendar: 'Kalender hinzufügen',
+			 cssTitle: 'Farbe zur Anzeige der Termine',
+			 deleteCalendar: 'Kalender löschen',
+			 fieldTitle: 'Name des Kalenders',
+			 isActive: 'Ist der Kalender aktiviert?',
+			 link: 'Link zum Google Kalender',
+			 title: 'Eingebundene Kalender'
+			 },
+			 calendarTitle: 'Kalender',
+			 description: 'Hier können globale Einstellungen zur Seite vorgenommen werden.',
+			 downtime: {
+			 isActive: 'Wartungsmodus aktiviert?',
+			 message: 'Nachricht an die Benutzer',
+			 messageDescription: 'Diese Nachricht wird den Benutzern im Frontend angezeigt. Die' +
+			 ' Administrations-Oberfläche ist weiterhin erreichbar.',
+			 title: 'Wartungsmodus'
+			 },
+			 layout: {
+			 form: {
+			 body: {
+			 'background-image': 'Hintergrundbild'
+			 },
+			 loader: {
+			 logo: 'Bild, das beim Laden angezeigt wird',
+			 message: 'Nachricht beim Laden',
+			 type: 'Wähle zwischen: spinner-logo, spinner-message und default'
+			 },
+			 logo: {
+			 brand: 'Brand-Logo',
+			 dark: 'Logo bei dunklem Design',
+			 green: 'Logo bei grünem Hintergrund',
+			 light: 'Logo bei hellem Hintergrund'
+			 },
+			 self: {
+			 layout: 'Fluid oder fixed Design?'
+			 },
+			 sticky: {
+			 offset: 'Porlets offset'
+			 }
+			 },
+			 input: {
+			 title: 'Layout',
+			 description: 'Wie soll das Layout aufgebaut werden?'
+			 },
+			 title: {
+			 frontend: 'Frontend-Seite',
+			 backend: 'Administrationbereich'
+			 },
+			 wizard: {
+			 self: {
+			 description: '',
+			 title: 'Self'
+			 },
+			 portlet: {
+			 description: '',
+			 title: 'Portlets'
+			 },
+			 loader: {
+			 description: '',
+			 title: 'Laden-Anzeige'
+			 },
+			 colors: {
+			 description: '',
+			 title: 'Farbgebung'
+			 },
+			 header: {
+			 description: '',
+			 title: 'Erste Kopfzeile'
+			 },
+			 subheader: {
+			 description: '',
+			 title: 'Zweite Kopfzeile'
+			 },
+			 brand: {
+			 description: '',
+			 title: 'Branding'
+			 },
+			 aside: {
+			 description: '',
+			 title: 'Seitliche Navigation'
+			 },
+			 footer: {
+			 description: '',
+			 title: 'Fußzeile'
+			 }
+			 }
+			 },
+			 layoutTitle: 'Layout Optionen',
+			 mailing: {
+			 addMailList: 'Neuen Verteiler anlegen',
+			 addEmail: 'E-Mail hinzufügen',
+			 deleteMailList: 'Verteiler löschen',
+			 fieldTitle: 'Name des Verteilers',
+			 isActive: 'Aktiviert?',
+			 title: 'E-Mail Verteiler'
+			 },
+			 mailingTitle: 'E-Mail Optionen',
+			 page: {
+			 description: 'Beschreibung',
+			 descriptionDescription: 'Beschreibung der Seite im Kopfbereich',
+			 emailDescription: 'E-Mail Adresse, die im Kopfbereich der Seite angezeigt wird.',
+			 emailTitle: 'E-Mail',
+			 keywords: 'Keywords der Seite',
+			 keywordsDescription: 'Keywords, die als Standard im Kopfbereich angezeigt werden.',
+			 name: 'Name der Seite',
+			 nameDescription: 'Name der Seite, wie er in der Titelleiste angezeigt wird.',
+			 title: 'Titel der Seite',
+			 titleDescription: 'Standard-Titel, der im Kopfbereich angezeigt wird.'
+			 },
+			 pageTitle: 'Seiteneinstellungen',
+			 title: 'Administration der Seite'
+			 */
+			subheader: {
+				title: 'Einstellungen',
+				desc: '---'
+			}
+		},
 		TRANSLATOR: {
 			SELECT: 'Wähle deine Sprache'
+		},
+		undo: 'Rückgängig machen',
+		user: {
+			dashboard: {
+				description: 'In diesem Bereich können Benutzer verwaltet und Rollen vergeben oder entzogen werden.',
+				title: 'Benutzer- und Rollenverwaltung'
+			},
+			list: {
+				create: {
+					tooltip: 'Einen neuen Benutzer anlegen',
+					title: 'Neuer Benutzer'
+				},
+				delete: {
+					one: 'Benutzer löschen',
+					title: 'Alle löschen',
+					tooltip: 'Alle ausgewählten Benutzer löschen'
+				},
+				detail: 'Details anzeigen',
+				edit: 'Benutzer editieren',
+				noRoles: 'keine',
+				search: {
+					description: '',
+					fields: 'Vorname, Nachname, E-Mail und Anzeigename',
+					placeholder: 'Benutzer suchen ...',
+					title: 'Suche nach '
+				},
+				selectedCount: 'Es wurden {{count}} Benutzer ausgewählt.',
+				table: {
+					id: 'Id',
+					assignedRoles: 'Verknüpfte Rollen',
+					displayName: 'Anzeigename',
+					email: 'E-Mail',
+					firstName: 'Vorname',
+					lastName: 'Nachname'
+				},
+				title: 'Registrierte Benutzer'
+			},
+			role: {
+				create: {
+					title: 'Rolle erstellen',
+					tooltip: 'Eine neue Rolle erstellen'
+				},
+				delete: {
+					one: 'Rolle löschen',
+					title: 'Rollen löschen',
+					tooltip: 'Alle ausgewählten Rollen löschen'
+				},
+				dialog: {
+					saveTooltip: 'Rolle speichern',
+					title: {
+						edit: 'Die Rolle {{role}} editieren',
+						new: 'Neue Rolle erstellen',
+						placeholder: 'Titel der Rolle',
+						pleaseEnter: 'Bitte gib den Titel der Rolle an.'
+					}
+				},
+				detail: 'Details anzeigen',
+				edit: 'Rolle editieren',
+				permissions: {
+					title: 'Berechtigungen'
+				},
+				search: {
+					fields: 'Titel',
+					placeholder: 'Nach Rollen suchen ...',
+					title: 'Suchen nach'
+				},
+				selectedCount: 'Es wurden {{count}} Rollen ausgewählt.',
+				table: {
+					id: 'Id',
+					title: 'Titel'
+				},
+				title: 'Rollen'
+			},
+			roles: {
+				admin: 'Administrator'
+			},
+			subheader: {
+				desc: '',
+				title: 'Benutzer'
+			}
 		}
 	}
 };

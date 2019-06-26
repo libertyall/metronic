@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog, MatPaginator, MatSnackBar, MatSort } from '@angular/material';
-import { debounceTime, distinctUntilChanged, skip, tap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map, skip, tap } from 'rxjs/operators';
 import { fromEvent, merge, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { LayoutUtilsService, MessageType, QueryParamsModel } from '../../../../../core/_base/crud';
@@ -9,7 +9,9 @@ import { AppState } from '../../../../../core/reducers';
 import { RoleEditDialogComponent } from '../role-edit/role-edit.dialog.component';
 import { RolesDataSource } from '../../../../../core/auth/_data-sources/roles.datasource';
 import { Role } from '../../../../../core/auth/_interfaces/role.interface';
-import { RoleDeleted, RolesPageRequested } from '../../../../../core/auth/_actions/role.actions';
+import { RolesPageRequested } from '../../../../../core/auth/_actions/role.actions';
+import { UserDeleted } from '../../../../../core/auth/_actions/user.actions';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -20,34 +22,29 @@ import { RoleDeleted, RolesPageRequested } from '../../../../../core/auth/_actio
 export class RolesListComponent implements OnInit, OnDestroy {
 
 	dataSource: RolesDataSource;
-	displayedColumns = [ 'select', 'id', 'title', 'actions' ];
-	@ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-	@ViewChild('sort1', {static: true}) sort: MatSort;
+	displayedColumns = ['select', 'id', 'title', 'actions'];
+	@ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+	@ViewChild('sort1', { static: true }) sort: MatSort;
 
-	@ViewChild('searchInput', {static: true}) searchInput: ElementRef;
+	@ViewChild('searchInput', { static: true }) searchInput: ElementRef;
 
 	selection = new SelectionModel<Role>(true, []);
 	rolesResult: Role[] = [];
 
 	private subscriptions: Subscription[] = [];
 
-	constructor(
-		private store: Store<AppState>,
-		public dialog: MatDialog,
-		public snackBar: MatSnackBar,
-		private layoutUtilsService: LayoutUtilsService) {
+	constructor(private translate: TranslateService,
+				private store: Store<AppState>,
+				public dialog: MatDialog,
+				public snackBar: MatSnackBar,
+				private layoutUtilsService: LayoutUtilsService) {
 	}
 
 	ngOnInit() {
 		const sortSubscription = this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
 		this.subscriptions.push(sortSubscription);
 
-		const paginatorSubscriptions = merge(this.sort.sortChange, this.paginator.page).pipe(
-			tap(() => {
-				this.loadRolesList();
-			})
-		)
-			.subscribe();
+		const paginatorSubscriptions = merge(this.sort.sortChange, this.paginator.page).pipe(map(() => this.loadRolesList())).subscribe();
 		this.subscriptions.push(paginatorSubscriptions);
 
 		const searchSubscription = fromEvent(this.searchInput.nativeElement, 'keyup').pipe(
@@ -97,53 +94,50 @@ export class RolesListComponent implements OnInit, OnDestroy {
 	}
 
 	deleteRole(_item: Role) {
-		const _title: string = 'User Role';
-		const _description: string = 'Are you sure to permanently delete this role?';
-		const _waitDesciption: string = 'Role is deleting...';
-		const _deleteMessage = `Role has been deleted`;
+		const _title: string = this.translate.instant('user.role.delete.dialog.title');
+		const _description: string = this.translate.instant('user.role.delete.dialog.question');
+		const _waitDescription: string = this.translate.instant('user.role.delete.dialog.waitDescription');
+		const _deleteMessage = this.translate.instant('user.role.delete.dialog.successMessage');
 
-		const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption);
+		const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDescription);
 		dialogRef.afterClosed().subscribe(res => {
 			if (!res) {
 				return;
 			}
 
-			this.store.dispatch(new RoleDeleted({ id: _item.id }));
+			this.store.dispatch(new UserDeleted({ id: _item.id }));
 			this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Delete);
-			this.loadRolesList();
 		});
 	}
 
-	fetchRoles() {
-		const messages = [];
-		this.selection.selected.forEach(elem => {
-			messages.push({
-				text: `${ elem.title }`,
-				id: elem.id.toString()
-			});
-		});
-		this.layoutUtilsService.fetchElements(messages);
-	}
-
-	/**
-	 * Add role
-	 */
 	addRole() {
 		const newRole: Role = { id: '', title: '', permissions: [], isCoreRole: false };
 		this.editRole(newRole);
 	}
 
 	editRole(role: Role) {
-		const _saveMessage = `Role successfully has been saved.`;
+
+		const _canceledMessage = this.translate.instant('dialog.canceledMessage');
+		const _editMessage = this.translate.instant('user.role.edit.dialog.successMessage');
+		const _saveMessage = this.translate.instant('user.role.create.dialog.successMessage');
+
 		const _messageType = role.id ? MessageType.Update : MessageType.Create;
 		const dialogRef = this.dialog.open(RoleEditDialogComponent, { data: { roleId: role.id } });
+
 		dialogRef.afterClosed().subscribe(res => {
 			if (!res) {
 				return;
 			}
 
-			this.layoutUtilsService.showActionNotification(_saveMessage, _messageType, 10000, true, true);
-			this.loadRolesList();
+			if (res.isEdit || res.isNew) {
+				res.isEdit ?
+					this.layoutUtilsService.showActionNotification(_editMessage, _messageType, 10000, true, true)
+					:
+					this.layoutUtilsService.showActionNotification(_saveMessage, _messageType, 10000, true, true);
+				this.loadRolesList();
+			} else {
+				this.layoutUtilsService.showActionNotification(_canceledMessage, MessageType.Canceled, 10000, true, false);
+			}
 		});
 	}
 
@@ -159,5 +153,9 @@ export class RolesListComponent implements OnInit, OnDestroy {
 		} else {
 			this.rolesResult.forEach(row => this.selection.select(row));
 		}
+	}
+
+	deleteAll(): void {
+		console.log(this.selection.selected);
 	}
 }

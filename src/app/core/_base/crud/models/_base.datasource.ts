@@ -16,7 +16,7 @@ import { skip, distinctUntilChanged } from 'rxjs/operators';
 **/
 export class BaseDataSource implements DataSource<BaseModel> {
 	entitySubject = new BehaviorSubject<any[]>([]);
-	hasItems: boolean = true; // Need to show message: 'No records found'
+	hasItems: boolean = true;
 
 	// Loading | Progress bar
 	loading$: Observable<boolean>;

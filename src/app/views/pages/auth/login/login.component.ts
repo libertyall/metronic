@@ -40,24 +40,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
 	ngOnInit(): void {
 		this.initLoginForm();
-
-		/* this.user$ = this.store.select(currentUser);
-		 this.isLoggedIn$ = this.store.select(isLoggedIn);
-		 this.isLoading$ = this.store.select(getIsLoading);
-
-		 this.errors$ = this.store
-		 .pipe(
-		 select(getError),
-		 map((error: any) => {
-		 this.loading = false;
-		 this.authNoticeService.setNotice(this.translate.instant('AUTH.VALIDATION.INVALID_LOGIN'), 'danger');
-		 if (error && (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password')) {
-		 return 'Invalid login or password';
-		 } else {
-		 return null;
-		 }
-		 })
-		 ); */
 	}
 
 	ngOnDestroy(): void {
@@ -106,18 +88,15 @@ export class LoginComponent implements OnInit, OnDestroy {
 			rememberMe: controls['rememberMe'].value
 		};
 
-		// this.store.dispatch(new CredentialsLogin(authData.email, authData.password, authData.rememberMe));
-
 		this.auth
 			.doLoginWithCredentials(authData)
-			.then((user) => {
+			.then(() => {
 				this.store.dispatch(new CredentialsLogin(authData.email, authData.password, authData.rememberMe));
 				this.router.navigateByUrl('/').then(() => console.log('navigate to dashboard'));
 				this.loading = false;
 			})
 			.catch((error) => {
-				console.log(error);
-				this.authNoticeService.setNotice(this.translate.instant('AUTH.VALIDATION.INVALID_LOGIN'), 'danger');
+				this.authNoticeService.setNotice(this.translate.instant('AUTH.ERRORS.' + error.code), 'danger');
 				this.loading = false;
 			});
 	}

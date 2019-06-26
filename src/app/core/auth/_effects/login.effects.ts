@@ -98,7 +98,7 @@ export class LoginEffects {
 										photoURL: authData.photoURL || this.gravatarService.getUserGravatar(authData.email),
 										lastSignInTime: authData.metadata.lastSignInTime,
 										creationTime: authData.metadata.creationTime,
-										emailVerified: authData.emailVerified
+										emailVerified: authData.providerData[0].providerId === 'password' ? authData.emailVerified : true
 									};
 									return from([
 										new SetProviders(providers),
@@ -111,10 +111,6 @@ export class LoginEffects {
 							return of(new NotAuthenticated());
 						}
 					})
-					/* tap(() => {
-					 console.log(3);
-					 // this.router.navigateByUrl('');
-					 }) */
 				);
 			}
 		)

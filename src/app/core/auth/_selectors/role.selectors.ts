@@ -9,7 +9,7 @@ export const selectRolesState = createFeatureSelector<RolesState>('roles');
 
 export const selectRoleById = (roleId: number) => createSelector(
     selectRolesState,
-    rolesState => rolesState.entities[roleId]
+    rolesState =>  rolesState.entities[roleId]
 );
 
 export const selectAllRoles = createSelector(
@@ -35,7 +35,7 @@ export const selectRolesPageLoading = createSelector(
 
 export const selectRolesActionLoading = createSelector(
     selectRolesState,
-    rolesState => rolesState.actionsloading
+    rolesState => rolesState.actionsLoading
 );
 
 export const selectLastCreatedRoleId = createSelector(

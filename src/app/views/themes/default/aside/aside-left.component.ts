@@ -68,7 +68,7 @@ export class AsideLeftComponent implements OnInit, AfterViewInit {
 
 		this.router.events
 			.pipe(filter(event => event instanceof NavigationEnd))
-			.subscribe(event => this.currentRouteUrl = this.router.url.split(/[?#]/)[0]);
+			.subscribe(() => this.currentRouteUrl = this.router.url.split(/[?#]/)[0]);
 
 		const config = this.layoutConfigService.getConfig();
 

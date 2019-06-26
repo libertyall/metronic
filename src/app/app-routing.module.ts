@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { environment } from '../environments/environment';
 import { UnAuthGuard } from './core/auth/_guards/unauth.guard';
-import { AuthGuard } from './core/auth/_guards/auth.guard';
 
 const routes: Routes = [
 	{
@@ -12,8 +11,7 @@ const routes: Routes = [
 	},
 	{
 		path: '',
-		loadChildren: () => import('app/views/themes/default/theme.module').then(m => m.ThemeModule),
-		// canActivate: [AuthGuard]
+		loadChildren: () => import('app/views/themes/default/theme.module').then(m => m.ThemeModule)
 	},
 	{
 		path: '**',

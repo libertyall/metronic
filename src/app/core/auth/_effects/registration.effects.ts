@@ -114,14 +114,12 @@ export class RegistrationEffects {
 						providerId: 'password'
 					};
 					console.log(user);
-					return from([
-						new SaveUser({ user }),
-						new Authenticated({ user })
-					]);
-				}),
-				map((user) => {
-					console.log(user);
 					return new RegistrationSuccess({ user });
+					/* return from([
+						new SaveUser({ user }),
+						new Authenticated({ user }),
+					 	new RegistrationSuccess({ user })
+					]); */
 				}),
 				/* switchMap( (user: any) => {
 					return new RegistrationSuccess({ user });

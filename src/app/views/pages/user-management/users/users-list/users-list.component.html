@@ -1,18 +1,27 @@
 <kt-portlet>
-	<kt-portlet-header [title]="'Users list'" [class]="'kt-portlet__head--lg'" [viewLoading$]="dataSource.loading$">
+	<kt-portlet-header [title]="'user.list.title' | translate"
+					   [class]="'kt-portlet__head--lg'"
+					   [viewLoading$]="dataSource.loading$">
 		<ng-container ktPortletTools>
-			<button [routerLink]="['../users/add']" mat-raised-button color="primary" matTooltip="Create new User">New user</button>
+			<button [routerLink]="['../users/add']"
+					mat-raised-button
+					color="primary"
+					matTooltip="{{'user.list.create.tooltip' | translate }}">
+				{{'user.list.create.title' | translate}}
+			</button>
 		</ng-container>
 	</kt-portlet-header>
 	<kt-portlet-body>
 		<div class="kt-form">
 			<div class="kt-form__filtration">
 				<div class="row align-items-center">
-					<div class="col-md-2 kt-margin-bottom-10-mobile">
+					<div class="col-md-4 kt-margin-bottom-10-mobile">
 						<mat-form-field class="mat-form-field-fluid">
-							<input matInput placeholder="Search user" #searchInput placeholder="Search">
+							<input matInput placeholder="{{'user.list.search.placeholder' | translate}}"
+								   #searchInput>
 							<mat-hint align="start">
-								<strong>Search</strong> in all fields
+								<strong>{{'user.list.search.title' | translate}}</strong>
+								{{'user.list.search.fields' | translate}}
 							</mat-hint>
 						</mat-form-field>
 					</div>
@@ -20,18 +29,22 @@
 			</div>
 
 			<div class="row align-items-center collapse kt-form__group-actions kt-margin-top-20 kt-margin-bottom-20"
-				[ngClass]="{'show' : selection.selected.length > 0}"><!-- We show 'Group Actions' div if smth are selected -->
+				[ngClass]="{'show' : selection.selected.length > 0}">
 				<div class="col-xl-12">
 					<div class="kt-form__group kt-form__group--inline">
 						<div class="kt-form__label kt-form__label-no-wrap">
 							<label class="kt--font-bold kt-font-danger-">
-								<span translate="ECOMMERCE.COMMON.SELECTED_RECORDS_COUNT"></span> {{ selection.selected.length }}
+								<span translate="user.list.selectedCount"
+									  [translateParams]="{count: selection.selected.length}"></span>
 							</label>
 						</div>
 						<div class="kt-form__control kt-form__group--inline">
-							<button (click)="fetchUsers()" mat-raised-button matTooltip="Fetch selected users"  class="mat-button-mt-4">
+							<button (click)="deleteAll()"
+									mat-raised-button
+									class="mat-button-mt-4"
+									matTooltip="{{'user.list.delete.tooltip' | translate }}">
 								<mat-icon>clear_all</mat-icon>
-								Fetch Selected
+								{{'user.list.delete.title' | translate}}
 							</button>
 						</div>
 					</div>
@@ -40,7 +53,6 @@
 		</div>
 		<div class="mat-table__wrapper">
 			<mat-table class="lmat-elevation-z8"
-				#table
 				[dataSource]="dataSource"
 				matSort
 				#sort1="matSort"
@@ -61,46 +73,60 @@
 				</ng-container>
 
 				<ng-container matColumnDef="id">
-					<mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
+					<mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'user.list.table.id' | translate}}</mat-header-cell>
 					<mat-cell *matCellDef="let user">{{user.id}}</mat-cell>
 				</ng-container>
 
 				<ng-container matColumnDef="displayName">
-					<mat-header-cell *matHeaderCellDef mat-sort-header>DisplayName</mat-header-cell>
+					<mat-header-cell *matHeaderCellDef
+									 mat-sort-header>{{ 'user.list.table.displayName' | translate}}</mat-header-cell>
 					<mat-cell *matCellDef="let user">{{user.displayName}}</mat-cell>
 				</ng-container>
 
 				<ng-container matColumnDef="email">
-					<mat-header-cell *matHeaderCellDef mat-sort-header class="email-cell">Email</mat-header-cell>
+					<mat-header-cell *matHeaderCellDef mat-sort-header class="email-cell">{{ 'user.list.table.email' |
+						translate}}</mat-header-cell>
 					<mat-cell *matCellDef="let user" class="email-cell">
 						<a href="user-management/users#" class="kt-link">{{user.email}}</a>
 					</mat-cell>
 				</ng-container>
 
 				<ng-container matColumnDef="firstName">
-					<mat-header-cell *matHeaderCellDef mat-sort-header>FirstName</mat-header-cell>
+					<mat-header-cell *matHeaderCellDef
+									 mat-sort-header>{{ 'user.list.table.firstName' | translate}}</mat-header-cell>
 					<mat-cell *matCellDef="let user">{{user.firstName}}</mat-cell>
 				</ng-container>
 
 				<ng-container matColumnDef="lastName">
-					<mat-header-cell *matHeaderCellDef mat-sort-header>LastName</mat-header-cell>
+					<mat-header-cell *matHeaderCellDef
+									 mat-sort-header>{{ 'user.list.table.lastName' | translate}}</mat-header-cell>
 					<mat-cell *matCellDef="let user">{{user.lastName}}</mat-cell>
 				</ng-container>
 
-				<ng-container matColumnDef="_roles">
-					<mat-header-cell *matHeaderCellDef>Roles</mat-header-cell>
+				<ng-container matColumnDef="assignedRoles">
+					<mat-header-cell
+						*matHeaderCellDef>{{ 'user.list.table.assignedRoles' | translate}}</mat-header-cell>
 					<mat-cell *matCellDef="let user">
-						<span>{{ getUserRolesStr(user) }}</span>
+						<span>{{ getUserRolesStr(user) || 'user.list.noRoles' | translate }}</span>
 					</mat-cell>
 				</ng-container>
 
 				<ng-container matColumnDef="actions">
-					<mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+					<mat-header-cell *matHeaderCellDef>{{ 'actions' | translate}}</mat-header-cell>
 					<mat-cell *matCellDef="let user">
-						<button (click)="editUser(user.id)" mat-icon-button color="primary" matTooltip="Edit user">
+						<button [routerLink]="['/users/detail', user.id]" mat-icon-button
+								color="warn"
+								matTooltip="{{ 'user.list.detail' | translate}}">
+							<mat-icon>info</mat-icon>
+						</button>
+						<button [routerLink]="['/users/edit', user.id]" mat-icon-button color="primary"
+								matTooltip="{{ 'user.list.edit' | translate}}">
 							<mat-icon>create</mat-icon>
 						</button>&nbsp;
-						<button mat-icon-button color="warn" matTooltip="Delete user" type="button" (click)="deleteUser(user)">
+						<button mat-icon-button color="warn"
+								matTooltip="{{ 'user.list.delete.one' | translate}}"
+								type="button"
+								(click)="deleteUser(user)">
 							<mat-icon>delete</mat-icon>
 						</button>
 					</mat-cell>
@@ -110,8 +136,8 @@
 
 				<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
 			</mat-table>
-			<div class="mat-table__message" *ngIf="!dataSource.hasItems">No records found</div>
-			<div class="mat-table__message" *ngIf="dataSource.isPreloadTextViewed$ | async">Please wait....</div>
+			<div class="mat-table__message" *ngIf="!dataSource.hasItems">{{ 'user.list.noEntries' | translate}}</div>
+			<div class="mat-table__message" *ngIf="dataSource.isPreloadTextViewed$ | async">{{ 'pleaseWait' | translate}}</div>
 		</div>
 
 		<div class="mat-table__bottom">

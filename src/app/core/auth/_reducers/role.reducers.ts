@@ -9,7 +9,7 @@ export interface RolesState extends EntityState<Role> {
     queryResult: Role[];
     lastCreatedRoleId: string;
     listLoading: boolean;
-    actionsloading: boolean;
+    actionsLoading: boolean;
     lastQuery: QueryParamsModel;
     showInitWaitingMessage: boolean;
 }
@@ -22,7 +22,7 @@ export const initialRolesState: RolesState = adapter.getInitialState({
     queryResult: [],
     lastCreatedRoleId: undefined,
     listLoading: false,
-    actionsloading: false,
+	actionsLoading: false,
     lastQuery: new QueryParamsModel({}),
     showInitWaitingMessage: true
 });
@@ -33,7 +33,7 @@ export function rolesReducer(state = initialRolesState, action: RoleActions): Ro
             ...state, listLoading: action.payload.isLoading, lastCreatedRoleId: undefined
         };
         case RoleActionTypes.RolesActionToggleLoading: return {
-            ...state, actionsloading: action.payload.isLoading
+            ...state, actionsLoading: action.payload.isLoading
         };
         case RoleActionTypes.RoleOnServerCreated: return {
             ...state
@@ -43,9 +43,11 @@ export function rolesReducer(state = initialRolesState, action: RoleActions): Ro
         });
         // case RoleActionTypes.RoleUpdated: return adapter.updateOne(action.payload.role, state);
         case RoleActionTypes.RoleDeleted: return adapter.removeOne(action.payload.id, state);
-        case RoleActionTypes.AllRolesLoaded: return adapter.addAll(action.payload.roles, {
-            ...state, isAllRolesLoaded: true
-        });
+        case RoleActionTypes.AllRolesLoaded: {
+        	return adapter.addAll(action.payload.roles, {
+				...state, isAllRolesLoaded: true
+			});
+		}
         case RoleActionTypes.RolesPageCancelled: return {
             ...state, listLoading: false, queryRowsCount: 0, queryResult: [], lastQuery: new QueryParamsModel({})
         };
@@ -55,7 +57,7 @@ export function rolesReducer(state = initialRolesState, action: RoleActions): Ro
             queryRowsCount: action.payload.totalCount,
             queryResult: action.payload.roles,
             lastQuery: action.payload.page,
-            showInitWaitingMessage: true
+            showInitWaitingMessage: false
         });
         default: return state;
     }

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
@@ -7,20 +7,18 @@ import { Update } from '@ngrx/entity';
 import { AppState } from '../../../../../core/reducers';
 import { LayoutConfigService, SubheaderService } from '../../../../../core/_base/layout';
 import { LayoutUtilsService, MessageType } from '../../../../../core/_base/crud';
-import {
-	selectLastCreatedUserId,
-	selectUserById,
-	selectUsersActionLoading
-} from '../../../../../core/auth/_selectors/user.selectors';
+import { selectLastCreatedUserId, selectUsersActionLoading } from '../../../../../core/auth/_selectors/user.selectors';
 import { SocialNetworks } from '../../../../../core/auth/_interfaces/social-networks.interface';
 import { Address } from '../../../../../core/auth/_interfaces/address.interface';
 import { Role } from '../../../../../core/auth/_interfaces/role.interface';
 import { IUser } from '../../../../../core/auth/_interfaces/user.interface';
 import { UserOnServerCreated, UserUpdated } from '../../../../../core/auth/_actions/user.actions';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'kt-user-edit',
 	templateUrl: './user-edit.component.html',
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserEditComponent implements OnInit, OnDestroy {
 
@@ -41,6 +39,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
 				private userFB: FormBuilder,
 				private subheaderService: SubheaderService,
 				private layoutUtilsService: LayoutUtilsService,
+				private translate: TranslateService,
 				private store: Store<AppState>,
 				private layoutConfigService: LayoutConfigService) {
 	}
@@ -49,26 +48,22 @@ export class UserEditComponent implements OnInit, OnDestroy {
 	ngOnInit() {
 		this.loading$ = this.store.pipe(select(selectUsersActionLoading));
 
-		const routeSubscription = this.activatedRoute.params.subscribe(params => {
-			const id = params[ 'id' ];
-			if (id && id > 0) {
-				this.store.pipe(select(selectUserById(id))).subscribe(res => {
-					if (res) {
-						this.user = res;
-						this.rolesSubject.next(this.user.assignedRoles);
-						this.addressSubject.next(this.user.address);
-						this.socialNetworksSubject.next(this.user.socialNetworks);
-						this.oldUser = Object.assign({}, this.user);
-						this.initUser();
-					}
-				});
+		const routeSubscription = this.activatedRoute.data.subscribe((data: { user: IUser }) => {
+			if (data.user) {
+				this.user = this.oldUser = data.user;
+				this.initUser();
+				this.rolesSubject.next(this.user.assignedRoles);
+				this.addressSubject.next(this.user.address);
+				this.socialNetworksSubject.next(this.user.socialNetworks);
 			} else {
 				this.user = {
 					email: '',
 					displayName: '',
+					firstName: '',
+					lastName: '',
 					photoURL: '',
 					phoneNumber: '',
-					uid: '',
+					id: '',
 					assignedRoles: [],
 					providerId: 'password'
 				};
@@ -80,6 +75,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
 				this.initUser();
 			}
 		});
+
 		this.subscriptions.push(routeSubscription);
 	}
 
@@ -109,26 +105,26 @@ export class UserEditComponent implements OnInit, OnDestroy {
 
 	createForm() {
 		this.userForm = this.userFB.group({
-			displayName: [ this.user.displayName, Validators.required ],
-			firstName: [ this.user.firstName, Validators.required ],
-			lastName: [ this.user.lastName, Validators.required ],
-			email: [ this.user.email, Validators.email ]
+			displayName: [this.user.displayName, Validators.required],
+			firstName: [this.user.firstName, Validators.required],
+			lastName: [this.user.lastName, Validators.required],
+			email: [this.user.email, Validators.email],
+			phoneNumber: [this.user.phoneNumber]
 		});
 	}
 
 	goBackWithId() {
-		const url = `${ this.layoutConfigService.getCurrentMainRoute() }/user-management/users`;
-		this.router.navigateByUrl(url, { relativeTo: this.activatedRoute });
+		this.router.navigateByUrl('/users/list').then();
 	}
 
-	refreshUser(userId: string = '') {
+	/* refreshUser(userId: string = '') {
 		let url = this.router.url;
 		if (userId === '') {
-			return this.router.navigate([ url ], { relativeTo: this.activatedRoute }).then(() => console.log('create user'));
+			return this.router.navigate([url], { relativeTo: this.activatedRoute }).then(() => console.log('create user'));
 		}
 		url = `${ this.layoutConfigService.getCurrentMainRoute() }/user-management/users/edit/${ userId }`;
 		this.router.navigateByUrl(url, { relativeTo: this.activatedRoute }).then(() => console.log('edit user'));
-	}
+	} */
 
 	reset() {
 		this.user = Object.assign({}, this.oldUser);
@@ -139,13 +135,13 @@ export class UserEditComponent implements OnInit, OnDestroy {
 		this.userForm.updateValueAndValidity();
 	}
 
-	onSumbit(withBack: boolean = false) {
+	onSubmit(withBack: boolean = false) {
 		this.hasFormErrors = false;
 		const controls = this.userForm.controls;
 		/** check form */
 		if (this.userForm.invalid) {
 			Object.keys(controls).forEach(controlName =>
-				controls[ controlName ].markAsTouched()
+				controls[controlName].markAsTouched()
 			);
 
 			this.hasFormErrors = true;
@@ -169,14 +165,14 @@ export class UserEditComponent implements OnInit, OnDestroy {
 			address: this.addressSubject.value,
 			socialNetworks: this.socialNetworksSubject.value,
 			id: this.user.id,
-			email: controls[ 'email' ].value,
-			firstName: controls[ 'firstName' ].value,
-			lastName: controls[ 'lastName' ].value,
-			displayName: controls[ 'displayName' ].value,
+			email: controls['email'].value,
+			firstName: controls['firstName'].value,
+			lastName: controls['lastName'].value,
+			displayName: controls['displayName'].value,
 			password: this.user.password,
 			phoneNumber: '',
 			photoURL: '',
-			providerId: ''
+			providerId: 'password'
 		};
 	}
 
@@ -188,8 +184,8 @@ export class UserEditComponent implements OnInit, OnDestroy {
 			if (userId) {
 				if (withBack) {
 					this.goBackWithId();
-				} else {
-					this.refreshUser(userId);
+				// } else {
+				// 	this.refreshUser(userId);
 				}
 			}
 		});
@@ -206,19 +202,17 @@ export class UserEditComponent implements OnInit, OnDestroy {
 		this.layoutUtilsService.showActionNotification(message, MessageType.Update, 5000, true, true);
 		if (withBack) {
 			this.goBackWithId();
-		} else {
-			this.refreshUser(_user.id);
+		// } else {
+		// 	this.refreshUser(_user.id);
 		}
 	}
 
 	getComponentTitle() {
-		let result = 'Create user';
 		if (!this.user || !this.user.id) {
-			return result;
+			return this.translate.instant('user.edit.page.title.create');
 		}
 
-		result = `Edit user - ${ this.user.firstName } ${ this.user.lastName } (${ this.user.displayName })`;
-		return result;
+		return this.translate.instant('user.edit.page.title.edit') + ` - ${ this.user.firstName } ${ this.user.lastName } (${ this.user.displayName })`;
 	}
 
 	onAlertClose() {

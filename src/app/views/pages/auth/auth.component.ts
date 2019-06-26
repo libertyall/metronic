@@ -36,12 +36,11 @@ export class AuthComponent implements OnInit {
 		this.backgroundImage = objectPath.get(config, 'backend.self.body.background-image.selected');
 		this.copyright = objectPath.get(config, 'backend.footer.self.copyright');
 		this.mainLogo = objectPath.get(config, 'backend.self.mainLogo.selected');
-		this.pageTitle = objectPath.get(config, 'backend.self.page.title');
-
-		this.title.setTitle(this.pageTitle);
 
 		this.translationService.setLanguage(this.translationService.getSelectedLanguage());
+
 		this.headerLogo = this.layoutConfigService.getLogo('backend');
+
 		this.splashScreenService.hide();
 	}
 }

@@ -10,7 +10,8 @@ export enum MessageType {
 	Create,
 	Read,
 	Update,
-	Delete
+	Delete,
+	Canceled
 }
 
 @Injectable()

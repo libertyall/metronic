@@ -4,17 +4,18 @@ import { Observable, of, Subscription } from 'rxjs';
 import { each, find, some } from 'lodash';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '../../../../../core/reducers';
-import { delay } from 'rxjs/operators';
 import { Role } from '../../../../../core/auth/_interfaces/role.interface';
 import { Permission } from '../../../../../core/auth/_interfaces/permission.interface';
 import { selectLastCreatedRoleId, selectRoleById } from '../../../../../core/auth/_selectors/role.selectors';
 import { selectAllPermissions } from '../../../../../core/auth/_selectors/permission.selectors';
 import { RoleOnServerCreated, RoleUpdated } from '../../../../../core/auth/_actions/role.actions';
+import { AlertService } from '../../../../../shared/services/alert/alert.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'kt-role-edit-dialog',
 	templateUrl: './role-edit.dialog.component.html',
-	changeDetection: ChangeDetectionStrategy.Default,
+	changeDetection: ChangeDetectionStrategy.Default
 })
 export class RoleEditDialogComponent implements OnInit, OnDestroy {
 
@@ -29,6 +30,8 @@ export class RoleEditDialogComponent implements OnInit, OnDestroy {
 	private componentSubscriptions: Subscription;
 
 	constructor(public dialogRef: MatDialogRef<RoleEditDialogComponent>,
+				private translate: TranslateService,
+				private alertService: AlertService,
 				@Inject(MAT_DIALOG_DATA) public data: any,
 				private store: Store<AppState>) {
 	}
@@ -53,7 +56,7 @@ export class RoleEditDialogComponent implements OnInit, OnDestroy {
 
 			this.role = res;
 			this.allPermissions$ = this.store.pipe(select(selectAllPermissions));
-			this.loadPermissions();
+			//  this.loadPermissions();
 		});
 	}
 
@@ -126,7 +129,7 @@ export class RoleEditDialogComponent implements OnInit, OnDestroy {
 	}
 
 
-	onSubmit() {
+	onSubmit(): Observable<Role> {
 		this.hasFormErrors = false;
 		this.loadingAfterSubmit = false;
 		if (!this.isTitleValid()) {
@@ -160,9 +163,9 @@ export class RoleEditDialogComponent implements OnInit, OnDestroy {
 		this.viewLoading = true;
 		this.store.dispatch(new RoleOnServerCreated({ role: _role }));
 		this.componentSubscriptions = this.store.pipe(
-			delay(1000), // Remove this line
 			select(selectLastCreatedRoleId)
 		).subscribe(res => {
+			console.log(res);
 			if (!res) {
 				return;
 			}
@@ -170,7 +173,7 @@ export class RoleEditDialogComponent implements OnInit, OnDestroy {
 			this.viewLoading = false;
 			this.dialogRef.close({
 				_role,
-				isEdit: false
+				isNew: false
 			});
 		});
 	}
@@ -213,9 +216,9 @@ export class RoleEditDialogComponent implements OnInit, OnDestroy {
 
 	getTitle(): string {
 		if (this.role && this.role.id) {
-			return `Edit role '${ this.role.title }'`;
+			return this.translate.instant('user.role.dialog.title.edit', { role: this.role.title });
 		}
-		return 'New role';
+		return this.translate.instant('user.role.dialog.title.new');
 	}
 
 	isTitleValid(): boolean {

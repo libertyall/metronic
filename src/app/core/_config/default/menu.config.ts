@@ -603,15 +603,18 @@ export class MenuConfig {
 					submenu: [
 						{
 							title: 'Dashboard',
-							page: '/users/dashboard'
+							page: '/users/dashboard',
+							translate: 'MENU.DASHBOARD',
 						},
 						{
 							title: 'Users',
-							page: '/users/list'
+							page: '/users/list',
+							translate: 'MENU.USER.LIST',
 						},
 						{
 							title: 'Roles',
-							page: '/users/roles'
+							page: '/users/roles',
+							translate: 'MENU.USER.ROLES',
 							// permission: 'accessToECommerceModule'
 						}
 					]

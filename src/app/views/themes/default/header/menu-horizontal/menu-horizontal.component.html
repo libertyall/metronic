@@ -20,7 +20,7 @@
 
 		<!-- if item has submenu -->
 		<ng-container *ngIf="item.submenu">
-			<a href="javascript:;" [ngClass]="{ 'kt-menu__toggle': item.root }" class="kt-menu__link">
+			<span [ngClass]="{ 'kt-menu__toggle': item.root }" class="kt-menu__link">
 
 				<ng-container [ngTemplateOutlet]="menuItemInnerTemplate" [ngTemplateOutletContext]="{ item: item, parentItem: parentItem }"></ng-container>
 
@@ -32,7 +32,7 @@
 				<!-- else arrow icons -->
 				<i *ngIf="item.submenu && !item.root" class="kt-menu__hor-arrow la la-angle-right"></i>
 				<i *ngIf="item.submenu && !item.root" class="kt-menu__ver-arrow la la-angle-right"></i>
-			</a>
+			</span>
 		</ng-container>
 
 		<!-- if item hasn't sumbenu -->
@@ -93,7 +93,7 @@
 		<span class="kt-menu__item-here"></span>
 		<!-- menu item title text -->
 		<span class="kt-menu__link-text" [translate]="item.translate">
-			{{item.title}}
+			{{item.title + '123' | translate}}
 		</span>
 	</ng-container>
 

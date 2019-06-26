@@ -1,0 +1,29 @@
+<kt-portlet>
+	<kt-portlet-header [title]="'user.dashboard.title' | translate"
+					   [class]="'kt-portlet__head--lg'">
+	</kt-portlet-header>
+	<kt-portlet-body>
+		{{'user.dashboard.description' | translate}}
+
+		<div class="row align-items-center mt-5">
+			<div class="col-md-6 text-center kt-margin-bottom-10-mobile">
+				<button [routerLink]="['/users/list']"
+						mat-raised-button
+						class="mat-button-mt-4"
+						matTooltip="{{'MENU.USER.LIST' | translate }}">
+					{{'MENU.USER.LIST' | translate }}
+				</button>
+			</div>
+			<div class="col-md-6 text-center kt-margin-bottom-10-mobile">
+				<button [routerLink]="['/users/roles']"
+						mat-raised-button
+						class="mat-button-mt-4"
+						matTooltip="{{'MENU.USER.ROLES' | translate }}">
+					{{'MENU.USER.ROLES' | translate }}
+				</button>
+			</div>
+		</div>
+
+
+	</kt-portlet-body>
+</kt-portlet>

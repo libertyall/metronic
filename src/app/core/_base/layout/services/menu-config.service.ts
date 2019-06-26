@@ -8,25 +8,14 @@ export class MenuConfigService {
 
 	private menuConfig: any;
 
-	/**
-	 * Service Constructor
-	 */
 	constructor() {
 		this.onConfigUpdated$ = new Subject();
 	}
 
-	/**
-	 * Returns the menuConfig
-	 */
 	getMenus() {
 		return this.menuConfig;
 	}
 
-	/**
-	 * Load config
-	 *
-	 * @param config: any
-	 */
 	loadConfigs(config: any) {
 		this.menuConfig = config;
 		this.onConfigUpdated$.next(this.menuConfig);

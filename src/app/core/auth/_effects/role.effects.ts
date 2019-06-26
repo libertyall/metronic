@@ -1,35 +1,25 @@
 import { Injectable } from '@angular/core';
-import { defer, Observable, of } from 'rxjs';
-import { filter, map, mergeMap, withLatestFrom } from 'rxjs/operators';
+import { defer, forkJoin, Observable, of } from 'rxjs';
+import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { Action, select, Store } from '@ngrx/store';
+import { Action, Store } from '@ngrx/store';
 import { AppState } from '../../reducers';
 import {
-	AllRolesLoaded,
-	AllRolesRequested,
-	RoleActionTypes,
-	RoleCreated,
-	RoleDeleted,
-	RoleOnServerCreated,
-	RolesActionToggleLoading,
-	RolesPageLoaded,
-	RolesPageRequested,
-	RolesPageToggleLoading,
-	RoleUpdated
+	AllRolesLoaded, AllRolesRequested, RoleActionTypes, RoleCreated, RoleCreateError, RoleDeleted, RoleOnServerCreated,
+	RolesActionToggleLoading, RolesPageLoaded, RolesPageRequested, RolesPageToggleLoading, RoleUpdated
 } from '../_actions/role.actions';
 import { AuthService } from '../_services/auth.service';
-import { allRolesLoaded } from '../_selectors/role.selectors';
-import { Role } from '../_interfaces/role.interface';
+import { QueryParamsModel, QueryResultsModel } from '../../_base/crud';
 
 @Injectable()
 export class RoleEffects {
-	showPageLoadingDistpatcher = new RolesPageToggleLoading({ isLoading: true });
-	showActionLoadingDistpatcher = new RolesActionToggleLoading({ isLoading: true });
-	hideActionLoadingDistpatcher = new RolesActionToggleLoading({ isLoading: false });
+	showPageLoadingDispatcher = new RolesPageToggleLoading({ isLoading: true });
+	showActionLoadingDispatcher = new RolesActionToggleLoading({ isLoading: true });
+	hideActionLoadingDispatcher = new RolesActionToggleLoading({ isLoading: false });
 
 
 	constructor(private actions$: Actions,
-				private auth: AuthService,
+				private authService: AuthService,
 				private store: Store<AppState>) {
 	}
 
@@ -37,47 +27,43 @@ export class RoleEffects {
 	loadAllRoles$ = this.actions$
 		.pipe(
 			ofType<AllRolesRequested>(RoleActionTypes.AllRolesRequested),
-			withLatestFrom(this.store.pipe(select(allRolesLoaded))),
-			filter(([ action, isAllRolesLoaded ]) => !isAllRolesLoaded),
-			mergeMap(() => this.auth.getRoles()),
-			map((roles: Role[]) => {
-				return new AllRolesLoaded({ roles });
-			})
+			mergeMap(() => this.authService.getAllRoles()),
+			map(roles => new AllRolesLoaded({ roles: roles }))
 		);
 
-	/* @Effect()
+	@Effect()
 	loadRolesPage$ = this.actions$
 		.pipe(
 			ofType<RolesPageRequested>(RoleActionTypes.RolesPageRequested),
 			mergeMap(({ payload }) => {
-				this.store.dispatch(this.showPageLoadingDistpatcher);
-				const requestToServer = this.auth.findRoles(payload.page);
+				this.store.dispatch(this.showPageLoadingDispatcher);
+				const requestToServer = this.authService.getRoleList(payload.page);
 				const lastQuery = of(payload.page);
 				return forkJoin(requestToServer, lastQuery);
 			}),
 			map(response => {
-				const result: QueryResultsModel = response[ 0 ];
-				const lastQuery: QueryParamsModel = response[ 1 ];
+				const result: QueryResultsModel = response[0];
+				const lastQuery: QueryParamsModel = response[1];
 				return new RolesPageLoaded({
 					roles: result.items,
 					totalCount: result.totalCount,
 					page: lastQuery
 				});
-			}),
-		); */
+			})
+		);
 
 	@Effect()
 	deleteRole$ = this.actions$
 		.pipe(
 			ofType<RoleDeleted>(RoleActionTypes.RoleDeleted),
 			mergeMap(({ payload }) => {
-					this.store.dispatch(this.showActionLoadingDistpatcher);
-					return this.auth.removeRole(payload.id);
+					this.store.dispatch(this.showActionLoadingDispatcher);
+					return this.authService.removeRole(payload.id);
 				}
 			),
 			map(() => {
-				return this.hideActionLoadingDistpatcher;
-			}),
+				return this.hideActionLoadingDispatcher;
+			})
 		);
 
 	@Effect()
@@ -85,12 +71,12 @@ export class RoleEffects {
 		.pipe(
 			ofType<RoleUpdated>(RoleActionTypes.RoleUpdated),
 			mergeMap(({ payload }) => {
-				this.store.dispatch(this.showActionLoadingDistpatcher);
-				return this.auth.updateRole(payload.role);
+				this.store.dispatch(this.showActionLoadingDispatcher);
+				return this.authService.updateRole(payload.role);
 			}),
 			map(() => {
-				return this.hideActionLoadingDistpatcher;
-			}),
+				return this.hideActionLoadingDispatcher;
+			})
 		);
 
 
@@ -98,13 +84,18 @@ export class RoleEffects {
 	createRole$ = this.actions$
 		.pipe(
 			ofType<RoleOnServerCreated>(RoleActionTypes.RoleOnServerCreated),
-			mergeMap(({ payload }) => {
-				this.store.dispatch(this.showActionLoadingDistpatcher);
-				return this.auth.createRole(payload.role).then((res) => this.store.dispatch(new RoleCreated({ role: res })));
+			switchMap(({ payload }) => {
+				return this.authService.createRole(payload.role).pipe(
+					map(() => this.store.dispatch(new RoleCreated({ role: payload.role })))
+				);
 			}),
 			map(() => {
-				return this.hideActionLoadingDistpatcher;
+				return this.hideActionLoadingDispatcher;
 			}),
+			catchError((error) => {
+				this.store.dispatch(new RolesActionToggleLoading({ isLoading: false }));
+				return of(new RoleCreateError(error));
+			})
 		);
 
 	@Effect()

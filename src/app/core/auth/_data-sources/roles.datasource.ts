@@ -1,14 +1,9 @@
-// RxJS
-import { of } from 'rxjs';
-import { catchError, finalize, tap, debounceTime, delay, distinctUntilChanged } from 'rxjs/operators';
-// NGRX
-import { Store, select } from '@ngrx/store';
-// CRUD
+import { select, Store } from '@ngrx/store';
 import { BaseDataSource, QueryResultsModel } from '../../_base/crud';
-// State
-import { AppState } from '../../../core/reducers';
-// Selectirs
-import { selectQueryResult, selectRolesPageLoading, selectRolesShowInitWaitingMessage } from '../_selectors/role.selectors';
+import { AppState } from '../../reducers';
+import {
+	selectQueryResult, selectRolesPageLoading, selectRolesShowInitWaitingMessage
+} from '../_selectors/role.selectors';
 
 export class RolesDataSource extends BaseDataSource {
 	constructor(private store: Store<AppState>) {

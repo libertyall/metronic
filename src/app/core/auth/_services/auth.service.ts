@@ -3,19 +3,20 @@ import { IUser } from '../_interfaces/user.interface';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
-import { from, Observable } from 'rxjs';
+import { from, Observable, of } from 'rxjs';
 import { Role } from '../_interfaces/role.interface';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../reducers';
-import { User } from 'firebase';
+import { QueryParamsModel } from '../../_base/crud';
+import { map, take } from 'rxjs/operators';
 import UserCredential = firebase.auth.UserCredential;
 
 @Injectable()
 export class AuthService {
 
 	private userPath = `users`;
-	private rolesPath = `user-roles`;
-	private permissionsPath = `user-permissions`;
+	private rolesPath = `roles`;
+	private permissionsPath = `permissions`;
 
 	users$: Observable<IUser[]>;
 	roles$: Observable<Role[]>;
@@ -52,19 +53,19 @@ export class AuthService {
 			return this.afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(() => {
 				return this.afAuth.auth.signInWithEmailAndPassword(credentials.email, credentials.password);
 				/* if (signInAction.user) {
-					console.log(signInAction.user);
-					await this.updateUser(signInAction.user);
-				}
-				return signInAction; */
+				 console.log(signInAction.user);
+				 await this.updateUser(signInAction.user);
+				 }
+				 return signInAction; */
 			});
 		} else {
 			return this.afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).then(() => {
 				return this.afAuth.auth.signInWithEmailAndPassword(credentials.email, credentials.password);
 				/* if (signInAction.user) {
-					console.log(signInAction.user);
-					await this.updateUser(signInAction.user);
-				}
-				return signInAction; */
+				 console.log(signInAction.user);
+				 await this.updateUser(signInAction.user);
+				 }
+				 return signInAction; */
 			});
 		}
 	}
@@ -94,17 +95,57 @@ export class AuthService {
 
 	saveUser(data: IUser): Observable<void> {
 		data.id = this.afAuth.auth.currentUser.uid;
+		delete data.password;
 		const userRef: AngularFirestoreDocument<IUser> = this.afs.doc(`/users/${ data.id }`);
 		return from(userRef.set(data, { merge: true }));
 	}
 
-	// Roles
-	getRoles(): Observable<Role[]> {
-		return this.roles$;
-	}
-
 	removeUser(userId: string): Promise<any> {
 		return this.afs.collection<IUser>(this.userPath).doc(userId).delete();
+	}
+
+	/*
+	 Roles
+	 */
+	getAllRoles(): Observable<Role[]> {
+		return this.roles$.pipe(
+			take(1)
+		);
+	}
+
+	getRoleList(page?: QueryParamsModel): Observable<any> {
+		const { filter, pageNumber, pageSize, sortField, sortOrder } = page;
+		return this.roles$.pipe(
+			take(1),
+			map((roles: Role[]) => {
+				const totalItems = roles.length;
+				const filteredItems = this.searchRoleByTitle(filter, roles);
+				const sortedItems = this.sortData(filteredItems, sortField, sortOrder);
+				const paginatedItems = sortedItems.splice(pageNumber * pageSize, pageSize);
+				return {
+					items: paginatedItems,
+					totalCount: totalItems,
+					errorMessage: ''
+				};
+			})
+		);
+	}
+
+	sortData(items, sortField = 'title', sortOrder = 'asc') {
+		return items.sort((a, b) => {
+			return (a[sortField] < b[sortField] ? -1 : 1) * (sortOrder === 'asc' ? 1 : -1);
+		});
+	}
+
+	searchRoleByTitle(filter, roles: Role[]) {
+		return filter && filter.title ? roles.filter(role => {
+			return role.title.indexOf(filter.title.toLowerCase()) > -1;
+		}) : roles;
+	}
+
+	createRole(role: Role): Observable<Role> {
+		// role.id = this.afs.createId();
+		return from(this.afs.collection<Role>(this.rolesPath).doc(role.id).set(role).then(() => role));
 	}
 
 	removeRole(roleId: string): Promise<any> {
@@ -115,16 +156,13 @@ export class AuthService {
 		return this.afs.collection<IUser>(this.rolesPath).doc(role.id).update(role);
 	}
 
-	async createRole(role: Role): Promise<Role> {
-		role.id = this.afs.createId();
-		await this.afs.collection<Role>(this.rolesPath).doc(role.id).set(role);
-		return role;
-	}
-
-	// Permissions/**/
+	/*
+	 Permissions
+	 */
 	getPermissions() {
 		return this.permissions$;
 	}
+
 
 	getCreationBy(): string {
 		return 'asdasd';
@@ -143,9 +181,10 @@ export class AuthService {
 		return this.afAuth.auth.signInWithPopup(provider);
 	}
 
-	doTwitterLogin(): Promise<UserCredential> {
+	doTwitterLogin(): Observable<UserCredential> {
+		console.log(123);
 		const provider = new firebase.auth.TwitterAuthProvider();
-		return this.afAuth.auth.signInWithPopup(provider);
+		return from(this.afAuth.auth.signInWithPopup(provider));
 	}
 
 	doGoogleLogin(): Promise<UserCredential> {
@@ -154,6 +193,12 @@ export class AuthService {
 			prompt: 'select_account'
 		});
 		return this.afAuth.auth.signInWithPopup(provider);
+	}
+
+	createUser(userData: IUser): Observable<IUser> {
+		console.log('ToDo');
+		console.log(userData);
+		return of(userData);
 	}
 
 }

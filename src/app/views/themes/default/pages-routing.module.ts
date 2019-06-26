@@ -60,7 +60,7 @@ const routes: Routes = [
 			}, */
 			{
 				path: 'users',
-				loadChildren: 'app/views/pages/user/user.module#UserModule'
+				loadChildren: () => import('../../pages/user-management/user-management.module').then(m => m.UserManagementModule)
 			},
 			{
 				path: 'error/403',

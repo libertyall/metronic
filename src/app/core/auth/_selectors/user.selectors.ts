@@ -6,16 +6,14 @@ import { IUser } from '../_interfaces/user.interface';
 
 export const selectUsersState = createFeatureSelector<UsersState>('users');
 
-export const selectUserById = (userId: number) => createSelector(
+export const selectUserById = (userId: string) => createSelector(
     selectUsersState,
     usersState => usersState.entities[userId]
 );
 
 export const selectUsersPageLoading = createSelector(
     selectUsersState,
-    usersState => {
-        return usersState.listLoading;
-    }
+    usersState => usersState.listLoading
 );
 
 export const selectUsersActionLoading = createSelector(

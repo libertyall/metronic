@@ -3,7 +3,7 @@ import * as fromChangePassword from './password-management.reducer';
 import * as fromProviders from './providers-management.reducer';
 import * as fromEmailHandler from './email-handler.reducer';
 
-import {ActionReducerMap, createFeatureSelector, createSelector, MemoizedSelector} from '@ngrx/store';
+import { ActionReducerMap, createFeatureSelector, createSelector, MemoizedSelector } from '@ngrx/store';
 
 export interface AuthState {
 	user: fromUser.State;
@@ -38,10 +38,7 @@ export const isUserLogged = createSelector(
 
 export const getUser = createSelector(
 	getAuthState,
-	state => {
-		console.log(state);
-		return state.user.user;
-	}
+	state => state.user.user
 );
 
 export const getAuthError = createSelector(

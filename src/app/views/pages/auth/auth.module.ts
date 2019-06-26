@@ -25,33 +25,7 @@ import { ProvidersManagementEffects } from '../../../core/auth/_effects/provider
 import { PasswordManagementEffects } from '../../../core/auth/_effects/password-management.effects';
 import { authReducer } from '../../../core/auth/_reducers/auth.reducer';
 import { PartialsModule } from '../../partials/partials.module';
-
-const routes: Routes = [
-	{
-		path: '',
-		component: AuthComponent,
-		children: [
-			{
-				path: '',
-				redirectTo: 'login',
-				pathMatch: 'full'
-			},
-			{
-				path: 'login',
-				component: LoginComponent
-			},
-			{
-				path: 'register',
-				component: RegisterComponent
-			},
-			{
-				path: 'forgot-password',
-				component: ForgotPasswordComponent
-			}
-		]
-	}
-];
-
+import { authRoutes } from './auth.routes';
 
 @NgModule({
 	imports: [
@@ -59,7 +33,7 @@ const routes: Routes = [
 		FormsModule,
 		ReactiveFormsModule,
 		MatButtonModule,
-		RouterModule.forChild(routes),
+		RouterModule.forChild(authRoutes),
 		MatInputModule,
 		MatFormFieldModule,
 		MatCheckboxModule,
