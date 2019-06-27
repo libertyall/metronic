@@ -5,7 +5,7 @@ import { selectAllPermissions } from './permission.selectors';
 import { Role } from '../_interfaces/role.interface';
 import { Permission } from '../_interfaces/permission.interface';
 
-export const selectAuthState = state =>  state.auth;
+export const selectAuthState = state => state.auth;
 
 export const isLoggedIn = createSelector(
 	selectAuthState,

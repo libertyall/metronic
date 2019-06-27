@@ -1,15 +1,10 @@
-import { NgxPermissionsModule } from 'ngx-permissions';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { MatButtonModule, MatProgressBarModule, MatTabsModule, MatTooltipModule } from '@angular/material';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbProgressbarModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
-import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { CoreModule } from '../../../core/core.module';
@@ -27,9 +22,10 @@ import { HtmlClassService } from './html-class.service';
 import { HeaderMobileComponent } from './header/header-mobile/header-mobile.component';
 import { ErrorPageComponent } from './content/error-page/error-page.component';
 import { rolesReducer } from '../../../core/auth/_reducers/role.reducers';
-import { permissionsReducer } from '../../../core/auth/_reducers/permission.reducers';
 import { RoleEffects } from '../../../core/auth/_effects/role.effects';
 import { PermissionEffects } from '../../../core/auth/_effects/permission.effects';
+import { permissionsReducer } from '../../../core/auth/_reducers/permission.reducers';
+import { NgxPermissionsModule } from 'ngx-permissions';
 
 @NgModule({
 	declarations: [
@@ -42,7 +38,7 @@ import { PermissionEffects } from '../../../core/auth/_effects/permission.effect
 		TopbarComponent,
 		AsideLeftComponent,
 		MenuHorizontalComponent,
-		ErrorPageComponent,
+		ErrorPageComponent
 	],
 	exports: [
 		BaseComponent,
@@ -54,31 +50,33 @@ import { PermissionEffects } from '../../../core/auth/_effects/permission.effect
 		TopbarComponent,
 		AsideLeftComponent,
 		MenuHorizontalComponent,
-		ErrorPageComponent,
+		ErrorPageComponent
 	],
 	providers: [
-		HtmlClassService,
+		HtmlClassService
 	],
 	imports: [
 		CommonModule,
 		RouterModule,
-		// NgxPermissionsModule.forChild(),
+		NgxPermissionsModule.forChild(),
 		StoreModule.forFeature('roles', rolesReducer),
 		EffectsModule.forFeature([PermissionEffects, RoleEffects]),
-		// StoreModule.forFeature('permissions', permissionsReducer),
+		StoreModule.forFeature('permissions', permissionsReducer),
 		PagesRoutingModule,
 		// PagesModule,
 		PartialsModule,
 		CoreModule,
 		InlineSVGModule,
 		PerfectScrollbarModule,
-		NgbModule,
+		NgbProgressbarModule,
+		NgbTooltipModule,
+		// NgbModule,
 		// FormsModule,
 		// MatProgressBarModule,
 		// MatTabsModule,
 		// MatButtonModule,
 		// MatTooltipModule,
-		TranslateModule.forChild(),
+		TranslateModule.forChild()
 		// LoadingBarModule,
 		// NgxDaterangepickerMd,
 	]

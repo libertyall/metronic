@@ -1,0 +1,119 @@
+<kt-portlet>
+	<kt-portlet-header [title]="'user.permission.title' | translate"
+					   [class]="'kt-portlet__head--lg'"
+					   [viewLoading$]="dataSource.loading$">
+		<ng-container ktPortletTools>
+			<button (click)="addPermission()" mat-raised-button matTooltip="{{'user.permission.create.tooltip' | translate}}"
+					color="primary"
+					type="button">
+				<span>{{'user.permission.create.title' | translate}}</span>
+			</button>
+		</ng-container>
+	</kt-portlet-header>
+	<kt-portlet-body>
+		<div class="kt-form">
+			<div class="kt-form__filtration">
+				<div class="row align-items-center">
+					<div class="col-md-4 kt-margin-bottom-10-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<input matInput placeholder="{{'user.permission.search.placeholder' | translate}}"
+								   #searchInput>
+							<mat-hint align="start">
+								<strong>{{'user.permission.search.title' | translate}}</strong>
+								{{'user.permission.search.fields' | translate}}
+							</mat-hint>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+
+			<div class="row align-items-center collapse kt-form__group-actions kt-margin-top-20 kt-margin-bottom-20"
+				 [ngClass]="{'show' : selection.selected.length > 0}">
+				<div class="col-xl-12">
+					<div class="kt-form__group kt-form__group--inline">
+						<div class="kt-form__label kt-form__label-no-wrap">
+							<label class="kt--font-bold kt-font-danger-">
+								<span translate="user.permission.selectedCount"
+									  [translateParams]="{count: selection.selected.length}"></span>
+							</label>
+						</div>
+						<div class="kt-form__control kt-form__group--inline">
+							<button (click)="deleteAll()"
+									mat-raised-button
+									class="mat-button-mt-4"
+									matTooltip="{{'user.permission.delete.tooltip' | translate }}">
+								<mat-icon>clear_all</mat-icon>
+								{{'user.permission.delete.title' | translate}}
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="mat-table__wrapper">
+			<mat-table class="lmat-elevation-z8"
+					   [dataSource]="dataSource"
+					   matSort
+					   #sort1="matSort"
+					   matSortActive="id"
+					   matSortDirection="asc"
+					   matSortDisableClear>
+				<ng-container matColumnDef="select">
+					<mat-header-cell *matHeaderCellDef class="mat-column-checkbox">
+						<mat-checkbox (change)="$event ? masterToggle() : null"
+									  [checked]="selection.hasValue() && isAllSelected()"
+									  [indeterminate]="selection.hasValue() && !isAllSelected()">
+						</mat-checkbox>
+					</mat-header-cell>
+					<mat-cell *matCellDef="let row" class="mat-column-checkbox">
+						<mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
+						</mat-checkbox>
+					</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="id">
+					<mat-header-cell *matHeaderCellDef
+									 mat-sort-header>{{ 'user.permission.table.id' | translate}}</mat-header-cell>
+					<mat-cell *matCellDef="let permission">{{permission.id}}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="title">
+					<mat-header-cell *matHeaderCellDef
+									 mat-sort-header>{{ 'user.permission.table.title' | translate}}</mat-header-cell>
+					<mat-cell *matCellDef="let permission">{{permission.title}}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="actions">
+					<mat-header-cell *matHeaderCellDef>{{ 'actions' | translate}}</mat-header-cell>
+					<mat-cell *matCellDef="let permission">
+						<button mat-icon-button color="primary"
+								matTooltip="{{ (permission.isCorePermission ? 'user.permission.detail' :  'user.permission.edit') | translate}}"
+								(click)="editPermission(permission)">
+							<mat-icon>{{ permission.isCorePermission ? 'visibility' : 'create' }}</mat-icon>
+						</button>&nbsp;
+						<button mat-icon-button color="warn"
+								matTooltip="{{'user.permission.delete.one' | translate}}"
+								type="button"
+								[disabled]="permission.isCorePermission"
+								(click)="deletePermission(permission)">
+							<mat-icon>delete</mat-icon>
+						</button>
+					</mat-cell>
+				</ng-container>
+
+				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+				<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+			</mat-table>
+
+			<div class="mat-table__message" *ngIf="!dataSource.hasItems">{{ 'user.list.noEntries' | translate}}</div>
+			<div class="mat-table__message" *ngIf="dataSource.isPreloadTextViewed$ | async">{{ 'pleaseWait' | translate}}</div>
+		</div>
+
+		<div class="mat-table__bottom">
+			<mat-spinner [diameter]="20" *ngIf="dataSource.loading$ | async"></mat-spinner>
+			<mat-paginator [pageSize]="10" [pageSizeOptions]="[3, 5, 10]" [length]="dataSource.paginatorTotal$ | async" [showFirstLastButtons]="true"></mat-paginator>
+		</div>
+	</kt-portlet-body>
+</kt-portlet>

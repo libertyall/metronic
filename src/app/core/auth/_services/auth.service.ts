@@ -9,6 +9,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../reducers';
 import { QueryParamsModel } from '../../_base/crud';
 import { map, take } from 'rxjs/operators';
+import { Permission } from '../_interfaces/permission.interface';
 import UserCredential = firebase.auth.UserCredential;
 
 @Injectable()
@@ -104,6 +105,12 @@ export class AuthService {
 		return this.afs.collection<IUser>(this.userPath).doc(userId).delete();
 	}
 
+	createUser(userData: IUser): Observable<IUser> {
+		console.log('ToDo');
+		console.log(userData);
+		return of(userData);
+	}
+
 	/*
 	 Roles
 	 */
@@ -159,11 +166,51 @@ export class AuthService {
 	/*
 	 Permissions
 	 */
-	getPermissions() {
-		return this.permissions$;
+	getAllPermissions() {
+		return this.permissions$.pipe(take(1));
+	}
+
+	getPermissionList(page?: QueryParamsModel): Observable<any> {
+		const { filter, pageNumber, pageSize, sortField, sortOrder } = page;
+		return this.permissions$.pipe(
+			take(1),
+			map((permissions: Permission[]) => {
+				const totalItems = permissions.length;
+				const filteredItems = this.searchPermissionByTitle(filter, permissions);
+				const sortedItems = this.sortData(filteredItems, sortField, sortOrder);
+				const paginatedItems = sortedItems.splice(pageNumber * pageSize, pageSize);
+				return {
+					items: paginatedItems,
+					totalCount: totalItems,
+					errorMessage: ''
+				};
+			})
+		);
+	}
+
+	searchPermissionByTitle(filter, permissions: Permission[]) {
+		return filter && filter.title ? permissions.filter(permission => {
+			return permission.title.indexOf(filter.title.toLowerCase()) > -1;
+		}) : permissions;
+	}
+
+	createPermission(permission: Permission): Observable<Permission> {
+		permission.id = this.afs.createId();
+		return from(this.afs.collection<Permission>(this.permissionsPath).doc(permission.id).set(permission).then(() => permission));
+	}
+
+	removePermission(permissionId: string): Promise<any> {
+		return this.afs.collection<IUser>(this.permissionsPath).doc(permissionId).delete();
+	}
+
+	updatePermission(permission: Permission): Promise<void> {
+		return this.afs.collection<IUser>(this.permissionsPath).doc(permission.id).update(permission);
 	}
 
 
+	/**
+	 * Other Functions
+	 */
 	getCreationBy(): string {
 		return 'asdasd';
 		/* return this.afAuth.user.pipe(map(user => {
@@ -175,7 +222,9 @@ export class AuthService {
 		return firebase.firestore.FieldValue.serverTimestamp();
 	}
 
-
+	/*
+	 Social Login
+	 */
 	doFacebookLogin(): Promise<UserCredential> {
 		const provider = new firebase.auth.FacebookAuthProvider();
 		return this.afAuth.auth.signInWithPopup(provider);
@@ -193,12 +242,6 @@ export class AuthService {
 			prompt: 'select_account'
 		});
 		return this.afAuth.auth.signInWithPopup(provider);
-	}
-
-	createUser(userData: IUser): Observable<IUser> {
-		console.log('ToDo');
-		console.log(userData);
-		return of(userData);
 	}
 
 }

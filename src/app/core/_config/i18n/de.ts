@@ -235,6 +235,7 @@ export const locale = {
 			},
 			USER: {
 				LIST: 'Benutzerliste',
+				PERMISSIONS: 'Berechtigungen',
 				ROLES: 'Rollen'
 			}
 		},
@@ -405,6 +406,50 @@ export const locale = {
 					lastName: 'Nachname'
 				},
 				title: 'Registrierte Benutzer'
+			},
+			permission: {
+				create: {
+					title: 'Berechtigung erstellen',
+					tooltip: 'Eine neue Berechtigung erstellen'
+				},
+				delete: {
+					one: 'Berechtigung löschen',
+					title: 'Berechtigungen löschen',
+					tooltip: 'Alle ausgewählten Berechtigungen löschen.'
+				},
+				dialog: {
+					name: {
+						placeholder: 'Name der Berechtigung',
+						pleaseEnter: 'Bitte gib den Namen für die Berechtigung an.'
+					},
+					parentId: {
+						none: 'Keine übergeordnete Berechtigung',
+						placeholder: 'Übergebordnete Berechtigung'
+					},
+					saveTooltip: 'Berechtigung speichern',
+					title: {
+						edit: 'Die Berechtigung {{permission}} editieren',
+						new: 'Neue Berechtigung erstellen',
+						placeholder: 'Titel der Berechtigung',
+						pleaseEnter: 'Bitte gib den Titel der Berechtigung an.'
+					}
+				},
+				detail: 'Details anzeigen',
+				edit: 'Berechtigung editieren',
+				permissions: {
+					title: 'Berechtigungen'
+				},
+				search: {
+					fields: 'Titel',
+					placeholder: 'Nach Berechtigungen suchen ...',
+					title: 'Suchen nach'
+				},
+				selectedCount: 'Es wurden {{count}} Berechtigungen ausgewählt.',
+				table: {
+					id: 'Id',
+					title: 'Titel'
+				},
+				title: 'Berechtigungen'
 			},
 			role: {
 				create: {

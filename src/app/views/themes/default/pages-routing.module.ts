@@ -8,59 +8,59 @@ const routes: Routes = [
 	{
 		path: '',
 		component: BaseComponent,
-		canActivate: [ AuthGuard ],
+		canActivate: [AuthGuard],
 		children: [
 			{
 				path: 'dashboard',
-				loadChildren: () => import('app/views/pages/dashboard/dashboard.module').then(m => m.DashboardModule),
-			}, /* ,
+				loadChildren: () => import('app/views/pages/dashboard/dashboard.module').then(m => m.DashboardModule)
+			},
 			{
 				path: 'articles',
-				loadChildren: () => import('app/views/pages/article/article.module').then(m => m.AuthModule),
-			}, */
+				loadChildren: () => import('app/views/pages/article/article.module').then(m => m.ArticleModule)
+			},
 			{
 				path: 'categories',
 				loadChildren: () => import('app/views/pages/category/category.module').then(m => m.CategoryModule)
 			},
-			/*{
+			{
 				path: 'calendar',
-				loadChildren: 'app/views/pages/sfw-calendar/sfw-calendar.module#SFWCalendarModule'
+				loadChildren: () => import('app/views/pages/calendar/calendar.module').then(m => m.CalendarModule)
 			},
 			{
 				path: 'clubs',
-				loadChildren: 'app/views/pages/club/club.module#ClubModule'
+				loadChildren: () => import('app/views/pages/club/club.module').then(m => m.ClubModule)
 			},
 			{
 				path: 'locations',
-				loadChildren: 'app/views/pages/location/location.module#LocationModule'
+				loadChildren: () => import('app/views/pages/location/location.module').then(m => m.LocationModule)
 			},
 			{
 				path: 'matches',
-				loadChildren: 'app/views/pages/match/match.module#MatchModule'
+				loadChildren: () => import('app/views/pages/match/match.module').then(m => m.MatchModule)
 			},
 			{
 				path: 'members',
-				loadChildren: 'app/views/pages/member/member.module#MemberModule'
-			},
-			{
-				path: 'uploader',
-				loadChildren: 'app/views/pages/uploader/uploader.module#UploaderModule'
-			},*/
+				loadChildren: () => import('app/views/pages/member/member.module').then(m => m.MemberModule)
+			},/*
+			 {
+			 path: 'uploader',
+			 loadChildren: 'app/views/pages/uploader/uploader.module#UploaderModule'
+			 },*/
 			{
 				path: 'settings',
-				loadChildren: () => import('../../pages/settings/settings.module').then(m => m.SettingsModule)
+				loadChildren: () => import('app/views/pages/settings/settings.module').then(m => m.SettingsModule)
 			},
-			/* {
+			{
 				path: 'sponsors',
-				loadChildren: 'app/views/pages/sponsor/sponsor.module#SponsorModule'
+				loadChildren: () => import('app/views/pages/sponsor/sponsor.module').then(m => m.SponsorModule)
 			},
 			{
 				path: 'teams',
-				loadChildren: 'app/views/pages/team/team.module#TeamModule'
-			}, */
+				loadChildren: () => import('app/views/pages/team/team.module').then(m => m.TeamModule)
+			},
 			{
 				path: 'users',
-				loadChildren: () => import('../../pages/user-management/user-management.module').then(m => m.UserManagementModule)
+				loadChildren: () => import('app/views/pages/user-management/user-management.module').then(m => m.UserManagementModule)
 			},
 			{
 				path: 'error/403',
@@ -76,12 +76,12 @@ const routes: Routes = [
 			{ path: '', redirectTo: 'dashboard', pathMatch: 'full' },
 			{ path: '**', redirectTo: 'dashboard', pathMatch: 'full' }
 		]
-	},
+	}
 ];
 
 @NgModule({
-	imports: [ RouterModule.forChild(routes) ],
-	exports: [ RouterModule ]
+	imports: [RouterModule.forChild(routes)],
+	exports: [RouterModule]
 })
 export class PagesRoutingModule {
 }

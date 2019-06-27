@@ -1,14 +1,15 @@
-import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
-import {Observable, Subscription} from 'rxjs';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import * as objectPath from 'object-path';
-import {Permission} from '../../../../core/auth/_interfaces/permission.interface';
-import {LayoutConfigService, MenuConfigService, PageConfigService} from '../../../../core/_base/layout';
-import {HtmlClassService} from '../html-class.service';
-import {AppState} from '../../../../core/reducers';
-import {select, Store} from '@ngrx/store';
-import {NgxPermissionsService} from 'ngx-permissions';
-import {MenuConfig} from '../../../../core/_config/default/menu.config';
-import {PageConfig} from '../../../../core/_config/default/page.config';
+import { Permission } from '../../../../core/auth/_interfaces/permission.interface';
+import { LayoutConfigService, MenuConfigService, PageConfigService } from '../../../../core/_base/layout';
+import { HtmlClassService } from '../html-class.service';
+import { AppState } from '../../../../core/reducers';
+import { select, Store } from '@ngrx/store';
+import { NgxPermissionsService } from 'ngx-permissions';
+import { MenuConfig } from '../../../../core/_config/default/menu.config';
+import { PageConfig } from '../../../../core/_config/default/page.config';
+import { currentUserPermissions } from '../../../../core/auth/_selectors/auth.selectors';
 
 @Component({
 	selector: 'kt-base',
@@ -20,8 +21,11 @@ export class BaseComponent implements OnInit, OnDestroy {
 
 	selfLayout: string;
 	asideDisplay: boolean;
-	// asideSecondary: boolean;
 	subheaderDisplay: boolean;
+	desktopHeaderDisplay: boolean;
+	fitTop: boolean;
+	fluid: boolean;
+
 
 	private unsubscribe: Subscription[] = [];
 	private currentUserPermissions$: Observable<Permission[]>;
@@ -33,9 +37,7 @@ export class BaseComponent implements OnInit, OnDestroy {
 				private store: Store<AppState>,
 				private permissionsService: NgxPermissionsService) {
 
-		// this.store.pipe(select(currentUser)).pipe(t => console.log(t));
-
-		// this.loadRolesWithPermissions();
+		this.loadRolesWithPermissions();
 
 		this.menuConfigService.loadConfigs(new MenuConfig().configs);
 		this.pageConfigService.loadConfigs(new PageConfig().configs);
@@ -52,9 +54,13 @@ export class BaseComponent implements OnInit, OnDestroy {
 	ngOnInit(): void {
 		const config = this.layoutConfigService.getConfig();
 
+		this.desktopHeaderDisplay = objectPath.get(config, 'backend.header.self.fixed.desktop');
 		this.selfLayout = objectPath.get(config, 'backend.self.layout.selected');
 		this.asideDisplay = objectPath.get(config, 'backend.aside.self.display.selected');
 		this.subheaderDisplay = objectPath.get(config, 'backend.subheader.display.selected');
+		this.desktopHeaderDisplay = objectPath.get(config, 'backend.header.self.fixed.desktop');
+		this.fitTop = objectPath.get(config, 'backend.content.fit-top.selected');
+		this.fluid = objectPath.get(config, 'backend.content.width.selected') === 'fluid';
 
 		const layoutConfigSubscription = this.layoutConfigService.onConfigUpdated$.subscribe(cfg => {
 			setTimeout(() => {
@@ -68,10 +74,9 @@ export class BaseComponent implements OnInit, OnDestroy {
 		this.unsubscribe.forEach(sb => sb.unsubscribe());
 	}
 
-	/*
 	loadRolesWithPermissions() {
 		this.currentUserPermissions$ = this.store.pipe(select(currentUserPermissions));
-		const subscr = this.currentUserPermissions$.subscribe(res => {
+		const subscription = this.currentUserPermissions$.subscribe(res => {
 			if (!res || res.length === 0) {
 				return;
 			}
@@ -79,6 +84,6 @@ export class BaseComponent implements OnInit, OnDestroy {
 			this.permissionsService.flushPermissions();
 			res.forEach((pm: Permission) => this.permissionsService.addPermission(pm.name));
 		});
-		this.unsubscribe.push(subscr);
-	} */
+		this.unsubscribe.push(subscription);
+	}
 }

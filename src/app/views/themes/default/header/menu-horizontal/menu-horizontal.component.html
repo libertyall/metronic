@@ -16,11 +16,12 @@
 	<li [attr.aria-haspopup]="true"
 		[attr.data-ktmenu-submenu-toggle]="getItemAttrSubmenuToggle(item)"
 		(mouseleave)="mouseLeave($event)"
+		(mouseenter)="mouseEnter($event)"
 		[ngClass]="getItemCssClasses(item)">
 
 		<!-- if item has submenu -->
 		<ng-container *ngIf="item.submenu">
-			<span [ngClass]="{ 'kt-menu__toggle': item.root }" class="kt-menu__link">
+			<a href="javascript:;" [ngClass]="{ 'kt-menu__toggle': item.root }" class="kt-menu__link">
 
 				<ng-container [ngTemplateOutlet]="menuItemInnerTemplate" [ngTemplateOutletContext]="{ item: item, parentItem: parentItem }"></ng-container>
 
@@ -32,7 +33,7 @@
 				<!-- else arrow icons -->
 				<i *ngIf="item.submenu && !item.root" class="kt-menu__hor-arrow la la-angle-right"></i>
 				<i *ngIf="item.submenu && !item.root" class="kt-menu__ver-arrow la la-angle-right"></i>
-			</span>
+			</a>
 		</ng-container>
 
 		<!-- if item hasn't sumbenu -->
@@ -89,15 +90,15 @@
 		</i>
 	</ng-container>
 
-	<ng-container *ngIf="!item.badge; else m_menu_link_badge">
+	<ng-container *ngIf="!item.badge; else menuLinkBadge">
 		<span class="kt-menu__item-here"></span>
 		<!-- menu item title text -->
 		<span class="kt-menu__link-text" [translate]="item.translate">
-			{{item.title + '123' | translate}}
+			{{item.title}}
 		</span>
 	</ng-container>
 
-	<ng-template #m_menu_link_badge>
+	<ng-template #menuLinkBadge>
 		<!-- menu item with badge -->
 		<span class="kt-menu__link-text" [translate]="item.translate">{{item.title}}</span>
 		<span class="kt-menu__link-badge">

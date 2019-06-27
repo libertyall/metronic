@@ -600,6 +600,7 @@ export class MenuConfig {
 					translate: 'MENU.SETTINGS.USER',
 					icon: 'flaticon-users',
 					bullet: 'dot',
+					// permission: 'accessToUserManagementModule',
 					submenu: [
 						{
 							title: 'Dashboard',
@@ -614,8 +615,12 @@ export class MenuConfig {
 						{
 							title: 'Roles',
 							page: '/users/roles',
-							translate: 'MENU.USER.ROLES',
-							// permission: 'accessToECommerceModule'
+							translate: 'MENU.USER.ROLES'
+						},
+						{
+							title: 'Permissions',
+							page: '/users/permissions',
+							translate: 'MENU.USER.PERMISSIONS'
 						}
 					]
 				}

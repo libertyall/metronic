@@ -56,7 +56,7 @@ export class RoleEditDialogComponent implements OnInit, OnDestroy {
 
 			this.role = res;
 			this.allPermissions$ = this.store.pipe(select(selectAllPermissions));
-			//  this.loadPermissions();
+			this.loadPermissions();
 		});
 	}
 
@@ -68,12 +68,14 @@ export class RoleEditDialogComponent implements OnInit, OnDestroy {
 
 	loadPermissions() {
 		this.allPermissions$.subscribe(_allPermissions => {
+			console.log(_allPermissions);
 			if (!_allPermissions) {
 				return;
 			}
 
 			const mainPermissions = _allPermissions.filter(element => !element.parentId);
 			mainPermissions.forEach((element: Permission) => {
+				console.log(element.id);
 				const hasUserPermission = this.role.permissions.some(t => t === element.id);
 				const rootPermission: Permission = {
 					id: element.id,

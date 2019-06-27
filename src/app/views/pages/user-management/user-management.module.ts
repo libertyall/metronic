@@ -16,10 +16,10 @@ import { ChangePasswordComponent } from './users/_subs/change-password/change-pa
 import { AddressComponent } from './users/_subs/address/address.component';
 import { SocialNetworksComponent } from './users/_subs/social-networks/social-networks.component';
 import {
-	MatAutocompleteModule, MatButtonModule, MatCardModule, MatCheckboxModule, MatDatepickerModule, MatDialogModule,
-	MatExpansionModule, MatIconModule, MatInputModule, MatMenuModule, MatNativeDateModule, MatPaginatorModule,
-	MatProgressBarModule, MatProgressSpinnerModule, MatRadioModule, MatSelectModule, MatSnackBarModule, MatSortModule,
-	MatTableModule, MatTabsModule, MatTooltipModule
+	MAT_DIALOG_DEFAULT_OPTIONS, MatAutocompleteModule, MatButtonModule, MatCardModule, MatCheckboxModule,
+	MatDatepickerModule, MatDialogModule, MatExpansionModule, MatIconModule, MatInputModule, MatMenuModule,
+	MatNativeDateModule, MatPaginatorModule, MatProgressBarModule, MatProgressSpinnerModule, MatRadioModule,
+	MatSelectModule, MatSnackBarModule, MatSortModule, MatTableModule, MatTabsModule, MatTooltipModule
 } from '@angular/material';
 import { PortletModule } from '../../partials/content/general/portlet/portlet.module';
 import { userManagementRoutes } from './user-management.routing';
@@ -32,6 +32,8 @@ import { usersReducer } from '../../../core/auth/_reducers/user.reducers';
 import { UserEffects } from '../../../core/auth/_effects/user.effects';
 import { UserDetailComponent } from './users/user-detail/user-detail.component';
 import { UserResolver } from './user.resolver';
+import { PermissionsListComponent } from './permissions/permissions-list/permissions-list.component';
+import { PermissionEditDialogComponent } from './permissions/permission-edit/permission-edit.dialog.component';
 
 @NgModule({
 	imports: [
@@ -70,28 +72,20 @@ import { UserResolver } from './user.resolver';
 	],
 	providers: [
 		UserService,
-		UserResolver
-		/* InterceptService,
-		 {
-		 provide: HTTP_INTERCEPTORS,
-		 useClass: InterceptService,
-		 multi: true
-		 },
-		 {
-		 provide: MAT_DIALOG_DEFAULT_OPTIONS,
-		 useValue: {
-		 hasBackdrop: true,
-		 panelClass: 'kt-mat-dialog-container__wrapper',
-		 height: 'auto',
-		 width: '900px'
-		 }
-		 },
-		 HttpUtilsService,
-		 TypesUtilsService,
-		 LayoutUtilsService */
+		UserResolver,
+		{
+			provide: MAT_DIALOG_DEFAULT_OPTIONS,
+			useValue: {
+				hasBackdrop: true,
+				panelClass: 'kt-mat-dialog-container__wrapper',
+				height: 'auto',
+				width: '500px'
+			}
+		}
 	],
 	entryComponents: [
 		ActionNotificationComponent,
+		PermissionEditDialogComponent,
 		RoleEditDialogComponent
 	],
 	declarations: [
@@ -105,7 +99,9 @@ import { UserResolver } from './user.resolver';
 		AddressComponent,
 		SocialNetworksComponent,
 		UserDashboardComponent,
-		UserDetailComponent
+		UserDetailComponent,
+		PermissionsListComponent,
+		PermissionEditDialogComponent
 	]
 })
 export class UserManagementModule {

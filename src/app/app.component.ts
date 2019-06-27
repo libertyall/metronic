@@ -42,12 +42,15 @@ export class AppComponent implements OnInit, OnDestroy {
 				this.splashScreenService.hide();
 				window.scrollTo(0, 0);
 			}
+
+			setTimeout(() => {
+				document.body.classList.add('kt-page--loaded');
+			}, 500);
 		});
 		this.unsubscribe.push(routerSubscription);
 
 		const config = this.layoutConfigService.getConfig();
 		this.pageTitle = objectPath.get(config, 'backend.self.page.title');
-
 		this.title.setTitle(this.pageTitle);
 	}
 

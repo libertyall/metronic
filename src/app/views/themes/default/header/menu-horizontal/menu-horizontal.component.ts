@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import * as objectPath from 'object-path';
@@ -14,7 +14,7 @@ import { HtmlClassService } from '../../html-class.service';
 	styleUrls: ['./menu-horizontal.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MenuHorizontalComponent implements OnInit, AfterViewInit {
+export class MenuHorizontalComponent implements OnInit {
 
 	currentRouteUrl: any = '';
 
@@ -42,44 +42,54 @@ export class MenuHorizontalComponent implements OnInit, AfterViewInit {
 		}
 	};
 
-
-	constructor(
-		private el: ElementRef,
-		public htmlClassService: HtmlClassService,
-		public menuHorService: MenuHorizontalService,
-		private menuConfigService: MenuConfigService,
-		private layoutConfigService: LayoutConfigService,
-		private router: Router,
-		private render: Renderer2
+	constructor(private el: ElementRef,
+				public htmlClassService: HtmlClassService,
+				public menuHorService: MenuHorizontalService,
+				private menuConfigService: MenuConfigService,
+				private layoutConfigService: LayoutConfigService,
+				private router: Router,
+				private render: Renderer2,
+				private cdr: ChangeDetectorRef
 	) {
-	}
-
-	ngAfterViewInit(): void {
 	}
 
 
 	ngOnInit(): void {
-		this.rootArrowEnabled = this.layoutConfigService.getConfig('backend.header.menu.self.root-arrow');
+		this.rootArrowEnabled = this.layoutConfigService.getConfig('header.menu.self.root-arrow');
 
 		this.currentRouteUrl = this.router.url;
 		this.router.events
 			.pipe(filter(event => event instanceof NavigationEnd))
-			.subscribe(event => {
+			.subscribe(() => {
 				this.currentRouteUrl = this.router.url;
+				this.cdr.markForCheck();
 			});
 	}
 
+	mouseEnter(e: Event) {
+		// check if the left aside menu is fixed
+		if (!document.body.classList.contains('kt-menu__item--hover')) {
+			this.render.addClass(document.body, 'kt-menu__item--hover');
+		}
+	}
 
 	mouseLeave(event: MouseEvent) {
 		this.render.removeClass(event.target, 'kt-menu__item--hover');
 	}
-
 
 	getItemCssClasses(item) {
 		let classes = 'kt-menu__item';
 
 		if (objectPath.get(item, 'submenu')) {
 			classes += ' kt-menu__item--submenu';
+		}
+
+		if (!item.submenu && this.isMenuItemIsActive(item)) {
+			classes += ' kt-menu__item--active kt-menu__item--here';
+		}
+
+		if (item.submenu && this.isMenuItemIsActive(item)) {
+			classes += ' kt-menu__item--open kt-menu__item--here';
 		}
 
 		if (objectPath.get(item, 'resizer')) {
@@ -99,10 +109,6 @@ export class MenuHorizontalComponent implements OnInit, AfterViewInit {
 
 		if (objectPath.get(item, 'icon-only')) {
 			classes += ' kt-menu__item--icon-only';
-		}
-
-		if (this.isMenuItemIsActive(item)) {
-			classes += ' kt-menu__item--active kt-menu__item--here';
 		}
 
 		return classes;
@@ -150,7 +156,6 @@ export class MenuHorizontalComponent implements OnInit, AfterViewInit {
 		return classes;
 	}
 
-
 	isMenuItemIsActive(item): boolean {
 		if (item.submenu) {
 			return this.isMenuRootItemIsActive(item);
@@ -172,9 +177,18 @@ export class MenuHorizontalComponent implements OnInit, AfterViewInit {
 			}
 		}
 
-		if (item.submenu) {
-			for (const subItem of item.submenu) {
+		if (item.submenu.columns) {
+			for (const subItem of item.submenu.columns) {
 				if (this.isMenuItemIsActive(subItem)) {
+					return true;
+				}
+			}
+		}
+
+		if (typeof item.submenu[Symbol.iterator] === 'function') {
+			for (const subItem of item.submenu) {
+				const active = this.isMenuItemIsActive(subItem);
+				if (active) {
 					return true;
 				}
 			}

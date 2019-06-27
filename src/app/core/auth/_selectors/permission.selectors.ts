@@ -1,6 +1,10 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { PermissionsState } from '../_reducers/permission.reducers';
 import * as fromPermissions from '../_reducers/permission.reducers';
+import { HttpExtenstionsModel, QueryResultsModel } from '../../_base/crud';
+import { each } from 'lodash';
+import { Permission } from '../_interfaces/permission.interface';
+import { selectRolesState } from './role.selectors';
 
 export const selectPermissionsState = createFeatureSelector<PermissionsState>('permissions');
 
@@ -21,5 +25,34 @@ export const selectAllPermissionsIds = createSelector(
 
 export const allPermissionsLoaded = createSelector(
     selectPermissionsState,
-    ps  => ps._isAllPermissionsLoaded
+    ps  => ps.isAllPermissionsLoaded
+);
+
+export const selectLastCreatedPermissionId = createSelector(
+	selectPermissionsState,
+	ps => ps.lastCreatedPermissionId
+);
+
+export const selectPermissionsPageLoading = createSelector(
+	selectPermissionsState,
+	permissionsState => permissionsState.listLoading
+);
+
+export const selectPermissionsShowInitWaitingMessage = createSelector(
+	selectPermissionsState,
+	rolesState => rolesState.showInitWaitingMessage
+);
+
+export const selectQueryResult = createSelector(
+	selectPermissionsState,
+	permissionsState => {
+		const items: Permission[] = [];
+		each(permissionsState.entities, element => {
+			items.push(element);
+		});
+		const httpExtension = new HttpExtenstionsModel();
+		httpExtension.sortArray(items, permissionsState.lastQuery.sortField, permissionsState.lastQuery.sortOrder);
+
+		return new QueryResultsModel(permissionsState.queryResult, permissionsState.queryRowsCount);
+	}
 );

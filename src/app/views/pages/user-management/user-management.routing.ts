@@ -6,6 +6,7 @@ import { UserDetailComponent } from './users/user-detail/user-detail.component';
 import { UserResolver } from './user.resolver';
 import { UserEditComponent } from './users/user-edit/user-edit.component';
 import { RolesListComponent } from './roles/roles-list/roles-list.component';
+import { PermissionsListComponent } from './permissions/permissions-list/permissions-list.component';
 
 export const userManagementRoutes: Routes = [
 	{
@@ -15,7 +16,12 @@ export const userManagementRoutes: Routes = [
 			{
 				path: 'dashboard',
 				component: UserDashboardComponent
-			}, {
+			},
+			{
+				path: 'permissions',
+				component: PermissionsListComponent
+			},
+			{
 				path: 'roles',
 				component: RolesListComponent
 			},
