@@ -4,7 +4,6 @@ import * as fromPermissions from '../_reducers/permission.reducers';
 import { HttpExtenstionsModel, QueryResultsModel } from '../../_base/crud';
 import { each } from 'lodash';
 import { Permission } from '../_interfaces/permission.interface';
-import { selectRolesState } from './role.selectors';
 
 export const selectPermissionsState = createFeatureSelector<PermissionsState>('permissions');
 

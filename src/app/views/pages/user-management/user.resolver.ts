@@ -32,7 +32,7 @@ export class UserResolver implements Resolve<IUser> {
 					this.router.navigate(['/users']).then(() => console.log('no user found'));
 				}
 				this.store.dispatch(new GetUser({
-					userId: userId
+					userId
 				}));
 				return user;
 			}),

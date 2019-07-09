@@ -1,23 +1,27 @@
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { map, take } from 'rxjs/operators';
-import { IApplication } from '../../interfaces/application.interface';
-import { BackendLayoutConfigModel, LayoutConfigService } from '../../../core/_base/layout';
-import { LayoutConfig } from '../../../core/_config/default/layout.config';
+import {Injectable} from '@angular/core';
+import {Observable, of} from 'rxjs';
+import {AngularFirestore} from '@angular/fire/firestore';
+import {map, take} from 'rxjs/operators';
+import {IApplication} from '../../interfaces/application.interface';
+import {LayoutConfigService} from '../../../core/_base/layout';
+import * as _ from 'lodash';
+import {LayoutConfig} from "../../../core/_config/default/layout.config";
+
 
 @Injectable()
 export class ApplicationService {
 
-	private collectionRef: AngularFirestoreCollection<IApplication>;
 	private path = `applications`;
 
-	public applications$: Observable<IApplication[]>;
 	public currentApplication$: Observable<IApplication>;
 
+	public applicationConfig: {
+		id?: string;
+		isCurrentApplication?: boolean,
+		appConfig?: any
+	} = {};
+
 	constructor(private afs: AngularFirestore) {
-		// this.collectionRef = this.afs.collection<IApplication>(this.path);
-		// this.applications$ = this.collectionRef.valueChanges();
 	}
 
 	getCurrentApplication(): Observable<IApplication> {
@@ -35,18 +39,25 @@ export class ApplicationService {
 		return this.currentApplication$;
 	}
 
-	getConfiguration(appConfig: LayoutConfigService): Observable<void> {
-		if (appConfig.getConfig() === null) {
+	getConfiguration(layoutConfigService: LayoutConfigService): Observable<{
+		id?: string;
+		isCurrentApplication?: boolean,
+		appConfig?: any
+	}> {
+		if (_.isEmpty(this.applicationConfig)) {
 			return this.getCurrentApplication().pipe(
+				take(1),
 				map((app: IApplication) => {
-					if (!app.configuration) {
-						const defaultConfig =  new LayoutConfig().configs;
-						return appConfig.loadConfigs(defaultConfig);
+						const defaultConfig = new LayoutConfig().configs;
+						layoutConfigService.loadConfigs(defaultConfig);
+						this.applicationConfig = {...this.applicationConfig, ...defaultConfig, ...app};
+						return this.applicationConfig;
 					}
-				})
-			);
+				));
+		} else {
+			return of(this.applicationConfig);
 		}
-		return of();
+
 	}
 
 	createApplication(application: IApplication): Promise<IApplication> {
@@ -60,40 +71,6 @@ export class ApplicationService {
 
 	updateApplication(application: IApplication): Promise<any> {
 		return this.afs.collection(this.path).doc(application.id).update(application);
-	}
-
-	/* getAppData(): Observable<IApplication> {
-	 return this.afs.collection<IApplication>(this.path, ref =>
-	 ref.where('isCurrentApplication', '==', true)
-	 ).valueChanges().pipe(
-	 first(),
-	 map((applications: IApplication[]) => {
-	 return applications.find((application: IApplication) => {
-	 return application.isCurrentApplication;
-	 });
-	 })
-	 );
-	 } */
-
-	setNewApplication(): IApplication {
-		return {
-			id: this.afs.createId(),
-			isCurrentApplication: true,
-			page: {
-				isEnabled: true,
-				name: '',
-				email: '',
-				title: ''
-			},
-			urlShortening: 0,
-			registration: '0',
-			downtime: {
-				isEnabled: false,
-				message: ''
-			},
-			staticPages: [],
-			social: []
-		};
 	}
 
 	getWeekdays(): number[] {

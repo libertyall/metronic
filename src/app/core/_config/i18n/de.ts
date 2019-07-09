@@ -363,6 +363,15 @@ export const locale = {
 			 pageTitle: 'Seiteneinstellungen',
 			 title: 'Administration der Seite'
 			 */
+			calendars: {
+				title: 'Kalender'
+			},
+			main: {
+				title: 'Grundeinstellungen'
+			},
+			social: {
+				title: 'Soziale Netzwerke'
+			},
 			subheader: {
 				title: 'Einstellungen',
 				desc: '---'

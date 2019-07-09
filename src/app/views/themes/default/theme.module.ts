@@ -26,6 +26,8 @@ import { RoleEffects } from '../../../core/auth/_effects/role.effects';
 import { PermissionEffects } from '../../../core/auth/_effects/permission.effects';
 import { permissionsReducer } from '../../../core/auth/_reducers/permission.reducers';
 import { NgxPermissionsModule } from 'ngx-permissions';
+import {ApplicationEffects} from '../../../core/application/effects/application.effects';
+import {applicationReducer} from '../../../core/application/reducers/application.reducers';
 
 @NgModule({
 	declarations: [
@@ -60,8 +62,8 @@ import { NgxPermissionsModule } from 'ngx-permissions';
 		RouterModule,
 		NgxPermissionsModule.forChild(),
 		StoreModule.forFeature('roles', rolesReducer),
-		EffectsModule.forFeature([PermissionEffects, RoleEffects]),
 		StoreModule.forFeature('permissions', permissionsReducer),
+		EffectsModule.forFeature([PermissionEffects, RoleEffects]),
 		PagesRoutingModule,
 		// PagesModule,
 		PartialsModule,

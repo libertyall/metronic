@@ -9,9 +9,9 @@ import { FirestoreDataServiceFactory } from './firestore/firestore-entity-collec
 import { appReducer, AppState } from '../core/reducers';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { EffectsModule } from '@ngrx/effects';
-import { CategoryEffects } from '../core/category/effects/category.effects';
+import {ApplicationEffects} from '../core/application/effects/application.effects';
 
-/* export function storageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
+export function storageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
 	return storageSync<AppState>({
 		features: [
 			// { stateKey: 'router', storageForFeature: window.sessionStorage },
@@ -21,14 +21,14 @@ import { CategoryEffects } from '../core/category/effects/category.effects';
 	})(reducer);
 }
 
-const metaReducers: Array<MetaReducer<any, any>> = [storageSyncReducer]; */
+const metaReducers: Array<MetaReducer<any, any>> = [storageSyncReducer];
 
 @NgModule({
 	declarations: [],
 	imports: [
-		EffectsModule.forRoot([]),
+		EffectsModule.forRoot([ApplicationEffects]),
 		environment.production ? [] : StoreDevtoolsModule.instrument(),
-		StoreModule.forRoot(appReducer), // , { metaReducers }
+		StoreModule.forRoot(appReducer, { metaReducers }),
 		StoreRouterConnectingModule.forRoot({ stateKey: 'router' })
 	],
 	providers: [

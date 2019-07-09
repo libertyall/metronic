@@ -41,7 +41,6 @@ export class BaseComponent implements OnInit, OnDestroy {
 
 		this.menuConfigService.loadConfigs(new MenuConfig().configs);
 		this.pageConfigService.loadConfigs(new PageConfig().configs);
-
 		this.htmlClassService.setConfig(this.layoutConfigService.getConfig());
 
 		const layoutSubscription = this.layoutConfigService.onConfigUpdated$.subscribe(layoutConfig => {

@@ -1,64 +1,26 @@
-import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { ApplicationsState } from '../reducers/application.reducers';
-import { IApplication } from '../../../shared/interfaces/application.interface';
-import { HttpExtenstionsModel, QueryResultsModel } from '../../_base/crud';
-import { each } from 'lodash';
+import {createFeatureSelector, createSelector} from '@ngrx/store';
+import {ApplicationsState} from '../reducers/application.reducers';
+import * as fromApplications from '../reducers/application.reducers';
 
-export const selectApplicationsState = createFeatureSelector<ApplicationsState>('application');
+export const selectApplicationsState = createFeatureSelector<ApplicationsState>('applications');
 
-export const selectApplicationById = (applicationId: string) => createSelector(
+export const selectCurrentApplication = () => createSelector(
 	selectApplicationsState,
-	applicationsState => applicationsState.entities[applicationId]
+	fromApplications.selectAll
 );
 
-export const selectApplicationsPageLoading = createSelector(
+export const selectApplicationPageLoading = createSelector(
 	selectApplicationsState,
-	applicationsState => {
-		return applicationsState.listLoading;
-	}
+	applicationsState => applicationsState.listLoading
 );
 
-export const selectApplicationsActionLoading = createSelector(
+
+export const selectApplicationActionLoading = createSelector(
 	selectApplicationsState,
 	applicationsState => applicationsState.actionsLoading
 );
 
-export const selectLastCreatedApplicationId = createSelector(
-	selectApplicationsState,
-	applicationsState => applicationsState.lastCreatedApplicationId
-);
-
-/* export const selectCategoriesPageLastQuery = createSelector(
- selectApplicationsState,
- categoriesState => categoriesState.lastQuery
- );
- */
-export const selectApplicationsInStore = createSelector(
-	selectApplicationsState,
-	applicationsState => {
-		const items: IApplication[] = [];
-		each(applicationsState.entities, element => {
-			items.push(element);
-		});
-		const httpExtension = new HttpExtenstionsModel();
-		const result: IApplication[] = httpExtension.sortArray(items, applicationsState.lastQuery.sortField, applicationsState.lastQuery.sortOrder);
-		return new QueryResultsModel(result, applicationsState.totalCount, '');
-	}
-);
-
-/* export const selectAllCategories = createSelector(
- selectCategoriesState,
- fromCategory.selectAll
- );
- */
-export const selectApplicationsShowInitWaitingMessage = createSelector(
+export const selectApplicationShowInitWaitingMessage = createSelector(
 	selectApplicationsState,
 	applicationsState => applicationsState.showInitWaitingMessage
 );
-
-/* export const selectHasCategoriesInStore = createSelector(
- selectCategoriesState,
- queryResult => {
- return queryResult.totalCount;
- }
- ); */

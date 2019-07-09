@@ -15,7 +15,7 @@ const routes: Routes = [
 	},
 	{
 		path: '**',
-		redirectTo: 'default/error/403',
+		redirectTo: 'error/403',
 		pathMatch: 'full'
 	}
 ];

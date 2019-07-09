@@ -1,33 +1,36 @@
-import { createFeatureSelector } from '@ngrx/store';
-import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
-import { ApplicationActions, ApplicationActionTypes } from '../actions/application.actions';
-import { IApplication } from '../../../shared/interfaces/application.interface';
-import { QueryParamsModel } from '../../_base/crud';
+import {createFeatureSelector} from '@ngrx/store';
+import {createEntityAdapter, EntityAdapter, EntityState} from '@ngrx/entity';
+import {ApplicationActions, ApplicationActionTypes} from '../actions/application.actions';
+import {IApplication} from '../../../shared/interfaces/application.interface';
 
 // tslint:disable-next-line:no-empty-interface
 export interface ApplicationsState extends EntityState<IApplication> {
+	currentApplication: any;
 	listLoading: boolean;
 	actionsLoading: boolean;
-	totalCount: number;
-	lastCreatedApplicationId: string;
-	lastQuery: QueryParamsModel;
 	showInitWaitingMessage: boolean;
 }
 
 export const adapter: EntityAdapter<IApplication> = createEntityAdapter<IApplication>();
 
 export const initialApplicationsState: ApplicationsState = adapter.getInitialState({
+	currentApplication: undefined,
 	listLoading: false,
 	actionsLoading: false,
-	totalCount: 0,
-	lastQuery: new QueryParamsModel({}),
-	lastCreatedApplicationId: undefined,
 	showInitWaitingMessage: true
 });
+
+// export const applicationState: MemoizedSelector<object, ApplicationsState> = createFeatureSelector<ApplicationsState>('applications');
 
 export function applicationReducer(state = initialApplicationsState, action: ApplicationActions): ApplicationsState {
 
 	switch (action.type) {
+
+		case ApplicationActionTypes.ApplicationRequested:
+			return {
+				...state
+			};
+
 		case ApplicationActionTypes.ApplicationOnServerCreated:
 			return {
 				...state
@@ -52,8 +55,8 @@ export function applicationReducer(state = initialApplicationsState, action: App
 export const getApplicationState = createFeatureSelector<ApplicationsState>('applications');
 
 export const {
-				 selectAll,
-				 selectEntities,
-				 selectIds,
-				 selectTotal
-			 } = adapter.getSelectors();
+	selectAll,
+	selectEntities,
+	selectIds,
+	selectTotal
+} = adapter.getSelectors();

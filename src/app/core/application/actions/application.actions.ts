@@ -1,14 +1,14 @@
-import { Action } from '@ngrx/store';
-import { Update } from '@ngrx/entity';
-import { IApplication } from '../../../shared/interfaces/application.interface';
+import {Action} from '@ngrx/store';
+import {Update} from '@ngrx/entity';
+import {IApplication} from '../../../shared/interfaces/application.interface';
 
 export enum ApplicationActionTypes {
-	ApplicationRequested            = '[View Applications Page] Application Requested',
-	ApplicationLoaded               = '[Applications API] Application Loaded',
-	ApplicationOnServerCreated      = '[Edit Application Component] Application On Server Created',
-	ApplicationCreated              = '[Edit Application Dialog] Application Created',
-	ApplicationUpdated              = '[Edit Application Dialog] Application Updated',
-	ApplicationDeleted              = '[Applications List Page] Application Deleted',
+	ApplicationRequested = '[View Application Page] Get Current Application',
+	ApplicationLoaded = '[Applications API] Application Loaded',
+	ApplicationOnServerCreated = '[Edit Application Component] Application On Server Created',
+	ApplicationCreated = '[Edit Application Dialog] Application Created',
+	ApplicationUpdated = '[Edit Application Dialog] Application Updated',
+	ApplicationDeleted = '[Applications List Page] Application Deleted',
 	ApplicationsActionToggleLoading = '[Applications] Applications Action Toggle Loading'
 }
 
@@ -16,8 +16,7 @@ export class ApplicationRequested implements Action {
 
 	readonly type = ApplicationActionTypes.ApplicationRequested;
 
-	constructor(public payload: { applicationId: string }) {
-
+	constructor() {
 	}
 }
 
@@ -70,10 +69,11 @@ export class ApplicationsActionToggleLoading implements Action {
 }
 
 
-export type ApplicationActions = ApplicationRequested
+export type ApplicationActions =
 	| ApplicationCreated
 	| ApplicationUpdated
 	| ApplicationDeleted
 	| ApplicationOnServerCreated
 	| ApplicationsActionToggleLoading
+	| ApplicationRequested
 	| ApplicationLoaded;

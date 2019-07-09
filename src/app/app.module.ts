@@ -42,9 +42,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	maxScrollbarLength: 300
 };
 
-export function initializeLayoutConfig(appConfig: LayoutConfigService, applicationService: ApplicationService) {
+export function initializeConfig(layoutConfigService: LayoutConfigService, applicationService: ApplicationService) {
 	return () => {
-		return applicationService.getConfiguration(appConfig).toPromise();
+		return applicationService.getConfiguration(layoutConfigService).toPromise();
 	};
 }
 
@@ -100,7 +100,7 @@ export function hljsLanguages(): HighlightLanguage[] {
 		},
 		{
 			provide: APP_INITIALIZER,
-			useFactory: initializeLayoutConfig,
+			useFactory: initializeConfig,
 			deps: [LayoutConfigService, ApplicationService],
 			multi: true
 		},

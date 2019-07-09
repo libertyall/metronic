@@ -1,19 +1,24 @@
-import { Injectable } from '@angular/core';
-import { map, mergeMap } from 'rxjs/operators';
-import { Actions, Effect, ofType } from '@ngrx/effects';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../reducers';
-import { ApplicationService } from '../../../shared/services/application/application.service';
+import {Injectable} from '@angular/core';
+import {map, mergeMap} from 'rxjs/operators';
+import {Actions, Effect, ofType} from '@ngrx/effects';
+import {Store} from '@ngrx/store';
+import {AppState} from '../../reducers';
+import {ApplicationService} from '../../../shared/services/application/application.service';
 import {
-	ApplicationActionTypes, ApplicationCreated, ApplicationLoaded, ApplicationRequested,
-	ApplicationsActionToggleLoading, ApplicationUpdated
+	ApplicationActionTypes,
+	ApplicationCreated,
+	ApplicationLoaded,
+	ApplicationRequested,
+	ApplicationsActionToggleLoading,
+	ApplicationUpdated
 } from '../actions/application.actions';
+import {defer, Observable, of} from 'rxjs';
 
 @Injectable()
 export class ApplicationEffects {
 
-	showActionLoadingDispatcher = new ApplicationsActionToggleLoading({ isLoading: true });
-	hideActionLoadingDispatcher = new ApplicationsActionToggleLoading({ isLoading: false });
+	showActionLoadingDispatcher = new ApplicationsActionToggleLoading({isLoading: true});
+	hideActionLoadingDispatcher = new ApplicationsActionToggleLoading({isLoading: false});
 
 	constructor(private actions$: Actions,
 				private applicationService: ApplicationService,
@@ -24,7 +29,7 @@ export class ApplicationEffects {
 	updateApplication$ = this.actions$
 		.pipe(
 			ofType<ApplicationUpdated>(ApplicationActionTypes.ApplicationUpdated),
-			mergeMap(({ payload }) => {
+			mergeMap(({payload}) => {
 				this.store.dispatch(this.showActionLoadingDispatcher);
 				return this.applicationService.updateApplication(payload.application);
 			}),
@@ -37,10 +42,10 @@ export class ApplicationEffects {
 	createApplication$ = this.actions$
 		.pipe(
 			ofType<ApplicationCreated>(ApplicationActionTypes.ApplicationOnServerCreated),
-			mergeMap(({ payload }) => {
+			mergeMap(({payload}) => {
 				this.store.dispatch(this.showActionLoadingDispatcher);
 				return this.applicationService.createApplication(payload.application).then(
-					(res) => this.store.dispatch(new ApplicationCreated({ application: res })
+					(res) => this.store.dispatch(new ApplicationCreated({application: res})
 					)
 				);
 			}),
@@ -50,10 +55,12 @@ export class ApplicationEffects {
 		);
 
 	@Effect()
-	loadApplication$ = this.actions$
-		.pipe(
-			ofType<ApplicationRequested>(ApplicationActionTypes.ApplicationRequested),
-			mergeMap(action => this.applicationService.getCurrentApplication()),
-			map(application => new ApplicationLoaded({ application }))
-		);
+	loadApplication$ = this.actions$.pipe(
+		ofType<ApplicationRequested>(ApplicationActionTypes.ApplicationRequested),
+		mergeMap(() => this.applicationService.getCurrentApplication()),
+		map(application => new ApplicationLoaded({application}))
+	);
+
+	@Effect()
+	init$: Observable<any> = defer(() => of(new ApplicationRequested()));
 }

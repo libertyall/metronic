@@ -1,10 +1,11 @@
-import { select, Store } from '@ngrx/store';
-import { BaseDataSource, QueryResultsModel } from '../../_base/crud';
-import { AppState } from '../../reducers';
+import {select, Store} from '@ngrx/store';
+import {BaseDataSource} from '../../_base/crud';
+import {AppState} from '../../reducers';
 import {
-	selectApplicationsInStore, selectApplicationsPageLoading, selectApplicationsShowInitWaitingMessage
+	selectApplicationPageLoading,
+	selectApplicationShowInitWaitingMessage,
+	selectCurrentApplication
 } from '../selectors/application.selectors';
-
 
 export class ApplicationsDataSource extends BaseDataSource {
 
@@ -12,18 +13,18 @@ export class ApplicationsDataSource extends BaseDataSource {
 		super();
 
 		this.loading$ = this.store.pipe(
-			select(selectApplicationsPageLoading)
+			select(selectApplicationPageLoading)
 		);
 
 		this.isPreloadTextViewed$ = this.store.pipe(
-			select(selectApplicationsShowInitWaitingMessage)
+			select(selectApplicationShowInitWaitingMessage)
 		);
 
 		this.store.pipe(
-			select(selectApplicationsInStore)
-		).subscribe((response: QueryResultsModel) => {
-			this.paginatorTotalSubject.next(response.totalCount);
-			this.entitySubject.next(response.items);
+			select(selectCurrentApplication)
+		).subscribe((app) => {
+			console.log(app);
+			// this.entitySubject.next(app);
 		});
 	}
 
