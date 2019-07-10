@@ -17,10 +17,6 @@ import { ErrorComponent } from './content/general/error/error.component';
 import { RouterModule } from '@angular/router';
 import { ActionNotificationComponent, AlertComponent, DeleteEntityDialogComponent } from './content/crud';
 import { TranslateModule } from '@ngx-translate/core';
-import { EffectsModule } from '@ngrx/effects';
-import { StoreModule } from '@ngrx/store';
-import { categoryTypeReducer } from '../../core/category-types/_reducers/category-type.reducers';
-import { CategoryTypeEffects } from '../../core/category-types/_effects/category-type.effects';
 
 @NgModule({
 	declarations: [

@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, take } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../reducers';
-import { AuthService } from '../_services/auth.service';
+import { AuthService } from '../_services';
 import { User } from 'firebase';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthNoticeService } from '../auth-notice/auth-notice.service';

@@ -1,13 +1,13 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { createFeatureSelector } from '@ngrx/store';
-import { Permission } from '../_interfaces/permission.interface';
 import { PermissionActions, PermissionActionTypes } from '../_actions/permission.actions';
 import { QueryParamsModel } from '../../_base/crud';
+import { PermissionInterface } from '../_interfaces/permission.interface';
 
-export interface PermissionsState extends EntityState<Permission> {
+export interface PermissionsState extends EntityState<PermissionInterface> {
 	isAllPermissionsLoaded: boolean;
 	queryRowsCount: number;
-	queryResult: Permission[];
+	queryResult: PermissionInterface[];
 	lastCreatedPermissionId: string;
 	listLoading: boolean;
 	actionsLoading: boolean;
@@ -15,7 +15,7 @@ export interface PermissionsState extends EntityState<Permission> {
 	showInitWaitingMessage: boolean;
 }
 
-export const adapter: EntityAdapter<Permission> = createEntityAdapter<Permission>();
+export const adapter: EntityAdapter<PermissionInterface> = createEntityAdapter<PermissionInterface>();
 
 export const initialPermissionsState: PermissionsState = adapter.getInitialState({
 	isAllPermissionsLoaded: false,

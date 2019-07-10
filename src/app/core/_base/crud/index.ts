@@ -1,5 +1,5 @@
 // Models
-export { BaseModel } from './models/_base.model';
+export { BaseInterface } from './models/base.interface';
 export { BaseDataSource } from './models/_base.datasource';
 export { QueryParamsModel } from './models/query-models/query-params.model';
 export { QueryResultsModel } from './models/query-models/query-results.model';

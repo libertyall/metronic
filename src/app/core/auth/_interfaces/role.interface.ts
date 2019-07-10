@@ -1,6 +1,6 @@
-import { BaseModel } from '../../_base/crud';
+import { BaseInterface } from '../../_base/crud';
 
-export interface Role extends BaseModel {
+export interface RoleInterface extends BaseInterface {
     id: string;
     title: string;
     permissions: string[];

@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import * as objectPath from 'object-path';
-import { Permission } from '../../../../core/auth/_interfaces/permission.interface';
+import { PermissionInterface } from '../../../../core/auth/_interfaces/permission.interface';
 import { LayoutConfigService, MenuConfigService, PageConfigService } from '../../../../core/_base/layout';
 import { HtmlClassService } from '../html-class.service';
 import { AppState } from '../../../../core/reducers';
@@ -28,7 +28,7 @@ export class BaseComponent implements OnInit, OnDestroy {
 
 
 	private unsubscribe: Subscription[] = [];
-	private currentUserPermissions$: Observable<Permission[]>;
+	private currentUserPermissions$: Observable<PermissionInterface[]>;
 
 	constructor(private layoutConfigService: LayoutConfigService,
 				private menuConfigService: MenuConfigService,
@@ -81,7 +81,7 @@ export class BaseComponent implements OnInit, OnDestroy {
 			}
 
 			this.permissionsService.flushPermissions();
-			res.forEach((pm: Permission) => this.permissionsService.addPermission(pm.name));
+			res.forEach((pm: PermissionInterface) => this.permissionsService.addPermission(pm.name));
 		});
 		this.unsubscribe.push(subscription);
 	}

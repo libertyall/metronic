@@ -1,4 +1,4 @@
-import { DefaultPersistenceResultHandler, Logger, EntityActionFactory, EntityAction, EntityOp } from 'ngrx-data';
+import { DefaultPersistenceResultHandler, Logger, EntityActionFactory, EntityAction, EntityOp } from '@ngrx/data';
 import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
 

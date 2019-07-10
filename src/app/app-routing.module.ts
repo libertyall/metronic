@@ -10,6 +10,10 @@ const routes: Routes = [
 		canActivate: [UnAuthGuard]
 	},
 	{
+		path: '**',
+		redirectTo: '/auth'
+	}
+	/* {
 		path: '',
 		loadChildren: () => import('app/views/themes/default/theme.module').then(m => m.ThemeModule)
 	},
@@ -17,7 +21,7 @@ const routes: Routes = [
 		path: '**',
 		redirectTo: 'error/403',
 		pathMatch: 'full'
-	}
+	}*/
 ];
 
 @NgModule({

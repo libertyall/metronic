@@ -3,13 +3,13 @@ import { QueryResultsModel, HttpExtenstionsModel } from '../../_base/crud';
 import { RolesState } from '../_reducers/role.reducers';
 import * as fromRole from '../_reducers/role.reducers';
 import { each } from 'lodash';
-import { Role } from '../_interfaces/role.interface';
+import { RoleInterface } from '../_interfaces/role.interface';
 
 export const selectRolesState = createFeatureSelector<RolesState>('roles');
 
 export const selectRoleById = (roleId: number) => createSelector(
     selectRolesState,
-    rolesState =>  rolesState.entities[roleId]
+    rolesState => rolesState.entities[roleId]
 );
 
 export const selectAllRoles = createSelector(
@@ -52,12 +52,12 @@ export const selectRolesShowInitWaitingMessage = createSelector(
 export const selectQueryResult = createSelector(
     selectRolesState,
     rolesState => {
-        const items: Role[] = [];
+        const items: RoleInterface[] = [];
         each(rolesState.entities, element => {
             items.push(element);
         });
         const httpExtension = new HttpExtenstionsModel();
-        httpExtension.sortArray(items, rolesState.lastQuery.sortField, rolesState.lastQuery.sortOrder);
+        const result: RoleInterface[] = httpExtension.sortArray(items, rolesState.lastQuery.sortField, rolesState.lastQuery.sortOrder);
 
         return new QueryResultsModel(rolesState.queryResult, rolesState.queryRowsCount);
     }

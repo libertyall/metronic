@@ -5,8 +5,8 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../reducers';
 import { catchError, map, take } from 'rxjs/operators';
 import { User } from 'firebase';
-import { AuthService } from '../_services/auth.service';
-import { Logout } from '../_actions/auth.actions';
+import { AuthService } from '../_services';
+import { getAuthUser, logout } from '../_actions/auth.actions';
 import { AuthNoticeService } from '../auth-notice/auth-notice.service';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -34,7 +34,7 @@ export class UnAuthGuard implements CanActivate {
 				return true;
 			}),
 			catchError((error: any) => {
-				this.store.dispatch(new Logout());
+				this.store.dispatch(logout());
 				this.router.navigateByUrl('/auth/login').then(() => console.log('error in unauth guard', error));
 				return of(false);
 			})

@@ -5,12 +5,14 @@ import { Observable, Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../core/reducers';
-import { AuthService } from '../../../../core/auth/_services/auth.service';
+import { AuthService } from '../../../../core/auth/_services';
 import { AuthNoticeService } from '../../../../core/auth/auth-notice/auth-notice.service';
 import {
-	CredentialsLogin, FacebookLogin, GoogleLogin, TwitterLogin
+	authError,
+	credentialsLogin
 } from '../../../../core/auth/_actions/auth.actions';
-import { IUser } from '../../../../core/auth/_interfaces/user.interface';
+import { UserInterface } from '../../../../core/auth/_interfaces/user.interface';
+import { currentUser, isLoading, isLoggedIn, selectAuthState } from '../../../../core/auth/_selectors/auth.selectors';
 
 @Component({
 	selector: 'kt-login',
@@ -23,7 +25,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 	loading = false;
 	errors$: any = [];
 
-	user$: Observable<IUser | null>;
+	user$: Observable<UserInterface | null>;
 	isLoggedIn$: Observable<boolean>;
 	isLoading$: Observable<boolean>;
 
@@ -36,6 +38,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 				private store: Store<AppState>,
 				private fb: FormBuilder) {
 		this.unsubscribe = new Subject();
+		this.store.select(selectAuthState).subscribe(t => console.log(t));
+		this.isLoggedIn$ = this.store.select(isLoggedIn);
+		this.user$ = this.store.select(currentUser);
+		this.isLoading$ = this.store.select(isLoading);
 	}
 
 	ngOnInit(): void {
@@ -91,11 +97,12 @@ export class LoginComponent implements OnInit, OnDestroy {
 		this.auth
 			.doLoginWithCredentials(authData)
 			.then(() => {
-				this.store.dispatch(new CredentialsLogin(authData.email, authData.password, authData.rememberMe));
+				this.store.dispatch(credentialsLogin({ email: authData.email, password: authData.password, rememberMe: authData.rememberMe }));
 				this.router.navigateByUrl('/').then(() => console.log('navigate to dashboard'));
 				this.loading = false;
 			})
 			.catch((error) => {
+				this.store.dispatch(authError(error));
 				this.authNoticeService.setNotice(this.translate.instant('AUTH.ERRORS.' + error.code), 'danger');
 				this.loading = false;
 			});
@@ -109,7 +116,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 		return control.hasError(validationType) && (control.dirty || control.touched);
 	}
 
-	googleLogin(): void {
+	/* googleLogin(): void {
 		this.store.dispatch(new GoogleLogin());
 	}
 
@@ -119,5 +126,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
 	twitterLogin(): void {
 		this.store.dispatch(new TwitterLogin());
-	}
+	} */
+
 }

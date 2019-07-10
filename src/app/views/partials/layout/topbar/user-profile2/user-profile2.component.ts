@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '../../../../../core/reducers';
-import { IUser } from '../../../../../core/auth/_interfaces/user.interface';
+import { UserInterface } from '../../../../../core/auth/_interfaces/user.interface';
 import { currentUser } from '../../../../../core/auth/_selectors/auth.selectors';
-import { Logout } from '../../../../../core/auth/_actions/auth.actions';
+import { logout } from '../../../../../core/auth/_actions/auth.actions';
 
 @Component({
 	selector: 'kt-user-profile2',
@@ -12,7 +12,7 @@ import { Logout } from '../../../../../core/auth/_actions/auth.actions';
 })
 export class UserProfile2Component implements OnInit {
 
-	user$: Observable<IUser>;
+	user$: Observable<UserInterface>;
 
 	constructor(private store: Store<AppState>) {
 	}
@@ -22,6 +22,6 @@ export class UserProfile2Component implements OnInit {
 	}
 
 	logout() {
-		this.store.dispatch(new Logout());
+		this.store.dispatch(logout());
 	}
 }

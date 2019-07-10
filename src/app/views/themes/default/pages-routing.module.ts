@@ -10,7 +10,7 @@ const routes: Routes = [
 		component: BaseComponent,
 		canActivate: [AuthGuard],
 		children: [
-			{
+			/* {
 				path: 'dashboard',
 				loadChildren: () => import('app/views/pages/dashboard/dashboard.module').then(m => m.DashboardModule)
 			},
@@ -45,7 +45,7 @@ const routes: Routes = [
 			 {
 			 path: 'uploader',
 			 loadChildren: 'app/views/pages/uploader/uploader.module#UploaderModule'
-			 },*/
+			 },
 			{
 				path: 'settings',
 				loadChildren: () => import('app/views/pages/settings/settings.module').then(m => m.SettingsModule)
@@ -75,6 +75,8 @@ const routes: Routes = [
 			{ path: 'error/:type', component: ErrorPageComponent },
 			{ path: '', redirectTo: 'dashboard', pathMatch: 'full' },
 			{ path: '**', redirectTo: 'dashboard', pathMatch: 'full' }
+
+			 */
 		]
 	}
 ];

@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../../core/reducers';
-import { IUser } from '../../../../../core/auth/_interfaces/user.interface';
-import { Logout } from '../../../../../core/auth/_actions/auth.actions';
+import { UserInterface } from '../../../../../core/auth/_interfaces/user.interface';
+import { logout } from '../../../../../core/auth/_actions/auth.actions';
 import { Router } from '@angular/router';
-import { getUser } from '../../../../../core/auth/_reducers/auth.reducer';
 import { AuthNoticeService } from '../../../../../core/auth/auth-notice/auth-notice.service';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -15,7 +14,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class UserProfileComponent implements OnInit {
 
-	user$: Observable<IUser>;
+	user$: Observable<UserInterface>;
 
 	constructor(private router: Router,
 				private authNoticeService: AuthNoticeService,
@@ -24,11 +23,11 @@ export class UserProfileComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.user$ = this.store.select(getUser);
+		// this.user$ = this.store.select(getUserState);
 	}
 
 	logout() {
-		this.store.dispatch(new Logout());
+		this.store.dispatch(logout());
 		// this.router.navigateByUrl('/').then(() => console.log('logout'));
 		// this.authNoticeService.setNotice(this.translate.instant('AUTH.LOGOUT'), 'success');
 	}

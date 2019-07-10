@@ -1,6 +1,0 @@
-<span *ngIf="creation">
-  {{ moment(creation.seconds * 1000).fromNow() }}
-	({{moment(creation.seconds * 1000).format('L') }},
-	{{moment(creation.seconds * 1000).format('LT') }}
-	{{'general.oClock' | translate}})
-</span>

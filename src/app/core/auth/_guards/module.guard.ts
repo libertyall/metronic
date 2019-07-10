@@ -6,7 +6,7 @@ import { select, Store } from '@ngrx/store';
 import { AppState } from '../../reducers';
 import { find } from 'lodash';
 import { currentUserPermissions } from '../_selectors/auth.selectors';
-import { Permission } from '../_interfaces/permission.interface';
+import { PermissionInterface } from '../_interfaces/permission.interface';
 
 @Injectable()
 export class ModuleGuard implements CanActivate {
@@ -23,8 +23,8 @@ export class ModuleGuard implements CanActivate {
 		return this.store
 			.pipe(
 				select(currentUserPermissions),
-				map((permissions: Permission[]) => {
-					const _perm = find(permissions, (elem: Permission) => {
+				map((permissions: PermissionInterface[]) => {
+					const _perm = find(permissions, (elem: PermissionInterface) => {
 						return elem.title.toLocaleLowerCase() === moduleName.toLocaleLowerCase();
 					});
 					return !!_perm;

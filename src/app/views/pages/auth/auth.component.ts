@@ -1,10 +1,9 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {LayoutConfigService, SplashScreenService} from '../../../core/_base/layout';
-import {TranslationService} from '../../../core/_base/metronic';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { LayoutConfigService, SplashScreenService } from '../../../core/_base/layout';
+import { TranslationService } from '../../../core/_base/metronic';
 import * as objectPath from 'object-path';
-import {Title} from '@angular/platform-browser';
-import {Observable} from 'rxjs';
-import {IArticle} from '../../../shared/interfaces/article.interface';
+import { Title } from '@angular/platform-browser';
+import { of } from 'rxjs';
 
 @Component({
 	selector: 'kt-auth',
@@ -21,7 +20,7 @@ export class AuthComponent implements OnInit {
 	mainLogo: string = '';
 	pageTitle: string = '';
 
-	public articles$: Observable<IArticle[]>;
+	public articles$ = of([]); // : Observable<IArticle[]>;
 
 	constructor(private layoutConfigService: LayoutConfigService,
 				private translationService: TranslationService,

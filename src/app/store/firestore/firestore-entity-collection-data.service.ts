@@ -3,14 +3,14 @@ import {
 	AngularFirestore, AngularFirestoreCollection, DocumentChangeAction, DocumentReference
 } from '@angular/fire/firestore';
 import { from as observableFrom, Observable } from 'rxjs';
-import { EntityCollectionDataService, QueryParams, Update } from 'ngrx-data';
+import { EntityCollectionDataService, QueryParams } from '@ngrx/data';
 import { map, mergeMap } from 'rxjs/operators';
+import { Update } from '@ngrx/entity';
 
 @Injectable()
 export class FirestoreEntityCollectionDataService<T> implements EntityCollectionDataService<T | DocumentChangeAction<T>> {
 
 	constructor(private collection: AngularFirestoreCollection<T>, private afs: AngularFirestore) {
-
 	}
 
 	public get name() {

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AlertService } from '../../shared/services/alert/alert.service';
+// import { AlertService } from '../../shared/services/alert/alert.service';
 import {
 	MatCardModule, MatIconModule, MatMenuModule, MatPaginatorIntl, MatPaginatorModule, MatProgressBarModule,
 	MatSnackBarModule,
@@ -10,19 +10,19 @@ import {
 } from '@angular/material';
 import { NgPipesModule } from 'ngx-pipes';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { SnackbarComponent } from '../../shared/components/snackbar/snackbar.component';
-import { SharedMediaModule } from '../../shared/components/media/shared-media.module';
-import { LinkModule } from '../../shared/components/links/link.module';
+// import { SnackbarComponent } from '../../shared/components/snackbar/snackbar.component';
+// import { SharedMediaModule } from '../../shared/components/media/shared-media.module';
+// import { LinkModule } from '../../shared/components/links/link.module';
 import { PortletModule } from '../partials/content/general/portlet/portlet.module';
-import { MatPaginatorI18nService } from '../../shared/services/application/mat-paginator-i18n.service';
+// import { MatPaginatorI18nService } from '../../shared/services/application/mat-paginator-i18n.service';
 
 @NgModule({
 	declarations: [
-		SnackbarComponent
+		// SnackbarComponent
 	],
 	exports: [
 		CommonModule,
-		LinkModule,
+		// LinkModule,
 		MatCardModule,
 		MatSnackBarModule,
 		MatIconModule,
@@ -34,7 +34,7 @@ import { MatPaginatorI18nService } from '../../shared/services/application/mat-p
 		NgxDatatableModule,
 		PortletModule,
 		ReactiveFormsModule,
-		SharedMediaModule,
+		// SharedMediaModule,
 		TranslateModule
 	],
 	imports: [
@@ -43,14 +43,14 @@ import { MatPaginatorI18nService } from '../../shared/services/application/mat-p
 		MatProgressBarModule
 	],
 	providers: [
-		AlertService,
+		/* AlertService,
 		{
 			provide: MatPaginatorIntl, deps: [TranslateService],
 			useClass: MatPaginatorI18nService
-		}
+		} */
 	],
 	entryComponents: [
-		SnackbarComponent
+		// SnackbarComponent
 	]
 })
 export class SharedModule {

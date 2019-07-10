@@ -2,31 +2,16 @@ import { createSelector } from '@ngrx/store';
 import { each, find, some } from 'lodash';
 import { selectAllRoles } from './role.selectors';
 import { selectAllPermissions } from './permission.selectors';
-import { Role } from '../_interfaces/role.interface';
-import { Permission } from '../_interfaces/permission.interface';
+import { RoleInterface } from '../_interfaces/role.interface';
+import { PermissionInterface } from '../_interfaces/permission.interface';
 
-export const selectAuthState = state => state.auth;
+export const selectAuthState = state => {
+	return state.auth;
+}
 
 export const isLoggedIn = createSelector(
 	selectAuthState,
-	auth => {
-		return auth.user.loggedIn;
-	}
-);
-
-export const getIsLoading = createSelector(
-	selectAuthState,
-	auth => auth.user.loading
-);
-
-export const getIsAdmin = createSelector(
-	selectAuthState,
-	auth => auth.user.isAdmin
-);
-
-export const getError = createSelector(
-	selectAuthState,
-	auth => auth.error
+	auth => auth.loggedIn
 );
 
 export const isLoggedOut = createSelector(
@@ -34,16 +19,14 @@ export const isLoggedOut = createSelector(
 	loggedIn => !loggedIn
 );
 
-export const isUserLoaded = createSelector(
+export const isLoading = createSelector(
 	selectAuthState,
-	auth => auth.isUserLoaded
+	auth => auth.isLoading
 );
 
 export const currentUser = createSelector(
 	selectAuthState,
-	auth => {
-		return auth.user.user;
-	}
+	auth => auth.user || null
 );
 
 export const currentUserRoleIds = createSelector(
@@ -52,7 +35,6 @@ export const currentUserRoleIds = createSelector(
 		if (!user) {
 			return [];
 		}
-
 		return user.roles;
 	}
 );
@@ -60,23 +42,24 @@ export const currentUserRoleIds = createSelector(
 export const currentUserPermissionsIds = createSelector(
 	currentUserRoleIds,
 	selectAllRoles,
-	(userRoleIds: string[], allRoles: Role[]) => {
-		return getPermissionsIdsFrom(userRoleIds, allRoles);
+	(userRoleIds: string[], allRoles: RoleInterface[]) => {
+		const result = getPermissionsIdsFrom(userRoleIds, allRoles);
+		return result;
 	}
 );
 
-/* export const checkHasUserPermission = (permissionId: string) => createSelector(
+export const checkHasUserPermission = (permissionId: string) => createSelector(
 	currentUserPermissionsIds,
 	(ids: string[]) => {
 		return ids.some(id => id === permissionId);
 	}
-); */
+);
 
 export const currentUserPermissions = createSelector(
 	currentUserPermissionsIds,
 	selectAllPermissions,
-	(permissionIds: string[], allPermissions: Permission[]) => {
-		const result: Permission[] = [];
+	(permissionIds: string[], allPermissions: PermissionInterface[]) => {
+		const result: PermissionInterface[] = [];
 		each(permissionIds, id => {
 			const userPermission = find(allPermissions, elem => elem.id === id);
 			if (userPermission) {
@@ -87,17 +70,17 @@ export const currentUserPermissions = createSelector(
 	}
 );
 
-function getPermissionsIdsFrom(userRolesIds: string[] = [], allRoles: Role[] = []): string[] {
-	const userRoles: Role[] = [];
+function getPermissionsIdsFrom(userRolesIds: string[] = [], allRoles: RoleInterface[] = []): string[] {
+	const userRoles: RoleInterface[] = [];
 	each(userRolesIds, (_id: string) => {
-		const userRole = find(allRoles, (_role: Role) => _role.id === _id);
+		const userRole = find(allRoles, (_role: RoleInterface) => _role.id === _id);
 		if (userRole) {
 			userRoles.push(userRole);
 		}
 	});
 
 	const result: string[] = [];
-	each(userRoles, (_role: Role) => {
+	each(userRoles, (_role: RoleInterface) => {
 		each(_role.permissions, id => {
 			if (!some(result, _id => _id === id)) {
 				result.push(id);

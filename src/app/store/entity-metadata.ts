@@ -1,4 +1,4 @@
-import { EntityMetadataMap } from 'ngrx-data';
+import { EntityMetadataMap } from '@ngrx/data';
 
 const entityMetadata: EntityMetadataMap = {
   application: {},
@@ -16,7 +16,7 @@ const entityMetadata: EntityMetadataMap = {
   sponsor: {},
   teamOfTheMonth: {},
   team: {},
-  user: {}
+  // user: {}
 };
 
 const pluralNames = {

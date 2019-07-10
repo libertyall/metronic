@@ -3,7 +3,7 @@ import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
 import { defer, forkJoin, Observable, of } from 'rxjs';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
-import { AuthService } from '../_services/auth.service';
+import { AuthService } from '../_services';
 import {
 	AllPermissionsLoaded, AllPermissionsRequested, PermissionActionTypes, PermissionCreated, PermissionCreateError,
 	PermissionDeleted, PermissionOnServerCreated, PermissionsActionToggleLoading, PermissionsPageLoaded,
@@ -41,7 +41,7 @@ export class PermissionEffects {
 				this.store.dispatch(this.showPageLoadingDispatcher);
 				const requestToServer = this.authService.getPermissionList(payload.page);
 				const lastQuery = of(payload.page);
-				return forkJoin(requestToServer, lastQuery);
+				return forkJoin([requestToServer, lastQuery]);
 			}),
 			map(response => {
 				const result: QueryResultsModel = response[0];
@@ -60,7 +60,7 @@ export class PermissionEffects {
 			ofType<PermissionDeleted>(PermissionActionTypes.PermissionDeleted),
 			mergeMap(({ payload }) => {
 					this.store.dispatch(this.showActionLoadingDispatcher);
-					return this.authService.removePermission(payload.id);
+					return this.authService.deletePermission(payload.id);
 				}
 			),
 			map(() => {

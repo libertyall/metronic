@@ -1,7 +1,7 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
@@ -14,18 +14,12 @@ import { RegisterComponent } from './register/register.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { AuthNoticeComponent } from './auth-notice/auth-notice.component';
 import { UnAuthGuard } from '../../../core/auth/_guards/unauth.guard';
-import { AuthService } from '../../../core/auth/_services/auth.service';
+import { AuthService } from '../../../core/auth/_services';
 import { AuthGuard } from '../../../core/auth/_guards/auth.guard';
-import { ApplicationService } from '../../../shared/services/application/application.service';
-import { EmailHandlerEffects } from '../../../core/auth/_effects/email-handler.effects';
-import { LoginEffects } from '../../../core/auth/_effects/login.effects';
-import { ReAuthenticationEffects } from '../../../core/auth/_effects/re-authentication.effects';
-import { RegistrationEffects } from '../../../core/auth/_effects/registration.effects';
-import { ProvidersManagementEffects } from '../../../core/auth/_effects/providers-management.effects';
-import { PasswordManagementEffects } from '../../../core/auth/_effects/password-management.effects';
-import { authReducer } from '../../../core/auth/_reducers/auth.reducer';
 import { PartialsModule } from '../../partials/partials.module';
 import { authRoutes } from './auth.routes';
+import { authReducer } from '../../../core/auth/_reducers/auth.reducers';
+import { AuthEffects } from '../../../core/auth/_effects/auth.effects';
 
 @NgModule({
 	imports: [
@@ -39,14 +33,7 @@ import { authRoutes } from './auth.routes';
 		MatCheckboxModule,
 		TranslateModule.forChild(),
 		StoreModule.forFeature('auth', authReducer),
-		EffectsModule.forFeature([
-			EmailHandlerEffects,
-			LoginEffects,
-			ReAuthenticationEffects,
-			RegistrationEffects,
-			ProvidersManagementEffects,
-			PasswordManagementEffects
-		]),
+		EffectsModule.forFeature([AuthEffects]),
 		PartialsModule
 	],
 	providers: [
@@ -55,8 +42,7 @@ import { authRoutes } from './auth.routes';
 			provide: HTTP_INTERCEPTORS,
 			useClass: InterceptService,
 			multi: true
-		},
-		ApplicationService
+		}
 	],
 	exports: [AuthComponent],
 	declarations: [

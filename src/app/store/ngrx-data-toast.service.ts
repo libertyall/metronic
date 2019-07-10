@@ -6,9 +6,9 @@ import {
   ofEntityOp,
   OP_ERROR,
   OP_SUCCESS
-} from 'ngrx-data';
+} from '@ngrx/data';
 import { filter } from 'rxjs/operators';
-import { ToastService } from '../shared/services/application/toast.service';
+import { ToastService } from '../shared/services/toast.service';
 
 @Injectable({ providedIn: 'root' })
 export class NgrxDataToastService {

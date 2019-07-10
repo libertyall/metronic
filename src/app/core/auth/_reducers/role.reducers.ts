@@ -1,12 +1,13 @@
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { QueryParamsModel } from '../../_base/crud';
-import { Role } from '../_interfaces/role.interface';
 import { RoleActions, RoleActionTypes } from '../_actions/role.actions';
+import { RoleInterface } from '../_interfaces/role.interface';
+import { UserInterface } from '../_interfaces/user.interface';
 
-export interface RolesState extends EntityState<Role> {
+export interface RolesState extends EntityState<RoleInterface> {
     isAllRolesLoaded: boolean;
     queryRowsCount: number;
-    queryResult: Role[];
+    queryResult: RoleInterface[];
     lastCreatedRoleId: string;
     listLoading: boolean;
     actionsLoading: boolean;
@@ -14,7 +15,7 @@ export interface RolesState extends EntityState<Role> {
     showInitWaitingMessage: boolean;
 }
 
-export const adapter: EntityAdapter<Role> = createEntityAdapter<Role>();
+export const adapter: EntityAdapter<RoleInterface> = createEntityAdapter<RoleInterface>();
 
 export const initialRolesState: RolesState = adapter.getInitialState({
     isAllRolesLoaded: false,
@@ -22,7 +23,7 @@ export const initialRolesState: RolesState = adapter.getInitialState({
     queryResult: [],
     lastCreatedRoleId: undefined,
     listLoading: false,
-	actionsLoading: false,
+    actionsLoading: false,
     lastQuery: new QueryParamsModel({}),
     showInitWaitingMessage: true
 });
@@ -30,7 +31,7 @@ export const initialRolesState: RolesState = adapter.getInitialState({
 export function rolesReducer(state = initialRolesState, action: RoleActions): RolesState {
     switch  (action.type) {
         case RoleActionTypes.RolesPageToggleLoading: return {
-            ...state, listLoading: action.payload.isLoading, lastCreatedRoleId: undefined
+                ...state, listLoading: action.payload.isLoading, lastCreatedRoleId: undefined
         };
         case RoleActionTypes.RolesActionToggleLoading: return {
             ...state, actionsLoading: action.payload.isLoading
@@ -41,13 +42,11 @@ export function rolesReducer(state = initialRolesState, action: RoleActions): Ro
         case RoleActionTypes.RoleCreated: return adapter.addOne(action.payload.role, {
             ...state, lastCreatedRoleId: action.payload.role.id
         });
-        // case RoleActionTypes.RoleUpdated: return adapter.updateOne(action.payload.role, state);
+        case RoleActionTypes.RoleUpdated: return adapter.updateOne(action.payload.partialrole, state);
         case RoleActionTypes.RoleDeleted: return adapter.removeOne(action.payload.id, state);
-        case RoleActionTypes.AllRolesLoaded: {
-        	return adapter.addAll(action.payload.roles, {
-				...state, isAllRolesLoaded: true
-			});
-		}
+        case RoleActionTypes.AllRolesLoaded: return adapter.addAll(action.payload.roles, {
+            ...state, isAllRolesLoaded: true
+        });
         case RoleActionTypes.RolesPageCancelled: return {
             ...state, listLoading: false, queryRowsCount: 0, queryResult: [], lastQuery: new QueryParamsModel({})
         };

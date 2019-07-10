@@ -1,10 +1,10 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { QueryResultsModel, HttpExtenstionsModel } from '../../_base/crud';
-import { UsersState } from '../_reducers/user.reducers';
+import { State } from '../_reducers/user.reducers';
 import { each } from 'lodash';
-import { IUser } from '../_interfaces/user.interface';
+import { UserInterface } from '../_interfaces/user.interface';
 
-export const selectUsersState = createFeatureSelector<UsersState>('users');
+export const selectUsersState = createFeatureSelector<State>('users');
 
 export const selectUserById = (userId: string) => createSelector(
     selectUsersState,
@@ -13,7 +13,9 @@ export const selectUserById = (userId: string) => createSelector(
 
 export const selectUsersPageLoading = createSelector(
     selectUsersState,
-    usersState => usersState.listLoading
+    usersState => {
+        return usersState.listLoading;
+    }
 );
 
 export const selectUsersActionLoading = createSelector(
@@ -28,18 +30,23 @@ export const selectLastCreatedUserId = createSelector(
 
 export const selectUsersPageLastQuery = createSelector(
     selectUsersState,
-    usersState => usersState.lastQuery
+    usersState => {
+    	console.log(usersState);
+    	return usersState;
+	}
 );
 
 export const selectUsersInStore = createSelector(
     selectUsersState,
     usersState => {
-        const items: IUser[] = [];
+        const items: UserInterface[] = [];
         each(usersState.entities, element => {
             items.push(element);
         });
         const httpExtension = new HttpExtenstionsModel();
-        const result: IUser[] = httpExtension.sortArray(items, usersState.lastQuery.sortField, usersState.lastQuery.sortOrder);
+        console.log(usersState);
+        const result: UserInterface[] = httpExtension.sortArray(items, usersState.lastQuery.sortField,
+		 usersState.lastQuery.sortOrder);
         return new QueryResultsModel(result, usersState.totalCount, '');
     }
 );
@@ -51,7 +58,5 @@ export const selectUsersShowInitWaitingMessage = createSelector(
 
 export const selectHasUsersInStore = createSelector(
     selectUsersState,
-    queryResult => {
-        return queryResult.totalCount;
-    }
+    queryResult =>  queryResult.totalCount
 );

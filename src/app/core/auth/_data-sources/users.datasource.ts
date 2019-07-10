@@ -1,9 +1,7 @@
 import { select, Store } from '@ngrx/store';
 import { BaseDataSource, QueryResultsModel } from '../../_base/crud';
 import { AppState } from '../../reducers';
-import {
-	selectUsersInStore, selectUsersPageLoading, selectUsersShowInitWaitingMessage
-} from '../_selectors/user.selectors';
+import { selectUsersInStore, selectUsersPageLoading, selectUsersShowInitWaitingMessage } from '../_selectors/user.selectors';
 
 export class UsersDataSource extends BaseDataSource {
 	constructor(private store: Store<AppState>) {

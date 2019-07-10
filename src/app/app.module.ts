@@ -27,14 +27,41 @@ import * as xml from 'highlight.js/lib/languages/xml';
 import * as json from 'highlight.js/lib/languages/json';
 import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire';
-import { AuthService } from './core/auth/_services/auth.service';
+import { AuthService } from './core/auth/_services';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { UnAuthGuard } from './core/auth/_guards/unauth.guard';
 import { NgxPermissionsModule } from 'ngx-permissions';
-import { ApplicationService } from './shared/services/application/application.service';
-import { AppStoreModule } from './store/app-store.module';
 import { GravatarService } from './core/auth/_services/gravatar.service';
+import { ApplicationService } from './modules/application/services/application.service';
+import { ActionReducer, MetaReducer, StoreModule } from '@ngrx/store';
+import { appReducer, AppState } from './core/reducers';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { entityConfig } from './store/entity-metadata';
+import { DefaultDataServiceFactory, EntityDataModule, PersistenceResultHandler } from '@ngrx/data';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { FirestoreDataServiceFactory } from './store/firestore/firestore-entity-collection-data.service';
+import { FirestorePersistenceResultHandler } from './store/firestore/firestore-persistence-result-handler.service';
 
+/* export function storageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
+	return storageSync<AppState>({
+		features: [
+			// { stateKey: 'router', storageForFeature: window.sessionStorage },
+			{ stateKey: 'auth' }
+		],
+		storage: window.localStorage
+	})(reducer);
+} */
+
+export function logger(reducer: any) {
+	return (state: any, action: any) => {
+		// console.log('state', state);
+		// console.log('action', action);
+		return reducer(state, action);
+	};
+}
+
+const metaReducers: Array<MetaReducer<any, any>> = [logger]; // storageSyncReducer,
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	wheelSpeed: 0.5,
 	swipeEasing: true,
@@ -60,7 +87,6 @@ export function hljsLanguages(): HighlightLanguage[] {
 @NgModule({
 	declarations: [AppComponent],
 	imports: [
-		AppStoreModule,
 		BrowserAnimationsModule,
 		BrowserModule,
 		AppRoutingModule,
@@ -69,13 +95,28 @@ export function hljsLanguages(): HighlightLanguage[] {
 		PartialsModule,
 		CoreModule,
 		OverlayModule,
-		AuthModule.forRoot(),
+		// AuthModule.forRoot(),
 		AngularFireModule.initializeApp(environment.firebaseConfig),
 		AngularFirestoreModule.enablePersistence(),
 		AngularFireAuthModule,
 		TranslateModule.forRoot(),
 		MatProgressSpinnerModule,
-		InlineSVGModule.forRoot()
+		InlineSVGModule.forRoot(),
+		StoreModule.forRoot(appReducer, {
+			runtimeChecks: {
+				strictStateImmutability: true,
+				strictActionImmutability: true,
+				strictStateSerializability: true,
+				strictActionSerializability: true
+			},
+			metaReducers
+		}),
+		EffectsModule.forRoot([]),
+		environment.production ? [] : StoreDevtoolsModule.instrument({
+			maxAge: 40
+		}),
+		EntityDataModule.forRoot(entityConfig),
+		// StoreRouterConnectingModule.forRoot()
 	],
 	exports: [],
 	providers: [
@@ -116,6 +157,14 @@ export function hljsLanguages(): HighlightLanguage[] {
 		{
 			provide: FirestoreSettingsToken,
 			useValue: {}
+		},
+		{
+			provide: DefaultDataServiceFactory,
+			useClass: FirestoreDataServiceFactory
+		},
+		{
+			provide: PersistenceResultHandler,
+			useClass: FirestorePersistenceResultHandler
 		}
 	],
 	bootstrap: [AppComponent]

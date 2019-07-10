@@ -1,112 +1,86 @@
 import { Action } from '@ngrx/store';
+import { Update } from '@ngrx/entity';
 import { QueryParamsModel } from '../../_base/crud';
-import { Role } from '../_interfaces/role.interface';
+import { RoleInterface } from '../_interfaces/role.interface';
 
 export enum RoleActionTypes {
-	AllRolesRequested        = '[Roles Home Page] All Roles Requested',
-	AllRolesLoaded           = '[Roles API] All Roles Loaded',
-	RoleOnServerCreated      = '[Edit Role Dialog] Role On Server Created',
-	RoleCreated              = '[Edit Roles Dialog] Roles Created',
-	RoleCreateError          = '[Create Role Dialog] Role NOT created',
-	RoleUpdated              = '[Edit Role Dialog] Role Updated',
-	RoleDeleted              = '[Roles List Page] Role Deleted',
-	RolesPageRequested       = '[Roles List Page] Roles Page Requested',
-	RolesPageLoaded          = '[Roles API] Roles Page Loaded',
-	RolesPageCancelled       = '[Roles API] Roles Page Cancelled',
-	RolesPageToggleLoading   = '[Roles page] Roles Page Toggle Loading',
-	RolesActionToggleLoading = '[Roles] Roles Action Toggle Loading'
+    AllRolesRequested = '[Roles Home Page] All Roles Requested',
+    AllRolesLoaded = '[Roles API] All Roles Loaded',
+    RoleOnServerCreated = '[Edit Role Dialog] Role On Server Created',
+    RoleCreated = '[Edit Roles Dialog] Roles Created',
+    RoleUpdated = '[Edit Role Dialog] Role Updated',
+    RoleDeleted = '[Roles List Page] Role Deleted',
+    RolesPageRequested = '[Roles List Page] Roles Page Requested',
+    RolesPageLoaded = '[Roles API] Roles Page Loaded',
+    RolesPageCancelled = '[Roles API] Roles Page Cancelled',
+    RolesPageToggleLoading = '[Roles page] Roles Page Toggle Loading',
+    RolesActionToggleLoading = '[Roles] Roles Action Toggle Loading'
 }
 
 export class RoleOnServerCreated implements Action {
-	readonly type = RoleActionTypes.RoleOnServerCreated;
-
-	constructor(public payload: { role: Role }) {
-	}
-}
-
-export class RoleCreateError implements Action {
-	readonly type = RoleActionTypes.RoleCreateError;
-
-	constructor(public payload: { error: any }) {
-	}
+    readonly type = RoleActionTypes.RoleOnServerCreated;
+    constructor(public payload: { role: RoleInterface }) { }
 }
 
 export class RoleCreated implements Action {
-	readonly type = RoleActionTypes.RoleCreated;
-
-	constructor(public payload: { role: Role }) {
-	}
+    readonly type = RoleActionTypes.RoleCreated;
+    constructor(public payload: { role: RoleInterface }) { }
 }
 
 export class RoleUpdated implements Action {
-	readonly type = RoleActionTypes.RoleUpdated;
-
-	constructor(public payload: { role: Role }) {
-	}
+    readonly type = RoleActionTypes.RoleUpdated;
+    constructor(public payload: {
+        partialrole: Update<RoleInterface>,
+        role: RoleInterface
+    }) { }
 }
 
 export class RoleDeleted implements Action {
-	readonly type = RoleActionTypes.RoleDeleted;
-
-	constructor(public payload: { id: string }) {
-	}
+    readonly type = RoleActionTypes.RoleDeleted;
+    constructor(public payload: { id: string }) {}
 }
 
 export class RolesPageRequested implements Action {
-	readonly type = RoleActionTypes.RolesPageRequested;
-
-	constructor(public payload: { page: QueryParamsModel }) {
-	}
+    readonly type = RoleActionTypes.RolesPageRequested;
+    constructor(public payload: { page: QueryParamsModel }) { }
 }
 
 export class RolesPageLoaded implements Action {
-	readonly type = RoleActionTypes.RolesPageLoaded;
-
-	constructor(public payload: { roles: Role[], totalCount: number, page: QueryParamsModel }) {
-	}
+    readonly type = RoleActionTypes.RolesPageLoaded;
+    constructor(public payload: { roles: RoleInterface[], totalCount: number, page: QueryParamsModel }) { }
 }
 
 export class RolesPageCancelled implements Action {
-	readonly type = RoleActionTypes.RolesPageCancelled;
+    readonly type = RoleActionTypes.RolesPageCancelled;
 }
 
 export class AllRolesRequested implements Action {
-	readonly type = RoleActionTypes.AllRolesRequested;
-
-	constructor() {
-	}
+    readonly type = RoleActionTypes.AllRolesRequested;
 }
 
 export class AllRolesLoaded implements Action {
-	readonly type = RoleActionTypes.AllRolesLoaded;
-
-	constructor(public payload: { roles: Role[] }) {
-	}
+    readonly type = RoleActionTypes.AllRolesLoaded;
+    constructor(public payload: { roles: RoleInterface[] }) { }
 }
 
 export class RolesPageToggleLoading implements Action {
-	readonly type = RoleActionTypes.RolesPageToggleLoading;
-
-	constructor(public payload: { isLoading: boolean }) {
-	}
+    readonly type = RoleActionTypes.RolesPageToggleLoading;
+    constructor(public payload: { isLoading: boolean }) { }
 }
 
 export class RolesActionToggleLoading implements Action {
-	readonly type = RoleActionTypes.RolesActionToggleLoading;
-
-	constructor(public payload: { isLoading: boolean }) {
-	}
+    readonly type = RoleActionTypes.RolesActionToggleLoading;
+    constructor(public payload: { isLoading: boolean }) { }
 }
 
 export type RoleActions = RoleCreated
-	| RoleCreateError
-	| RoleUpdated
-	| RoleDeleted
-	| RolesPageRequested
-	| RolesPageLoaded
-	| RolesPageCancelled
-	| AllRolesLoaded
-	| AllRolesRequested
-	| RoleOnServerCreated
-	| RolesPageToggleLoading
-	| RolesActionToggleLoading;
+| RoleUpdated
+| RoleDeleted
+| RolesPageRequested
+| RolesPageLoaded
+| RolesPageCancelled
+| AllRolesLoaded
+| AllRolesRequested
+| RoleOnServerCreated
+| RolesPageToggleLoading
+| RolesActionToggleLoading;

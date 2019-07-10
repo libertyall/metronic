@@ -7,9 +7,9 @@ import { AppState } from '../../../../core/reducers';
 import { Subject } from 'rxjs';
 import { ConfirmPasswordValidator } from './confirm-password.validator';
 import { AuthNoticeService } from '../../../../core/auth/auth-notice/auth-notice.service';
-import { AuthService } from '../../../../core/auth/_services/auth.service';
-import { IUser } from '../../../../core/auth/_interfaces/user.interface';
-import { CredentialsRegistration } from '../../../../core/auth/_actions/auth.actions';
+import { AuthService } from '../../../../core/auth/_services';
+import { UserInterface } from '../../../../core/auth/_interfaces/user.interface';
+import { authError, register, registerSuccess } from '../../../../core/auth/_actions/auth.actions';
 
 @Component({
 	selector: 'kt-register',
@@ -115,20 +115,22 @@ export class RegisterComponent implements OnInit, OnDestroy {
 		}
 
 		this.loading = true;
-		const _user: IUser = {
+		const user: UserInterface = {
 			email: controls['email'].value,
 			displayName: controls['displayName'].value,
 			firstName: controls['firstName'].value,
 			lastName: controls['lastName'].value,
 			password: controls['password'].value
 		};
-		this.auth.register(_user).then(() => {
-			this.store.dispatch(new CredentialsRegistration(_user));
+
+		this.auth.register(user).then(() => {
+			this.store.dispatch(registerSuccess()); /// { user }
 			this.authNoticeService.setNotice(this.translate.instant('AUTH.REGISTER.SUCCESS'), 'success');
 			this.router.navigateByUrl('/auth/login').then(() => console.log('register successful'));
 			this.loading = false;
 		}).catch((error) => {
 			console.log(error);
+			this.store.dispatch(authError({ error }));
 			this.authNoticeService.setNotice(this.translate.instant('AUTH.VALIDATION.SIGNUP.' + error.code), 'danger');
 			this.loading = false;
 		});
