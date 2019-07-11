@@ -20,6 +20,8 @@ import { PartialsModule } from '../../partials/partials.module';
 import { authRoutes } from './auth.routes';
 import { authReducer } from '../../../core/auth/_reducers/auth.reducers';
 import { AuthEffects } from '../../../core/auth/_effects/auth.effects';
+import {usersReducer} from '../../../core/auth/_reducers/user.reducers';
+import {UserEffects} from '../../../core/auth/_effects/user.effects';
 
 @NgModule({
 	imports: [
@@ -33,8 +35,10 @@ import { AuthEffects } from '../../../core/auth/_effects/auth.effects';
 		MatCheckboxModule,
 		TranslateModule.forChild(),
 		StoreModule.forFeature('auth', authReducer),
-		EffectsModule.forFeature([AuthEffects]),
-		PartialsModule
+		EffectsModule.forFeature([AuthEffects])
+		// StoreModule.forFeature('users', usersReducer),
+		// EffectsModule.forFeature([AuthEffects, UserEffects]),
+		// PartialsModule
 	],
 	providers: [
 		InterceptService,

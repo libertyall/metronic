@@ -1,18 +1,21 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable, Subject } from 'rxjs';
-import { TranslateService } from '@ngx-translate/core';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../../../core/reducers';
-import { AuthService } from '../../../../core/auth/_services';
-import { AuthNoticeService } from '../../../../core/auth/auth-notice/auth-notice.service';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {Router} from '@angular/router';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Observable, Subject} from 'rxjs';
+import {TranslateService} from '@ngx-translate/core';
+import {Store} from '@ngrx/store';
+import {AppState} from '../../../../core/reducers';
+import {AuthService} from '../../../../core/auth/_services';
+import {AuthNoticeService} from '../../../../core/auth/auth-notice/auth-notice.service';
 import {
-	authError,
-	credentialsLogin
+	credentialsLogin,
+	facebookLogin,
+	googleLogin,
+	startLogin,
+	twitterLogin
 } from '../../../../core/auth/_actions/auth.actions';
-import { UserInterface } from '../../../../core/auth/_interfaces/user.interface';
-import { currentUser, isLoading, isLoggedIn, selectAuthState } from '../../../../core/auth/_selectors/auth.selectors';
+import {UserInterface} from '../../../../core/auth/_interfaces/user.interface';
+import {currentUser, isLoading, isLoggedIn} from '../../../../core/auth/_selectors/auth.selectors';
 
 @Component({
 	selector: 'kt-login',
@@ -22,8 +25,6 @@ import { currentUser, isLoading, isLoggedIn, selectAuthState } from '../../../..
 export class LoginComponent implements OnInit, OnDestroy {
 
 	loginForm: FormGroup;
-	loading = false;
-	errors$: any = [];
 
 	user$: Observable<UserInterface | null>;
 	isLoggedIn$: Observable<boolean>;
@@ -38,7 +39,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 				private store: Store<AppState>,
 				private fb: FormBuilder) {
 		this.unsubscribe = new Subject();
-		this.store.select(selectAuthState).subscribe(t => console.log(t));
 		this.isLoggedIn$ = this.store.select(isLoggedIn);
 		this.user$ = this.store.select(currentUser);
 		this.isLoading$ = this.store.select(isLoading);
@@ -52,7 +52,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 		this.authNoticeService.setNotice(null);
 		this.unsubscribe.next();
 		this.unsubscribe.complete();
-		this.loading = false;
 	}
 
 	initLoginForm() {
@@ -85,8 +84,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 			);
 			return;
 		}
-
-		this.loading = true;
+		this.store.dispatch(startLogin());
 
 		const authData = {
 			email: controls['email'].value,
@@ -94,7 +92,9 @@ export class LoginComponent implements OnInit, OnDestroy {
 			rememberMe: controls['rememberMe'].value
 		};
 
-		this.auth
+		this.store.dispatch(credentialsLogin(authData));
+
+		/* this.auth
 			.doLoginWithCredentials(authData)
 			.then(() => {
 				this.store.dispatch(credentialsLogin({ email: authData.email, password: authData.password, rememberMe: authData.rememberMe }));
@@ -102,10 +102,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 				this.loading = false;
 			})
 			.catch((error) => {
-				this.store.dispatch(authError(error));
+				this.store.dispatch(authMessage(error));
 				this.authNoticeService.setNotice(this.translate.instant('AUTH.ERRORS.' + error.code), 'danger');
 				this.loading = false;
-			});
+			}); */
 	}
 
 	isControlHasError(controlName: string, validationType: string): boolean {
@@ -116,16 +116,16 @@ export class LoginComponent implements OnInit, OnDestroy {
 		return control.hasError(validationType) && (control.dirty || control.touched);
 	}
 
-	/* googleLogin(): void {
-		this.store.dispatch(new GoogleLogin());
+	googleLogin(): void {
+		this.store.dispatch(googleLogin());
 	}
 
 	facebookLogin(): void {
-		this.store.dispatch(new FacebookLogin());
+		this.store.dispatch(facebookLogin());
 	}
 
 	twitterLogin(): void {
-		this.store.dispatch(new TwitterLogin());
-	} */
+		this.store.dispatch(twitterLogin());
+	}
 
 }

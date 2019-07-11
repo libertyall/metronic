@@ -7,13 +7,13 @@ import { FirstLetterPipe, GetObjectPipe, JoinPipe, OffcanvasDirective, SafePipe,
 	imports: [CommonModule],
 	declarations: [
 		// directives
-		ScrollTopDirective,
+		/* ScrollTopDirective,
 		OffcanvasDirective,
 		ToggleDirective,
 		MenuDirective,
 		ContentAnimateDirective,
 		// pipes
-		FirstLetterPipe,
+		FirstLetterPipe, */
 		/* HeaderDirective,
 		TabClickEventDirective,
 		SparklineChartDirective,
@@ -26,13 +26,13 @@ import { FirstLetterPipe, GetObjectPipe, JoinPipe, OffcanvasDirective, SafePipe,
 	],
 	exports: [
 		// directives
-		ScrollTopDirective,
+		/* ScrollTopDirective,
 		OffcanvasDirective,
 		ToggleDirective,
 		MenuDirective,
 		ContentAnimateDirective,
 		// pipes
-		FirstLetterPipe,
+		FirstLetterPipe, */
 		/* HeaderDirective,
 		TabClickEventDirective,
 		SparklineChartDirective,

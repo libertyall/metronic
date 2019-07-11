@@ -1,47 +1,57 @@
-import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
-import { HttpClientModule } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { GestureConfig, MatProgressSpinnerModule } from '@angular/material';
-import { OverlayModule } from '@angular/cdk/overlay';
-import { PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
-import { InlineSVGModule } from 'ng-inline-svg';
-import { environment } from '../environments/environment';
+import {BrowserModule, HAMMER_GESTURE_CONFIG} from '@angular/platform-browser';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
+import {TranslateModule} from '@ngx-translate/core';
+import {HttpClientModule} from '@angular/common/http';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {GestureConfig, MatProgressSpinnerModule} from '@angular/material';
+import {OverlayModule} from '@angular/cdk/overlay';
+import {PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface} from 'ngx-perfect-scrollbar';
+import {InlineSVGModule} from 'ng-inline-svg';
+import {environment} from '../environments/environment';
 import 'hammerjs';
-import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
-import { CoreModule } from './core/core.module';
-import { PartialsModule } from './views/partials/partials.module';
-import { DataTableService } from './core/_base/metronic';
+import {AppComponent} from './app.component';
+import {AppRoutingModule} from './app-routing.module';
+import {CoreModule} from './core/core.module';
+import {PartialsModule} from './views/partials/partials.module';
+import {DataTableService} from './core/_base/metronic';
 import {
-	KtDialogService, LayoutConfigService, LayoutRefService, MenuAsideService, MenuConfigService, MenuHorizontalService,
-	PageConfigService, SplashScreenService, SubheaderService
+	KtDialogService,
+	LayoutConfigService,
+	LayoutRefService,
+	MenuAsideService,
+	MenuConfigService,
+	MenuHorizontalService,
+	PageConfigService,
+	SplashScreenService,
+	SubheaderService
 } from './core/_base/layout';
-import { AuthModule } from './views/pages/auth/auth.module';
-import { LayoutUtilsService, TypesUtilsService } from './core/_base/crud';
-import { HIGHLIGHT_OPTIONS, HighlightLanguage } from 'ngx-highlightjs';
+import {LayoutUtilsService, TypesUtilsService} from './core/_base/crud';
+import {HIGHLIGHT_OPTIONS, HighlightLanguage} from 'ngx-highlightjs';
 import * as typescript from 'highlight.js/lib/languages/typescript';
 import * as scss from 'highlight.js/lib/languages/scss';
 import * as xml from 'highlight.js/lib/languages/xml';
 import * as json from 'highlight.js/lib/languages/json';
-import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
-import { AngularFireModule } from '@angular/fire';
-import { AuthService } from './core/auth/_services';
-import { AngularFireAuthModule } from '@angular/fire/auth';
-import { UnAuthGuard } from './core/auth/_guards/unauth.guard';
-import { NgxPermissionsModule } from 'ngx-permissions';
-import { GravatarService } from './core/auth/_services/gravatar.service';
-import { ApplicationService } from './modules/application/services/application.service';
-import { ActionReducer, MetaReducer, StoreModule } from '@ngrx/store';
-import { appReducer, AppState } from './core/reducers';
-import { EffectsModule } from '@ngrx/effects';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { entityConfig } from './store/entity-metadata';
-import { DefaultDataServiceFactory, EntityDataModule, PersistenceResultHandler } from '@ngrx/data';
-import { StoreRouterConnectingModule } from '@ngrx/router-store';
-import { FirestoreDataServiceFactory } from './store/firestore/firestore-entity-collection-data.service';
-import { FirestorePersistenceResultHandler } from './store/firestore/firestore-persistence-result-handler.service';
+import {AngularFirestoreModule, FirestoreSettingsToken} from '@angular/fire/firestore';
+import {AngularFireModule} from '@angular/fire';
+import {AuthService} from './core/auth/_services';
+import {AngularFireAuthModule} from '@angular/fire/auth';
+import {UnAuthGuard} from './core/auth/_guards/unauth.guard';
+import {NgxPermissionsModule} from 'ngx-permissions';
+import {GravatarService} from './core/auth/_services/gravatar.service';
+import {ApplicationService} from './modules/application/services/application.service';
+import {MetaReducer, StoreModule} from '@ngrx/store';
+import {appReducer} from './core/reducers';
+import {EffectsModule} from '@ngrx/effects';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import {entityConfig} from './store/entity-metadata';
+import {DefaultDataServiceFactory, EntityDataModule, PersistenceResultHandler} from '@ngrx/data';
+import {RouterState, StoreRouterConnectingModule} from '@ngrx/router-store';
+import {FirestoreDataServiceFactory} from './store/firestore/firestore-entity-collection-data.service';
+import {FirestorePersistenceResultHandler} from './store/firestore/firestore-persistence-result-handler.service';
+import {UserService} from "./core/auth/_services/user.service";
+import {AuthModule} from "./views/pages/auth/auth.module";
+import {UserEffects} from "./core/auth/_effects/user.effects";
+import {AuthEffects} from "./core/auth/_effects/auth.effects";
 
 /* export function storageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
 	return storageSync<AppState>({
@@ -55,8 +65,6 @@ import { FirestorePersistenceResultHandler } from './store/firestore/firestore-p
 
 export function logger(reducer: any) {
 	return (state: any, action: any) => {
-		// console.log('state', state);
-		// console.log('action', action);
 		return reducer(state, action);
 	};
 }
@@ -90,12 +98,12 @@ export function hljsLanguages(): HighlightLanguage[] {
 		BrowserAnimationsModule,
 		BrowserModule,
 		AppRoutingModule,
-		HttpClientModule,
+		// HttpClientModule,
 		NgxPermissionsModule.forRoot(),
 		PartialsModule,
 		CoreModule,
 		OverlayModule,
-		// AuthModule.forRoot(),
+		AuthModule.forRoot(),
 		AngularFireModule.initializeApp(environment.firebaseConfig),
 		AngularFirestoreModule.enablePersistence(),
 		AngularFireAuthModule,
@@ -111,25 +119,28 @@ export function hljsLanguages(): HighlightLanguage[] {
 			},
 			metaReducers
 		}),
-		EffectsModule.forRoot([]),
+		EffectsModule.forRoot([UserEffects, AuthEffects]),
 		environment.production ? [] : StoreDevtoolsModule.instrument({
 			maxAge: 40
 		}),
-		EntityDataModule.forRoot(entityConfig),
-		// StoreRouterConnectingModule.forRoot()
+		// EntityDataModule.forRoot(entityConfig),
+		/*StoreRouterConnectingModule.forRoot({
+			routerState: RouterState.Minimal
+		})*/
 	],
 	exports: [],
 	providers: [
 		ApplicationService,
 		AuthService,
+		UserService,
 		GravatarService,
 		LayoutConfigService,
 		LayoutRefService,
-		MenuConfigService,
+		// MenuConfigService,
 		UnAuthGuard,
-		PageConfigService,
-		KtDialogService,
-		DataTableService,
+		// PageConfigService,
+		// KtDialogService,
+		// DataTableService,
 		SplashScreenService,
 		{
 			provide: PERFECT_SCROLLBAR_CONFIG,
@@ -149,11 +160,11 @@ export function hljsLanguages(): HighlightLanguage[] {
 			provide: HIGHLIGHT_OPTIONS,
 			useValue: { languages: hljsLanguages }
 		},
-		SubheaderService,
-		MenuHorizontalService,
-		MenuAsideService,
-		TypesUtilsService,
-		LayoutUtilsService,
+		// SubheaderService,
+		// MenuHorizontalService,
+		// MenuAsideService,
+		// TypesUtilsService,
+		// LayoutUtilsService,
 		{
 			provide: FirestoreSettingsToken,
 			useValue: {}

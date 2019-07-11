@@ -3,6 +3,18 @@ export const locale = {
 	lang: 'de',
 	data: {
 		actions: 'Aktionen',
+		'auth/email-already-in-use': 'Die verwendete E-Mail Adresse ist bereits in unserem System gespeichert. Nutze eine andere Adresse oder lass Dir Dein Passwort per Mail zusenden.',
+		'auth/invalid-email': 'Du hast keine gültige E-Mail Adresse eingegeben. Bitte überprüfe Deine Eingabe.',
+		'auth/reminder-sent': 'Eine E-Mail mit neuen Daten wurde versendet.',
+		'auth/too-many-requests': 'Du hast zu viele Anfragen gesendet.',
+		'auth/user-not-found': 'Es wurde kein Benutzer mit diesen Daten gefunden.',
+		'auth/argument-error': 'Es ist ein Systemfehler aufgetreten. Bitte versuche es zu einem späteren Zeitpunkt erneut.',
+		'auth/user-disabled': 'Dein Benutzeraccount wurde von einem Administrator deaktiviert.',
+		'auth/operation-not-allowed': 'Diese Login-Methode wurde gesperrt.',
+		'auth/account-exists-with-different-credential': 'Es existiert bereits ein Benutzer der diese Mail-Adresse verwendet.',
+		'auth/wrong-password': 'Du hast ein falsches Passwort für diesen Account angegeben.',
+		'auth/send-verification': 'Eine weitere E-Mail zur Bestätigung Deines Accounts wurde Dir gesendet.',
+		'auth/register-success': 'Deine Registrierung war erfolgreich! Nach dem Bestätigen Deiner E-Mail Adresse muss Dein Account noch von einem Administrator freigegeben werden.',
 		AUTH: {
 			AGREE: {
 				TEXT: 'Ich akzeptiere die '

@@ -7,7 +7,12 @@ import { PermissionInterface } from '../_interfaces/permission.interface';
 
 export const selectAuthState = state => {
 	return state.auth;
-}
+};
+
+export const selectAuthMessage = createSelector(
+	selectAuthState,
+	state => state.message
+);
 
 export const isLoggedIn = createSelector(
 	selectAuthState,

@@ -1,7 +1,7 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, Output } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { AuthNoticeService } from '../../../../core/auth/auth-notice/auth-notice.service';
-import { AuthNotice } from '../../../../core/auth/auth-notice/auth-notice.interface';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit, Output} from '@angular/core';
+import {Subscription} from 'rxjs';
+import {AuthNoticeService} from '../../../../core/auth/auth-notice/auth-notice.service';
+import {AuthNotice} from '../../../../core/auth/auth-notice/auth-notice.interface';
 
 @Component({
 	selector: 'kt-auth-notice',
@@ -19,9 +19,8 @@ export class AuthNoticeComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit() {
-		this.subscriptions.push(this.authNoticeService.onNoticeChanged$.subscribe(
-			(notice: AuthNotice) => {
-				notice = Object.assign({}, { message: '', type: '' }, notice);
+		this.subscriptions.push(this.authNoticeService.onNoticeChanged$.subscribe((notice: AuthNotice) => {
+				notice = Object.assign({}, {message: '', type: ''}, notice);
 				this.message = notice.message;
 				this.code = notice.code;
 				this.type = notice.type;

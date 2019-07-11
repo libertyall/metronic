@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from '@angular/fire/firestore';
+import {from, Observable} from 'rxjs';
 import { UserInterface } from '../_interfaces/user.interface';
 import { QueryParamsModel } from '../../_base/crud';
 import { map, take } from 'rxjs/operators';
+import UserCredential = firebase.auth.UserCredential;
 
 @Injectable()
 export class UserService {
@@ -18,10 +19,27 @@ export class UserService {
 		this.users$ = this.collectionRef.valueChanges();
 	}
 
+	createUser(data: { userCredential: UserCredential, userData: UserInterface}): Observable<void> {
+		console.log(data.userData);
+		console.log(data.userCredential);
+		const user: UserInterface = {
+			providerId: data.userCredential.additionalUserInfo.providerId,
+			email: data.userCredential.user.email,
+			emailVerified: false,
+			displayName: data.userCredential.user.displayName || data.userData.displayName,
+			firstName: data.userData.firstName,
+			lastName: data.userData.lastName,
+
+		};
+		const userRef: AngularFirestoreDocument<UserInterface> = this.afs.doc(`/users/${ user.id }`);
+		return from(userRef.set(user, { merge: true }));
+	}
+
+	/*
 	createUser(user: UserInterface): Promise<void> {
 		user.id = this.afs.createId();
 		return this.afs.collection<UserInterface>(this.path).doc(user.id).set(user);
-	}
+	} */
 
 	removeUser(user: UserInterface): Promise<any> {
 		return this.afs.collection<UserInterface>(this.path).doc(user.id).delete();

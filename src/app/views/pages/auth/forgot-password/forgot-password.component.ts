@@ -1,10 +1,14 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
-import { TranslateService } from '@ngx-translate/core';
-import { AuthNoticeService } from '../../../../core/auth/auth-notice/auth-notice.service';
-import { AuthService } from '../../../../core/auth/_services/auth.service';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {Observable, Subject} from 'rxjs';
+import {TranslateService} from '@ngx-translate/core';
+import {AuthNoticeService} from '../../../../core/auth/auth-notice/auth-notice.service';
+import {AuthService} from '../../../../core/auth/_services';
+import {Store} from '@ngrx/store';
+import {AppState} from '../../../../core/reducers';
+import {forgotPassword} from '../../../../core/auth/_actions/auth.actions';
+import {isLoading, selectAuthMessage} from '../../../../core/auth/_selectors/auth.selectors';
 
 @Component({
 	selector: 'kt-forgot-password',
@@ -14,35 +18,31 @@ import { AuthService } from '../../../../core/auth/_services/auth.service';
 export class ForgotPasswordComponent implements OnInit, OnDestroy {
 
 	forgotPasswordForm: FormGroup;
-	loading = false;
-	errors: any = [];
+	isLoading$: Observable<boolean>;
 	length6 = 6;
 	length320 = 320;
 
-	private unsubscribe: Subject<any>;
-
-	constructor(
-		private authService: AuthService,
-		public authNoticeService: AuthNoticeService,
-		private translate: TranslateService,
-		private router: Router,
-		private fb: FormBuilder) {
-		this.unsubscribe = new Subject();
+	constructor(private store: Store<AppState>,
+				private authService: AuthService,
+				public authNoticeService: AuthNoticeService,
+				private translate: TranslateService,
+				private router: Router,
+				private fb: FormBuilder) {
 	}
 
 	ngOnInit() {
 		this.initRegistrationForm();
+		this.store.select(selectAuthMessage).subscribe((message) => this.authNoticeService.setNotice(message.code, message.color));
+		this.isLoading$ = this.store.select(isLoading);
 	}
 
 	ngOnDestroy(): void {
-		this.unsubscribe.next();
-		this.unsubscribe.complete();
-		this.loading = false;
+		this.authNoticeService.setNotice(null);
 	}
 
 	initRegistrationForm() {
 		this.forgotPasswordForm = this.fb.group({
-			email: [ '', Validators.compose([
+			email: ['', Validators.compose([
 				Validators.required,
 				Validators.email,
 				Validators.minLength(this.length6),
@@ -52,31 +52,20 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 		});
 	}
 
-
 	submit() {
 		const controls = this.forgotPasswordForm.controls;
 		if (this.forgotPasswordForm.invalid) {
 			Object.keys(controls).forEach(controlName =>
-				controls[ controlName ].markAsTouched()
+				controls[controlName].markAsTouched()
 			);
 			return;
 		}
-		this.loading = true;
-		const email = controls[ 'email' ].value;
-
-		this.authService.requestPassword(email).then(() => {
-			this.authNoticeService.setNotice(this.translate.instant('AUTH.FORGOT.SUCCESS'), 'success');
-			this.router.navigateByUrl('/auth/login').then(() => console.log('forgot-password'));
-			this.loading = false;
-		}).catch((error) => {
-			console.log(error);
-			this.authNoticeService.setNotice(this.translate.instant('AUTH.VALIDATION.NOT_FOUND', { name: this.translate.instant('AUTH.INPUT.EMAIL') }), 'danger');
-			this.loading = false;
-		});
+		const email = controls['email'].value;
+		this.store.dispatch(forgotPassword({email}));
 	}
 
 	isControlHasError(controlName: string, validationType: string): boolean {
-		const control = this.forgotPasswordForm.controls[ controlName ];
+		const control = this.forgotPasswordForm.controls[controlName];
 		if (!control) {
 			return false;
 		}

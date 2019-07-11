@@ -2,6 +2,7 @@ import { createAction, props } from '@ngrx/store';
 import { QueryParamsModel } from '../../_base/crud';
 import { UserInterface } from '../_interfaces/user.interface';
 import { User } from 'firebase';
+import UserCredential = firebase.auth.UserCredential;
 
 export const usersPageToggleLoading = createAction('[USER]: toggle Page loading', props<{ isLoading: boolean }>());
 export const usersActionToggleLoading = createAction('[USER]: toggle action loading', props<{ isLoading: boolean }>());
@@ -9,7 +10,7 @@ export const usersActionToggleLoading = createAction('[USER]: toggle action load
 export const userError = createAction('[USER]: User error', props<{ error: any }>());
 export const userSuccess = createAction('[USER]: Operation successfully');
 
-export const userCreate = createAction('[USER]: User create', props<{ user: UserInterface }>());
+export const userCreate = createAction('[USER]: User create', props<{ data: { userCredential: UserCredential, userData: UserInterface } }>());
 export const userCreateSuccess = createAction('[USER]: User created successfully', props<{ user: UserInterface }>());
 
 export const userDelete = createAction('[USER]: User delete', props<{ user: UserInterface }>());

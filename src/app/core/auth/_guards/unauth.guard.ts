@@ -24,13 +24,14 @@ export class UnAuthGuard implements CanActivate {
 		return this.authService.getAuthState().pipe(
 			take(1),
 			map((user: User) => {
-				if (user && (user.emailVerified || user.providerId !== 'password')) {
+				console.log(user);
+				/*if (user && (user.emailVerified || user.providerId !== 'password')) {
 					this.router.navigateByUrl('/dashboard').then(() => console.log('already logged in'));
 					return false;
 				}
 				if (user && user.providerId === 'password' && !user.emailVerified) {
 					this.authNoticeService.setNotice(this.translate.instant('AUTH.LOGIN.VERIFYEMAIL'), 'danger');
-				}
+				}*/
 				return true;
 			}),
 			catchError((error: any) => {

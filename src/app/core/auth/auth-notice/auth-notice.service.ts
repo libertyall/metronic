@@ -13,10 +13,7 @@ export class AuthNoticeService {
 	}
 
 	setNotice(message: string, type?: string) {
-		const notice: AuthNotice = {
-			message: message,
-			type: type
-		};
+		const notice: AuthNotice = {message, type};
 		this.onNoticeChanged$.next(notice);
 	}
 }

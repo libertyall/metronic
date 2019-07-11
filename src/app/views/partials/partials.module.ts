@@ -20,9 +20,9 @@ import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
 	declarations: [
-		ScrollTopComponent,
+		// ScrollTopComponent,
 		SplashScreenComponent,
-		QuickPanelComponent,
+		/* QuickPanelComponent,
 		StickyToolbarComponent,
 
 		// topbar components
@@ -52,9 +52,9 @@ import { TranslateModule } from '@ngx-translate/core';
 		 UserProfile2Component, */
 	],
 	exports: [
-		ScrollTopComponent,
+		// ScrollTopComponent,
 		SplashScreenComponent,
-		QuickPanelComponent,
+		/* QuickPanelComponent,
 		StickyToolbarComponent,
 		SearchDropdownComponent,
 		SearchResultComponent,
@@ -117,9 +117,9 @@ import { TranslateModule } from '@ngx-translate/core';
 		 MatTooltipModule, */
 	],
 	entryComponents: [
-		AlertComponent,
-		ActionNotificationComponent,
-		DeleteEntityDialogComponent
+		// AlertComponent,
+		// ActionNotificationComponent,
+		// DeleteEntityDialogComponent
 	]
 })
 export class PartialsModule {

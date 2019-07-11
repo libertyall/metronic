@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { catchError, map, mergeMap } from 'rxjs/operators';
+import {catchError, exhaustMap, map, mergeMap} from 'rxjs/operators';
 import { forkJoin, of } from 'rxjs';
-import { Actions, Effect, ofType } from '@ngrx/effects';
+import {Actions, createEffect, Effect, ofType} from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { QueryParamsModel, QueryResultsModel } from '../../_base/crud';
 import { AuthService } from '../_services';
@@ -10,16 +10,19 @@ import {
 	getUsersPage, getUsersPageError, getUsersPageSuccess, userCreate, userCreateSuccess, userDelete, userError,
 	usersActionToggleLoading, usersPageToggleLoading, userUpdate
 } from '../_actions/user.actions';
+import {authMessage, forgotPassword} from '../_actions/auth.actions';
+import {UserService} from '../_services/user.service';
 
 @Injectable()
 export class UserEffects {
+
 	showPageLoadingDispatcher = usersPageToggleLoading({ isLoading: true });
 	hidePageLoadingDispatcher = usersPageToggleLoading({ isLoading: false });
 
 	showActionLoadingDispatcher = usersActionToggleLoading({ isLoading: true });
 	hideActionLoadingDispatcher = usersActionToggleLoading({ isLoading: false });
 
-	@Effect()
+	/* @Effect()
 	loadUsersPage$ = this.actions$.pipe(
 		ofType(getUsersPage),
 		mergeMap(({ page }) => {
@@ -52,7 +55,7 @@ export class UserEffects {
 		catchError((error) => of(userError(error)))
 	);
 
-	@Effect()
+	/* @Effect()
 	updateUser$ = this.actions$.pipe(
 		ofType(userUpdate),
 		mergeMap(({ user }) => {
@@ -61,9 +64,18 @@ export class UserEffects {
 		}),
 		map(() => this.hideActionLoadingDispatcher),
 		catchError((error) => of(userError(error)))
-	);
+	); */
 
-	@Effect()
+	userCreate = createEffect(() => this.actions$.pipe(
+		ofType(userCreate),
+		exhaustMap(action => {
+			return this.userService.createUser(action.data).pipe(
+				catchError(error => of(authMessage({code: error.code, color: 'danger'})))
+			);
+		})
+	), {dispatch: false});
+
+	/* @Effect()
 	createUser$ = this.actions$.pipe(
 		ofType(userCreate),
 		mergeMap(({ user }) => {
@@ -74,8 +86,10 @@ export class UserEffects {
 			this.store.dispatch(userCreateSuccess({ user: res }));
 			return this.hideActionLoadingDispatcher;
 		})
-	);
+	); */
 
-	constructor(private actions$: Actions, private auth: AuthService, private store: Store<AppState>) {
+	constructor(private actions$: Actions,
+				private userService: UserService,
+				private store: Store<AppState>) {
 	}
 }

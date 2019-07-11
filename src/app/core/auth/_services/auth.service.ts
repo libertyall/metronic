@@ -1,16 +1,16 @@
-import { Injectable } from '@angular/core';
-import { UserInterface } from '../_interfaces/user.interface';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
+import {Injectable} from '@angular/core';
+import {UserInterface} from '../_interfaces/user.interface';
+import {AngularFireAuth} from '@angular/fire/auth';
+import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
-import { from, Observable, of, Subscription } from 'rxjs';
-import { RoleInterface } from '../_interfaces/role.interface';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../reducers';
-import { QueryParamsModel } from '../../_base/crud';
-import { map, take } from 'rxjs/operators';
-import { PermissionInterface } from '../_interfaces/permission.interface';
-import { getAuthUser, setLoggedOut } from '../_actions/auth.actions';
+import {from, Observable, of, Subscription} from 'rxjs';
+import {RoleInterface} from '../_interfaces/role.interface';
+import {Store} from '@ngrx/store';
+import {AppState} from '../../reducers';
+import {QueryParamsModel} from '../../_base/crud';
+import {map, take} from 'rxjs/operators';
+import {PermissionInterface} from '../_interfaces/permission.interface';
+import {getAuthUser, logout} from '../_actions/auth.actions';
 import UserCredential = firebase.auth.UserCredential;
 
 @Injectable()
@@ -43,19 +43,17 @@ export class AuthService {
 		this.permissionCollectionRef = this.afs.collection<RoleInterface>(this.permissionsPath);
 		this.permissions$ = this.permissionCollectionRef.valueChanges();
 
-
+		/*
 		this.afAuth.authState.subscribe((user: firebase.User) => {
 			if (user) {
-				this.userSubscription = this.afs.doc(`/users/${ user.uid }`).valueChanges().subscribe((userObj: any) => {
+				this.userSubscription = this.afs.doc(`/users/${user.uid}`).valueChanges().subscribe((userObj: any) => {
 					this.store.dispatch(getAuthUser(userObj));
 				});
 			} else {
-				this.store.dispatch(setLoggedOut());
+				this.store.dispatch(logout());
 				this.userSubscription.unsubscribe();
 			}
-		});
-
-
+		}); */
 	}
 
 	getAuthState() {
@@ -88,48 +86,33 @@ export class AuthService {
 		}
 	}
 
-	logout(): Promise<void> {
-		return this.afAuth.auth.signOut();
+	logout(): Observable<void> {
+		console.log('logout');
+		return from(this.afAuth.auth.signOut());
 	}
 
-	async register(values: UserInterface): Promise<any> {
-		const registerAction = await this.afAuth.auth.createUserWithEmailAndPassword(values.email, values.password);
-		const sendVerificationMail = await this.sendVerificationMail();
-		const updateUser = this.saveUser(values);
-		return Promise.all([registerAction, sendVerificationMail, updateUser]);
+	register(values: UserInterface): Observable<UserCredential> {
+		return from(this.afAuth.auth.createUserWithEmailAndPassword(values.email, values.password));
 	}
 
-	sendVerificationMail(): Promise<void> {
-		return this.afAuth.auth.currentUser.sendEmailVerification();
+	sendVerificationMail(): Observable<void> {
+		return from(this.afAuth.auth.currentUser.sendEmailVerification());
 	}
 
 	getUserById(userId: string): Observable<UserInterface> {
 		return this.afs.doc<UserInterface>(this.userPath + '/' + userId).valueChanges();
 	}
 
-	public requestPassword(email: string): Promise<void> {
-		return this.afAuth.auth.sendPasswordResetEmail(email);
-	}
-
-	saveUser(data: UserInterface): Observable<void> {
-		data.id = this.afAuth.auth.currentUser.uid;
-		delete data.password;
-		const userRef: AngularFirestoreDocument<UserInterface> = this.afs.doc(`/users/${ data.id }`);
-		return from(userRef.set(data, { merge: true }));
+	public requestPassword(email: string): Observable<void> {
+		return from(this.afAuth.auth.sendPasswordResetEmail(email));
 	}
 
 	deleteUser(user: UserInterface): Promise<any> {
 		return this.afs.collection<UserInterface>(this.userPath).doc(user.id).delete();
 	}
 
-	createUser(userData: UserInterface): Observable<UserInterface> {
-		console.log('ToDo');
-		console.log(userData);
-		return of(userData);
-	}
-
 	updateUser(user: UserInterface): Promise<void> {
-		return this.afs.collection<UserInterface>(this.userPath).doc(user.id).set(user, { merge: true });
+		return this.afs.collection<UserInterface>(this.userPath).doc(user.id).set(user, {merge: true});
 	}
 
 	getAllUsers(): Observable<UserInterface[]> {
@@ -137,7 +120,7 @@ export class AuthService {
 	}
 
 	getUserList(page?: QueryParamsModel): Observable<any> {
-		const { filter, pageNumber, pageSize, sortField, sortOrder } = page;
+		const {filter, pageNumber, pageSize, sortField, sortOrder} = page;
 		return this.users$.pipe(
 			take(1),
 			map((users: UserInterface[]) => {
@@ -166,7 +149,7 @@ export class AuthService {
 	}
 
 	getRoleList(page?: QueryParamsModel): Observable<any> {
-		const { filter, pageNumber, pageSize, sortField, sortOrder } = page;
+		const {filter, pageNumber, pageSize, sortField, sortOrder} = page;
 		return this.roles$.pipe(
 			take(1),
 			map((roles: RoleInterface[]) => {
@@ -216,7 +199,7 @@ export class AuthService {
 	}
 
 	getPermissionList(page?: QueryParamsModel): Observable<any> {
-		const { filter, pageNumber, pageSize, sortField, sortOrder } = page;
+		const {filter, pageNumber, pageSize, sortField, sortOrder} = page;
 		return this.permissions$.pipe(
 			take(1),
 			map((permissions: PermissionInterface[]) => {
