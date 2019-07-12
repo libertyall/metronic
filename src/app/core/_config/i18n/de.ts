@@ -3,6 +3,8 @@ export const locale = {
 	lang: 'de',
 	data: {
 		actions: 'Aktionen',
+		'auth/logged-out': 'Du wurdest aus dem System ausgeloggt.',
+		'auth/not-verified': 'Du hast Deine E-Mail Adresse noch nicht bestätigt.',
 		'auth/email-already-in-use': 'Die verwendete E-Mail Adresse ist bereits in unserem System gespeichert. Nutze eine andere Adresse oder lass Dir Dein Passwort per Mail zusenden.',
 		'auth/invalid-email': 'Du hast keine gültige E-Mail Adresse eingegeben. Bitte überprüfe Deine Eingabe.',
 		'auth/reminder-sent': 'Eine E-Mail mit neuen Daten wurde versendet.',

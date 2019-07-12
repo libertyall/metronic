@@ -2,15 +2,22 @@ import {
 	acceptTerms,
 	authMessage,
 	credentialsLogin,
+	credentialsLoginSuccess,
+	facebookLoginSuccess,
 	forgotPassword,
-	getAuthUser,
+	getAuthUser, googleLoginSuccess,
 	logout,
-	register, registerSuccess,
-	sendVerificationMail, startLogin,
-	startRegister
+	logoutSuccess,
+	register,
+	registerSuccess,
+	sendVerificationMail, setAuthUser,
+	startLogin,
+	startRegister,
+	twitterLoginSuccess
 } from '../_actions/auth.actions';
 import {UserInterface} from '../_interfaces/user.interface';
 import {Action, createReducer, on} from '@ngrx/store';
+import {ROOT_EFFECTS_INIT} from "@ngrx/effects";
 
 export interface AuthState {
 	loggedIn: boolean;
@@ -29,40 +36,48 @@ export const initialState: AuthState = {
 	message: {}
 };
 
-export const authReducer = createReducer(
+export const reducer = createReducer(
 	initialState,
 
 	on(authMessage, (state, action) => {
-		console.log(action);
 		return {...state, isLoading: false, message: {code: action.code, color: action.color}};
 	}),
 
+	on(setAuthUser, (state, action) => {
+		return {...state, user: action.user, loggedIn: action.isLoggedIn};
+	}),
+
+	/**
+	 * Login & Logout
+	 */
 	on(startLogin, (state, action) => {
-		console.log(action.type);
 		return {...state, isLoading: true, message: {}};
 	}),
 
-	on(credentialsLogin, (state, action) => {
-		console.log(action.type);
+	/* on(credentialsLogin, (state, action) => {
 		return {...state};
-	}),
+	}), */
 
-	on(getAuthUser, (state, action) => {
-		console.log(action);
-		return {...state};
+	on(credentialsLoginSuccess, (state, action) => {
+		return {...state, user: action.user, loggedIn: action.isLoggedIn, isLoading: false, message: {}};
 	}),
 
 	on(logout, (state, action) => {
-		console.log(action);
 		return {...initialState};
 	}),
 
+	on(logoutSuccess, (state, action) => {
+		return {...state, message: {code: action.code, color: action.color}};
+	}),
+
+	/**
+	 * Register
+	 */
 	on(startRegister, (state, action) => {
 		return {...state, isLoading: true};
 	}),
 
 	on(acceptTerms, (state, action) => {
-		console.log(action);
 		return {...state, isLoading: false, message: {}};
 	}),
 
@@ -75,17 +90,34 @@ export const authReducer = createReducer(
 	}),
 
 	on(sendVerificationMail, (state, action) => {
-		console.log(action);
 		return {...state};
 	}),
 
+	/**
+	 * forgot Password
+	 */
 	on(forgotPassword, (state, action) => {
-		console.log(action);
 		return {...state, isLoading: true, message: {}};
-	})
+	}),
+
+	/**
+	 * social Providers
+	 */
+
+	on(facebookLoginSuccess, (state, action) => {
+		return {...state, isLoading: false, message: {}};
+	}),
+
+	on(googleLoginSuccess, (state, action) => {
+		return {...state, isLoading: false, message: {}};
+	}),
+
+	on(twitterLoginSuccess, (state, action) => {
+		return {...state, isLoading: false, message: {}};
+	}),
 
 );
 
-export function reducer(state: AuthState | undefined, action: Action): AuthState {
-	return authReducer(state, action);
+export function authReducer(state: AuthState | undefined, action: Action): AuthState {
+	return reducer(state, action);
 }

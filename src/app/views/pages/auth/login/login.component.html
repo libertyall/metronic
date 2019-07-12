@@ -18,6 +18,7 @@
 			isLoggedIn: {{isLoggedIn$ | async | json}}<br/>
 			user: {{user$ | async | json}}<br/>
 			loading: {{isLoading$ | async | json}}<br/>
+			<a *ngIf="isLoggedIn$ | async" (click)="logout()">Logout</a>
 		</div>
 
 		<kt-auth-notice></kt-auth-notice>

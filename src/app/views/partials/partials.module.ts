@@ -21,7 +21,7 @@ import { TranslateModule } from '@ngx-translate/core';
 @NgModule({
 	declarations: [
 		// ScrollTopComponent,
-		SplashScreenComponent,
+		// SplashScreenComponent,
 		/* QuickPanelComponent,
 		StickyToolbarComponent,
 
@@ -53,7 +53,7 @@ import { TranslateModule } from '@ngx-translate/core';
 	],
 	exports: [
 		// ScrollTopComponent,
-		SplashScreenComponent,
+		// SplashScreenComponent,
 		/* QuickPanelComponent,
 		StickyToolbarComponent,
 		SearchDropdownComponent,

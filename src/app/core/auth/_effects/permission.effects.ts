@@ -1,27 +1,36 @@
-import { Injectable } from '@angular/core';
-import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
-import { defer, forkJoin, Observable, of } from 'rxjs';
-import { Actions, Effect, ofType } from '@ngrx/effects';
-import { Action, Store } from '@ngrx/store';
-import { AuthService } from '../_services';
+import {Injectable} from '@angular/core';
+import {catchError, map, mergeMap, switchMap} from 'rxjs/operators';
+import {defer, forkJoin, Observable, of} from 'rxjs';
+import {Actions, Effect, ofType} from '@ngrx/effects';
+import {Action, Store} from '@ngrx/store';
 import {
-	AllPermissionsLoaded, AllPermissionsRequested, PermissionActionTypes, PermissionCreated, PermissionCreateError,
-	PermissionDeleted, PermissionOnServerCreated, PermissionsActionToggleLoading, PermissionsPageLoaded,
-	PermissionsPageRequested, PermissionsPageToggleLoading, PermissionUpdated
+	AllPermissionsLoaded,
+	AllPermissionsRequested,
+	PermissionActionTypes,
+	PermissionCreated,
+	PermissionCreateError,
+	PermissionDeleted,
+	PermissionOnServerCreated,
+	PermissionsActionToggleLoading,
+	PermissionsPageLoaded,
+	PermissionsPageRequested,
+	PermissionsPageToggleLoading,
+	PermissionUpdated
 } from '../_actions/permission.actions';
-import { AppState } from '../../reducers';
-import { QueryParamsModel, QueryResultsModel } from '../../_base/crud';
+import {AppState} from '../../reducers';
+import {QueryParamsModel, QueryResultsModel} from '../../_base/crud';
+import {UserService} from "../_services/user.service";
 
 @Injectable()
 export class PermissionEffects {
 
-	showPageLoadingDispatcher = new PermissionsPageToggleLoading({ isLoading: true });
-	showActionLoadingDispatcher = new PermissionsActionToggleLoading({ isLoading: true });
-	hideActionLoadingDispatcher = new PermissionsActionToggleLoading({ isLoading: false });
+	showPageLoadingDispatcher = new PermissionsPageToggleLoading({isLoading: true});
+	showActionLoadingDispatcher = new PermissionsActionToggleLoading({isLoading: true});
+	hideActionLoadingDispatcher = new PermissionsActionToggleLoading({isLoading: false});
 
 
 	constructor(private actions$: Actions,
-				private authService: AuthService,
+				private userService: UserService,
 				private store: Store<AppState>) {
 	}
 
@@ -29,17 +38,17 @@ export class PermissionEffects {
 	loadAllPermissions$ = this.actions$
 		.pipe(
 			ofType<AllPermissionsRequested>(PermissionActionTypes.AllPermissionsRequested),
-			mergeMap(() => this.authService.getAllPermissions()),
-			map(permissions => new AllPermissionsLoaded({ permissions }))
+			mergeMap(() => this.userService.getAllPermissions()),
+			map(permissions => new AllPermissionsLoaded({permissions}))
 		);
 
 	@Effect()
 	loadPermissionsPage$ = this.actions$
 		.pipe(
 			ofType<PermissionsPageRequested>(PermissionActionTypes.PermissionsPageRequested),
-			mergeMap(({ payload }) => {
+			mergeMap(({payload}) => {
 				this.store.dispatch(this.showPageLoadingDispatcher);
-				const requestToServer = this.authService.getPermissionList(payload.page);
+				const requestToServer = this.userService.getPermissionList(payload.page);
 				const lastQuery = of(payload.page);
 				return forkJoin([requestToServer, lastQuery]);
 			}),
@@ -58,9 +67,9 @@ export class PermissionEffects {
 	deletePermission$ = this.actions$
 		.pipe(
 			ofType<PermissionDeleted>(PermissionActionTypes.PermissionDeleted),
-			mergeMap(({ payload }) => {
+			mergeMap(({payload}) => {
 					this.store.dispatch(this.showActionLoadingDispatcher);
-					return this.authService.deletePermission(payload.id);
+					return this.userService.deletePermission(payload.id);
 				}
 			),
 			map(() => {
@@ -72,9 +81,9 @@ export class PermissionEffects {
 	updatePermission$ = this.actions$
 		.pipe(
 			ofType<PermissionUpdated>(PermissionActionTypes.PermissionUpdated),
-			mergeMap(({ payload }) => {
+			mergeMap(({payload}) => {
 				this.store.dispatch(this.showActionLoadingDispatcher);
-				return this.authService.updatePermission(payload.permission);
+				return this.userService.updatePermission(payload.permission);
 			}),
 			map(() => {
 				return this.hideActionLoadingDispatcher;
@@ -86,21 +95,21 @@ export class PermissionEffects {
 	createPermission$ = this.actions$
 		.pipe(
 			ofType<PermissionOnServerCreated>(PermissionActionTypes.PermissionOnServerCreated),
-			switchMap(({ payload }) => {
+			switchMap(({payload}) => {
 				console.log(123);
 				console.log(payload.permission);
-				return this.authService.createPermission(payload.permission).pipe(
+				return this.userService.createPermission(payload.permission).pipe(
 					map(() => {
-						console.log('test');
-						return this.store.dispatch(new PermissionCreated({ permission: payload.permission }));
-					}
-				));
+							console.log('test');
+							return this.store.dispatch(new PermissionCreated({permission: payload.permission}));
+						}
+					));
 			}),
 			map(() => {
 				return this.hideActionLoadingDispatcher;
 			}),
 			catchError((error) => {
-				this.store.dispatch(new PermissionsActionToggleLoading({ isLoading: false }));
+				this.store.dispatch(new PermissionsActionToggleLoading({isLoading: false}));
 				return of(new PermissionCreateError(error));
 			})
 		);

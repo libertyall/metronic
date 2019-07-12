@@ -1,21 +1,33 @@
 import {Injectable} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
-import {catchError, exhaustMap, map, switchMap} from 'rxjs/operators';
-import {Actions, createEffect, ofType} from '@ngrx/effects';
+import {catchError, exhaustMap, map, switchMap, tap} from 'rxjs/operators';
+import {Actions, createEffect, ofType, ROOT_EFFECTS_INIT} from '@ngrx/effects';
 import {AuthService} from '../_services';
 import {
 	acceptTerms,
+	accountNotVerified,
 	authMessage,
+	credentialsLogin,
+	credentialsLoginSuccess,
+	facebookLogin,
+	facebookLoginSuccess,
 	forgotPassword,
+	googleLogin,
+	googleLoginSuccess,
 	logout,
+	logoutSuccess,
 	register,
-	registerSuccess,
-	sendVerificationMail
+	sendVerificationMail,
+	setAuthUser,
+	twitterLogin,
+	twitterLoginSuccess
 } from '../_actions/auth.actions';
 import {of} from 'rxjs';
 import {UserService} from '../_services/user.service';
+import {UserInterface} from '../_interfaces/user.interface';
+import {Store} from '@ngrx/store';
+import {AppState} from '../../reducers';
 import UserCredential = firebase.auth.UserCredential;
-import {userCreate} from '../_actions/user.actions';
 
 @Injectable()
 export class AuthEffects {
@@ -24,6 +36,7 @@ export class AuthEffects {
 
 	constructor(private actions$: Actions,
 				private router: Router,
+				private store: Store<AppState>,
 				private userService: UserService,
 				private authService: AuthService) {
 
@@ -43,18 +56,14 @@ export class AuthEffects {
 		ofType(register),
 		exhaustMap(action => {
 			return this.authService.register(action.user).pipe(
-				map((user: UserCredential) => userCreate({ data: {userCredential: user, userData: action.user }})),
+				switchMap((user: UserCredential) => this.userService.createUser(user)),
+				switchMap((user: UserInterface) => this.userService.updateUser(user.uid, action.user)),
 				map(() => sendVerificationMail()),
 				map(() => logout()),
-				map(() => registerSuccess()),
+				map(() => authMessage({code: 'auth/register-success', color: 'success'})),
 				catchError(error => of(authMessage({code: error.code, color: 'danger'})))
 			);
 		})
-	));
-
-	registerSuccess = createEffect(() => this.actions$.pipe(
-		ofType(registerSuccess),
-		exhaustMap(action => of(authMessage({code: 'auth/register-success', color: 'success'})))
 	));
 
 	sendVerificationMail = createEffect(() => this.actions$.pipe(
@@ -62,10 +71,31 @@ export class AuthEffects {
 		exhaustMap(() => this.authService.sendVerificationMail())
 	), {dispatch: false});
 
+	credentialsLogin = createEffect(() => this.actions$.pipe(
+		ofType(credentialsLogin),
+		exhaustMap(action => {
+			return this.authService.setAuthPersistence(action.credentials.rememberMe).pipe(
+				switchMap(() => this.authService.doLoginWithCredentials({
+					email: action.credentials.email,
+					password: action.credentials.password
+				})),
+				switchMap((user: UserCredential) => this.userService.createUser(user)),
+				map((user) => credentialsLoginSuccess({user, isLoggedIn: true})),
+				catchError(error => of(authMessage({code: error.code, color: 'danger'})))
+			);
+		})
+	));
+
 	logout = createEffect(() => this.actions$.pipe(
 		ofType(logout),
-		exhaustMap(() => this.authService.logout())
-	), {dispatch: false});
+		exhaustMap(() => this.authService.logout()),
+		map(() => logoutSuccess({code: 'auth/logged-out', color: 'success'}))
+	));
+
+	accountNotVerified = createEffect(() => this.actions$.pipe(
+		ofType(accountNotVerified),
+		exhaustMap(() => of(authMessage({code: 'auth/not-verified', color: 'warning'})))
+	));
 
 	forgotPassword = createEffect(() => this.actions$.pipe(
 		ofType(forgotPassword),
@@ -75,102 +105,46 @@ export class AuthEffects {
 				catchError(error => of(authMessage({code: error.code, color: 'danger'})))
 			);
 		})
-	)); // , {dispatch: false})
+	));
 
-	/*authMessage = createEffect(() => this.actions$.pipe(
-		ofType(authMessage),
-		map((error) => console.log(error)) // of({ test: 'error' }))
-	), {dispatch: false});
+	/**
+	 * Social Logins
+	 */
+	googleLogin = createEffect(() => this.actions$.pipe(
+		ofType(googleLogin),
+		exhaustMap(action =>
+			this.authService.doGoogleLogin().pipe(
+				switchMap((user: UserCredential) => this.userService.createUser(user)),
+				map((user) => googleLoginSuccess({user})),
+				catchError(error => of(authMessage({code: error.code, color: 'danger'})))
+			))
+	));
 
-	@Effect()
-	loginWithCredentials: Observable<Action> = this.actions$.pipe(
-		ofType(AuthActionTypes.CredentialsLogin),
-		map((action: CredentialsLogin) => {
-			return {
-				email: action.email,
-				password: action.password,
-				rememberMe: (action.rememberMe) ? action.rememberMe : false
-			};
-		}),
-		exhaustMap(credentials => {
-			return from(this.authService.doLoginWithCredentials(credentials)).pipe(
-				map(() => new UserRequested()),
-				catchError(error => of(new AuthError(error)))
-			);
-		})
-	);
+	facebookLogin = createEffect(() => this.actions$.pipe(
+		ofType(facebookLogin),
+		exhaustMap(action =>
+			this.authService.doFacebookLogin().pipe(
+				switchMap((user: UserCredential) => this.userService.createUser(user)),
+				map((user) => facebookLoginSuccess({user})),
+				catchError(error => of(authMessage({code: error.code, color: 'danger'})))
+			))
+	));
 
-	@Effect({ dispatch: false })
-	saveUser$ = this.actions$.pipe(
-		ofType(AuthActionTypes.UserSave),
-		map((action: AuthActionTypes.UserSave) => action),
-		switchMap((payload: any) => this.authService.saveUser(payload.user))
-	);
+	twitterLogin = createEffect(() => this.actions$.pipe(
+		ofType(twitterLogin),
+		exhaustMap(action =>
+			this.authService.doTwitterLogin().pipe(
+				switchMap((user: UserCredential) => this.userService.createUser(user)),
+				map((user) => twitterLoginSuccess({user})),
+				catchError(error => of(authMessage({code: error.code, color: 'danger'})))
+			))
+	));
 
- @Effect()
-	 googleLogin: Observable<Action> = this.actions$.pipe(
-	 ofType(AuthActionTypes.GoogleLogin),
-	 map((action: GoogleLogin) => action.payload),
-	 exhaustMap(() => {
-	 return from(this.authServiceService.doGoogleLogin()).pipe(
-	 map(() => {
-	 return new GetUser();
-	 }),
-	 catchError(error => of(new AuthError(error)))
-	 );
-	 })
-	 );
+	init = createEffect(() => this.actions$.pipe(
+		ofType(ROOT_EFFECTS_INIT),
+		exhaustMap(() => this.authService.authUser$.pipe(
+			map((user) =>  setAuthUser({user, isLoggedIn: !!user}))
+		))
+	));
 
-	 @Effect()
-	 facebookLogin: Observable<Action> = this.actions$.pipe(
-	 ofType(AuthActionTypes.FacebookLogin),
-	 map((action: FacebookLogin) => action.payload),
-	 exhaustMap(() => {
-	 return from(this.authServiceService.doFacebookLogin()).pipe(
-	 map(() => {
-	 return new GetUser();
-	 }),
-	 catchError(error => of(new AuthError(error)))
-	 );
-	 })
-	 );
-
-	 @Effect()
-	 twitterLogin: Observable<Action> = this.actions$.pipe(
-	 ofType(AuthActionTypes.TwitterLogin),
-	 map((action: TwitterLogi) => action.payload),
-	 exhaustMap(() => {
-	 return from(this.authServiceService.doTwitterLogin()).pipe(
-	 map(() => {
-	 return new GetUser();
-	 }),
-	 catchError(error => of(new AuthError(error)))
-	 );
-	 })
-	 );
-
-	@Effect({ dispatch: false })
-	loadUser$ = this.actions$.pipe(
-		ofType<UserRequested>(AuthActionTypes.UserRequested),
-		withLatestFrom(this.store.pipe(select(isUserLoaded))),
-		filter(([action, _isUserLoaded]) => !_isUserLoaded),
-		mergeMap(([action, _isUserLoaded]) => {
-			console.log(_isUserLoaded);
-			return this.authService.getUserById(_isUserLoaded);
-			// this.authService.getUserByToken()
-		}),
-		map(_user => {
-			console.log(_user);
-			if (_user) {
-				this.store.dispatch(new UserLoaded({ user: _user }));
-			} else {
-				this.store.dispatch(new Logout());
-			}
-		})
-	);
-
-	@Effect()
-	init$: Observable<Action> = defer(() => {
-		return of(getAuthUser());
-	}); */
 }

@@ -3,6 +3,7 @@ import { Address } from './address.interface';
 import { SocialNetworks } from './social-networks.interface';
 
 export interface UserInterface extends BaseInterface {
+
 	uid?: string;
 	emailVerified?: boolean;
 	isDisabled?: boolean;
@@ -13,19 +14,19 @@ export interface UserInterface extends BaseInterface {
 	firstName?: string;
 	lastName?: string;
 	displayName?: string;
-	gender?: string;
+	// gender?: string;
 	phoneNumber?: string;
-	photoURL?: string;
+	photoUrl?: string;
 
 	assignedRoles?: [];
 	lastSignInTime?: any;
 	creationTime?: any;
 
-	isNewUser?: boolean;
-	isOnline?: boolean;
+	// isNewUser?: boolean;
+	// isOnline?: boolean;
 
-	address?: Address;
-	socialNetworks?: SocialNetworks;
+	// address?: Address;
+	// socialNetworks?: SocialNetworks;
 
 	providerId?: string;
 }

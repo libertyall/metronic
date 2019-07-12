@@ -1,26 +1,27 @@
-import { Injectable } from '@angular/core';
-import {catchError, exhaustMap, map, mergeMap} from 'rxjs/operators';
-import { forkJoin, of } from 'rxjs';
-import {Actions, createEffect, Effect, ofType} from '@ngrx/effects';
-import { Store } from '@ngrx/store';
-import { QueryParamsModel, QueryResultsModel } from '../../_base/crud';
-import { AuthService } from '../_services';
-import { AppState } from '../../reducers';
-import {
-	getUsersPage, getUsersPageError, getUsersPageSuccess, userCreate, userCreateSuccess, userDelete, userError,
-	usersActionToggleLoading, usersPageToggleLoading, userUpdate
-} from '../_actions/user.actions';
-import {authMessage, forgotPassword} from '../_actions/auth.actions';
+import {Injectable} from '@angular/core';
+import {catchError, exhaustMap} from 'rxjs/operators';
+import {of} from 'rxjs';
+import {Actions, createEffect, ofType} from '@ngrx/effects';
+import {userCreate, usersActionToggleLoading, usersPageToggleLoading} from '../_actions/user.actions';
+import {authMessage} from '../_actions/auth.actions';
 import {UserService} from '../_services/user.service';
 
 @Injectable()
 export class UserEffects {
 
-	showPageLoadingDispatcher = usersPageToggleLoading({ isLoading: true });
-	hidePageLoadingDispatcher = usersPageToggleLoading({ isLoading: false });
+	constructor(private actions$: Actions,
+				private userService: UserService) {
+	}
 
-	showActionLoadingDispatcher = usersActionToggleLoading({ isLoading: true });
-	hideActionLoadingDispatcher = usersActionToggleLoading({ isLoading: false });
+	userCreate = createEffect(() => this.actions$.pipe(
+		ofType(userCreate),
+		exhaustMap(action => {
+			console.log(action);
+			return this.userService.createUser(action.userData).pipe(
+				catchError(error => of(authMessage({code: error.code, color: 'danger'})))
+			);
+		})
+	), {dispatch: false});
 
 	/* @Effect()
 	loadUsersPage$ = this.actions$.pipe(
@@ -65,31 +66,4 @@ export class UserEffects {
 		map(() => this.hideActionLoadingDispatcher),
 		catchError((error) => of(userError(error)))
 	); */
-
-	userCreate = createEffect(() => this.actions$.pipe(
-		ofType(userCreate),
-		exhaustMap(action => {
-			return this.userService.createUser(action.data).pipe(
-				catchError(error => of(authMessage({code: error.code, color: 'danger'})))
-			);
-		})
-	), {dispatch: false});
-
-	/* @Effect()
-	createUser$ = this.actions$.pipe(
-		ofType(userCreate),
-		mergeMap(({ user }) => {
-			this.store.dispatch(this.showActionLoadingDispatcher);
-			return this.auth.createUser(user);
-		}),
-		map(res => {
-			this.store.dispatch(userCreateSuccess({ user: res }));
-			return this.hideActionLoadingDispatcher;
-		})
-	); */
-
-	constructor(private actions$: Actions,
-				private userService: UserService,
-				private store: Store<AppState>) {
-	}
 }

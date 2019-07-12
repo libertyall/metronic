@@ -40,7 +40,7 @@ import {NgxPermissionsModule} from 'ngx-permissions';
 import {GravatarService} from './core/auth/_services/gravatar.service';
 import {ApplicationService} from './modules/application/services/application.service';
 import {MetaReducer, StoreModule} from '@ngrx/store';
-import {appReducer} from './core/reducers';
+import {appReducer, AppState} from './core/reducers';
 import {EffectsModule} from '@ngrx/effects';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {entityConfig} from './store/entity-metadata';
@@ -48,10 +48,12 @@ import {DefaultDataServiceFactory, EntityDataModule, PersistenceResultHandler} f
 import {RouterState, StoreRouterConnectingModule} from '@ngrx/router-store';
 import {FirestoreDataServiceFactory} from './store/firestore/firestore-entity-collection-data.service';
 import {FirestorePersistenceResultHandler} from './store/firestore/firestore-persistence-result-handler.service';
-import {UserService} from "./core/auth/_services/user.service";
-import {AuthModule} from "./views/pages/auth/auth.module";
-import {UserEffects} from "./core/auth/_effects/user.effects";
-import {AuthEffects} from "./core/auth/_effects/auth.effects";
+import {UserService} from './core/auth/_services/user.service';
+import {AuthModule} from './views/pages/auth/auth.module';
+import {UserEffects} from './core/auth/_effects/user.effects';
+import {AuthEffects} from './core/auth/_effects/auth.effects';
+import {storeFreeze} from 'ngrx-store-freeze';
+import {authReducer} from "./core/auth/_reducers/auth.reducers";
 
 /* export function storageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
 	return storageSync<AppState>({
@@ -69,7 +71,8 @@ export function logger(reducer: any) {
 	};
 }
 
-const metaReducers: Array<MetaReducer<any, any>> = [logger]; // storageSyncReducer,
+
+export const metaReducers: MetaReducer<AppState>[] = !environment.production ? [storeFreeze] : [logger];
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	wheelSpeed: 0.5,
 	swipeEasing: true,
@@ -100,16 +103,16 @@ export function hljsLanguages(): HighlightLanguage[] {
 		AppRoutingModule,
 		// HttpClientModule,
 		NgxPermissionsModule.forRoot(),
-		PartialsModule,
-		CoreModule,
-		OverlayModule,
+		// PartialsModule,
+		// CoreModule,
+		// OverlayModule,
 		AuthModule.forRoot(),
 		AngularFireModule.initializeApp(environment.firebaseConfig),
 		AngularFirestoreModule.enablePersistence(),
 		AngularFireAuthModule,
 		TranslateModule.forRoot(),
 		MatProgressSpinnerModule,
-		InlineSVGModule.forRoot(),
+		// InlineSVGModule.forRoot(),
 		StoreModule.forRoot(appReducer, {
 			runtimeChecks: {
 				strictStateImmutability: true,
@@ -119,7 +122,7 @@ export function hljsLanguages(): HighlightLanguage[] {
 			},
 			metaReducers
 		}),
-		EffectsModule.forRoot([UserEffects, AuthEffects]),
+		EffectsModule.forRoot([AuthEffects]),
 		environment.production ? [] : StoreDevtoolsModule.instrument({
 			maxAge: 40
 		}),
@@ -131,13 +134,13 @@ export function hljsLanguages(): HighlightLanguage[] {
 	exports: [],
 	providers: [
 		ApplicationService,
-		AuthService,
+		// AuthService,
 		UserService,
-		GravatarService,
+		// GravatarService,
 		LayoutConfigService,
-		LayoutRefService,
+		// LayoutRefService,
 		// MenuConfigService,
-		UnAuthGuard,
+		// UnAuthGuard,
 		// PageConfigService,
 		// KtDialogService,
 		// DataTableService,
@@ -155,11 +158,11 @@ export function hljsLanguages(): HighlightLanguage[] {
 			useFactory: initializeConfig,
 			deps: [LayoutConfigService, ApplicationService],
 			multi: true
-		},
+		}/*,
 		{
 			provide: HIGHLIGHT_OPTIONS,
 			useValue: { languages: hljsLanguages }
-		},
+		}*/,
 		// SubheaderService,
 		// MenuHorizontalService,
 		// MenuAsideService,
@@ -168,11 +171,11 @@ export function hljsLanguages(): HighlightLanguage[] {
 		{
 			provide: FirestoreSettingsToken,
 			useValue: {}
-		},
+		}/*,
 		{
 			provide: DefaultDataServiceFactory,
 			useClass: FirestoreDataServiceFactory
-		},
+		}*/,
 		{
 			provide: PersistenceResultHandler,
 			useClass: FirestorePersistenceResultHandler

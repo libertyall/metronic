@@ -7,7 +7,7 @@ import {AuthNoticeService} from '../../../../core/auth/auth-notice/auth-notice.s
 import {AuthService} from '../../../../core/auth/_services';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../../core/reducers';
-import {forgotPassword} from '../../../../core/auth/_actions/auth.actions';
+import {forgotPassword, logout} from '../../../../core/auth/_actions/auth.actions';
 import {isLoading, selectAuthMessage} from '../../../../core/auth/_selectors/auth.selectors';
 
 @Component({
@@ -38,6 +38,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 
 	ngOnDestroy(): void {
 		this.authNoticeService.setNotice(null);
+		this.store.dispatch(logout());
 	}
 
 	initRegistrationForm() {
