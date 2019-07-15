@@ -18,6 +18,7 @@ export class EntityService implements IAutoEntityService<any> {
 	}
 
 	loadAll(entityInfo: IEntityInfo): Observable<any[]> {
+		console.log(entityInfo);
 		return this.http.get<any[]>(
 			`${environment.production}/${entityInfo.modelName}`
 		);

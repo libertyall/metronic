@@ -16,6 +16,8 @@ import { ApplicationService } from '../../../../modules/application/services/app
 import { ApplicationModel } from '../../../../modules/application/model/application.model';
 import { EntityActionOptions } from '@ngrx/data';
 import { AppState } from '../../../../app.state';
+import {CategoryModel} from '../../../../modules/category/model/category.model';
+import {CategoryDataService} from '../../../../modules/category/category.data.service';
 
 @Component({
 	selector: 'kt-login',
@@ -35,13 +37,17 @@ export class LoginComponent implements OnInit, OnDestroy {
 	private isLoading = false;
 	private applications$: Observable<any>;
 
-	constructor(private router: Router,
+	cats$: Observable<CategoryModel[]>;
+
+	constructor(private categoryService: CategoryDataService,
+				private router: Router,
 				private auth: AuthService,
 				private authNoticeService: AuthNoticeService,
 				private applicationService: ApplicationService,
 				private translate: TranslateService,
 				private store: Store<AppState>,
 				private fb: FormBuilder) {
+		this.cats$ = categoryService.getAll();
 		this.isLoggedIn$ = this.store.select(isLoggedIn);
 		this.user$ = this.store.select(currentUser);
 		this.isLoading$ = this.store.select(isLoading);
@@ -60,6 +66,11 @@ export class LoginComponent implements OnInit, OnDestroy {
 
 	ngOnInit(): void {
 		this.initLoginForm();
+		this.getCategories();
+	}
+
+	getCategories() {
+		this.categoryService.getAll().pipe(map(t => console.log(t))).subscribe();
 	}
 
 	ngOnDestroy(): void {

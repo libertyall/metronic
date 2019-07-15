@@ -3,7 +3,7 @@ import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {TranslateModule} from '@ngx-translate/core';
 import {HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {GestureConfig, MatProgressSpinnerModule} from '@angular/material';
+import {GestureConfig, MatProgressSpinnerModule, MatSnackBarModule} from '@angular/material';
 import {OverlayModule} from '@angular/cdk/overlay';
 import {PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface} from 'ngx-perfect-scrollbar';
 import {InlineSVGModule} from 'ng-inline-svg';
@@ -42,10 +42,11 @@ import {ApplicationService} from './modules/application/services/application.ser
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {UserService} from './core/auth/_services/user.service';
 import {AuthModule} from './views/pages/auth/auth.module';
-import { EntityEffects, NgrxAutoEntityModule } from '@briebug/ngrx-auto-entity';
-import { EntityService } from './shared/services/entity.service';
-import { CategoryModel } from './modules/category/model/category.model';
 import { StateModule } from './store/state.module';
+import {EntityDataModule} from '@ngrx/data';
+import {entityConfig} from './core/_config/default/entity-metadata';
+import {StoreModule} from '@ngrx/store';
+import {EffectsModule} from '@ngrx/effects';
 
 /* export function storageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
 	return storageSync<AppState>({
@@ -88,6 +89,7 @@ export function hljsLanguages(): HighlightLanguage[] {
 		AppRoutingModule,
 		HttpClientModule,
 		NgxPermissionsModule.forRoot(),
+		MatSnackBarModule,
 		// PartialsModule,
 		// CoreModule,
 		// OverlayModule,
@@ -101,12 +103,15 @@ export function hljsLanguages(): HighlightLanguage[] {
 		environment.production ? [] : StoreDevtoolsModule.instrument({
 			maxAge: 40
 		}),
-		NgrxAutoEntityModule,
+		StoreModule.forRoot({}),
+		EffectsModule.forRoot([]),
 		StateModule.forRoot(),
+		EntityDataModule.forRoot(entityConfig)
 	],
-	exports: [],
+	exports: [
+		MatSnackBarModule
+	],
 	providers: [
-		{ provide: CategoryModel, useClass: EntityService },
 		ApplicationService,
 		// AuthService,
 		UserService,

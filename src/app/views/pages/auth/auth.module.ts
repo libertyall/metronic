@@ -26,6 +26,7 @@ import {AuthEffects} from '../../../core/auth/_effects/auth.effects';
 import {usersReducer} from '../../../core/auth/_reducers/user.reducers';
 import {UserEffects} from '../../../core/auth/_effects/user.effects';
 import {SplashScreenComponent} from '../../partials/layout';
+import {EntityDataModule} from '@ngrx/data';
 
 @NgModule({
 	imports: [
@@ -41,6 +42,7 @@ import {SplashScreenComponent} from '../../partials/layout';
 		StoreModule.forFeature('users', usersReducer),
 		EffectsModule.forFeature([AuthEffects, UserEffects]),
 		// PartialsModule
+		EntityDataModule,
 		MatProgressSpinnerModule
 	],
 	providers: [
