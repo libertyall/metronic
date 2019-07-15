@@ -1,8 +1,8 @@
-import { EntityMetadataMap } from '@ngrx/data';
+import { EntityDataModuleConfig, EntityMetadataMap } from '@ngrx/data';
 
 const entityMetadata: EntityMetadataMap = {
-  application: {},
-  article: {},
+  Application: {},
+  /* article: {},
   category: {},
   club: {},
   file: {},
@@ -16,7 +16,7 @@ const entityMetadata: EntityMetadataMap = {
   sponsor: {},
   teamOfTheMonth: {},
   team: {},
-  // user: {}
+  // user: {} */
 };
 
 const pluralNames = {
@@ -25,7 +25,7 @@ const pluralNames = {
   match: 'matches'
 };
 
-export const entityConfig = {
+export const entityConfig: EntityDataModuleConfig = {
   entityMetadata,
   pluralNames
 };

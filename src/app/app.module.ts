@@ -39,21 +39,13 @@ import {UnAuthGuard} from './core/auth/_guards/unauth.guard';
 import {NgxPermissionsModule} from 'ngx-permissions';
 import {GravatarService} from './core/auth/_services/gravatar.service';
 import {ApplicationService} from './modules/application/services/application.service';
-import {MetaReducer, StoreModule} from '@ngrx/store';
-import {appReducer, AppState} from './core/reducers';
-import {EffectsModule} from '@ngrx/effects';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
-import {entityConfig} from './store/entity-metadata';
-import {DefaultDataServiceFactory, EntityDataModule, PersistenceResultHandler} from '@ngrx/data';
-import {RouterState, StoreRouterConnectingModule} from '@ngrx/router-store';
-import {FirestoreDataServiceFactory} from './store/firestore/firestore-entity-collection-data.service';
-import {FirestorePersistenceResultHandler} from './store/firestore/firestore-persistence-result-handler.service';
 import {UserService} from './core/auth/_services/user.service';
 import {AuthModule} from './views/pages/auth/auth.module';
-import {UserEffects} from './core/auth/_effects/user.effects';
-import {AuthEffects} from './core/auth/_effects/auth.effects';
-import {storeFreeze} from 'ngrx-store-freeze';
-import {authReducer} from "./core/auth/_reducers/auth.reducers";
+import { EntityEffects, NgrxAutoEntityModule } from '@briebug/ngrx-auto-entity';
+import { EntityService } from './shared/services/entity.service';
+import { CategoryModel } from './modules/category/model/category.model';
+import { StateModule } from './store/state.module';
 
 /* export function storageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
 	return storageSync<AppState>({
@@ -65,14 +57,6 @@ import {authReducer} from "./core/auth/_reducers/auth.reducers";
 	})(reducer);
 } */
 
-export function logger(reducer: any) {
-	return (state: any, action: any) => {
-		return reducer(state, action);
-	};
-}
-
-
-export const metaReducers: MetaReducer<AppState>[] = !environment.production ? [storeFreeze] : [logger];
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	wheelSpeed: 0.5,
 	swipeEasing: true,
@@ -82,6 +66,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
 export function initializeConfig(layoutConfigService: LayoutConfigService, applicationService: ApplicationService) {
 	return () => {
+		applicationService.getConfiguration(layoutConfigService).subscribe(t => console.log('loaded cfg', t));
 		return applicationService.getConfiguration(layoutConfigService).toPromise();
 	};
 }
@@ -101,7 +86,7 @@ export function hljsLanguages(): HighlightLanguage[] {
 		BrowserAnimationsModule,
 		BrowserModule,
 		AppRoutingModule,
-		// HttpClientModule,
+		HttpClientModule,
 		NgxPermissionsModule.forRoot(),
 		// PartialsModule,
 		// CoreModule,
@@ -113,26 +98,15 @@ export function hljsLanguages(): HighlightLanguage[] {
 		TranslateModule.forRoot(),
 		MatProgressSpinnerModule,
 		// InlineSVGModule.forRoot(),
-		StoreModule.forRoot(appReducer, {
-			runtimeChecks: {
-				strictStateImmutability: true,
-				strictActionImmutability: true,
-				strictStateSerializability: true,
-				strictActionSerializability: true
-			},
-			metaReducers
-		}),
-		EffectsModule.forRoot([AuthEffects]),
 		environment.production ? [] : StoreDevtoolsModule.instrument({
 			maxAge: 40
 		}),
-		// EntityDataModule.forRoot(entityConfig),
-		/*StoreRouterConnectingModule.forRoot({
-			routerState: RouterState.Minimal
-		})*/
+		NgrxAutoEntityModule,
+		StateModule.forRoot(),
 	],
 	exports: [],
 	providers: [
+		{ provide: CategoryModel, useClass: EntityService },
 		ApplicationService,
 		// AuthService,
 		UserService,
@@ -175,11 +149,15 @@ export function hljsLanguages(): HighlightLanguage[] {
 		{
 			provide: DefaultDataServiceFactory,
 			useClass: FirestoreDataServiceFactory
-		}*/,
+		}/* ,
+		{
+			provide: EntityCacheDataService,
+			useClass: FirestoreCacheDataService
+		},
 		{
 			provide: PersistenceResultHandler,
 			useClass: FirestorePersistenceResultHandler
-		}
+		}*/
 	],
 	bootstrap: [AppComponent]
 })

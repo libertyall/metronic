@@ -2,8 +2,8 @@ import { createSelector } from '@ngrx/store';
 import { each, find, some } from 'lodash';
 import { selectAllRoles } from './role.selectors';
 import { selectAllPermissions } from './permission.selectors';
-import { RoleInterface } from '../_interfaces/role.interface';
-import { PermissionInterface } from '../_interfaces/permission.interface';
+import { RoleClass } from '../_interfaces/role.interface';
+import { PermissionClass } from '../_interfaces/permission.interface';
 
 export const selectAuthState = state => {
 	return state.auth;
@@ -47,7 +47,7 @@ export const currentUserRoleIds = createSelector(
 export const currentUserPermissionsIds = createSelector(
 	currentUserRoleIds,
 	selectAllRoles,
-	(userRoleIds: string[], allRoles: RoleInterface[]) => {
+	(userRoleIds: string[], allRoles: RoleClass[]) => {
 		const result = getPermissionsIdsFrom(userRoleIds, allRoles);
 		return result;
 	}
@@ -63,8 +63,8 @@ export const checkHasUserPermission = (permissionId: string) => createSelector(
 export const currentUserPermissions = createSelector(
 	currentUserPermissionsIds,
 	selectAllPermissions,
-	(permissionIds: string[], allPermissions: PermissionInterface[]) => {
-		const result: PermissionInterface[] = [];
+	(permissionIds: string[], allPermissions: PermissionClass[]) => {
+		const result: PermissionClass[] = [];
 		each(permissionIds, id => {
 			const userPermission = find(allPermissions, elem => elem.id === id);
 			if (userPermission) {
@@ -75,17 +75,17 @@ export const currentUserPermissions = createSelector(
 	}
 );
 
-function getPermissionsIdsFrom(userRolesIds: string[] = [], allRoles: RoleInterface[] = []): string[] {
-	const userRoles: RoleInterface[] = [];
+function getPermissionsIdsFrom(userRolesIds: string[] = [], allRoles: RoleClass[] = []): string[] {
+	const userRoles: RoleClass[] = [];
 	each(userRolesIds, (_id: string) => {
-		const userRole = find(allRoles, (_role: RoleInterface) => _role.id === _id);
+		const userRole = find(allRoles, (_role: RoleClass) => _role.id === _id);
 		if (userRole) {
 			userRoles.push(userRole);
 		}
 	});
 
 	const result: string[] = [];
-	each(userRoles, (_role: RoleInterface) => {
+	each(userRoles, (_role: RoleClass) => {
 		each(_role.permissions, id => {
 			if (!some(result, _id => _id === id)) {
 				result.push(id);

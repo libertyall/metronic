@@ -3,7 +3,7 @@ import { PermissionsState } from '../_reducers/permission.reducers';
 import * as fromPermissions from '../_reducers/permission.reducers';
 import { HttpExtenstionsModel, QueryResultsModel } from '../../_base/crud';
 import { each } from 'lodash';
-import { PermissionInterface } from '../_interfaces/permission.interface';
+import { PermissionClass } from '../_interfaces/permission.interface';
 
 export const selectPermissionsState = createFeatureSelector<PermissionsState>('permissions');
 
@@ -45,7 +45,7 @@ export const selectPermissionsShowInitWaitingMessage = createSelector(
 export const selectQueryResult = createSelector(
 	selectPermissionsState,
 	permissionsState => {
-		const items: PermissionInterface[] = [];
+		const items: PermissionClass[] = [];
 		each(permissionsState.entities, element => {
 			items.push(element);
 		});

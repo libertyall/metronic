@@ -1,6 +1,6 @@
 import { select, Store } from '@ngrx/store';
 import { BaseDataSource, QueryResultsModel } from '../../_base/crud';
-import { AppState } from '../../reducers';
+import { AppState } from '../../../app.state';
 import {
 	selectQueryResult, selectRolesPageLoading, selectRolesShowInitWaitingMessage
 } from '../_selectors/role.selectors';

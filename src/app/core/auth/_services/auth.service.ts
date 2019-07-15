@@ -5,9 +5,9 @@ import {AngularFirestore} from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
 import {from, Observable, of} from 'rxjs';
 import {Store} from '@ngrx/store';
-import {AppState} from '../../reducers';
 import {switchMap} from 'rxjs/operators';
 import UserCredential = firebase.auth.UserCredential;
+import { AppState } from '../../../app.state';
 
 @Injectable()
 export class AuthService {

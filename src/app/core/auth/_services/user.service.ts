@@ -5,33 +5,33 @@ import { UserInterface } from '../_interfaces/user.interface';
 import { QueryParamsModel } from '../../_base/crud';
 import { map, take } from 'rxjs/operators';
 import UserCredential = firebase.auth.UserCredential;
-import {PermissionInterface} from '../_interfaces/permission.interface';
-import {RoleInterface} from '../_interfaces/role.interface';
+import {PermissionClass} from '../_interfaces/permission.interface';
+import {RoleClass} from '../_interfaces/role.interface';
 
 @Injectable()
 export class UserService {
 
 	private userCollectionRef: AngularFirestoreCollection<UserInterface>;
-	private roleCollectionRef: AngularFirestoreCollection<RoleInterface>;
-	private permissionCollectionRef: AngularFirestoreCollection<PermissionInterface>;
+	private roleCollectionRef: AngularFirestoreCollection<RoleClass>;
+	private permissionCollectionRef: AngularFirestoreCollection<PermissionClass>;
 
 	private userPath = `users`;
 	private rolesPath = `roles`;
 	private permissionsPath = `permissions`;
 
 	users$: Observable<UserInterface[]>;
-	roles$: Observable<RoleInterface[]>;
-	permissions$: Observable<PermissionInterface[]>;
+	roles$: Observable<RoleClass[]>;
+	permissions$: Observable<PermissionClass[]>;
 
 	constructor(private afs: AngularFirestore) {
 
 		this.userCollectionRef = this.afs.collection<UserInterface>(this.userPath);
 		this.users$ = this.userCollectionRef.valueChanges();
 
-		this.roleCollectionRef = this.afs.collection<RoleInterface>(this.rolesPath);
+		this.roleCollectionRef = this.afs.collection<RoleClass>(this.rolesPath);
 		this.roles$ = this.roleCollectionRef.valueChanges();
 
-		this.permissionCollectionRef = this.afs.collection<PermissionInterface>(this.permissionsPath);
+		this.permissionCollectionRef = this.afs.collection<PermissionClass>(this.permissionsPath);
 		this.permissions$ = this.permissionCollectionRef.valueChanges();
 	}
 
@@ -46,11 +46,11 @@ export class UserService {
 			creationTime: userCredential.user.metadata.creationTime,
 			lastSignInTime: userCredential.user.metadata.lastSignInTime,
 			photoUrl: userCredential.user.photoURL,
-			uid: userCredential.user.uid,
+			id: userCredential.user.uid,
 			phoneNumber: userCredential.user.phoneNumber,
 			assignedRoles: []
 		};
-		const userRef: AngularFirestoreDocument<UserInterface> = this.afs.doc(`/users/${ user.uid }`);
+		const userRef: AngularFirestoreDocument<UserInterface> = this.afs.doc(`/users/${ user.id }`);
 		return from(userRef.set(user, { merge: true }).then(() => user));
 	}
 
@@ -100,7 +100,7 @@ export class UserService {
 	/*
 	 Roles
 	 */
-	getAllRoles(): Observable<RoleInterface[]> {
+	getAllRoles(): Observable<RoleClass[]> {
 		return this.roles$.pipe(take(1));
 	}
 
@@ -108,7 +108,7 @@ export class UserService {
 		const {filter, pageNumber, pageSize, sortField, sortOrder} = page;
 		return this.roles$.pipe(
 			take(1),
-			map((roles: RoleInterface[]) => {
+			map((roles: RoleClass[]) => {
 				const totalItems = roles.length;
 				const filteredItems = this.searchRoleByTitle(filter, roles);
 				const sortedItems = this.sortData(filteredItems, sortField, sortOrder);
@@ -122,20 +122,20 @@ export class UserService {
 		);
 	}
 
-	createRole(role: RoleInterface): Observable<RoleInterface> {
+	createRole(role: RoleClass): Observable<RoleClass> {
 		// role.id = this.afs.createId();
-		return from(this.afs.collection<RoleInterface>(this.rolesPath).doc(role.id).set(role).then(() => role));
+		return from(this.afs.collection<RoleClass>(this.rolesPath).doc(role.id).set(role).then(() => role));
 	}
 
 	deleteRole(roleId: string): Promise<any> {
 		return this.afs.collection<UserInterface>(this.rolesPath).doc(roleId).delete();
 	}
 
-	updateRole(role: RoleInterface): Promise<void> {
+	updateRole(role: RoleClass): Promise<void> {
 		return this.afs.collection<UserInterface>(this.rolesPath).doc(role.id).update(role);
 	}
 
-	searchRoleByTitle(filter, roles: RoleInterface[]) {
+	searchRoleByTitle(filter, roles: RoleClass[]) {
 		return filter && filter.title ? roles.filter(role => {
 			return role.title.indexOf(filter.title.toLowerCase()) > -1;
 		}) : roles;
@@ -152,7 +152,7 @@ export class UserService {
 		const {filter, pageNumber, pageSize, sortField, sortOrder} = page;
 		return this.permissions$.pipe(
 			take(1),
-			map((permissions: PermissionInterface[]) => {
+			map((permissions: PermissionClass[]) => {
 				const totalItems = permissions.length;
 				const filteredItems = this.searchPermissionByTitle(filter, permissions);
 				const sortedItems = this.sortData(filteredItems, sortField, sortOrder);
@@ -166,20 +166,20 @@ export class UserService {
 		);
 	}
 
-	createPermission(permission: PermissionInterface): Observable<PermissionInterface> {
+	createPermission(permission: PermissionClass): Observable<PermissionClass> {
 		permission.id = this.afs.createId();
-		return from(this.afs.collection<PermissionInterface>(this.permissionsPath).doc(permission.id).set(permission).then(() => permission));
+		return from(this.afs.collection<PermissionClass>(this.permissionsPath).doc(permission.id).set(permission).then(() => permission));
 	}
 
 	deletePermission(permissionId: string): Promise<any> {
 		return this.afs.collection<UserInterface>(this.permissionsPath).doc(permissionId).delete();
 	}
 
-	updatePermission(permission: PermissionInterface): Promise<void> {
+	updatePermission(permission: PermissionClass): Promise<void> {
 		return this.afs.collection<UserInterface>(this.permissionsPath).doc(permission.id).update(permission);
 	}
 
-	searchPermissionByTitle(filter, permissions: PermissionInterface[]) {
+	searchPermissionByTitle(filter, permissions: PermissionClass[]) {
 		return filter && filter.title ? permissions.filter(permission => {
 			return permission.title.indexOf(filter.title.toLowerCase()) > -1;
 		}) : permissions;

@@ -4,10 +4,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 // NGRX
 import { select, Store } from '@ngrx/store';
-import { AppState } from '../../../../../core/reducers';
 import { currentUser } from '../../../../../core/auth/_selectors/auth.selectors';
 import { logout } from '../../../../../core/auth/_actions/auth.actions';
 import { UserInterface } from '../../../../../core/auth/_interfaces/user.interface';
+import { AppState } from '../../../../../app.state';
 
 @Component({
 	selector: 'kt-user-profile3',

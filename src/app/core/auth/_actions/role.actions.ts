@@ -1,7 +1,7 @@
 import { Action } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
 import { QueryParamsModel } from '../../_base/crud';
-import { RoleInterface } from '../_interfaces/role.interface';
+import { RoleClass } from '../_interfaces/role.interface';
 
 export enum RoleActionTypes {
     AllRolesRequested = '[Roles Home Page] All Roles Requested',
@@ -19,19 +19,19 @@ export enum RoleActionTypes {
 
 export class RoleOnServerCreated implements Action {
     readonly type = RoleActionTypes.RoleOnServerCreated;
-    constructor(public payload: { role: RoleInterface }) { }
+    constructor(public payload: { role: RoleClass }) { }
 }
 
 export class RoleCreated implements Action {
     readonly type = RoleActionTypes.RoleCreated;
-    constructor(public payload: { role: RoleInterface }) { }
+    constructor(public payload: { role: RoleClass }) { }
 }
 
 export class RoleUpdated implements Action {
     readonly type = RoleActionTypes.RoleUpdated;
     constructor(public payload: {
-        partialrole: Update<RoleInterface>,
-        role: RoleInterface
+        partialrole: Update<RoleClass>,
+        role: RoleClass
     }) { }
 }
 
@@ -47,7 +47,7 @@ export class RolesPageRequested implements Action {
 
 export class RolesPageLoaded implements Action {
     readonly type = RoleActionTypes.RolesPageLoaded;
-    constructor(public payload: { roles: RoleInterface[], totalCount: number, page: QueryParamsModel }) { }
+    constructor(public payload: { roles: RoleClass[], totalCount: number, page: QueryParamsModel }) { }
 }
 
 export class RolesPageCancelled implements Action {
@@ -60,7 +60,7 @@ export class AllRolesRequested implements Action {
 
 export class AllRolesLoaded implements Action {
     readonly type = RoleActionTypes.AllRolesLoaded;
-    constructor(public payload: { roles: RoleInterface[] }) { }
+    constructor(public payload: { roles: RoleClass[] }) { }
 }
 
 export class RolesPageToggleLoading implements Action {

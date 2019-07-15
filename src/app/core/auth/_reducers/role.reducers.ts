@@ -1,13 +1,13 @@
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { QueryParamsModel } from '../../_base/crud';
 import { RoleActions, RoleActionTypes } from '../_actions/role.actions';
-import { RoleInterface } from '../_interfaces/role.interface';
+import { RoleClass } from '../_interfaces/role.interface';
 import { UserInterface } from '../_interfaces/user.interface';
 
-export interface RolesState extends EntityState<RoleInterface> {
+export interface RolesState extends EntityState<RoleClass> {
     isAllRolesLoaded: boolean;
     queryRowsCount: number;
-    queryResult: RoleInterface[];
+    queryResult: RoleClass[];
     lastCreatedRoleId: string;
     listLoading: boolean;
     actionsLoading: boolean;
@@ -15,7 +15,7 @@ export interface RolesState extends EntityState<RoleInterface> {
     showInitWaitingMessage: boolean;
 }
 
-export const adapter: EntityAdapter<RoleInterface> = createEntityAdapter<RoleInterface>();
+export const adapter: EntityAdapter<RoleClass> = createEntityAdapter<RoleClass>();
 
 export const initialRolesState: RolesState = adapter.getInitialState({
     isAllRolesLoaded: false,

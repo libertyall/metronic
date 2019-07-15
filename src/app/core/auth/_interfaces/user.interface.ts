@@ -1,10 +1,7 @@
-import { BaseInterface } from '../../_base/crud';
-import { Address } from './address.interface';
-import { SocialNetworks } from './social-networks.interface';
+import { BaseModel } from '../../_base/crud';
 
-export interface UserInterface extends BaseInterface {
+export class UserInterface extends BaseModel {
 
-	uid?: string;
 	emailVerified?: boolean;
 	isDisabled?: boolean;
 

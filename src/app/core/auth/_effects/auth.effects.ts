@@ -26,7 +26,7 @@ import {of} from 'rxjs';
 import {UserService} from '../_services/user.service';
 import {UserInterface} from '../_interfaces/user.interface';
 import {Store} from '@ngrx/store';
-import {AppState} from '../../reducers';
+import { AppState } from '../../../app.state';
 import UserCredential = firebase.auth.UserCredential;
 
 @Injectable()
@@ -57,19 +57,22 @@ export class AuthEffects {
 		exhaustMap(action => {
 			return this.authService.register(action.user).pipe(
 				switchMap((user: UserCredential) => this.userService.createUser(user)),
-				switchMap((user: UserInterface) => this.userService.updateUser(user.uid, action.user)),
+				switchMap((user: UserInterface) => this.userService.updateUser(user.id, action.user)),
 				map(() => sendVerificationMail()),
 				map(() => logout()),
 				map(() => authMessage({code: 'auth/register-success', color: 'success'})),
 				catchError(error => of(authMessage({code: error.code, color: 'danger'})))
 			);
-		})
+		}),
+		catchError(error => of(authMessage({code: error.code, color: 'danger'})))
 	));
 
 	sendVerificationMail = createEffect(() => this.actions$.pipe(
 		ofType(sendVerificationMail),
-		exhaustMap(() => this.authService.sendVerificationMail())
-	), {dispatch: false});
+		exhaustMap(action => this.authService.sendVerificationMail().pipe(
+			map(() => authMessage({code: 'send-verification', color: 'success'}))
+		))
+	));
 
 	credentialsLogin = createEffect(() => this.actions$.pipe(
 		ofType(credentialsLogin),
@@ -80,10 +83,10 @@ export class AuthEffects {
 					password: action.credentials.password
 				})),
 				switchMap((user: UserCredential) => this.userService.createUser(user)),
-				map((user) => credentialsLoginSuccess({user, isLoggedIn: true})),
-				catchError(error => of(authMessage({code: error.code, color: 'danger'})))
+				map((user) => credentialsLoginSuccess({user, isLoggedIn: true}))
 			);
-		})
+		}),
+		catchError(error => of(authMessage({code: error.code, color: 'danger'})))
 	));
 
 	logout = createEffect(() => this.actions$.pipe(
@@ -94,7 +97,7 @@ export class AuthEffects {
 
 	accountNotVerified = createEffect(() => this.actions$.pipe(
 		ofType(accountNotVerified),
-		exhaustMap(() => of(authMessage({code: 'auth/not-verified', color: 'warning'})))
+		map(() => authMessage({code: 'auth/not-verified', color: 'warning'}))
 	));
 
 	forgotPassword = createEffect(() => this.actions$.pipe(

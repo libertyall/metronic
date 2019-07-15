@@ -1,15 +1,15 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import * as objectPath from 'object-path';
-import { PermissionInterface } from '../../../../core/auth/_interfaces/permission.interface';
+import { PermissionClass } from '../../../../core/auth/_interfaces/permission.interface';
 import { LayoutConfigService, MenuConfigService, PageConfigService } from '../../../../core/_base/layout';
 import { HtmlClassService } from '../html-class.service';
-import { AppState } from '../../../../core/reducers';
 import { select, Store } from '@ngrx/store';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { MenuConfig } from '../../../../core/_config/default/menu.config';
 import { PageConfig } from '../../../../core/_config/default/page.config';
 import { currentUserPermissions } from '../../../../core/auth/_selectors/auth.selectors';
+import { AppState } from '../../../../app.state';
 
 @Component({
 	selector: 'kt-base',
@@ -28,7 +28,7 @@ export class BaseComponent implements OnInit, OnDestroy {
 
 
 	private unsubscribe: Subscription[] = [];
-	private currentUserPermissions$: Observable<PermissionInterface[]>;
+	private currentUserPermissions$: Observable<PermissionClass[]>;
 
 	constructor(private layoutConfigService: LayoutConfigService,
 				private menuConfigService: MenuConfigService,
@@ -81,8 +81,9 @@ export class BaseComponent implements OnInit, OnDestroy {
 			}
 
 			this.permissionsService.flushPermissions();
-			res.forEach((pm: PermissionInterface) => this.permissionsService.addPermission(pm.name));
+			res.forEach((pm: PermissionClass) => this.permissionsService.addPermission(pm.name));
 		});
 		this.unsubscribe.push(subscription);
 	}
+
 }

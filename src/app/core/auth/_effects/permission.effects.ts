@@ -17,9 +17,9 @@ import {
 	PermissionsPageToggleLoading,
 	PermissionUpdated
 } from '../_actions/permission.actions';
-import {AppState} from '../../reducers';
+import { AppState } from '../../../app.state';
 import {QueryParamsModel, QueryResultsModel} from '../../_base/crud';
-import {UserService} from "../_services/user.service";
+import {UserService} from '../_services/user.service';
 
 @Injectable()
 export class PermissionEffects {

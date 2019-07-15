@@ -1,11 +1,11 @@
-import { BaseInterface } from '../../_base/crud';
+import { BaseModel } from '../../_base/crud';
 
-export interface PermissionInterface extends BaseInterface {
+export interface PermissionClass extends BaseModel {
     id: string;
     title: string;
     level: number;
     parentId: string;
     isSelected:  boolean;
     name: string;
-    _children: PermissionInterface[];
+    _children: PermissionClass[];
 }

@@ -1,20 +1,18 @@
-import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
-import {AngularFirestore} from '@angular/fire/firestore';
-import {map, take} from 'rxjs/operators';
-import {LayoutConfigService} from '../../../core/_base/layout';
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { map, take } from 'rxjs/operators';
+import { LayoutConfigService } from '../../../core/_base/layout';
 import * as _ from 'lodash';
-import { ApplicationInterface } from '../_interfaces/application.interface';
 import { LayoutConfig } from '../../../core/_config/default/layout.config';
+import { ApplicationModel } from '../model/application.model';
 
 
 @Injectable()
 export class ApplicationService {
 
 	private path = `applications`;
-
-	public currentApplication$: Observable<ApplicationInterface>;
-
+	public currentApplication$: Observable<ApplicationModel>;
 	public applicationConfig: {
 		id?: string;
 		isCurrentApplication?: boolean,
@@ -24,13 +22,13 @@ export class ApplicationService {
 	constructor(private afs: AngularFirestore) {
 	}
 
-	getCurrentApplication(): Observable<ApplicationInterface> {
+	getCurrentApplication(): Observable<ApplicationModel> {
 		if (!this.currentApplication$) {
-			this.currentApplication$ = this.afs.collection<ApplicationInterface>(this.path, ref =>
+			this.currentApplication$ = this.afs.collection<ApplicationModel>(this.path, ref =>
 				ref.where('isCurrentApplication', '==', true)
 			).valueChanges().pipe(
-				map((applications: ApplicationInterface[]) => {
-					return applications.find((app: ApplicationInterface) => {
+				map((applications: ApplicationModel[]) => {
+					return applications.find((app: ApplicationModel) => {
 						return app.isCurrentApplication;
 					});
 				})
@@ -47,10 +45,10 @@ export class ApplicationService {
 		if (_.isEmpty(this.applicationConfig)) {
 			return this.getCurrentApplication().pipe(
 				take(1),
-				map((app: ApplicationInterface) => {
+				map((app: ApplicationModel) => {
 						const defaultConfig = new LayoutConfig().configs;
 						layoutConfigService.loadConfigs(defaultConfig);
-						this.applicationConfig = {...this.applicationConfig, ...defaultConfig, ...app};
+						this.applicationConfig = { ...this.applicationConfig, ...defaultConfig, ...app };
 						return this.applicationConfig;
 					}
 				));
@@ -60,7 +58,7 @@ export class ApplicationService {
 
 	}
 
-	createApplication(application: ApplicationInterface): Promise<ApplicationInterface> {
+	createApplication(application: ApplicationModel): Promise<ApplicationModel> {
 		application.id = this.afs.createId();
 		return this.afs.collection(this.path).doc(application.id).set(application).then(
 			() => {
@@ -69,7 +67,7 @@ export class ApplicationService {
 		);
 	}
 
-	updateApplication(application: ApplicationInterface): Promise<any> {
+	updateApplication(application: ApplicationModel): Promise<any> {
 		return this.afs.collection(this.path).doc(application.id).update(application);
 	}
 

@@ -20,7 +20,7 @@ export const googleLoginSuccess = createAction('[AUTH]: Google Login successful'
 export const twitterLoginSuccess = createAction('[AUTH]: Twitter Login successful', props<{ user: any }>());
 
 export const logout = createAction('[AUTH]: Logout');
-export const logoutSuccess = createAction('[AUTH]: Logout successfull', props<{ code: string, color: string }>());
+export const logoutSuccess = createAction('[AUTH]: Logout successful', props<{ code: string, color: string }>());
 
 export const startRegister = createAction('[AUTH]: Start Registration Process');
 export const acceptTerms = createAction('[AUTH]: Accept Terms & Conditions');

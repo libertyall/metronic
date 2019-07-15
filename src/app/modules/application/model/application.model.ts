@@ -1,6 +1,6 @@
-import { BaseInterface } from '../../../core/_base/crud';
+import { BaseModel } from '../../../core/_base/crud';
 
-export interface ApplicationInterface extends BaseInterface{
+export class ApplicationModel extends BaseModel {
 	// id?: string;
 
 	// assignedCalendars?: IGoogleCalendar[];

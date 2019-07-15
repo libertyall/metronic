@@ -3,10 +3,10 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from
 import { Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { select, Store } from '@ngrx/store';
-import { AppState } from '../../reducers';
+import { AppState } from '../../../app.state';
 import { find } from 'lodash';
 import { currentUserPermissions } from '../_selectors/auth.selectors';
-import { PermissionInterface } from '../_interfaces/permission.interface';
+import { PermissionClass } from '../_interfaces/permission.interface';
 
 @Injectable()
 export class ModuleGuard implements CanActivate {
@@ -23,8 +23,8 @@ export class ModuleGuard implements CanActivate {
 		return this.store
 			.pipe(
 				select(currentUserPermissions),
-				map((permissions: PermissionInterface[]) => {
-					const _perm = find(permissions, (elem: PermissionInterface) => {
+				map((permissions: PermissionClass[]) => {
+					const _perm = find(permissions, (elem: PermissionClass) => {
 						return elem.title.toLocaleLowerCase() === moduleName.toLocaleLowerCase();
 					});
 					return !!_perm;

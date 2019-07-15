@@ -1,7 +1,7 @@
 import { Action } from '@ngrx/store';
 import { QueryParamsModel } from '../../_base/crud';
 import { UserInterface } from '../_interfaces/user.interface';
-import { PermissionInterface } from '../_interfaces/permission.interface';
+import { PermissionClass } from '../_interfaces/permission.interface';
 
 export enum PermissionActionTypes {
 	AllPermissionsRequested        = '[Init] All Permissions Requested',
@@ -21,7 +21,7 @@ export enum PermissionActionTypes {
 export class PermissionOnServerCreated implements Action {
 	readonly type = PermissionActionTypes.PermissionOnServerCreated;
 
-	constructor(public payload: { permission: PermissionInterface }) {
+	constructor(public payload: { permission: PermissionClass }) {
 		console.log(payload);
 	}
 }
@@ -36,14 +36,14 @@ export class PermissionCreateError implements Action {
 export class PermissionCreated implements Action {
 	readonly type = PermissionActionTypes.PermissionCreated;
 
-	constructor(public payload: { permission: PermissionInterface }) {
+	constructor(public payload: { permission: PermissionClass }) {
 	}
 }
 
 export class PermissionUpdated implements Action {
 	readonly type = PermissionActionTypes.PermissionUpdated;
 
-	constructor(public payload: { permission: PermissionInterface }) {
+	constructor(public payload: { permission: PermissionClass }) {
 	}
 }
 
@@ -64,7 +64,7 @@ export class PermissionsPageRequested implements Action {
 export class PermissionsPageLoaded implements Action {
 	readonly type = PermissionActionTypes.PermissionsPageLoaded;
 
-	constructor(public payload: { permissions: PermissionInterface[], totalCount: number, page: QueryParamsModel }) {
+	constructor(public payload: { permissions: PermissionClass[], totalCount: number, page: QueryParamsModel }) {
 	}
 }
 
@@ -82,7 +82,7 @@ export class AllPermissionsRequested implements Action {
 export class AllPermissionsLoaded implements Action {
 	readonly type = PermissionActionTypes.AllPermissionsLoaded;
 
-	constructor(public payload: { permissions: PermissionInterface[] }) {
+	constructor(public payload: { permissions: PermissionClass[] }) {
 	}
 }
 

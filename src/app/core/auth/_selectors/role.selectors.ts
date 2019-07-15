@@ -3,7 +3,7 @@ import { QueryResultsModel, HttpExtenstionsModel } from '../../_base/crud';
 import { RolesState } from '../_reducers/role.reducers';
 import * as fromRole from '../_reducers/role.reducers';
 import { each } from 'lodash';
-import { RoleInterface } from '../_interfaces/role.interface';
+import { RoleClass } from '../_interfaces/role.interface';
 
 export const selectRolesState = createFeatureSelector<RolesState>('roles');
 
@@ -52,12 +52,12 @@ export const selectRolesShowInitWaitingMessage = createSelector(
 export const selectQueryResult = createSelector(
     selectRolesState,
     rolesState => {
-        const items: RoleInterface[] = [];
+        const items: RoleClass[] = [];
         each(rolesState.entities, element => {
             items.push(element);
         });
         const httpExtension = new HttpExtenstionsModel();
-        const result: RoleInterface[] = httpExtension.sortArray(items, rolesState.lastQuery.sortField, rolesState.lastQuery.sortOrder);
+        const result: RoleClass[] = httpExtension.sortArray(items, rolesState.lastQuery.sortField, rolesState.lastQuery.sortOrder);
 
         return new QueryResultsModel(rolesState.queryResult, rolesState.queryRowsCount);
     }

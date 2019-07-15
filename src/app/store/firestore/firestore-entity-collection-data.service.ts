@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import {
 	AngularFirestore, AngularFirestoreCollection, DocumentChangeAction, DocumentReference
 } from '@angular/fire/firestore';
-import { from as observableFrom, Observable } from 'rxjs';
+import { from, Observable, of } from 'rxjs';
 import { EntityCollectionDataService, QueryParams } from '@ngrx/data';
-import { map, mergeMap } from 'rxjs/operators';
+import { catchError, map, mergeMap } from 'rxjs/operators';
 import { Update } from '@ngrx/entity';
 
 @Injectable()
@@ -14,29 +14,30 @@ export class FirestoreEntityCollectionDataService<T> implements EntityCollection
 	}
 
 	public get name() {
+		console.log(this.collection.ref);
 		return this.collection.ref.path;
 	}
 
 	add(entity: T): Observable<T> {
 		entity['id'] = this.afs.createId();
-		return observableFrom(this.collection.add(entity)).pipe(
-			mergeMap((doc: DocumentReference) => this.getById(doc.id))
-		);
+		return from(this.afs.collection<T>(this.name).doc(entity['id']).set(entity)).pipe(mergeMap(() => this.getById(entity['id'])));
+		// const entityWithId = Object.assign({id: this.afs.createId()}, entity);
+		// return from(this.collection.doc(entityWithId.id).set(entityWithId)).pipe(mergeMap(() =>
+		// this.getById(entityWithId.id)));
 	}
 
 	delete(key: number | string): Observable<number | string> {
-		return observableFrom(this.collection.doc('' + key).delete())
-			.pipe(
-				map(() => key)
-			);
+		return from(this.collection.doc('' + key).delete()).pipe(map(() => key));
 	}
 
 	getAll(): Observable<DocumentChangeAction<T>[]> {
-		return this.collection.stateChanges();
+		console.log(this.name);
+		this.afs.collection<T>(this.name).stateChanges().subscribe(t => console.log(t));
+		return this.afs.collection<T>(this.name).stateChanges();
 	}
 
-	getById(key: number | string): Observable<T> {
-		return this.collection.doc<T>('' + key).valueChanges();
+	getById(key: string): Observable<T> {
+		return this.collection.doc<T>(key).valueChanges();
 	}
 
 	getWithQuery(queryParams: QueryParams | string): Observable<T[]> {
@@ -47,7 +48,7 @@ export class FirestoreEntityCollectionDataService<T> implements EntityCollection
 		const id = String(update.id);
 		const updateDoc = this.collection.doc(id);
 
-		return observableFrom(
+		return from(
 			updateDoc.update(update.changes)
 		).pipe(mergeMap(() => <Observable<T>>updateDoc.valueChanges()));
 	}
@@ -64,17 +65,13 @@ export class FirestoreEntityCollectionDataService<T> implements EntityCollection
  */
 @Injectable()
 export class FirestoreDataServiceFactory {
-	constructor(
-		protected firestore: AngularFirestore
-	) {
+
+	constructor(protected firestore: AngularFirestore) {
 
 	}
 
-	/**
-	 * Create a default {EntityCollectionDataService} for the given entity type
-	 * @param entityName Name of the entity type for this data service
-	 */
 	create<T>(entityName: string): EntityCollectionDataService<T | DocumentChangeAction<T>> {
+		console.log(entityName);
 		return new FirestoreEntityCollectionDataService<T>(this.firestore.collection(entityName.toLowerCase()), this.firestore);
 	}
 }

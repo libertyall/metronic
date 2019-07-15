@@ -12,7 +12,7 @@ import { locale as frLang } from './core/_config/i18n/fr';
 import { Title } from '@angular/platform-browser';
 import * as objectPath from 'object-path';
 import { Store } from '@ngrx/store';
-import { AppState } from './core/reducers';
+import { AppState } from './app.state';
 
 @Component({
 	// tslint:disable-next-line:component-selector

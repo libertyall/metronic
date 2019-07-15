@@ -7,14 +7,14 @@ import { HttpExtenstionsModel } from './http-extentsions-model';
 import { QueryParamsModel } from './query-models/query-params.model';
 import { QueryResultsModel } from './query-models/query-results.model';
 import { skip, distinctUntilChanged } from 'rxjs/operators';
-import { BaseInterface } from './base.interface';
+import { BaseModel } from './base.model';
 
 // Why not use MatTableDataSource?
 /*  In this example, we will not be using the built-in MatTableDataSource because its designed for filtering,
 	sorting and pagination of a client - side data array.
 	Read the article: 'https://blog.angular-university.io/angular-material-data-table/'
 **/
-export class BaseDataSource implements DataSource<BaseInterface> {
+export class BaseDataSource implements DataSource<BaseModel> {
 	entitySubject = new BehaviorSubject<any[]>([]);
 	hasItems: boolean = true;
 

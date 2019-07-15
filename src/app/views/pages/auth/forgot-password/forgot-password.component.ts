@@ -1,14 +1,14 @@
-import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
-import {Observable, Subject} from 'rxjs';
-import {TranslateService} from '@ngx-translate/core';
-import {AuthNoticeService} from '../../../../core/auth/auth-notice/auth-notice.service';
-import {AuthService} from '../../../../core/auth/_services';
-import {Store} from '@ngrx/store';
-import {AppState} from '../../../../core/reducers';
-import {forgotPassword, logout} from '../../../../core/auth/_actions/auth.actions';
-import {isLoading, selectAuthMessage} from '../../../../core/auth/_selectors/auth.selectors';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
+import { AuthNoticeService } from '../../../../core/auth/auth-notice/auth-notice.service';
+import { AuthService } from '../../../../core/auth/_services';
+import { Store } from '@ngrx/store';
+import { forgotPassword, logout } from '../../../../core/auth/_actions/auth.actions';
+import { isLoading, selectAuthMessage } from '../../../../core/auth/_selectors/auth.selectors';
+import { AppState } from '../../../../app.state';
 
 @Component({
 	selector: 'kt-forgot-password',
@@ -43,12 +43,13 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 
 	initRegistrationForm() {
 		this.forgotPasswordForm = this.fb.group({
-			email: ['', Validators.compose([
-				Validators.required,
-				Validators.email,
-				Validators.minLength(this.length6),
-				Validators.maxLength(this.length320)
-			])
+			email: [
+				'', Validators.compose([
+					Validators.required,
+					Validators.email,
+					Validators.minLength(this.length6),
+					Validators.maxLength(this.length320)
+				])
 			]
 		});
 	}
@@ -62,7 +63,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 			return;
 		}
 		const email = controls['email'].value;
-		this.store.dispatch(forgotPassword({email}));
+		this.store.dispatch(forgotPassword({ email }));
 	}
 
 	isControlHasError(controlName: string, validationType: string): boolean {

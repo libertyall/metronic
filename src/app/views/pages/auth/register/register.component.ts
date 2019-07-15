@@ -3,7 +3,6 @@ import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TranslateService} from '@ngx-translate/core';
 import {Store} from '@ngrx/store';
-import {AppState} from '../../../../core/reducers';
 import {Observable, Subject} from 'rxjs';
 import {ConfirmPasswordValidator} from './confirm-password.validator';
 import {AuthNoticeService} from '../../../../core/auth/auth-notice/auth-notice.service';
@@ -11,6 +10,7 @@ import {AuthService} from '../../../../core/auth/_services';
 import {UserInterface} from '../../../../core/auth/_interfaces/user.interface';
 import {acceptTerms, register, startRegister} from '../../../../core/auth/_actions/auth.actions';
 import {isLoading, selectAuthMessage} from '../../../../core/auth/_selectors/auth.selectors';
+import { AppState } from '../../../../app.state';
 
 @Component({
 	selector: 'kt-register',

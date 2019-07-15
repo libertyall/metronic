@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../../../core/reducers';
 import { UserInterface } from '../../../../../core/auth/_interfaces/user.interface';
 import { logout } from '../../../../../core/auth/_actions/auth.actions';
 import { Router } from '@angular/router';
 import { AuthNoticeService } from '../../../../../core/auth/auth-notice/auth-notice.service';
 import { TranslateService } from '@ngx-translate/core';
+import { AppState } from '../../../../../app.state';
 
 @Component({
 	selector: 'kt-user-profile',
