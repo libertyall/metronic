@@ -1,12 +1,12 @@
 import { buildState, IEntityState } from '@briebug/ngrx-auto-entity';
-import { CategoryModel } from './model/category.model';
+import { Category } from './model/category.model';
 
-export const { initialState, selectors, facade: CategoryFacadeBase } = buildState(CategoryModel);
+export const { initialState, selectors, facade: CategoryFacadeBase } = buildState(Category);
 
 export const {
 				 selectAll: allCategories
 			 } = selectors;
 
-export function categoryReducer(state = initialState): IEntityState<CategoryModel> {
+export function categoryReducer(state = initialState): IEntityState<Category> {
 	return state;
 }

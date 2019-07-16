@@ -17,28 +17,31 @@ import { ErrorComponent } from './content/general/error/error.component';
 import { RouterModule } from '@angular/router';
 import { ActionNotificationComponent, AlertComponent, DeleteEntityDialogComponent } from './content/crud';
 import { TranslateModule } from '@ngx-translate/core';
+import {Subheader4Component} from './layout/subheader/subheader4/subheader4.component';
+import {Subheader5Component} from './layout/subheader/subheader5/subheader5.component';
 
 @NgModule({
 	declarations: [
-		// ScrollTopComponent,
-		// SplashScreenComponent,
-		/* QuickPanelComponent,
+		QuickPanelComponent,
 		StickyToolbarComponent,
-
+		ScrollTopComponent,
+		// SplashScreenComponent,
 		// topbar components
 		SearchDropdownComponent,
-		SearchResultComponent,
-		QuickActionComponent,
-		NotificationComponent,
-		CartComponent,
-		LanguageSelectorComponent,
-		UserProfileComponent,
 		Subheader1Component,
 		Subheader2Component,
 		Subheader3Component,
+		Subheader4Component,
+		Subheader5Component,
+		SearchResultComponent,
+		NotificationComponent,
+		QuickActionComponent,
+		// CartComponent,
+		LanguageSelectorComponent,
+		UserProfileComponent,
 		ErrorComponent,
 
-		AlertComponent,
+		/* AlertComponent,
 		ActionNotificationComponent,
 		DeleteEntityDialogComponent
 		/* NoticeComponent,
@@ -52,22 +55,25 @@ import { TranslateModule } from '@ngx-translate/core';
 		 UserProfile2Component, */
 	],
 	exports: [
+		QuickPanelComponent,
+		ScrollTopComponent,
 		// ScrollTopComponent,
 		// SplashScreenComponent,
-		/* QuickPanelComponent,
-		StickyToolbarComponent,
+		// StickyToolbarComponent,
 		SearchDropdownComponent,
-		SearchResultComponent,
-		QuickActionComponent,
-		NotificationComponent,
-		CartComponent,
-		LanguageSelectorComponent,
-		UserProfileComponent,
 		Subheader1Component,
 		Subheader2Component,
 		Subheader3Component,
+		Subheader4Component,
+		Subheader5Component,
+		SearchResultComponent,
+		NotificationComponent,
+		QuickActionComponent,
+		// CartComponent,
+		LanguageSelectorComponent,
+		UserProfileComponent,
 		ErrorComponent,
-		DeleteEntityDialogComponent,
+		/* DeleteEntityDialogComponent,
 		AlertComponent
 		/*WidgetModule,
 		 PortletModule,
@@ -85,18 +91,18 @@ import { TranslateModule } from '@ngx-translate/core';
 	imports: [
 		CommonModule,
 		CoreModule,
-		MatProgressBarModule,
-		MatProgressSpinnerModule,
 		NgbModule,
 		PerfectScrollbarModule,
 		InlineSVGModule,
-		// Suheader-Includes
+		TranslateModule.forChild(),
 		RouterModule,
+		/* MatProgressBarModule,
+		MatProgressSpinnerModule,
+		// Suheader-Includes
 		MatButtonModule,
 		MatDialogModule,
 		MatIconModule,
 		MatSnackBarModule,
-		TranslateModule.forChild()
 		/* FormsModule,
 		 ReactiveFormsModule,
 		 PortletModule,

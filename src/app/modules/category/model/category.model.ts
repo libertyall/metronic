@@ -1,6 +1,6 @@
 import { BaseModel } from '../../../core/_base/crud';
 
-export class CategoryModel extends BaseModel {
+export class Category extends BaseModel {
 
 	// assignedCalendars?: IGoogleCalendar[];
 

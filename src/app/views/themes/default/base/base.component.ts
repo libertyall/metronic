@@ -37,7 +37,7 @@ export class BaseComponent implements OnInit, OnDestroy {
 				private store: Store<AppState>,
 				private permissionsService: NgxPermissionsService) {
 
-		this.loadRolesWithPermissions();
+		// this.loadRolesWithPermissions();
 
 		this.menuConfigService.loadConfigs(new MenuConfig().configs);
 		this.pageConfigService.loadConfigs(new PageConfig().configs);

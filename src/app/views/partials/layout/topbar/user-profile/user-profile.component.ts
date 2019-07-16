@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { UserInterface } from '../../../../../core/auth/_interfaces/user.interface';
-import { logout } from '../../../../../core/auth/_actions/auth.actions';
+import {getAuthUser, logout} from '../../../../../core/auth/_actions/auth.actions';
 import { Router } from '@angular/router';
 import { AuthNoticeService } from '../../../../../core/auth/auth-notice/auth-notice.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AppState } from '../../../../../app.state';
+import {currentUser} from "../../../../../core/auth/_selectors/auth.selectors";
 
 @Component({
 	selector: 'kt-user-profile',
@@ -23,12 +24,10 @@ export class UserProfileComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		// this.user$ = this.store.select(getUserState);
+		this.user$ = this.store.select(currentUser);
 	}
 
 	logout() {
 		this.store.dispatch(logout());
-		// this.router.navigateByUrl('/').then(() => console.log('logout'));
-		// this.authNoticeService.setNotice(this.translate.instant('AUTH.LOGOUT'), 'success');
 	}
 }

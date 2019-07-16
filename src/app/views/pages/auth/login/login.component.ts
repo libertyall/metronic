@@ -1,23 +1,24 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable, Subject } from 'rxjs';
-import { TranslateService } from '@ngx-translate/core';
-import { Store } from '@ngrx/store';
-import { AuthService } from '../../../../core/auth/_services';
-import { AuthNoticeService } from '../../../../core/auth/auth-notice/auth-notice.service';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {Router} from '@angular/router';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Observable, Subject} from 'rxjs';
+import {TranslateService} from '@ngx-translate/core';
+import {Store} from '@ngrx/store';
+import {AuthService} from '../../../../core/auth/_services';
+import {AuthNoticeService} from '../../../../core/auth/auth-notice/auth-notice.service';
 import {
-	credentialsLogin, facebookLogin, googleLogin, logout, startLogin, twitterLogin
+	credentialsLogin,
+	facebookLogin,
+	googleLogin,
+	logout,
+	startLogin,
+	twitterLogin
 } from '../../../../core/auth/_actions/auth.actions';
-import { UserInterface } from '../../../../core/auth/_interfaces/user.interface';
-import { currentUser, isLoading, isLoggedIn, selectAuthMessage } from '../../../../core/auth/_selectors/auth.selectors';
-import { map, takeUntil } from 'rxjs/operators';
-import { ApplicationService } from '../../../../modules/application/services/application.service';
-import { ApplicationModel } from '../../../../modules/application/model/application.model';
-import { EntityActionOptions } from '@ngrx/data';
-import { AppState } from '../../../../app.state';
-import {CategoryModel} from '../../../../modules/category/model/category.model';
-import {CategoryDataService} from '../../../../modules/category/category.data.service';
+import {UserInterface} from '../../../../core/auth/_interfaces/user.interface';
+import {currentUser, isLoading, isLoggedIn, selectAuthMessage} from '../../../../core/auth/_selectors/auth.selectors';
+import {map, takeUntil} from 'rxjs/operators';
+import {ApplicationService} from '../../../../modules/application/services/application.service';
+import {AppState} from '../../../../app.state';
 
 @Component({
 	selector: 'kt-login',
@@ -37,17 +38,13 @@ export class LoginComponent implements OnInit, OnDestroy {
 	private isLoading = false;
 	private applications$: Observable<any>;
 
-	cats$: Observable<CategoryModel[]>;
-
-	constructor(private categoryService: CategoryDataService,
-				private router: Router,
+	constructor(private router: Router,
 				private auth: AuthService,
 				private authNoticeService: AuthNoticeService,
 				private applicationService: ApplicationService,
 				private translate: TranslateService,
 				private store: Store<AppState>,
 				private fb: FormBuilder) {
-		this.cats$ = categoryService.getAll();
 		this.isLoggedIn$ = this.store.select(isLoggedIn);
 		this.user$ = this.store.select(currentUser);
 		this.isLoading$ = this.store.select(isLoading);
@@ -66,11 +63,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
 	ngOnInit(): void {
 		this.initLoginForm();
-		this.getCategories();
-	}
-
-	getCategories() {
-		this.categoryService.getAll().pipe(map(t => console.log(t))).subscribe();
 	}
 
 	ngOnDestroy(): void {
@@ -115,7 +107,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 			rememberMe: controls['rememberMe'].value
 		};
 
-		this.store.dispatch(credentialsLogin({ credentials }));
+		this.store.dispatch(credentialsLogin({credentials}));
 	}
 
 	isControlHasError(controlName: string, validationType: string): boolean {

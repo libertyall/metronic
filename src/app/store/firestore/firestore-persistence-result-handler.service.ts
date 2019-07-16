@@ -1,7 +1,6 @@
-import { DefaultPersistenceResultHandler, EntityAction, EntityActionFactory, EntityOp, Logger } from '@ngrx/data';
-import { Injectable } from '@angular/core';
-import { Action } from '@ngrx/store';
-import { FirebaseApp } from '@angular/fire';
+import {DefaultPersistenceResultHandler, EntityAction, EntityActionFactory, EntityOp, Logger} from '@ngrx/data';
+import {Injectable} from '@angular/core';
+import {Action} from '@ngrx/store';
 
 @Injectable()
 export class FirestorePersistenceResultHandler extends DefaultPersistenceResultHandler {
@@ -21,7 +20,7 @@ export class FirestorePersistenceResultHandler extends DefaultPersistenceResultH
 					return this._entityActionFactory.create(
 						originalAction.payload.entityName,
 						EntityOp.ADD_ONE,
-						{ id: data.doc.id, ...(<object>data.doc.data()) }
+						{id: data.doc.id, ...(<object>data.doc.data())}
 					);
 				}
 
@@ -37,7 +36,7 @@ export class FirestorePersistenceResultHandler extends DefaultPersistenceResultH
 					return this._entityActionFactory.create(
 						originalAction.payload.entityName,
 						EntityOp.UPDATE_ONE,
-						{ id: data.doc.id, changes: { id: data.doc.id, ...(<object>data.doc.data()) } }
+						{id: data.doc.id, changes: {id: data.doc.id, ...(<object>data.doc.data())}}
 					);
 				}
 

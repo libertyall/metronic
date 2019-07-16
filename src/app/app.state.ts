@@ -6,7 +6,7 @@ import { autoEntityMetaReducer, IEntityState } from '@briebug/ngrx-auto-entity';
 import { applicationReducer } from './modules/application/application.state';
 import { environment } from '../environments/environment';
 import { storeFreeze } from 'ngrx-store-freeze';
-import { CategoryModel } from './modules/category/model/category.model';
+import { Category } from './modules/category/model/category.model';
 import { ApplicationModel } from './modules/application/model/application.model';
 import { categoryReducer } from './modules/category/category.state';
 import { IRouterStateUrl } from './shared/utils/utils';
@@ -20,7 +20,7 @@ export function logger(reducer: any) {
 
 export interface IAppState {
 	// application: IEntityState<ApplicationModel>;
-	category: IEntityState<CategoryModel>;
+	category: IEntityState<Category>;
 	auth: AuthState;
 	logger: LoggerState;
 	router: RouterReducerState<IRouterStateUrl>;

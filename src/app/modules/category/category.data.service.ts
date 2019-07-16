@@ -1,32 +1,60 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {DefaultDataService, HttpUrlGenerator, Logger} from '@ngrx/data';
+import {EntityCollectionServiceBase, EntityCollectionServiceElementsFactory, Logger, QueryParams} from '@ngrx/data';
 
-import {Observable} from 'rxjs';
-import {CategoryModel} from './model/category.model';
-import {AngularFirestore} from '@angular/fire/firestore';
+import {from, Observable} from 'rxjs';
+import {Category} from './model/category.model';
+import {AngularFirestore, AngularFirestoreCollection, DocumentReference} from '@angular/fire/firestore';
+import {mergeMap} from 'rxjs/operators';
 
-@Injectable()
-export class CategoryDataService extends DefaultDataService<CategoryModel> {
+@Injectable({providedIn: 'root'})
+export class CategoryDataService extends EntityCollectionServiceBase<Category> {
 
-	constructor(private afs: AngularFirestore, http: HttpClient, httpUrlGenerator: HttpUrlGenerator, logger: Logger) {
-		super('CategoryModel', http, httpUrlGenerator);
-		logger.log('Created custom CategoryModel EntityDataService');
+	private collection = this.afs.collection<Category>('categories');
+
+	constructor(private elementsFactory: EntityCollectionServiceElementsFactory,
+				private afs: AngularFirestore,
+				private logger: Logger) {
+		super('Category', elementsFactory);
+		// logger.log('Created custom Category EntityDataService');
 	}
 
-	getAll(): Observable<CategoryModel[]> {
-		return this.afs.collection<CategoryModel>('categories').valueChanges();
+	add(entity: Category): Observable<Category> {
+		return from(this.collection.add(entity)).pipe(
+			mergeMap((doc: DocumentReference) => this.getById(doc.id))
+		);
 	}
 
-	/* getById(id: string | number): Observable<CategoryModel> {
-		return super.getById(id).pipe(map(category => this.mapCategoryModel(category)));
-	}
-
-	getWithQuery(params: string | QueryParams): Observable<CategoryModel[]> {
-		return super.getWithQuery(params).pipe(map(categories => categories.map(category => this.mapCategoryModel(category))));
-	}
-
-	private mapCategoryModel(category: CategoryModel): CategoryModel {
-		return { ...category };
+	/* delete(key: number | string): Observable<number | string> {
+		return from(this.collection.doc('' + key).delete())
+			.pipe(
+				map(() => key)
+			);
 	} */
+
+	getAll(): Observable<Category[]> {
+		// console.log(this.collection);
+		return this.collection.valueChanges();
+	}
+
+	getById(key: number | string): Observable<Category> {
+		return this.collection.doc<Category>('' + key).valueChanges();
+	}
+
+	getWithQuery(queryParams: QueryParams | string): Observable<Category[]> {
+		return null;
+	}
+
+	/* update(update: Update<Category>): Observable<Category> {
+		const id = String(update.id);
+		const updateDoc = this.collection.doc(id);
+
+		return from(
+			updateDoc.update(update.changes)
+		).pipe(mergeMap(() => <Observable<Category>>updateDoc.valueChanges()));
+	} */
+
+	upsert(entity: Category): Observable<Category> {
+		return null;
+	}
+
 }

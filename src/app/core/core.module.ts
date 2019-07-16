@@ -6,14 +6,14 @@ import { FirstLetterPipe, GetObjectPipe, JoinPipe, OffcanvasDirective, SafePipe,
 @NgModule({
 	imports: [CommonModule],
 	declarations: [
-		// directives
-		/* ScrollTopDirective,
 		OffcanvasDirective,
+		ScrollTopDirective,
 		ToggleDirective,
+		// directives
 		MenuDirective,
-		ContentAnimateDirective,
+		// ContentAnimateDirective,
 		// pipes
-		FirstLetterPipe, */
+		FirstLetterPipe,
 		/* HeaderDirective,
 		TabClickEventDirective,
 		SparklineChartDirective,
@@ -25,14 +25,14 @@ import { FirstLetterPipe, GetObjectPipe, JoinPipe, OffcanvasDirective, SafePipe,
 		SafePipe, */
 	],
 	exports: [
-		// directives
-		/* ScrollTopDirective,
 		OffcanvasDirective,
+		ScrollTopDirective,
 		ToggleDirective,
+		// directives
 		MenuDirective,
-		ContentAnimateDirective,
+		// ContentAnimateDirective,
 		// pipes
-		FirstLetterPipe, */
+		FirstLetterPipe,
 		/* HeaderDirective,
 		TabClickEventDirective,
 		SparklineChartDirective,
