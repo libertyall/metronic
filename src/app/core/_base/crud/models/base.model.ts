@@ -1,13 +1,12 @@
-import { CreationInterface } from '../../../../shared/interfaces/creation.interface';
-import { PublicationInterface } from '../../../../shared/interfaces/publication.interface';
-import { ModificationInterface } from '../../../../shared/interfaces/modification.interface';
-import { Key } from '@briebug/ngrx-auto-entity';
+import { Creation } from '../../../../shared/_models/creation.class';
+import { Publication } from '../../../../shared/_models/publication.class';
+import { Modification } from '../../../../shared/_models/modification.class';
 
 export class BaseModel {
-	creation?: CreationInterface;
-	publication?: PublicationInterface;
-	modification?: ModificationInterface[];
+	creation?: Creation;
+	publication?: Publication;
+	modification?: Modification[];
 	isImported?: boolean;
 	title?: string;
-	@Key id?: string;
+	id?: string;
 }

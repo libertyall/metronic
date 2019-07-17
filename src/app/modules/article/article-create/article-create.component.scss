@@ -1,0 +1,101 @@
+@charset "UTF-8";
+
+.header {
+	border-bottom: 1px solid #e8e8e8;
+	padding-bottom: 15px;
+}
+
+.title {
+	color: #a0aabf;
+	font-size: 0.8rem;
+	font-weight: 500;
+}
+
+.status {
+	text-transform: uppercase;
+}
+
+.title-document {
+	border: none;
+	color: #373d49;
+	font-size: 1.25rem;
+	font-weight: 400;
+	line-height: 2.8rem;
+	margin-bottom: 0.29999rem;
+	outline: 0;
+	padding-left: 16px;
+	padding-right: 16px;
+	padding-top: 0.10001rem;
+}
+
+.title-document.ng-dirty.ng-invalid, .title-document.ng-invalid.ng-touched {
+	border: 1px solid red;
+}
+
+textarea {
+	padding: 30px 5px;
+}
+
+	::-webkit-input-placeholder {
+		text-align: center;
+	}
+
+	:-moz-placeholder {
+		text-align: center;
+	}
+
+	::-moz-placeholder {
+		text-align: center;
+	}
+
+	:-ms-input-placeholder {
+		text-align: center;
+	}
+
+
+
+.chat-panel {
+	box-shadow: 0 0 0 0 #cecece, -12px 0 8px -4px #cecece;
+	padding: 10px;
+}
+
+@media (min-width:768px) {
+	.chat-panel {
+		min-width: 400px;
+	}
+}
+
+@media (min-width:960px) {
+	.chat-panel {
+		min-width: 600px;
+	}
+}
+
+@media (min-width:1280px) {
+	.chat-panel {
+		height: 100%;
+		min-width: 800px;
+	}
+}
+
+.success {
+	color: green;
+}
+
+.error {
+	color: red;
+}
+
+.saving {
+	color: orange;
+	text-decoration: blink;
+}
+
+.mat-sidenav-content {
+	margin-left: 0;
+	padding-left: 0;
+}
+
+label {
+	display: none;
+}

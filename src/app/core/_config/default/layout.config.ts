@@ -7,6 +7,17 @@ export class LayoutConfig {
 		frontend: any
 	} = {
 		backend: {
+
+			content: {
+				'fit-top': {
+					type: 'checkbox',
+					selected: true
+				},
+				width: {
+					type: 'checkbox',
+					selected: true
+				}
+			},
 			self: {
 				body: {
 					'background-image': {

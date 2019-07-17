@@ -17,7 +17,6 @@ import {
 } from '../_actions/auth.actions';
 import {UserInterface} from '../_interfaces/user.interface';
 import {Action, createReducer, on} from '@ngrx/store';
-import {ROOT_EFFECTS_INIT} from "@ngrx/effects";
 
 export interface AuthState {
 	loggedIn: boolean;

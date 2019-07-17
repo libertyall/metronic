@@ -1,0 +1,156 @@
+<kt-portlet>
+	<kt-portlet-header [title]="getComponentTitle()" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+		<ng-container ktPortletTools>
+			<a [routerLink]="['/categories']" class="btn btn-secondary kt-margin-r-10" mat-raised-button
+			   [matTooltip]="'category.backToList' | translate">
+				<i class="la la-arrow-left"></i>
+				<span class="kt-hidden-mobile">{{'back' | translate}}</span>
+			</a>
+			<a class="btn btn-secondary kt-margin-r-10" (click)="reset()"
+			   [disabled]="selectedTab!== 0"
+			   mat-raised-button
+			   matTooltip="{{'resetDescription' | translate}}">
+				<i class="la la-cog"></i>
+				<span class="kt-hidden-mobile">{{'reset' | translate}}</span>
+			</a>
+			<!-- [disabled]="form.invalid" -->
+			<button class="btn btn-primary kt-margin-r-10"
+					color="primary"
+					(click)="onSubmit(false)"
+					mat-raised-button
+					matTooltip="{{'saveDescription' | translate}}">
+				<span class="kt-hidden-mobile">{{'save' | translate}}</span>
+			</button>
+			<button mat-icon-button [matMenuTriggerFor]="menu" color="primary">
+				<mat-icon>more_vert</mat-icon>
+			</button>
+			<mat-menu #menu="matMenu">
+				<a mat-menu-item
+				   matTooltip="{{'saveToListDescription' | translate}}"
+				   (click)="onSubmit(true)">
+					<span class="kt-hidden-mobile">{{'saveToList' | translate}}</span>
+				</a>
+				<a mat-menu-item
+				   matTooltip="{{ 'category.list.delete' | translate}}"
+				   (click)="deleteCategory(category)">
+					{{ 'category.list.delete' | translate}}
+				</a>
+				<a mat-menu-item
+				   matTooltip="{{ 'category.edit.goToList' | translate}}"
+				   (click)="goBackToList()">
+					{{ 'category.edit.goToList' | translate}}
+				</a>
+			</mat-menu>
+		</ng-container>
+	</kt-portlet-header>
+
+	<kt-portlet-body>
+		<mat-tab-group *ngIf="category"
+					   [(selectedIndex)]="selectedTab">
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<i class="mat-tab-label-icon fa fa-info"></i>
+					{{'category.edit.tabs.main.title' | translate}}
+				</ng-template>
+				<ng-template matTabContent>
+					<div>
+						<form [formGroup]="form" class="kt-form kt-form--group-seperator-dashed">
+
+							<kt-alert *ngIf="hasFormErrors"
+									  type="warn"
+									  [showCloseButton]="true"
+									  [duration]="10000"
+									  (close)="onAlertClose()">
+								{{'forms.errors.title' | translate}}!
+								{{'forms.errors.description' | translate}}
+							</kt-alert>
+
+							<div class="kt-form__section kt-form__section--first">
+								<div class="form-group kt-form__group row">
+
+									<div class="col-lg-4 kt-margin-bottom-20-mobile">
+										<mat-form-field class="mat-form-field-fluid">
+											<input id="title" matInput
+												   minlength="{{titleParams.minLength}}"
+												   maxlength="{{titleParams.maxLength}}"
+												   placeholder="{{'category.edit.inputs.title' | translate}}"
+												   formControlName="title">
+											<mat-error *ngIf="form.get('title').errors?.minlength">
+												{{'forms.errors.minLength' |translate: titleParams}}
+											</mat-error>
+											<mat-hint align="start" *ngIf="!form.get('title').value">
+												{{'category.edit.hints.title' | translate}}
+											</mat-hint>
+											<mat-hint align="end">
+												{{form.get('title').value.length || 0}}/{{titleMaxLength}}
+											</mat-hint>
+										</mat-form-field>
+									</div>
+
+									<div class="col-lg-4 kt-margin-bottom-20-mobile">
+										<mat-form-field class="mat-form-field-fluid">
+											<mat-select
+												placeholder="{{'category.edit.inputs.categoryType' | translate}}"
+												formControlName="assignedCategoryType">
+												<mat-option *ngFor="let categoryType of categoryTypes | orderBy: 'link'"
+															[value]="categoryType">
+													{{ 'general.menu.' + categoryType.link + '.main' | translate}}
+													{{categoryType | json}}
+												</mat-option>
+											</mat-select>
+											<mat-error *ngIf="form.get('assignedCategoryType').errors">
+												{{'category.edit.errors.noAssignedCategoryType' | translate}}
+											</mat-error>
+											<mat-hint align="start">
+												{{'category.edit.hints.assignedCategoryType' | translate }}
+											</mat-hint>
+										</mat-form-field>
+									</div>
+									<div class="col-lg-4 kt-margin-bottom-20-mobile">
+										<label>{{'category.edit.hints.mainCategory' | translate }}</label>
+										<div class="mat-form-field-fluid">
+											<mat-checkbox formControlName="isMainCategory">
+												{{'category.edit.isMainCategory' | translate }}
+											</mat-checkbox>
+										</div>
+									</div>
+								</div>
+
+								<div class="form-group kt-form__group row">
+
+									<div class="col-lg-8 kt-margin-bottom-20-mobile">
+										<label>{{'category.edit.hints.description' | translate }}</label>
+										<div class="mat-form-field-fluid">
+											<textarea formControlName="description" class="mat-form-field-flex">
+												{{'category.edit.description' | translate }}
+											</textarea>
+										</div>
+									</div>
+
+									<div class="col-lg-4 kt-margin-bottom-20-mobile">
+										<label>{{'category.edit.hints.isImported' | translate }}</label>
+										<div class="mat-form-field-fluid">
+											<mat-checkbox formControlName="isImported">
+												{{'category.edit.isImported' | translate }}
+											</mat-checkbox>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</form>
+					</div>
+				</ng-template>
+			</mat-tab>
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<i class="mat-tab-label-icon fa fa-info"></i>
+					{{'category.edit.tabs.creation.title' | translate}}
+				</ng-template>
+				<ng-template matTabContent>
+					Creation & Publication Status
+				</ng-template>
+			</mat-tab>
+		</mat-tab-group>
+	</kt-portlet-body>
+</kt-portlet>

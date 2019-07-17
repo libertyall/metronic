@@ -52,18 +52,13 @@ export class BaseComponent implements OnInit, OnDestroy {
 
 	ngOnInit(): void {
 		const config = this.layoutConfigService.getConfig();
-
-		this.desktopHeaderDisplay = objectPath.get(config, 'backend.header.self.fixed.desktop');
-		this.selfLayout = objectPath.get(config, 'backend.self.layout.selected');
-		this.asideDisplay = objectPath.get(config, 'backend.aside.self.display.selected');
-		this.subheaderDisplay = objectPath.get(config, 'backend.subheader.display.selected');
-		this.desktopHeaderDisplay = objectPath.get(config, 'backend.header.self.fixed.desktop');
-		this.fitTop = objectPath.get(config, 'backend.content.fit-top.selected');
-		this.fluid = objectPath.get(config, 'backend.content.width.selected') === 'fluid';
+		console.log(config);
+		this.initLayout(config);
 
 		const layoutConfigSubscription = this.layoutConfigService.onConfigUpdated$.subscribe(cfg => {
 			setTimeout(() => {
-				this.selfLayout = objectPath.get(cfg, 'backend.self.layout.selected');
+			console.log(cfg);
+			this.initLayout(cfg);
 			});
 		});
 		this.unsubscribe.push(layoutConfigSubscription);
@@ -71,6 +66,15 @@ export class BaseComponent implements OnInit, OnDestroy {
 
 	ngOnDestroy(): void {
 		this.unsubscribe.forEach(sb => sb.unsubscribe());
+	}
+
+	initLayout(config): void {
+		this.selfLayout = objectPath.get(config, 'backend.self.layout.selected');
+		this.asideDisplay = objectPath.get(config, 'backend.aside.self.display.selected');
+		this.subheaderDisplay = objectPath.get(config, 'backend.subheader.display.selected');
+		this.desktopHeaderDisplay = objectPath.get(config, 'backend.header.self.fixed.desktop.selected');
+		this.fitTop = objectPath.get(config, 'backend.content.fit-top.selected');
+		this.fluid = objectPath.get(config, 'backend.content.width.selected');
 	}
 
 	loadRolesWithPermissions() {

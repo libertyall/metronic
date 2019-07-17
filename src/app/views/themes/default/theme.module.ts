@@ -78,8 +78,7 @@ import {
 	],
 	imports: [
 		CommonModule,
-		RouterModule,
-		NgxPermissionsModule.forChild(),
+		// NgxPermissionsModule.forChild(),
 		// StoreModule.forFeature('roles', rolesReducer),
 		// StoreModule.forFeature('permissions', permissionsReducer),
 		// EffectsModule.forFeature([PermissionEffects, RoleEffects]),

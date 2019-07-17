@@ -1,25 +1,38 @@
-import {Injectable} from '@angular/core';
-import {UserInterface} from '../_interfaces/user.interface';
-import {AngularFireAuth} from '@angular/fire/auth';
-import {AngularFirestore} from '@angular/fire/firestore';
+import { Injectable } from '@angular/core';
+import { UserInterface } from '../_interfaces/user.interface';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
-import {from, Observable, of} from 'rxjs';
-import {Store} from '@ngrx/store';
-import {switchMap} from 'rxjs/operators';
-import UserCredential = firebase.auth.UserCredential;
+import { from, Observable, of } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { switchMap } from 'rxjs/operators';
 import { AppState } from '../../../app.state';
+import UserCredential = firebase.auth.UserCredential;
 
 @Injectable()
 export class AuthService {
 	public authUser$: Observable<UserInterface>;
+	public authUserId: string;
 
 	constructor(public afAuth: AngularFireAuth,
 				private store: Store<AppState>,
 				private afs: AngularFirestore) {
 
 		this.authUser$ = this.afAuth.authState.pipe(
-			switchMap((user: firebase.User) => user ? this.afs.doc(`/users/${user.uid}`).valueChanges() : of(null))
-		);
+			switchMap((user: firebase.User) => {
+				if (user) {
+					this.authUserId = user.uid;
+					return this.afs.doc(`/users/${ user.uid }`).valueChanges();
+				} else {
+					this.authUserId = null;
+					return of(null);
+				}
+			}
+		));
+	}
+
+	getAuthUserId() {
+		return this.authUserId;
 	}
 
 	getAuthState() {

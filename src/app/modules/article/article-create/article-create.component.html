@@ -1,0 +1,165 @@
+<!--<mat-sidenav-container fxFlexFill
+					   *ngIf="article"
+					   style="padding: 0 25px;">
+
+	<mat-sidenav #settings
+				 position="end"
+				 class="chat-panel"
+				 [mode]="'over'"
+				 [opened]="sidePanelOpened">
+
+		<div fxLayout="row"
+			 fxLayoutAlign="space-between center">
+			<span style="font-weight: bold; font-size: larger">{{ 'general.articles.edit.sidebar.title' | translate }}</span>
+			<span class="space"></span>
+			<button mat-icon-button (click)="sidePanelOpened = false">
+				<mat-icon>close</mat-icon>
+			</button>
+		</div>
+
+		<article-edit-sidebar [article]="article"
+							  (uploadCompleted)="uploadCompleted($event)"
+							  (changeArticle)="changeArticle($event)"
+							  (removeArticle)="removeArticle()">
+		</article-edit-sidebar>
+
+	</mat-sidenav>
+	<mat-sidenav-content>-->
+
+<ng-container [formGroup]="form">
+
+	<div class="row">
+		<div class="col-lg-12 text-right mb-3">
+			<h2 class="title">
+				{{'articles.form.status.title' | translate}}
+				<span class="status"
+					  [ngClass]="articleStatus">{{ 'articles.form.status.' + articleStatus | translate}}</span>
+			</h2>
+		</div>
+
+		<mat-menu #menu="matMenu">
+			<div [formGroupName]="'publication'"
+				 style="padding: 10px 10px;">
+				<h5>{{'articles.form.publish.question' | translate}}</h5>
+				<mat-radio-group class="radio-group"
+								 formControlName="status">
+					<mat-radio-button (click)="changePublicationStatus($event)"
+									  class="radio-button"
+									  *ngFor="let publication of publicationOptions"
+									  [value]="publication.value"
+									  style="margin: 10px 0">
+						{{ 'articles.form.publish.' + publication.text | translate}}<br/>
+						<span style="color: #cecece">
+                  {{ 'articles.form.publish.' + publication.description | translate}}
+                </span>
+					</mat-radio-button>
+				</mat-radio-group>
+
+				<div style="padding-left: 30px" *ngIf="form.get('publication.status').value === 2">
+					<label for="at">{{ 'articles.form.publish.chooseDateTime' | translate}}</label>
+					<input formControlName="at"
+						   id="at"
+						   [owlDateTime]="dt3"
+						   [owlDateTimeTrigger]="dt3">
+					<owl-date-time [pickerMode]="'dialog'" #dt3></owl-date-time>
+				</div>
+
+
+				<hr style="margin: 25px 0;"/>
+				<div class="button-row">
+					<button mat-button
+							(click)="resetPublication()"
+							type="button"
+							color="warn"
+							title="{{ 'articles.form.publish.draft' | translate}}">
+						{{ 'articles.form.publish.draft' | translate}}
+					</button>
+					<button mat-raised-button
+							type="button"
+							color="primary"
+							title="{{'articles.form.publish.button' | translate}}">
+						{{'articles.form.publish.button' | translate}}
+					</button>
+				</div>
+			</div>
+		</mat-menu>
+	</div>
+
+	<div class="row mb-5">
+		<div class="col-lg-8">
+			<label for="title"></label>
+			<input class="title-document" id="title" style="width: 100%"
+				   type="text"
+				   placeholder="{{'articles.form.titlePlaceholder' | translate}}"
+				   formControlName="title">
+		</div>
+		<div class="col-lg-4 text-right">
+			<button mat-raised-button
+					[matMenuTriggerFor]="menu"
+					title="{{'articles.form.publish.menuButton' | translate}}">
+				{{'articles.form.publish.menuButton' | translate}} &darr;
+			</button>
+
+
+			<!--<div class="kt-header__topbar-item kt-header__topbar-item--quick-panel" data-placement="bottom"
+				 ngbTooltip="Quick panel">
+				<span class="kt-header__topbar-icon" id="kt_quick_panel_toggler_btn">
+					<span class="kt-svg-icon" [inlineSVG]="'./assets/media/icons/svg/Layout/Layout-4-blocks.svg'"></span>
+				</span>
+			</div>-->
+			<!--<div class="kt-header__topbar-item kt-header__topbar-item--quick-panel" data-placement="bottom"
+				 ngbTooltip="Quick panel">-->
+				<span class="btn btn-brand kt-header__topbar-icon" id="kt_quick_panel_toggler_btn">
+				{{'articles.form.options.title' | translate}}
+				</span>
+			<!--</div>
+
+			<button *ngIf="isSmallDevice" id="kt_quick_panel_toggler_btn"
+					[title]="sidePanelOpened ? ('articles.form.options.close' | translate) : ('articles.form.options.show' | translate)"
+					mat-raised-button>
+				{{'articles.form.options.title' | translate}}
+			</button>
+
+			<!--<button *ngIf="!isSmallDevice" id="kt_quick_panel_toggler_btn"
+					mat-icon-button
+					[title]="sidePanelOpened ? ('articles.form.options.close' | translate) : ('articles.form.options.show' | translate)">
+				<mat-icon *ngIf="sidePanelOpened">arrow_forward_ios</mat-icon>
+				<mat-icon *ngIf="!sidePanelOpened">arrow_back_ios</mat-icon>
+			</button>-->
+		</div>
+	</div>
+
+
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="kt-section">
+				<div class="kt-section__content">
+					<ngb-tabset>
+						<ngb-tab>
+							<ng-template ngbTabTitle>{{'articles.form.tabs.input' | translate}}</ng-template>
+							<ng-template ngbTabContent>
+								<textarea id="articleText" style="width: 80vw; height: 80vh"
+									  [placeholder]="'articles.form.textPlaceholder' | translate"
+									  formControlName="text">
+								</textarea>
+							</ng-template>
+						</ngb-tab>
+						<ngb-tab [disabled]="!article.excerpt && !article.text">
+							<ng-template ngbTabTitle>{{'articles.form.tabs.preview' | translate}}</ng-template>
+							<ng-template ngbTabContent>
+								<div style="font-weight: bolder; margin: 25px 0" [innerHTML]="article.excerpt"></div>
+								<div [innerHTML]="article.text"></div>
+							</ng-template>
+						</ngb-tab>
+					</ngb-tabset>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+</ng-container>
+<!--
+
+</mat-sidenav-content>
+</mat-sidenav-container>-->

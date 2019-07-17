@@ -19,6 +19,7 @@ import { ActionNotificationComponent, AlertComponent, DeleteEntityDialogComponen
 import { TranslateModule } from '@ngx-translate/core';
 import {Subheader4Component} from './layout/subheader/subheader4/subheader4.component';
 import {Subheader5Component} from './layout/subheader/subheader5/subheader5.component';
+import { NgPipesModule } from 'ngx-pipes';
 
 @NgModule({
 	declarations: [
@@ -40,14 +41,12 @@ import {Subheader5Component} from './layout/subheader/subheader5/subheader5.comp
 		LanguageSelectorComponent,
 		UserProfileComponent,
 		ErrorComponent,
-
-		/* AlertComponent,
-		ActionNotificationComponent,
+		AlertComponent,
+		/* ActionNotificationComponent,
 		DeleteEntityDialogComponent
-		/* NoticeComponent,
+		 NoticeComponent,
 		 FetchEntityDialogComponent,
 		 UpdateStatusDialogComponent,
-
 		 ContextMenu2Component,
 		 ContextMenuComponent,
 		 NotificationComponent,
@@ -55,6 +54,8 @@ import {Subheader5Component} from './layout/subheader/subheader5/subheader5.comp
 		 UserProfile2Component, */
 	],
 	exports: [
+		NgPipesModule,
+		//
 		QuickPanelComponent,
 		ScrollTopComponent,
 		// ScrollTopComponent,
@@ -73,8 +74,8 @@ import {Subheader5Component} from './layout/subheader/subheader5/subheader5.comp
 		LanguageSelectorComponent,
 		UserProfileComponent,
 		ErrorComponent,
+		AlertComponent,
 		/* DeleteEntityDialogComponent,
-		AlertComponent
 		/*WidgetModule,
 		 PortletModule,
 		 NoticeComponent,
@@ -91,9 +92,10 @@ import {Subheader5Component} from './layout/subheader/subheader5/subheader5.comp
 	imports: [
 		CommonModule,
 		CoreModule,
+		InlineSVGModule,
+		MatIconModule,
 		NgbModule,
 		PerfectScrollbarModule,
-		InlineSVGModule,
 		TranslateModule.forChild(),
 		RouterModule,
 		/* MatProgressBarModule,

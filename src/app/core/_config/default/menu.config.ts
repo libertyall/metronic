@@ -381,12 +381,12 @@ export class MenuConfig {
 						{ section: 'Galleries', translate: 'MENU.UPLOAD.GALLERY.MAIN' },
 						{
 							title: 'Galleries',
-							page: '/uploader/list',
+							page: '/uploader/galleries',
 							translate: 'MENU.UPLOAD.GALLERY.LIST'
 						},
 						{
 							title: 'Create Gallery',
-							page: '/uploader/create',
+							page: '/uploader/galleries/create',
 							translate: 'MENU.UPLOAD.GALLERY.CREATE'
 						}
 					]
@@ -409,7 +409,7 @@ export class MenuConfig {
 							translate: 'MENU.ARTICLE.LIST'
 						},
 						{
-							title: 'Crete Article',
+							title: 'Create Article',
 							page: '/articles/create',
 							translate: 'MENU.ARTICLE.CREATE'
 						}
@@ -555,7 +555,7 @@ export class MenuConfig {
 						},
 						{
 							title: 'Create Location',
-							page: '/locations/crete',
+							page: '/locations/create',
 							translate: 'MENU.LOCATION.CREATE'
 						},
 						{

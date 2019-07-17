@@ -6,6 +6,7 @@ import { PortletComponent } from './portlet.component';
 import { PortletHeaderComponent } from './portlet-header.component';
 import { PortletBodyComponent } from './portlet-body.component';
 import { PortletFooterComponent } from './portlet-footer.component';
+import { KtDialogService } from '../../../../../core/_base/layout';
 
 @NgModule({
 	imports: [
@@ -24,7 +25,10 @@ import { PortletFooterComponent } from './portlet-footer.component';
 		PortletComponent,
 		PortletHeaderComponent,
 		PortletBodyComponent,
-		PortletFooterComponent,
+		PortletFooterComponent
+	],
+	providers: [
+		KtDialogService
 	]
 })
 export class PortletModule {

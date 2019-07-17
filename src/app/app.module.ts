@@ -1,49 +1,34 @@
-import {BrowserModule, HAMMER_GESTURE_CONFIG} from '@angular/platform-browser';
-import {APP_INITIALIZER, NgModule} from '@angular/core';
-import {TranslateModule} from '@ngx-translate/core';
-import {HttpClientModule} from '@angular/common/http';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {GestureConfig, MatProgressSpinnerModule, MatSnackBarModule} from '@angular/material';
-import {PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface} from 'ngx-perfect-scrollbar';
-import {environment} from '../environments/environment';
+import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { GestureConfig, MatProgressSpinnerModule, MatSnackBarModule } from '@angular/material';
+import { PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import { environment } from '../environments/environment';
 import 'hammerjs';
-import {AppComponent} from './app.component';
-import {AppRoutingModule} from './app-routing.module';
-import {LayoutConfigService, SplashScreenService} from './core/_base/layout';
-import {HighlightLanguage} from 'ngx-highlightjs';
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
+import { LayoutConfigService, SplashScreenService } from './core/_base/layout';
+import { HighlightLanguage } from 'ngx-highlightjs';
 import * as typescript from 'highlight.js/lib/languages/typescript';
 import * as scss from 'highlight.js/lib/languages/scss';
 import * as xml from 'highlight.js/lib/languages/xml';
 import * as json from 'highlight.js/lib/languages/json';
-import {AngularFirestoreCollection, AngularFirestoreModule, FirestoreSettingsToken} from '@angular/fire/firestore';
-import {AngularFireModule} from '@angular/fire';
-import {AngularFireAuthModule} from '@angular/fire/auth';
-import {NgxPermissionsModule} from 'ngx-permissions';
-import {ApplicationService} from './modules/application/services/application.service';
-import {StoreDevtoolsModule} from '@ngrx/store-devtools';
-import {UserService} from './core/auth/_services/user.service';
-import {AuthModule} from './views/pages/auth/auth.module';
-import {
-	DefaultDataServiceFactory,
-	EntityCollectionDataService,
-	EntityDataModule,
-	EntityDataService,
-	PersistenceResultHandler
-} from '@ngrx/data';
-import {StoreModule} from '@ngrx/store';
-import {EffectsModule} from '@ngrx/effects';
-import {RouterState, StoreRouterConnectingModule} from '@ngrx/router-store';
-import {appMetaReducers, appReducer} from './app.state';
-import {RouterEffects} from './views/state/router.effects';
-import {
-	FirestoreDataServiceFactory,
-	FirestoreEntityCollectionDataService
-} from './store/firestore/firestore-entity-collection-data.service';
-import {FirestorePersistenceResultHandler} from './store/firestore/firestore-persistence-result-handler.service';
-import {entityConfig} from './core/_config/default/entity-metadata';
-import {Category} from './modules/category/model/category.model';
-import {CategoryDataService} from "./modules/category/category.data.service";
-import {AuthEffects} from "./core/auth/_effects/auth.effects";
+import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { NgxPermissionsModule } from 'ngx-permissions';
+import { ApplicationService } from './modules/application/services/application.service';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { UserService } from './core/auth/_services/user.service';
+import { AuthModule } from './views/pages/auth/auth.module';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { RouterState, StoreRouterConnectingModule } from '@ngrx/router-store';
+import { appMetaReducers, appReducer } from './app.state';
+import { RouterEffects } from './views/state/router.effects';
+import { AuthEffects } from './core/auth/_effects/auth.effects';
 
 /* export function storageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
 	return storageSync<AppState>({
@@ -112,7 +97,7 @@ export function hljsLanguages(): HighlightLanguage[] {
 		EffectsModule.forRoot([RouterEffects, AuthEffects]),
 		StoreDevtoolsModule.instrument({logOnly: environment.production}),
 		// StateModule,
-		EntityDataModule.forRoot(entityConfig),
+		// EntityDataModule.forRoot(entityConfig),
 		StoreRouterConnectingModule.forRoot({
 			routerState: RouterState.Minimal
 		})
@@ -121,15 +106,6 @@ export function hljsLanguages(): HighlightLanguage[] {
 		MatSnackBarModule
 	],
 	providers: [
-		CategoryDataService,
-		{
-			provide: DefaultDataServiceFactory,
-			useClass: FirestoreDataServiceFactory
-		},
-		{
-			provide: PersistenceResultHandler,
-			useClass: FirestorePersistenceResultHandler
-		},
 		ApplicationService,
 		// AuthService,
 		UserService,

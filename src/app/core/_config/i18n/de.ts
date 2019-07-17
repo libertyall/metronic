@@ -17,6 +17,61 @@ export const locale = {
 		'auth/wrong-password': 'Du hast ein falsches Passwort für diesen Account angegeben.',
 		'auth/send-verification': 'Eine weitere E-Mail zur Bestätigung Deines Accounts wurde Dir gesendet.',
 		'auth/register-success': 'Deine Registrierung war erfolgreich! Nach dem Bestätigen Deiner E-Mail Adresse muss Dein Account noch von einem Administrator freigegeben werden.',
+		articles: {
+			calendar: {
+				addArticle: 'Neuer Artikel',
+				title: 'Veröffentlichungskalender',
+			},
+			dashboard: {
+				stats: {
+					description: 'Artikel nach ihrem Status',
+					title: 'Statistik'
+				},
+				top: {
+					description: 'Meistgelesen und meistkommentiert',
+					title: 'Top Artikel'
+				}
+			},
+			form: {
+				options: {
+					show: 'Optionen',
+					title: 'Optionen'
+				},
+				publish: {
+					button: 'Fertig',
+					draft: 'Als Entwurf',
+					live: {
+						text: 'Jetzt veröffentlichen',
+						description: 'Der Artikel wird direkt angezeigt.'
+					},
+					schedule: {
+						text: 'Für später planen',
+						description: 'Wähle ein Datum!'
+					},
+					menuButton: 'Veröffentlichung',
+					question: 'Wann soll der Artikel veröffentlicht werden?'
+				},
+				status: {
+					edit: 'Editieren',
+					error: 'NICHT gespeichert',
+					new: 'Neu',
+					saving: 'Speichere ...',
+					success: 'Gespeichert',
+					title: 'Status'
+				},
+				tabs: {
+					input: 'Texteingabe',
+					preview: 'Vorschau'
+				},
+				textPlaceholder: 'Fang´ mit Deiner Geschichte an ...',
+				titlePlaceholder: 'Der Titel Deines Artikels?'
+			},
+			publication: {
+				planned: 'geplant{{value}}',
+				published: 'veröffentlicht{{value}}',
+				unpublished: 'Entwürfe'
+			}
+		},
 		AUTH: {
 			AGREE: {
 				TEXT: 'Ich akzeptiere die '
@@ -84,6 +139,7 @@ export const locale = {
 				INVALID_FIELD: 'Diese Eingabe ist fehlerhaft.'
 			}
 		},
+		author: 'Author',
 		back: 'Zurück',
 		cancel: 'Abbrechen',
 		cancelTooltip: 'Verwerfen und Vorgang abbrechen!',
@@ -146,6 +202,12 @@ export const locale = {
 				},
 				title: 'Alle Kategorien'
 			}
+		},
+		comments: 'Kommentare',
+		date: {
+			allTime: 'Gesamt',
+			month: 'dieser Monat',
+			week: 'diese Woche'
 		},
 		delete: 'Löschen',
 		dialog: {
@@ -256,6 +318,7 @@ export const locale = {
 		NEXT_PAGE_LABEL: 'Nächste Seite anzeigen',
 		pleaseWait: 'Bitte warten',
 		PREVIOUS_PAGE_LABEL: 'Eine Seite zurückblättern',
+		readMore: 'Weiterlesen',
 		required: 'erforderlich',
 		reset: 'Zurücksetzen',
 		resetDescription: 'Das Formular zurücksetzen',
@@ -517,6 +580,7 @@ export const locale = {
 				desc: '',
 				title: 'Benutzer'
 			}
-		}
+		},
+		views: 'Ansichten'
 	}
 };

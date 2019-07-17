@@ -32,7 +32,7 @@ export const locale = {
 			CONTENT: 'Content',
 			DASHBOARD: 'Homepage',
 			LOCATION: {
-				CREATE: 'Crete Location',
+				CREATE: 'Create Location',
 				DASHBOARD: 'Dashboard',
 				LIST: 'All Locations',
 				MAIN: 'Locations',
