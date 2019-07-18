@@ -49,7 +49,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
 export function initializeConfig(layoutConfigService: LayoutConfigService, applicationService: ApplicationService) {
 	return () => {
-		applicationService.getConfiguration(layoutConfigService).subscribe(t => console.log('loaded cfg', t));
 		return applicationService.getConfiguration(layoutConfigService).toPromise();
 	};
 }

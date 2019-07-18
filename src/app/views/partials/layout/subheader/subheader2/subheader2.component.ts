@@ -13,7 +13,12 @@ export class Subheader2Component implements OnInit, OnDestroy, AfterViewInit {
 	today: number = Date.now();
 	title: string = '';
 	desc: string = '';
+	showToolbar: boolean = true;
 	breadcrumbs: Breadcrumb[] = [];
+	link: {
+		url?: string;
+		title?: string;
+	};
 
 	private subscriptions: Subscription[] = [];
 
@@ -30,6 +35,8 @@ export class Subheader2Component implements OnInit, OnDestroy, AfterViewInit {
 				Promise.resolve(null).then(() => {
 					this.title = bt.title;
 					this.desc = bt.desc;
+					this.showToolbar = bt.showToolbar;
+					this.link = bt.link;
 				});
 			}
 		}));

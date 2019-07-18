@@ -52,7 +52,6 @@ export class BaseComponent implements OnInit, OnDestroy {
 
 	ngOnInit(): void {
 		const config = this.layoutConfigService.getConfig();
-		console.log(config);
 		this.initLayout(config);
 
 		const layoutConfigSubscription = this.layoutConfigService.onConfigUpdated$.subscribe(cfg => {

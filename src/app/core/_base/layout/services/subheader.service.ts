@@ -14,11 +14,16 @@ export interface Breadcrumb {
 export interface BreadcrumbTitle {
 	title: string;
 	desc?: string;
+	showToolbar?: boolean;
+	link?: {
+		url?: string;
+		title?: string;
+	};
 }
 
 @Injectable()
 export class SubheaderService {
-	title$: BehaviorSubject<BreadcrumbTitle> = new BehaviorSubject<BreadcrumbTitle>({title: '', desc: ''});
+	title$: BehaviorSubject<BreadcrumbTitle> = new BehaviorSubject<BreadcrumbTitle>({title: '', desc: '', showToolbar: true, link: {}});
 	breadcrumbs$: BehaviorSubject<Breadcrumb[]> = new BehaviorSubject<Breadcrumb[]>([]);
 	disabled$: Subject<boolean> = new Subject<boolean>();
 
@@ -146,13 +151,13 @@ export class SubheaderService {
 	 *
 	 * @param title: string
 	 */
-	setTitle(page: string | { title: string, desc: string }) {
+	setTitle(page: string | { title: string, desc: string, showToolbar?: boolean, link?: {} }) {
 		if (typeof page === 'string') {
 			this.manualTitle[this.router.url] = page;
 			this.title$.next({title: page});
 		} else {
 			this.manualTitle[this.router.url] = page.title;
-			this.title$.next({title: page.title, desc: page.desc});
+			this.title$.next({title: page.title, desc: page.desc, showToolbar: page.showToolbar, link: page.link});
 		}
 	}
 

@@ -1,0 +1,24 @@
+import {Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
+import {Observable, of} from 'rxjs';
+import {Store} from '@ngrx/store';
+
+@Injectable()
+export class ApplicationResolver implements Resolve<Application> {
+
+	constructor(private router: Router,
+				private store: Store<AppState>) {
+	}
+
+	resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IApplication> {
+		this.store.dispatch(new ApplicationRequested());
+		return this.waitForApplicationToLoad();
+	}
+
+
+	waitForApplicationToLoad(): Observable<IApplication> {
+		console.log('load current app');
+		return of();
+	}
+
+}

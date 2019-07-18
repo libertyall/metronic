@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { map, take } from 'rxjs/operators';
-import { LayoutConfigService } from '../../../core/_base/layout';
+import {Injectable} from '@angular/core';
+import {Observable, of} from 'rxjs';
+import {AngularFirestore} from '@angular/fire/firestore';
+import {map, take} from 'rxjs/operators';
+import {LayoutConfigService} from '../../../core/_base/layout';
 import * as _ from 'lodash';
-import { LayoutConfig } from '../../../core/_config/default/layout.config';
-import { ApplicationModel } from '../model/application.model';
+import {LayoutConfig} from '../../../core/_config/default/layout.config';
+import {ApplicationModel} from '../model/application.model';
 
 
 @Injectable()
@@ -48,7 +48,7 @@ export class ApplicationService {
 				map((app: ApplicationModel) => {
 						const defaultConfig = new LayoutConfig().configs;
 						layoutConfigService.loadConfigs(defaultConfig);
-						this.applicationConfig = { ...this.applicationConfig, ...defaultConfig, ...app };
+						this.applicationConfig = {...this.applicationConfig, ...defaultConfig, ...app};
 						return this.applicationConfig;
 					}
 				));

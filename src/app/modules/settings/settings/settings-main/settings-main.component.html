@@ -1,0 +1,149 @@
+<div class="row">
+	<div class="col-lg-12">
+		<form [formGroup]="form" class="kt-form kt-form--group-seperator-dashed">
+
+			<!--<kt-alert *ngIf="hasFormErrors"
+                      type="warn"
+                      [showCloseButton]="true"
+                      [duration]="10000"
+                      (close)="onAlertClose()">
+                {{'forms.errors.title' | translate}}!
+                {{'forms.errors.description' | translate}}
+            </kt-alert>-->
+
+			<div class="kt-form__section kt-form__section--first" formGroupName="page">
+
+				<div class="form-group kt-form__group row pb-5">
+					<div class="col-lg-6 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<input matInput
+								   minlength="{{titleParams.minLength}}"
+								   maxlength="{{titleParams.maxLength}}"
+								   placeholder="{{'settings.main.placeholder.title' | translate}}"
+								   formControlName="title">
+							<!--<mat-error *ngIf="form.get('page.title').errors?.minlength">{{'forms.errors.minLength' |translate: titleParams}}</mat-error>-->
+							<mat-hint align="start"
+									  *ngIf="!form.get('page.title').value">{{'settings.main.hints.title' | translate}}</mat-hint>
+							<mat-hint align="end">{{form.get('page.title').value.length || 0}}
+								/{{titleParams.maxLength}}</mat-hint>
+						</mat-form-field>
+					</div>
+
+					<div class="col-lg-6 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<input matInput
+								   minlength="{{subTitleParams.minLength}}"
+								   maxlength="{{subTitleParams.maxLength}}"
+								   placeholder="{{'settings.main.placeholder.subTitle' | translate}}"
+								   formControlName="subTitle">
+							<!--<mat-error *ngIf="form.get('page.subTitle').errors?.minlength">{{'forms.errors.minLength' | translate: subTitleParams}}</mat-error>-->
+							<mat-hint align="start"
+									  *ngIf="!form.get('page.subTitle').value">{{'settings.main.hints.subTitle' | translate}}</mat-hint>
+							<mat-hint align="end">{{form.get('page.subTitle').value.length || 0}}
+								/{{subTitleParams.maxLength}}</mat-hint>
+						</mat-form-field>
+					</div>
+				</div>
+
+				<div class="form-group kt-form__group row py-5">
+					<div class="col-lg-6 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<input matInput
+								   placeholder="{{'settings.main.placeholder.email' | translate}}"
+								   formControlName="email">
+							<mat-hint align="start"
+									  *ngIf="!form.get('page.email').value">{{'settings.main.hints.email' | translate}}</mat-hint>
+						</mat-form-field>
+					</div>
+
+					<div class="col-lg-6 kt-margin-bottom-20-mobile">
+						<label>{{'settings.main.placeholder.isEnabled.title' | translate }}</label>
+						<div class="mat-form-field-fluid">
+							<mat-checkbox
+								formControlName="isEnabled">{{'settings.main.placeholder.isEnabled.text' | translate }}</mat-checkbox>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group kt-form__group row py-5">
+					<div class="col-lg-6 kt-margin-bottom-20-mobile">
+						<label>{{'settings.main.placeholder.assignedKeywords.title' | translate }}</label>
+						<mat-form-field class="mat-form-field-fluid">
+							<input matInput
+								   placeholder="{{'settings.main.placeholder.assignedKeywords.text' | translate}}"
+								   formControlName="assignedKeywords">
+						</mat-form-field>
+					</div>
+
+					<div class="col-lg-6 kt-margin-bottom-20-mobile">
+						<label>{{'settings.main.placeholder.description.title' | translate }}</label>
+						<mat-form-field class="mat-form-field-fluid">
+							<input matInput
+								   placeholder="{{'settings.main.placeholder.description.text' | translate}}"
+								   formControlName="description">
+						</mat-form-field>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="kt-form__section kt-form__section--first" formGroupName="downtime">
+				<div class="form-group kt-form__group row py-5">
+					<div class="col-lg-12"><h3>{{'settings.main.downtime' | translate}}</h3></div>
+
+					<div class="col-lg-6 kt-margin-bottom-20-mobile">
+						<label>{{'settings.main.placeholder.downtime.message.title' | translate }}</label>
+						<mat-form-field class="mat-form-field-fluid">
+							<input matInput
+								   placeholder="{{'settings.main.placeholder.downtime.message.text' | translate}}"
+								   formControlName="message">
+						</mat-form-field>
+					</div>
+					<div class="col-lg-6 kt-margin-bottom-20-mobile">
+						<label>{{'settings.main.placeholder.downtime.isEnabled.title' | translate }}</label>
+						<div class="mat-form-field-fluid">
+							<mat-checkbox
+								formControlName="isEnabled">{{'settings.main.placeholder.downtime.isEnabled.text' | translate }}</mat-checkbox>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="kt-form__section kt-form__section--first" formGroupName="registration">
+				<div class="form-group kt-form__group row py-5">
+					<div class="col-lg-12"><h3>{{'settings.main.placeholder.registration.title' | translate}}</h3></div>
+
+					<div class="col-lg-6 kt-margin-bottom-20-mobile">
+						<label>{{'settings.main.placeholder.registration.defaultRole.title' | translate }}</label><br/>
+						<mat-form-field class="mat-form-field-fluid">
+							<mat-select placeholder="{{'settings.main.placeholder.registration.defaultRole.placeholder' | translate}}"
+								formControlName="defaultRole">
+								<mat-option *ngFor="let role of roles"
+											[value]="role">{{'roles.' + role | translate}}</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+					<div class="col-lg-6 kt-margin-bottom-20-mobile">
+						<label>{{'settings.main.placeholder.registration.isEnabled.title' | translate }}</label>
+						<div class="mat-form-field-fluid">
+							<mat-checkbox
+								formControlName="isEnabled">{{'settings.main.placeholder.registration.isEnabled.text' | translate }}</mat-checkbox>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!--<div class="kt-form__section kt-form__section--first" formGroupName="links">
+                <div class="form-group kt-form__group row py-5">
+                    <div class="col-lg-12"><h3>{{'settings.main.links' | translate}}</h3></div>
+                    <ul>
+                        <li>Linktitel</li>
+                        <li>Links zu sozialen Netzwerken</li>
+                        <li>Anzeige im Footer?</li>
+                    </ul>
+                </div>
+            </div>-->
+
+		</form>
+	</div>
+</div>

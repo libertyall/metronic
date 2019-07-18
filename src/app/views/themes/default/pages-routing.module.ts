@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { BaseComponent } from './base/base.component';
-import { ErrorPageComponent } from './content/error-page/error-page.component';
-import { AuthGuard } from '../../../core/auth/_guards/auth.guard';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {BaseComponent} from './base/base.component';
+import {ErrorPageComponent} from './content/error-page/error-page.component';
+import {AuthGuard} from '../../../core/auth/_guards/auth.guard';
 
 const routes: Routes = [
 	{
@@ -45,11 +45,11 @@ const routes: Routes = [
 			{
 				path: 'uploader',
 				loadChildren: () => import('app/modules/uploader/uploader.module').then(m => m.UploaderModule)
-			},/*
-			 {
-			 path: 'settings',
-			 loadChildren: () => import('app/views/pages/settings/settings.module').then(m => m.SettingsModule)
-			 },
+			},
+			{
+				path: 'settings',
+				loadChildren: () => import('app/modules/settings/settings.module').then(m => m.SettingsModule)
+			},/*,
 			 {
 			 path: 'sponsors',
 			 loadChildren: () => import('app/views/pages/sponsor/sponsor.module').then(m => m.SponsorModule)
@@ -72,9 +72,9 @@ const routes: Routes = [
 			 'desc': 'Looks like you don\'t have permission to access for requested page.<br> Please, contact administrator'
 			 }
 			 },*/
-			{ path: 'error/:type', component: ErrorPageComponent },
-			{ path: '', redirectTo: 'articles', pathMatch: 'full' },
-			{ path: '**', redirectTo: 'articles', pathMatch: 'full' }
+			{path: 'error/:type', component: ErrorPageComponent},
+			{path: '', redirectTo: 'articles', pathMatch: 'full'},
+			{path: '**', redirectTo: 'articles', pathMatch: 'full'}
 		]
 	}
 ];

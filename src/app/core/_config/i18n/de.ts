@@ -327,6 +327,66 @@ export const locale = {
 		saveToList: 'Speichern und zur Übersicht',
 		saveToListDescription: 'Speichern und zur Listenansicht zurückkehren',
 		settings: {
+			layout: {
+				options: {
+					backend: {
+						title: 'Admin-Oberfläche'
+					},
+					frontend: {
+						title: 'Homepage'
+					},
+				},
+				title: 'Layout-Optionen'
+			},
+			main: {
+				downtime: 'Wartungsmodus',
+				hints: {
+					email: 'E-Mail Adresse für Benachrichtigungen',
+					subTitle: 'Untertitel für die Statuszeile',
+					title: 'Der Titel, der in der Statuszeile angezeigt wird'
+				},
+				placeholder: {
+					assignedKeywords: {
+						text: 'Komma-separierte Liste mit Schlagwörtern',
+						title: 'Verknüpfte Schlagwörter'
+					},
+					description: {
+						text: 'Gib hier eine kurze Beschreibung (max XX Zeichen) für Suchmaschinen an',
+						title: 'Beschreibung für Suchmaschinen.'
+					},
+					downtime: {
+						headerTitle: 'Wartungsmodus',
+						isEnabled: {
+							text: 'Wartungsmodus aktiviert?',
+							title: 'Soll die Seite in den Wartungsmodus gesetzt werden?'
+						},
+						message: {
+							text: 'Schreib hier kurz, warum die Seite im Wartungsmodus ist, wie lange es dauert etc.',
+							title: 'Hinweistext für die Benutzer'
+						}
+					},
+					email: 'E-Mail',
+					isEnabled: {
+						text: 'Ist die Seite aktiviert?',
+						title: 'Seite aktiv'
+					},
+					registration: {
+						defaultRole: {
+							placeholder: 'Standard-Rolle für die Neuanmeldung?',
+							title: 'Welche Rolle sollen Benutzer nach einer erfolgreichen Registrierung erhalten?'
+						},
+						isEnabled: {
+							text: 'Registrierung aktiviert?',
+							title: 'Dürfen sich Benutzer neu registrieren?'
+						},
+						title: 'Registrierung'
+					},
+					subTitle: 'Untertitel',
+					title: 'Titel der Seite'
+				},
+				registration: 'Registrierung',
+				title: 'Grundeinstellungen'
+			},
 			/* calendar: {
 			 addCalendar: 'Kalender hinzufügen',
 			 cssTitle: 'Farbe zur Anzeige der Termine',
@@ -440,18 +500,9 @@ export const locale = {
 			 pageTitle: 'Seiteneinstellungen',
 			 title: 'Administration der Seite'
 			 */
-			calendars: {
-				title: 'Kalender'
-			},
-			main: {
-				title: 'Grundeinstellungen'
-			},
-			social: {
-				title: 'Soziale Netzwerke'
-			},
 			subheader: {
 				title: 'Einstellungen',
-				desc: '---'
+				desc: ''
 			}
 		},
 		TRANSLATOR: {

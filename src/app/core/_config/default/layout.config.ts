@@ -62,9 +62,6 @@ export class LayoutConfig {
 					type: 'select',
 					options: ['./assets/media/logos/logo-dark.png', './assets/media/logos/logo-light.png', './assets/media/logos/logo-4.png'],
 					selected: './assets/media/logos/logo-dark.png'
-				},
-				page: {
-					title: 'Administration | SF Winterbach'
 				}
 			},
 			portlet: {

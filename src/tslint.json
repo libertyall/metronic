@@ -12,6 +12,7 @@
             "element",
             "kt",
             "kebab-case"
-        ]
-    }
+        ],
+		"quotemark": [false]
+	}
 }
