@@ -330,7 +330,111 @@ export const locale = {
 			layout: {
 				options: {
 					backend: {
-						title: 'Admin-Oberfläche'
+						title: 'Admin-Oberfläche',
+						aside: {
+							footer: {
+								self: {
+									display: 'Footer anzeigen',
+									title: 'Menü-Fußzeilen-Optionen'
+								},
+								title: 'Menü-Fußzeilen'
+							},
+							menu: {
+								title: 'Menü'
+							},
+							self: {
+								display: 'Menü anzeigen?',
+								title: 'Menü-Darstellung',
+								fixed: 'Fixiertes Menü',
+								minimize: {
+									default: 'Default',
+									title: 'Menü minimieren',
+									toggle: 'Menü auf-/ und zuklappbar'
+								}
+							},
+							title: 'Menü',
+						},
+						brand: {
+							title: 'Branding'
+						},
+						colors: {
+							base: {
+								title: 'Basisfarben'
+							},
+							title: 'Farbgebung',
+							state: {
+								brand: {
+									title: 'Brand'
+								},
+								danger: {
+									title: 'Fehler'
+								},
+								dark: {
+									title: 'Dunkel'
+								},
+								info: {
+									title: 'Info'
+								},
+								light: {
+									title: 'Hell'
+								},
+								primary: {
+									title: 'Primär'
+								},
+								success: {
+									title: 'Erfolg'
+								},
+								title: 'Farben für verschiedene Stati',
+								warning: {
+									title: 'Warnungen'
+								},
+							}
+						},
+						content: {
+							'fit-top': 'Content Fit Top Title',
+							width: 'Content width Title',
+							title: 'Inhalt'
+						},
+						footer: {
+							title: 'Fußzeile',
+							self: {
+								fixed: 'Fußzeile fixieren',
+								title: 'Fußzeilen-Optionen'
+							}
+						},
+						header: {
+							title: 'Erste Kopfzeile'
+						},
+						loader: {
+							enabled: 'Ladeanzeige aktivieren',
+							title: 'Ladeanzeige',
+							type: 'Art der Anzeige',
+							logo: 'Logo für den Ladebildschirm',
+							message: 'Nachricht während dem Ladevorgang'
+						},
+						portlet: {
+							title: 'Boxen / Portlets',
+							sticky: {
+								title: 'Fixierte Portlets',
+								offset: 'Offset Size in Pixel'
+							},
+						},
+						self: {
+							layout: 'Layout',
+							body: {
+								'background-image': 'Hintergrundbild',
+								title: 'Body Layout'
+							},
+							logo: {
+								title: 'Logo'
+							},
+							mainLogo: 'Hauptlogo',
+							stickyLogo: 'Festes Logo',
+							title: 'SELF??????'
+						},
+						subheader: {
+							title: 'Zweite Kopfzeile'
+						}
 					},
 					frontend: {
 						title: 'Homepage'

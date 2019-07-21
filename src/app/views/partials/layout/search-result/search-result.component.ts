@@ -1,4 +1,3 @@
-// Angular
 import { Component, Input } from '@angular/core';
 
 export interface ISearchResult {
@@ -12,7 +11,6 @@ export interface ISearchResult {
 	styleUrls: ['./search-result.component.scss']
 })
 export class SearchResultComponent {
-	// Public properties
 	@Input() data: ISearchResult[];
 	@Input() noRecordText: string;
 }

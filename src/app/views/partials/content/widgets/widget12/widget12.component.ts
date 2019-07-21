@@ -79,7 +79,7 @@ export class Widget12Component implements OnInit {
 							ticks: {
 								display: true,
 								beginAtZero: true,
-								fontColor: this.layoutConfigService.getConfig('backend.colors.base.shape.3'),
+								fontColor: this.layoutConfigService.getConfigValue('colors.base.shape')[3],
 								fontSize: 13,
 								padding: 10
 							}
@@ -95,13 +95,13 @@ export class Widget12Component implements OnInit {
 								labelString: 'Value'
 							},
 							gridLines: {
-								color: this.layoutConfigService.getConfig('backend.colors.base.shape.2'),
+								color: this.layoutConfigService.getConfigValue('colors.base.shape')[2],
 								drawBorder: false,
 								offsetGridLines: false,
 								drawTicks: false,
 								borderDash: [3, 4],
 								zeroLineWidth: 1,
-								zeroLineColor: this.layoutConfigService.getConfig('backend.colors.base.shape.2'),
+								zeroLineColor: this.layoutConfigService.getConfigValue('colors.base.shape')[2],
 								zeroLineBorderDash: [3, 4]
 							},
 							ticks: {
@@ -109,7 +109,7 @@ export class Widget12Component implements OnInit {
 								stepSize: 10,
 								display: true,
 								beginAtZero: true,
-								fontColor: this.layoutConfigService.getConfig('backend.colors.base.shape.3'),
+								fontColor: this.layoutConfigService.getConfigValue('colors.base.shape')[3],
 								fontSize: 13,
 								padding: 10
 							}
@@ -131,7 +131,7 @@ export class Widget12Component implements OnInit {
 					xPadding: 10,
 					caretPadding: 0,
 					displayColors: false,
-					backgroundColor: this.layoutConfigService.getConfig('backend.colors.state.brand'),
+					backgroundColor: this.layoutConfigService.getConfigValue('colors.state.brand'),
 					titleFontColor: '#ffffff',
 					cornerRadius: 4,
 					footerSpacing: 0,

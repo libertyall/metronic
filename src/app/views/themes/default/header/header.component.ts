@@ -2,7 +2,6 @@ import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angula
 import {
 	NavigationCancel, NavigationEnd, NavigationStart, RouteConfigLoadEnd, RouteConfigLoadStart, Router
 } from '@angular/router';
-import * as objectPath from 'object-path';
 import { LoadingBarService } from '@ngx-loading-bar/core';
 import { LayoutConfigService, LayoutRefService } from '../../../../core/_base/layout';
 import { HtmlClassService } from '../html-class.service';
@@ -15,7 +14,7 @@ import { HtmlClassService } from '../html-class.service';
 export class HeaderComponent implements OnInit, AfterViewInit {
 
 	menuHeaderDisplay: boolean;
-	@ViewChild('ktHeader', {static: true}) ktHeader: ElementRef;
+	@ViewChild('ktHeader', { static: true }) ktHeader: ElementRef;
 
 	constructor(private router: Router,
 				private layoutRefService: LayoutRefService,
@@ -39,10 +38,9 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 	}
 
 	ngOnInit(): void {
-		const config = this.layoutConfigService.getConfig();
-		this.menuHeaderDisplay = objectPath.get(config, 'backend.header.menu.self.display.selected');
+		this.menuHeaderDisplay = this.layoutConfigService.getConfigValue('header.menu.self.display');
 
-		if (objectPath.get(config, 'backend.header.self.fixed.desktop.enabled.selected') || objectPath.get(config, 'backend.header.self.fixed.desktop')) {
+		if (this.layoutConfigService.getConfigValue('header.self.fixed.desktop.enabled') || this.layoutConfigService.getConfigValue('header.self.fixed.desktop')) {
 			// header minimize on scroll down
 			this.ktHeader.nativeElement.setAttribute('data-ktheader-minimize', '1');
 		}

@@ -5,8 +5,8 @@ import * as objectPath from 'object-path';
 import {
 	LayoutConfigService, MenuConfigService, MenuHorizontalService, MenuOptions
 } from '../../../../../core/_base/layout';
-import { OffcanvasOptions } from '../../../../../core/_base/metronic';
 import { HtmlClassService } from '../../html-class.service';
+import { OffcanvasOptions } from '../../../../../core/_base/layout/directives/offcanvas.directive';
 
 @Component({
 	selector: 'kt-menu-horizontal',
@@ -55,7 +55,7 @@ export class MenuHorizontalComponent implements OnInit {
 
 
 	ngOnInit(): void {
-		this.rootArrowEnabled = this.layoutConfigService.getConfig('header.menu.self.root-arrow');
+		this.rootArrowEnabled = this.layoutConfigService.getConfigValue('header.menu.self.root-arrow');
 
 		this.currentRouteUrl = this.router.url;
 		this.router.events

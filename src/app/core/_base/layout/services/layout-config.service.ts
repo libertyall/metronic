@@ -2,19 +2,17 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import * as objectPath from 'object-path';
 import { merge } from 'lodash';
-import { BackendLayoutConfigModel } from '..';
+import { FormlyFieldConfig } from '@ngx-formly/core';
+import lodash from 'lodash-es';
+import filterDeep from 'deepdash-es';
+
+const _ = filterDeep(lodash);
 
 @Injectable()
 export class LayoutConfigService {
 
-	onConfigUpdated$: Subject<{
-		backend: BackendLayoutConfigModel,
-		frontend: any
-	}>;
-	layoutConfig: {
-		backend: BackendLayoutConfigModel,
-		frontend: any
-	};
+	onConfigUpdated$: Subject<FormlyFieldConfig[]>;
+	layoutConfig: FormlyFieldConfig[];
 
 	/**
 	 * Servcie constructor
@@ -27,10 +25,7 @@ export class LayoutConfigService {
 	 * Save layout config to the local storage
 	 * @param layoutConfig
 	 */
-	saveConfig(layoutConfig: {
-		backend: BackendLayoutConfigModel,
-		frontend: any
-	}): void {
+	saveConfig(layoutConfig: FormlyFieldConfig[]): void {
 		if (layoutConfig) {
 			localStorage.setItem('layoutConfig', JSON.stringify(layoutConfig));
 		}
@@ -39,10 +34,7 @@ export class LayoutConfigService {
 	/**
 	 * Get layout config from local storage
 	 */
-	getSavedConfig(): {
-		backend: BackendLayoutConfigModel,
-		frontend: any
-	} {
+	getSavedConfig(): FormlyFieldConfig[] {
 		const config = localStorage.getItem('layoutConfig');
 		return JSON.parse(config);
 	}
@@ -56,14 +48,14 @@ export class LayoutConfigService {
 
 	/**
 	 * Get all config or by object path
-	 * @param path | object path separated by dot
+	 * // @param path | object path separated by dot
 	 */
-	getConfig(path?: string): BackendLayoutConfigModel | any {
-		this.layoutConfig = this.getSavedConfig();
-		if (path) {
-			return objectPath.get(this.layoutConfig, path);
-		}
-		return this.layoutConfig;
+	getConfig(/*path?: string*/): FormlyFieldConfig[] {
+		return this.layoutConfig = this.getSavedConfig();
+		/* if (path) {
+		 return objectPath.get(this.layoutConfig, path);
+		 }
+		 return this.layoutConfig; */
 	}
 
 	/**
@@ -82,9 +74,10 @@ export class LayoutConfigService {
 	/**
 	 * Get brand logo
 	 */
-	getLogo(type: string): string {
-		const menuAsideLeftSkin = objectPath.get(this.layoutConfig, type + '.brand.self.skin.selected');
-		const logoObject = objectPath.get(this.layoutConfig, type + '.self.mainLogo.selected');
+	getLogo(): string {
+		const menuAsideLeftSkin = this.getConfigValue('brand.self.skin');
+		const logoObject = this.getConfigValue('self.mainLogo');
+
 
 		let logo;
 		if (typeof logoObject === 'string') {
@@ -95,9 +88,10 @@ export class LayoutConfigService {
 		}
 		if (typeof logo === 'undefined') {
 			try {
-				const logos = objectPath.get(this.layoutConfig, type + '.self.mainLogo.selected');
+				const logos = this.getConfigValue('self.mainLogo');
 				logo = logos[Object.keys(logos)[0]];
-			} catch (e) {
+			}
+			catch (e) {
 				console.log(e);
 			}
 		}
@@ -107,10 +101,10 @@ export class LayoutConfigService {
 	/**
 	 * Returns sticky logo
 	 */
-	getStickyLogo(type: string): string {
-		let logo = objectPath.get(this.layoutConfig, type + '.self.logo.stickyLogo.selected');
+	getStickyLogo(): string {
+		let logo = this.getConfigValue('self.stickyLogo');
 		if (typeof logo === 'undefined') {
-			logo = this.getLogo(type);
+			logo = this.getLogo();
 		}
 		return logo + '';
 	}
@@ -119,10 +113,7 @@ export class LayoutConfigService {
 	 * Initialize layout config
 	 * @param config
 	 */
-	loadConfigs(config: {
-		backend: BackendLayoutConfigModel,
-		frontend: any
-	}) {
+	loadConfigs(config: FormlyFieldConfig[]) {
 		this.layoutConfig = this.getSavedConfig();
 		if (!this.layoutConfig) {
 			this.layoutConfig = config;
@@ -133,29 +124,21 @@ export class LayoutConfigService {
 	/**
 	 * Reload current layout config to the state of latest saved config
 	 */
-	reloadConfigs(): {
-		backend: BackendLayoutConfigModel,
-		frontend: any
-	} {
+	reloadConfigs(): FormlyFieldConfig[] {
 		this.layoutConfig = this.getSavedConfig();
 		this.onConfigUpdated$.next(this.layoutConfig);
 		return this.layoutConfig;
 	}
 
-	/**
-	 * Get default route name by object
-	 */
-	getCurrentMainRoute(): string {
+	getConfigValue(configKey: string) {
 		const config = this.getConfig();
-		if (!config) {
-			return '';
-		}
-
-		const url = config.demo;
-		if (!url) {
-			return '';
-		}
-
-		return url;
+		let returnValue: any = false;
+		_.filterDeep(config, (value, key, parentValue) => {
+			if (value === configKey + '.key') {
+				returnValue = parentValue;
+			}
+		});
+		return returnValue.defaultValue;
 	}
+
 }

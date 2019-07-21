@@ -1,5 +1,4 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import * as objectPath from 'object-path';
 import { LayoutConfigService, SplashScreenService } from '../../../../core/_base/layout';
 
 @Component({
@@ -20,10 +19,9 @@ export class SplashScreenComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		const loaderConfig = this.layoutConfigService.getConfig('backend.loader');
-		this.loaderLogo = objectPath.get(loaderConfig, 'logo');
-		this.loaderType = objectPath.get(loaderConfig, 'type.selected');
-		this.loaderMessage = objectPath.get(loaderConfig, 'message');
+		this.loaderLogo = this.layoutConfigService.getConfigValue('loader.logo');
+		this.loaderType = this.layoutConfigService.getConfigValue('loader.type');
+		this.loaderMessage = this.layoutConfigService.getConfigValue('loader.message');
 
 		this.splashScreenService.init(this.splashScreen);
 	}

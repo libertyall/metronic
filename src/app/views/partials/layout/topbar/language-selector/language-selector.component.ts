@@ -1,7 +1,7 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { TranslationService } from '../../../../../core/_base/metronic';
+import { TranslationService } from '../../../../../core/_base/layout/services/translation.service';
 
 interface LanguageFlag {
 	lang: string;
@@ -32,16 +32,15 @@ export class LanguageSelectorComponent implements OnInit {
 		}
 	];
 
-	constructor(private translationService: TranslationService, private router: Router) {
+	constructor(private translationService: TranslationService,
+				private router: Router) {
 	}
 
 	ngOnInit() {
 		this.setSelectedLanguage();
 		this.router.events
 			.pipe(filter(event => event instanceof NavigationStart))
-			.subscribe(event => {
-				this.setSelectedLanguage();
-			});
+			.subscribe(() => this.setSelectedLanguage());
 	}
 
 	setLanguage(lang) {

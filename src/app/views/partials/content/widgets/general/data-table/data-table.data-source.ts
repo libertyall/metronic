@@ -1,11 +1,9 @@
-// Angular
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
-// RxJS
 import { Observable, BehaviorSubject, of} from 'rxjs';
 import { catchError, finalize, tap } from 'rxjs/operators';
-// CRUD
 import { QueryParamsModel,  QueryResultsModel, HttpExtenstionsModel } from '../../../../../../core/_base/crud';
-import { DataTableService, DataTableItemModel } from '../../../../../../core/_base/metronic';
+import { DataTableItemModel } from '../../../../../../core/_base/layout/models/datatable-item.model';
+import { DataTableService } from '../../../../../../core/_base/layout/services/datatable.service';
 
 // Why not use MatTableDataSource?
 /*  In this example, we will not be using the built-in MatTableDataSource because its designed for filtering,

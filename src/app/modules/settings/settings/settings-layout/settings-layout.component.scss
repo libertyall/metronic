@@ -1,10 +1,24 @@
-.example-tree-invisible {
+.tree-invisible {
 	display: none;
 }
 
-.example-tree ul,
-.example-tree li {
+.tree ul,
+.tree li {
 	margin-top: 0;
 	margin-bottom: 0;
 	list-style-type: none;
+}
+
+.mat-form-field, .mat-form-field-wrapper, .radio-group {
+	display: flex;
+	flex-direction: column;
+	margin: 15px 0;
+}
+
+.radio-button {
+	margin: 5px;
+}
+
+.mat-tree-node {
+	min-height: auto;
 }

@@ -34,7 +34,7 @@ export class TreeService {
 			node.parentTitle = key;
 
 			if (value != null) {
-				if (typeof value === 'object' && !(['multi-select', 'select', 'checkbox', 'number'].includes(value.type))) {
+				if (typeof value === 'object' && !(['text', 'multi-select', 'select', 'checkbox', 'number', 'radio'].includes(value.type))) {
 					node.children = this.buildFileTree(value, level + 1, key);
 				} else {
 					node.item = value;

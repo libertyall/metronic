@@ -1,18 +1,12 @@
-// Angular
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatPaginator, MatSort } from '@angular/material';
-// RXJS
 import { tap } from 'rxjs/operators';
 import { merge } from 'rxjs';
-// Crud
 import { QueryParamsModel } from '../../../../../../core/_base/crud';
-// Metronic
-import {
-	DataTableItemModel,
-	DataTableService
-} from '../../../../../../core/_base/metronic';
 import { DataTableDataSource } from './data-table.data-source';
+import { DataTableItemModel } from '../../../../../../core/_base/layout/models/datatable-item.model';
+import { DataTableService } from '../../../../../../core/_base/layout/services/datatable.service';
 
 @Component({
 	selector: 'kt-data-table',

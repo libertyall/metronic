@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import * as objectPath from 'object-path';
 import { PermissionClass } from '../../../../core/auth/_interfaces/permission.interface';
 import { LayoutConfigService, MenuConfigService, PageConfigService } from '../../../../core/_base/layout';
 import { HtmlClassService } from '../html-class.service';
@@ -51,14 +50,10 @@ export class BaseComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit(): void {
-		const config = this.layoutConfigService.getConfig();
-		this.initLayout(config);
+		this.initLayout();
 
-		const layoutConfigSubscription = this.layoutConfigService.onConfigUpdated$.subscribe(cfg => {
-			setTimeout(() => {
-			console.log(cfg);
-			this.initLayout(cfg);
-			});
+		const layoutConfigSubscription = this.layoutConfigService.onConfigUpdated$.subscribe(() => {
+			setTimeout(() => this.initLayout());
 		});
 		this.unsubscribe.push(layoutConfigSubscription);
 	}
@@ -67,13 +62,13 @@ export class BaseComponent implements OnInit, OnDestroy {
 		this.unsubscribe.forEach(sb => sb.unsubscribe());
 	}
 
-	initLayout(config): void {
-		this.selfLayout = objectPath.get(config, 'backend.self.layout.selected');
-		this.asideDisplay = objectPath.get(config, 'backend.aside.self.display.selected');
-		this.subheaderDisplay = objectPath.get(config, 'backend.subheader.display.selected');
-		this.desktopHeaderDisplay = objectPath.get(config, 'backend.header.self.fixed.desktop.selected');
-		this.fitTop = objectPath.get(config, 'backend.content.fit-top.selected');
-		this.fluid = objectPath.get(config, 'backend.content.width.selected');
+	initLayout(): void {
+		this.selfLayout = this.layoutConfigService.getConfigValue('self.layout');
+		this.asideDisplay = this.layoutConfigService.getConfigValue('aside.self.display');
+		this.subheaderDisplay = this.layoutConfigService.getConfigValue('subheader.display');
+		this.desktopHeaderDisplay = this.layoutConfigService.getConfigValue('header.self.fixed.desktop');
+		this.fitTop = this.layoutConfigService.getConfigValue('content.fit-top');
+		this.fluid = this.layoutConfigService.getConfigValue('content.width');
 	}
 
 	loadRolesWithPermissions() {

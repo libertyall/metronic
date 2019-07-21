@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { LayoutConfigService, SplashScreenService } from '../../../core/_base/layout';
-import { TranslationService } from '../../../core/_base/metronic';
-import * as objectPath from 'object-path';
 import { Title } from '@angular/platform-browser';
 import { of } from 'rxjs';
+import { TranslationService } from '../../../core/_base/layout/services/translation.service';
 
 @Component({
 	selector: 'kt-auth',
@@ -29,12 +28,11 @@ export class AuthComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		const config = this.layoutConfigService.getConfig();
-		this.backgroundImage = objectPath.get(config, 'backend.self.body.background-image.selected');
-		this.copyright = objectPath.get(config, 'backend.footer.self.copyright');
-		this.mainLogo = objectPath.get(config, 'backend.self.mainLogo.selected');
+		this.backgroundImage = this.layoutConfigService.getConfigValue('self.body.background-image');
+		this.copyright = 'COPYRIGHT TODO';
+		this.mainLogo = this.layoutConfigService.getConfigValue('self.mainLogo');
 		this.translationService.setLanguage(this.translationService.getSelectedLanguage());
-		this.headerLogo = this.layoutConfigService.getLogo('backend');
+		this.headerLogo = this.layoutConfigService.getLogo();
 		this.splashScreenService.hide();
 	}
 }

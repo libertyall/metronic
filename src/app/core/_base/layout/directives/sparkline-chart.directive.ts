@@ -1,8 +1,5 @@
-// Angular
 import { AfterViewInit, Directive, ElementRef, Input } from '@angular/core';
-// Chart
 import { Chart } from 'chart.js/dist/Chart.min.js';
-// LayoutConfig
 import { LayoutConfigService } from '../../layout/services/layout-config.service';
 
 export interface SparklineChartOptions {
@@ -71,24 +68,26 @@ export class SparklineChartDirective implements AfterViewInit {
 			type: 'line',
 			data: {
 				labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October'],
-				datasets: [{
-					label: '',
-					borderColor: color,
-					borderWidth: border,
+				datasets: [
+					{
+						label: '',
+						borderColor: color,
+						borderWidth: border,
 
-					pointHoverRadius: 4,
-					pointHoverBorderWidth: 12,
-					pointBackgroundColor: Chart.helpers.color('#000000').alpha(0).rgbString(),
-					pointBorderColor: Chart.helpers.color('#000000').alpha(0).rgbString(),
-					pointHoverBackgroundColor: this.layoutConfigService.getConfig('colors.state.danger'),
-					pointHoverBorderColor: Chart.helpers.color('#000000').alpha(0.1).rgbString(),
-					fill: false,
-					data: data,
-				}]
+						pointHoverRadius: 4,
+						pointHoverBorderWidth: 12,
+						pointBackgroundColor: Chart.helpers.color('#000000').alpha(0).rgbString(),
+						pointBorderColor: Chart.helpers.color('#000000').alpha(0).rgbString(),
+						pointHoverBackgroundColor: this.layoutConfigService.getConfigValue('colors.state.danger'),
+						pointHoverBorderColor: Chart.helpers.color('#000000').alpha(0.1).rgbString(),
+						fill: false,
+						data
+					}
+				]
 			},
 			options: {
 				title: {
-					display: false,
+					display: false
 				},
 				tooltips: {
 					enabled: false,
@@ -110,32 +109,36 @@ export class SparklineChartDirective implements AfterViewInit {
 					mode: 'index'
 				},
 				scales: {
-					xAxes: [{
-						display: false,
-						gridLines: false,
-						scaleLabel: {
-							display: true,
-							labelString: 'Month'
+					xAxes: [
+						{
+							display: false,
+							gridLines: false,
+							scaleLabel: {
+								display: true,
+								labelString: 'Month'
+							}
 						}
-					}],
-					yAxes: [{
-						display: false,
-						gridLines: false,
-						scaleLabel: {
-							display: true,
-							labelString: 'Value'
-						},
-						ticks: {
-							beginAtZero: true
+					],
+					yAxes: [
+						{
+							display: false,
+							gridLines: false,
+							scaleLabel: {
+								display: true,
+								labelString: 'Value'
+							},
+							ticks: {
+								beginAtZero: true
+							}
 						}
-					}]
+					]
 				},
 
 				elements: {
 					point: {
 						radius: 4,
 						borderWidth: 12
-					},
+					}
 				},
 
 				layout: {

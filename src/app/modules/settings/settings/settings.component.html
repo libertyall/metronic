@@ -48,6 +48,19 @@
 		<mat-tab-group [(selectedIndex)]="selectedTab">
 			<mat-tab>
 				<ng-template mat-tab-label>
+					<i class="mat-tab-label-icon fa fa-calendar"></i>
+					{{'settings.layout.title' | translate}}
+				</ng-template>
+				<ng-template matTabContent>
+					<kt-settings-layout></kt-settings-layout>
+					<!-- (saveApplication)="saveApplication($event)"
+                                        [application]="application"
+					<settings-calendars></settings-calendars>-->
+				</ng-template>
+			</mat-tab>
+
+			<mat-tab>
+				<ng-template mat-tab-label>
 					<i class="mat-tab-label-icon fa fa-info"></i>
 					{{'settings.main.title' | translate}}
 				</ng-template>
@@ -79,19 +92,6 @@
                      </settings-registration>
 
 					-->
-				</ng-template>
-			</mat-tab>
-
-			<mat-tab>
-				<ng-template mat-tab-label>
-					<i class="mat-tab-label-icon fa fa-calendar"></i>
-					{{'settings.layout.title' | translate}}
-				</ng-template>
-				<ng-template matTabContent>
-					<kt-settings-layout></kt-settings-layout>
-					<!-- (saveApplication)="saveApplication($event)"
-                                        [application]="application"
-					<settings-calendars></settings-calendars>-->
 				</ng-template>
 			</mat-tab>
 

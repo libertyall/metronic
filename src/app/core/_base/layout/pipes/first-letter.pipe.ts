@@ -16,6 +16,6 @@ export class FirstLetterPipe implements PipeTransform {
 	 * @param args: any
 	 */
 	transform(value: any, args?: any): any {
-		return value.split(' ').map(n => n[0]).join('');
+		return value && value.split(' ').map(n => n[0]).join('');
 	}
 }

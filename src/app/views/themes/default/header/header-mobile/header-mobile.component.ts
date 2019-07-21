@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ToggleOptions } from '../../../../../core/_base/metronic';
 import { LayoutConfigService } from '../../../../../core/_base/layout';
+import { ToggleOptions } from '../../../../../core/_base/layout/directives/toggle.directive';
 
 @Component({
 	selector: 'kt-header-mobile',
@@ -22,7 +22,7 @@ export class HeaderMobileComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.headerLogo = this.layoutConfigService.getLogo('backend');
-		this.asideDisplay = this.layoutConfigService.getConfig('backend.aside.self.display');
+		this.headerLogo = this.layoutConfigService.getLogo();
+		this.asideDisplay = this.layoutConfigService.getConfigValue('aside.self.display');
 	}
 }

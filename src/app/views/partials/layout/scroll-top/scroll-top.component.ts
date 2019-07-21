@@ -1,7 +1,5 @@
-// Angular
 import { Component } from '@angular/core';
-// Metronic
-import { ScrollTopOptions } from '../../../../core/_base/metronic';
+import { ScrollTopOptions } from '../../../../core/_base/layout/directives/scroll-top.directive';
 
 @Component({
 	selector: 'kt-scroll-top',

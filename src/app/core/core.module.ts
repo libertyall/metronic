@@ -1,7 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ContentAnimateDirective, HeaderDirective, MenuDirective, StickyDirective } from './_base/layout';
-import { FirstLetterPipe, GetObjectPipe, JoinPipe, OffcanvasDirective, SafePipe, ScrollTopDirective, SparklineChartDirective, TabClickEventDirective, TimeElapsedPipe, ToggleDirective } from './_base/metronic';
+import { OffcanvasDirective } from './_base/layout/directives/offcanvas.directive';
+import { ScrollTopDirective } from './_base/layout/directives/scroll-top.directive';
+import { ToggleDirective } from './_base/layout/directives/toggle.directive';
+import { FirstLetterPipe } from './_base/layout/pipes/first-letter.pipe';
+import { TabClickEventDirective } from './_base/layout/directives/tab-click-event.directive';
+import { SparklineChartDirective } from './_base/layout/directives/sparkline-chart.directive';
+import { TimeElapsedPipe } from './_base/layout/pipes/time-elapsed.pipe';
+import { JoinPipe } from './_base/layout/pipes/join.pipe';
+import { GetObjectPipe } from './_base/layout/pipes/get-object.pipe';
+import { SafePipe } from './_base/layout/pipes/safe.pipe';
 
 @NgModule({
 	imports: [CommonModule],
@@ -9,39 +18,33 @@ import { FirstLetterPipe, GetObjectPipe, JoinPipe, OffcanvasDirective, SafePipe,
 		OffcanvasDirective,
 		ScrollTopDirective,
 		ToggleDirective,
-		// directives
 		MenuDirective,
-		// ContentAnimateDirective,
-		// pipes
-		FirstLetterPipe,
-		/* HeaderDirective,
+		HeaderDirective,
+		ContentAnimateDirective,
 		TabClickEventDirective,
 		SparklineChartDirective,
 		StickyDirective,
-		// pipes
+		FirstLetterPipe,
 		TimeElapsedPipe,
 		JoinPipe,
 		GetObjectPipe,
-		SafePipe, */
+		SafePipe,
 	],
 	exports: [
 		OffcanvasDirective,
 		ScrollTopDirective,
 		ToggleDirective,
-		// directives
 		MenuDirective,
-		// ContentAnimateDirective,
-		// pipes
+		ContentAnimateDirective,
 		FirstLetterPipe,
-		/* HeaderDirective,
+		HeaderDirective,
 		TabClickEventDirective,
 		SparklineChartDirective,
 		StickyDirective,
-		// pipes
 		TimeElapsedPipe,
 		JoinPipe,
 		GetObjectPipe,
-		SafePipe, */
+		SafePipe,
 	],
 	providers: []
 })

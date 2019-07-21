@@ -1,7 +1,5 @@
-// Angular
 import { Component } from '@angular/core';
-// Metronic
-import { OffcanvasOptions } from '../../../../core/_base/metronic';
+import { OffcanvasOptions } from '../../../../core/_base/layout/directives/offcanvas.directive';
 
 @Component({
 	selector: 'kt-sticky-toolbar',
@@ -9,7 +7,7 @@ import { OffcanvasOptions } from '../../../../core/_base/metronic';
 	styleUrls: ['./sticky-toolbar.component.scss']
 })
 export class StickyToolbarComponent {
-	// Public properties
+
 	demoPanelOptions: OffcanvasOptions = {
 		overlay: true,
 		baseClass: 'kt-demo-panel',

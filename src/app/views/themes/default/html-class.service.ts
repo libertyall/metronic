@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import * as objectPath from 'object-path';
 import { BehaviorSubject } from 'rxjs';
-import { BackendLayoutConfigModel } from '../../../core/_base/layout';
+import { FormlyFieldConfig } from '@ngx-formly/core';
+import { LayoutConfigService } from '../../../core/_base/layout';
 
 export interface ClassType {
 	header: string[];
@@ -13,14 +14,11 @@ export interface ClassType {
 @Injectable()
 export class HtmlClassService {
 
-	config: {
-		backend: BackendLayoutConfigModel,
-		frontend: any
-	};
+	config: FormlyFieldConfig[];
 	classes: ClassType;
 	onClassesUpdated$: BehaviorSubject<ClassType>;
 
-	constructor() {
+	constructor(private layoutConfigService: LayoutConfigService) {
 		this.onClassesUpdated$ = new BehaviorSubject(this.classes);
 	}
 
@@ -28,10 +26,7 @@ export class HtmlClassService {
 	 * Build html element classes from layout config
 	 * @param layoutConfig
 	 */
-	setConfig(layoutConfig: {
-		backend: BackendLayoutConfigModel,
-		frontend: any
-	}) {
+	setConfig(layoutConfig: FormlyFieldConfig[]) {
 		this.config = layoutConfig;
 
 		this.classes = {
@@ -53,6 +48,7 @@ export class HtmlClassService {
 	}
 
 	getClasses(path?: string, toString?: boolean): ClassType | string[] | string {
+		console.log(this.classes);
 		if (path) {
 			const classes = objectPath.get(this.classes, path) || '';
 			if (toString && Array.isArray(classes)) {
@@ -64,11 +60,11 @@ export class HtmlClassService {
 	}
 
 	private initLayout() {
-		if (objectPath.has(this.config, 'backend.self.body.class')) {
-			document.body.classList.add(objectPath.get(this.config, 'backend.self.body.class'));
+		if (this.layoutConfigService.getConfigValue('self.body.class')) {
+			document.body.classList.add(this.layoutConfigService.getConfigValue('self.body.class'));
 		}
-		if (objectPath.get(this.config, 'backend.self.layout') === 'boxed' && objectPath.has(this.config, 'backend.self.body.background-image.selected')) {
-			document.body.style.backgroundImage = 'url("' + objectPath.get(this.config, 'backend.self.body.background-image.selected') + '")';
+		if (this.layoutConfigService.getConfigValue('self.layout') === 'boxed' && this.layoutConfigService.getConfigValue('self.body.background-image')) {
+			document.body.style.backgroundImage = 'url("' + this.layoutConfigService.getConfigValue('self.body.background-image') + '")';
 		}
 	}
 
@@ -77,47 +73,57 @@ export class HtmlClassService {
 
 	private initHeader() {
 		// Fixed header
-		if (objectPath.get(this.config, 'backend.header.self.fixed.desktop.selected')) {
+		if (this.layoutConfigService.getConfigValue('header.self.fixed.desktop')) {
 			document.body.classList.add('kt-header--fixed');
 			objectPath.push(this.classes, 'header', 'kt-header--fixed');
 		} else {
 			document.body.classList.add('kt-header--static');
 		}
 
-		if (objectPath.get(this.config, 'backend.header.self.fixed.mobile.selected')) {
+		if (this.layoutConfigService.getConfigValue('header.self.fixed.mobile')) {
 			document.body.classList.add('kt-header-mobile--fixed');
 			objectPath.push(this.classes, 'header_mobile', 'kt-header-mobile--fixed');
 		}
 
-		if (objectPath.get(this.config, 'backend.header.menu.self.layout')) {
-			objectPath.push(this.classes, 'header_menu', 'kt-header-menu--layout-' + objectPath.get(this.config, 'backend.header.menu.self.layout.selected'));
+		if (this.layoutConfigService.getConfigValue('header.menu.self.layout')) {
+			objectPath.push(this.classes, 'header_menu', 'kt-header-menu--layout-' + this.layoutConfigService.getConfigValue('header.menu.self.layout'));
 		}
 	}
 
 	private initSubheader() {
 		// Fixed content head
-		if (objectPath.get(this.config, 'backend.subheader.fixed.selected')) {
+		if (this.layoutConfigService.getConfigValue('subheader.fixed')) {
 			document.body.classList.add('kt-subheader--fixed');
 		}
 
-		if (objectPath.get(this.config, 'backend.subheader.display.selected')) {
+		if (this.layoutConfigService.getConfigValue('subheader.display')) {
 			document.body.classList.add('kt-subheader--enabled');
 		}
 
-		if (objectPath.has(this.config, 'backend.subheader.style.selected')) {
-			document.body.classList.add('kt-subheader--' + objectPath.get(this.config, 'backend.subheader.style.selected'));
+		if (this.layoutConfigService.getConfigValue('subheader.style')) {
+			document.body.classList.add('kt-subheader--' + this.layoutConfigService.getConfigValue('subheader.style'));
 		}
 	}
 
 	private initAside() {
-		if (objectPath.get(this.config, 'backend.aside.self.display.selected') !== true) {
+		if (this.layoutConfigService.getConfigValue('aside.self.display') !== true) {
 			return;
 		}
 
 		document.body.classList.add('kt-aside--enabled');
 
+
+		if (this.layoutConfigService.getConfigValue('aside.self.skin')) {
+			objectPath.push(this.classes, 'aside', 'kt-aside--skin-' + this.layoutConfigService.getConfigValue('aside.self.skin'));
+			document.body.classList.add('kt-aside--skin-' + this.layoutConfigService.getConfigValue('aside.self.skin'));
+			objectPath.push(this.classes, 'aside_menu', 'kt-aside-menu--skin-' + this.layoutConfigService.getConfigValue('aside.self.skin'));
+
+			document.body.classList.add('kt-aside__brand--skin-' + this.layoutConfigService.getConfigValue('aside.self.skin'));
+			objectPath.push(this.classes, 'brand', 'kt-aside__brand--skin-' + this.layoutConfigService.getConfigValue('aside.self.skin'));
+		}
+
 		// Fixed Aside
-		if (objectPath.get(this.config, 'backend.aside.self.fixed.selected')) {
+		if (this.layoutConfigService.getConfigValue('aside.self.fixed')) {
 			document.body.classList.add('kt-aside--fixed');
 			objectPath.push(this.classes, 'aside', 'kt-aside--fixed');
 		} else {
@@ -125,17 +131,19 @@ export class HtmlClassService {
 		}
 
 		// Default fixed
-		if (objectPath.get(this.config, 'backend.aside.self.minimize.default.selected')) {
+		if (this.layoutConfigService.getConfigValue('aside.self.minimize.default')) {
 			document.body.classList.add('kt-aside--minimize');
 		}
 
 		// Menu
 		// Dropdown Submenu
-		if (objectPath.get(this.config, 'backend.aside.self.fixed.selected') !== true && objectPath.get(this.config, 'backend.aside.menu.dropdown.selected')) {
+		if (this.layoutConfigService.getConfigValue('aside.self.fixed') !== true && this.layoutConfigService.getConfigValue('aside.menu.dropdown')) {
 			objectPath.push(this.classes, 'aside_menu', 'kt-aside-menu--dropdown');
 		}
+		console.log(this.classes);
 	}
 
+	/*
 	private initAsideSecondary() {
 		if (objectPath.get(this.config, 'backend.aside-secondary.self.display.selected')) {
 			document.body.classList.add('kt-aside-secondary--enabled');
@@ -149,7 +157,7 @@ export class HtmlClassService {
 		if (objectPath.get(this.config, 'backend.aside-secondary.self.layout.selected') === 'layout-3') {
 			document.body.classList.add('kt-aside-secondary--static');
 		}
-	}
+	} */
 
 	private initContent() {
 	}
@@ -158,9 +166,9 @@ export class HtmlClassService {
 	 * Init Footer
 	 */
 	private initFooter() {
-		// Fixed header
-		if (objectPath.get(this.config, 'backend.footer.self.fixed.selected')) {
+		if (this.layoutConfigService.getConfigValue('footer.self.fixed')) {
 			document.body.classList.add('kt-footer--fixed');
 		}
 	}
+
 }

@@ -3,10 +3,10 @@ import {
 } from '@angular/core';
 import { filter } from 'rxjs/operators';
 import { NavigationEnd, Router } from '@angular/router';
-import * as objectPath from 'object-path';
 import { LayoutConfigService, MenuAsideService, MenuOptions } from '../../../../core/_base/layout';
-import { OffcanvasOptions } from '../../../../core/_base/metronic';
 import { HtmlClassService } from '../html-class.service';
+import { OffcanvasOptions } from '../../../../core/_base/layout/directives/offcanvas.directive';
+import * as objectPath from 'object-path';
 
 @Component({
 	selector: 'kt-aside-left',
@@ -70,16 +70,14 @@ export class AsideLeftComponent implements OnInit, AfterViewInit {
 			.pipe(filter(event => event instanceof NavigationEnd))
 			.subscribe(() => this.currentRouteUrl = this.router.url.split(/[?#]/)[0]);
 
-		const config = this.layoutConfigService.getConfig();
-
-		if (objectPath.get(config, 'backend.aside.menu.dropdown') !== true && objectPath.get(config, 'backend.aside.self.fixed')) {
+		if (this.layoutConfigService.getConfigValue('aside.menu.dropdown') !== true && this.layoutConfigService.getConfigValue('aside.self.fixed')) {
 			this.render.setAttribute(this.asideMenu.nativeElement, 'data-ktmenu-scroll', '1');
 		}
 
-		if (objectPath.get(config, 'backend.aside.menu.dropdown')) {
+		if (this.layoutConfigService.getConfigValue('aside.menu.dropdown')) {
 			this.render.setAttribute(this.asideMenu.nativeElement, 'data-ktmenu-dropdown', '1');
 			// tslint:disable-next-line:max-line-length
-			this.render.setAttribute(this.asideMenu.nativeElement, 'data-ktmenu-dropdown-timeout', objectPath.get(config, 'backend.aside.menu.submenu.dropdown.hover-timeout'));
+			this.render.setAttribute(this.asideMenu.nativeElement, 'data-ktmenu-dropdown-timeout', this.layoutConfigService.getConfigValue('aside.menu.submenu.dropdown.hover-timeout'));
 		}
 	}
 

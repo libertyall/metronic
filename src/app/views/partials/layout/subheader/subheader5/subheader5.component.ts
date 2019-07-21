@@ -1,8 +1,5 @@
-// Angular
 import { AfterViewInit, Component, Input, OnDestroy, OnInit } from '@angular/core';
-// RxJS
 import { Subscription } from 'rxjs';
-// Layout
 import { SubheaderService } from '../../../../../core/_base/layout';
 import { Breadcrumb } from '../../../../../core/_base/layout/services/subheader.service';
 

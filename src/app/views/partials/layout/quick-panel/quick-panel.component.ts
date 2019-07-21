@@ -1,7 +1,5 @@
-// Angular
 import { Component } from '@angular/core';
-// Metronic
-import { OffcanvasOptions } from '../../../../core/_base/metronic';
+import { OffcanvasOptions } from '../../../../core/_base/layout/directives/offcanvas.directive';
 
 @Component({
 	selector: 'kt-quick-panel',

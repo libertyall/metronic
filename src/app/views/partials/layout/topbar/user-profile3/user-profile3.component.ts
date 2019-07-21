@@ -1,8 +1,5 @@
-// Angular
 import { Component, Input, OnInit } from '@angular/core';
-// RxJS
 import { Observable } from 'rxjs';
-// NGRX
 import { select, Store } from '@ngrx/store';
 import { currentUser } from '../../../../../core/auth/_selectors/auth.selectors';
 import { logout } from '../../../../../core/auth/_actions/auth.actions';

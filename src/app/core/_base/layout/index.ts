@@ -5,7 +5,6 @@ export { MenuDirective } from './directives/menu.directive';
 export { StickyDirective } from './directives/sticky.directive';
 
 // Models
-export { BackendLayoutConfigModel } from './models/layout-config.model';
 export { MenuOptions } from './directives/menu.directive';
 
 // Services

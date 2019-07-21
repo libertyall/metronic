@@ -46,7 +46,7 @@ export class ApplicationService {
 			return this.getCurrentApplication().pipe(
 				take(1),
 				map((app: ApplicationModel) => {
-						const defaultConfig = new LayoutConfig().configs;
+						const defaultConfig = new LayoutConfig().backendConfig;
 						layoutConfigService.loadConfigs(defaultConfig);
 						this.applicationConfig = {...this.applicationConfig, ...defaultConfig, ...app};
 						return this.applicationConfig;
