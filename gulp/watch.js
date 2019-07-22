@@ -1,8 +1,8 @@
-var gulp = require('gulp');
-var build = require('./build');
+let gulp = require('gulp');
+let build = require('./build');
 
 // localhost site
-var connect = require('gulp-connect');
+let connect = require('gulp-connect');
 gulp.task('localhost', function (cb) {
 	connect.server({
 		root: '../dist',
