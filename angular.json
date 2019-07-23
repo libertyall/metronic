@@ -3,7 +3,7 @@
 	"version": 1,
 	"newProjectRoot": "projects",
 	"projects": {
-		"metronic": {
+		"sfw": {
 			"root": "",
 			"sourceRoot": "src",
 			"projectType": "application",
@@ -21,22 +21,21 @@
 				"build": {
 					"builder": "@angular-devkit/build-angular:browser",
 					"options": {
-						"outputPath": "dist/metronic",
+						"outputPath": "dist/sfw",
 						"index": "src/index.html",
 						"main": "src/main.ts",
 						"polyfills": "src/polyfills.ts",
 						"tsConfig": "src/tsconfig.app.json",
 						"assets": [
+							"src/favicon.ico",
 							"src/assets"
 						],
 						"styles": [
-							"src/styles.scss",
-							// "node_modules/@fullcalendar/core/main.css",
-							// "node_modules/@fullcalendar/daygrid/main.css"
+							"src/styles.scss"
 						],
 						"scripts": [
-							"src/assets/vendors/global/vendors.bundle.js",
-							"src/assets/base/scripts.bundle.js"
+							"dist/assets/vendors/global/vendors.bundle.js",
+							"dist/assets/js/scripts.bundle.js"
 						],
 						"es5BrowserSupport": true
 					},
@@ -70,18 +69,18 @@
 				"serve": {
 					"builder": "@angular-devkit/build-angular:dev-server",
 					"options": {
-						"browserTarget": "metronic:build"
+						"browserTarget": "sfw:build"
 					},
 					"configurations": {
 						"production": {
-							"browserTarget": "metronic:build:production"
+							"browserTarget": "sfw:build:production"
 						}
 					}
 				},
 				"extract-i18n": {
 					"builder": "@angular-devkit/build-angular:extract-i18n",
 					"options": {
-						"browserTarget": "metronic:build"
+						"browserTarget": "sfw:build"
 					}
 				},
 				"test": {
@@ -120,7 +119,7 @@
 				}
 			}
 		},
-		"metronic-e2e": {
+		"sfw-e2e": {
 			"root": "e2e/",
 			"sourceRoot": "",
 			"projectType": "application",
@@ -129,7 +128,7 @@
 					"builder": "@angular-devkit/build-angular:protractor",
 					"options": {
 						"protractorConfig": "e2e/protractor.conf.js",
-						"devServerTarget": "metronic:serve"
+						"devServerTarget": "sfw:serve"
 					}
 				},
 				"lint": {
@@ -146,5 +145,5 @@
 			}
 		}
 	},
-	"defaultProject": "metronic"
+	"defaultProject": "sfw"
 }

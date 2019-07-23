@@ -1,35 +1,33 @@
 'use strict';
 
-var gulp = require('gulp');
-var sass = require('gulp-sass');
-var rename = require('gulp-rename');
-var rewrite = require('gulp-rewrite-css');
-var concat = require('gulp-concat');
-var lazypipe = require('lazypipe');
-var gulpif = require('gulp-if');
-var uglify = require('gulp-uglify-es').default;
-var sourcemaps = require('gulp-sourcemaps');
-var build = require('./build');
-var path = require('path');
-var fs = require('fs');
-var filter = require('gulp-filter');
-var autoprefixer = require('gulp-autoprefixer');
-var rtlcss = require('gulp-rtlcss');
-var cleancss = require('gulp-clean-css');
-var yargs = require('yargs');
+let gulp = require('gulp');
+let sass = require('gulp-sass');
+let rename = require('gulp-rename');
+let rewrite = require('gulp-rewrite-css');
+let concat = require('gulp-concat');
+let lazypipe = require('lazypipe');
+let gulpif = require('gulp-if');
+let uglify = require('gulp-uglify-es').default;
+let sourcemaps = require('gulp-sourcemaps');
+let build = require('./build');
+let path = require('path');
+let fs = require('fs');
+let filter = require('gulp-filter');
+let autoprefixer = require('gulp-autoprefixer');
+let rtlcss = require('gulp-rtlcss');
+let cleancss = require('gulp-clean-css');
+let yargs = require('yargs');
 
 // merge with default parameters
-var args = Object.assign({
+let args = Object.assign({
     prod: false,
-    sass: false,
-    js: false,
-    media: false,
+    sass: true,
+    js: true,
+    media: true,
 }, yargs.argv);
 
-var allAssets = false;
-if (args.sass === false && args.js === false && args.media === false) {
-    allAssets = true;
-}
+let allAssets = true;
+
 
 if (args.prod !== false) {
     // force disable debug for production
@@ -40,10 +38,9 @@ if (args.prod !== false) {
 
 module.exports = {
 
-    // default variable config
+    // default letiable config
     config: Object.assign({}, {
-        demo: '',
-        debug: true,
+        debug: false,
         compile: {
             jsUglify: false,
             cssMinify: false,
@@ -66,10 +63,10 @@ module.exports = {
         if (typeof funcname !== 'function') {
             return false;
         }
-        for (var key in array) {
+        for (let key in array) {
             // apply "funcname" recursively only on object
             if (Object.prototype.toString.call(array[key]) === '[object Object]') {
-                var funcArgs = [array[key], funcname];
+                let funcArgs = [array[key], funcname];
                 if (arguments.length > 2) {
                     funcArgs.push(userdata);
                 }
@@ -95,7 +92,7 @@ module.exports = {
      * Add JS compilation options to gulp pipe
      */
     jsChannel: function () {
-        var config = this.config.compile;
+        let config = this.config.compile;
         return lazypipe().pipe(function () {
             return gulpif(config.jsSourcemaps, sourcemaps.init({loadMaps: true, debug: config.debug}));
         }).pipe(function () {
@@ -109,7 +106,7 @@ module.exports = {
      * Add CSS compilation options to gulp pipe
      */
     cssChannel: function (rtl, includePaths) {
-        var config = this.config.compile;
+        let config = this.config.compile;
         return lazypipe().pipe(function () {
             return gulpif(config.cssSourcemaps, sourcemaps.init({loadMaps: true, debug: config.debug}));
         }).pipe(function () {
@@ -166,20 +163,21 @@ module.exports = {
             outputFile = '';
         }
 
-        var piping = lazypipe();
+        let piping = lazypipe();
 
-        var regex = new RegExp(/\{\$.*?\}/);
-        var matched = path.match(regex);
+        let regex = new RegExp(/\{\$.*?\}/);
+        let matched = path.match(regex);
         if (matched) {
-            var outputs = build.config.dist;
-            console.log(build.config.dist);
+            let outputs = build.config.dist;
+            // console.log(build.config.dist);
             outputs.forEach(function (output) {
                 if (output.indexOf('/**/') !== -1) {
                     module.exports.getDemos().forEach(function (demo) {
-                        var outputPath = path.replace('**', demo).replace(matched[0], output.replace('**', demo)).replace(outputFile, '');
+                        let outputPath = path.replace('**', demo).replace(matched[0], output.replace('**', demo)).replace(outputFile, '');
                         // exclude unrelated demo assets
                         if (outputPath.indexOf('/assets/demo/') !== -1 && outputPath.indexOf('/assets/demo/' + demo) === -1) {
-                            var f = filter(outputPath, {restore: true});
+                        	console.log('test');
+                            let f = filter(outputPath, {restore: true});
                             piping = piping.pipe(function () {
                                 return f;
                             });
@@ -202,7 +200,7 @@ module.exports = {
                 } else {
                     if (path.indexOf('/**/') !== -1) {
                         module.exports.getDemos().forEach(function (demo) {
-                            var outputPath = path.replace('**', demo).replace(matched[0], output).replace(outputFile, '');
+                            let outputPath = path.replace('**', demo).replace(matched[0], output).replace(outputFile, '');
                             (function (_output) {
                                 piping = piping.pipe(function () {
                                     return gulp.dest(_output);
@@ -210,7 +208,7 @@ module.exports = {
                             })(outputPath);
                         });
                     } else {
-                        var outputPath = path.replace(matched[0], output).replace(outputFile, '');
+                        let outputPath = path.replace(matched[0], output).replace(outputFile, '');
                         (function (_output) {
                             piping = piping.pipe(function () {
                                 return gulp.dest(_output);
@@ -230,13 +228,13 @@ module.exports = {
      * @returns {*}
      */
     dotPath: function (path) {
-        var regex = new RegExp(/\{\$(.*?)\}/),
+        let regex = new RegExp(/\{\$(.*?)\}/),
             dot = function (obj, i) {
                 return obj[i];
             };
-        var matched = path.match(regex);
+        let matched = path.match(regex);
         if (matched) {
-            var realpath = matched[1].split('.').reduce(dot, build);
+            let realpath = matched[1].split('.').reduce(dot, build);
             return path = path.replace(matched[0], realpath);
         }
 
@@ -258,10 +256,10 @@ module.exports = {
      * @param folder
      */
     cssRewriter: function (folder) {
-        var imgRegex = new RegExp(/\.(gif|jpg|jpeg|tiff|png|ico)$/i);
-        // var fontRegex = new RegExp(/\.(otf|eot|svg|ttf|woff|woff2)$/i);
-        var vendorGlobalRegex = new RegExp(/vendors\/global/i);
-        var config = this.config;
+        let imgRegex = new RegExp(/\.(gif|jpg|jpeg|tiff|png|ico)$/i);
+        // let fontRegex = new RegExp(/\.(otf|eot|svg|ttf|woff|woff2)$/i);
+        let vendorGlobalRegex = new RegExp(/vendors\/global/i);
+        let config = this.config;
 
         return lazypipe().pipe(function () {
             // rewrite css relative path
@@ -269,12 +267,12 @@ module.exports = {
                 destination: folder,
                 debug: config.debug,
                 adaptPath: function (ctx) {
-                    var isCss = ctx.sourceFile.match(/\.[css]+$/i);
+                    let isCss = ctx.sourceFile.match(/\.[css]+$/i);
                     // process css only
                     if (isCss[0] === '.css') {
-                        var pieces = ctx.sourceDir.split(/\\|\//);
+                        let pieces = ctx.sourceDir.split(/\\|\//);
 
-                        var vendor = '';
+                        let vendor = '';
                         if (vendorGlobalRegex.test(folder)) {
                             // only vendors/base pass this
                             vendor = pieces[pieces.indexOf('node_modules') + 1];
@@ -283,9 +281,9 @@ module.exports = {
                             }
                         }
 
-                        var file = module.exports.baseFileName(ctx.targetFile);
+                        let file = module.exports.baseFileName(ctx.targetFile);
 
-                        var extension = 'fonts/';
+                        let extension = 'fonts/';
                         if (imgRegex.test(file)) {
                             extension = 'images/';
                         }
@@ -303,7 +301,7 @@ module.exports = {
      * @returns {string}
      */
     baseFileName: function (path) {
-        var maybeFile = path.split('/').pop();
+        let maybeFile = path.split('/').pop();
         if (maybeFile.indexOf('.') !== -1) {
             return maybeFile;
         }
@@ -311,8 +309,8 @@ module.exports = {
     },
 
     baseName: function (str) {
-        var base = new String(str).substring(str.lastIndexOf('/') + 1);
-        if (base.lastIndexOf('.') != -1) {
+        let base = String(str).substring(str.lastIndexOf('/') + 1);
+        if (base.lastIndexOf('.') !== -1) {
             base = base.substring(0, base.lastIndexOf('.'));
         }
         return base;
@@ -322,7 +320,7 @@ module.exports = {
      * Remove file name and get the path
      */
     pathOnly: function (str) {
-        var array = str.split('/');
+        let array = str.split('/');
         if (array.length > 0) {
             array.pop();
         }
@@ -334,41 +332,42 @@ module.exports = {
      * @param bundle
      */
     bundle: function (bundle) {
-        var _self = this;
-        var streams = [];
-        var stream;
+        let _self = this;
+        let streams = [];
+        let stream;
 
         if (bundle.hasOwnProperty('src') && bundle.hasOwnProperty('bundle')) {
 
             // for images & fonts as per vendor
             if ('mandatory' in bundle.src && 'optional' in bundle.src) {
-                var vendors = {};
+                let vendors = {};
 
-                for (var key in bundle.src) {
+                for (let key in bundle.src) {
                     if (!bundle.src.hasOwnProperty(key)) {
                         continue;
                     }
                     vendors = Object.assign(vendors, bundle.src[key]);
                 }
 
-                for (var vendor in vendors) {
+                for (let vendor in vendors) {
                     if (!vendors.hasOwnProperty(vendor)) {
                         continue;
                     }
 
-                    var vendorObj = vendors[vendor];
+                    let vendorObj = vendors[vendor];
 
-                    for (var type in vendorObj) {
+                    for (let type in vendorObj) {
                         if (!vendorObj.hasOwnProperty(type)) {
                             continue;
                         }
 
                         _self.dotPaths(vendorObj[type]);
 
+                        let output;
                         switch (type) {
                             case 'fonts':
                                 stream = gulp.src(vendorObj[type], {allowEmpty: true});
-                                var output = _self.outputChannel(bundle.bundle[type] + '/' + vendor, undefined, type)();
+                                output = _self.outputChannel(bundle.bundle[type] + '/' + vendor, undefined, type)();
                                 if (output) {
                                     stream.pipe(output);
                                 }
@@ -376,7 +375,7 @@ module.exports = {
                                 break;
                             case 'images':
                                 stream = gulp.src(vendorObj[type], {allowEmpty: true});
-                                var output = _self.outputChannel(bundle.bundle[type] + '/' + vendor, undefined, type)();
+                                output = _self.outputChannel(bundle.bundle[type] + '/' + vendor, undefined, type)();
                                 if (output) {
                                     stream.pipe(output);
                                 }
@@ -389,7 +388,7 @@ module.exports = {
 
             // flattening array
             if (!('styles' in bundle.src) && !('scripts' in bundle.src)) {
-                var src = {styles: [], scripts: []};
+                let src = {styles: [], scripts: []};
                 _self.objectWalkRecursive(bundle.src, function (paths, type) {
                     switch (type) {
                         case 'styles':
@@ -407,7 +406,7 @@ module.exports = {
                 bundle.src = src;
             }
 
-            for (var type in bundle.src) {
+            for (let type in bundle.src) {
                 if (!bundle.src.hasOwnProperty(type)) {
                     continue;
                 }
@@ -421,18 +420,18 @@ module.exports = {
                 }
 
                 _self.dotPaths(bundle.src[type]);
-                var outputFile = _self.baseFileName(bundle.bundle[type]);
+                let outputFile = _self.baseFileName(bundle.bundle[type]);
 
                 switch (type) {
                     case 'styles':
                         if (bundle.bundle.hasOwnProperty(type)) {
                             // rtl css bundle
                             if (build.config.compile.rtl.enabled) {
-                                var toRtlFiles = [];
-                                var rtlFiles = [];
+                                let toRtlFiles = [];
+                                let rtlFiles = [];
                                 bundle.src[type].forEach(function (path) {
                                     // get rtl css file path
-                                    var cssFile = _self.pathOnly(path) + '/' + _self.baseName(path) + '.rtl.css';
+                                    let cssFile = _self.pathOnly(path) + '/' + _self.baseName(path) + '.rtl.css';
                                     // check if rtl file is exist
                                     if (fs.existsSync(cssFile) && build.config.compile.rtl.skip.indexOf(_self.baseName(path)) === -1) {
                                         rtlFiles = rtlFiles.concat(cssFile);
@@ -443,13 +442,13 @@ module.exports = {
                                     toRtlFiles = toRtlFiles.concat(cssFile);
                                 });
 
-                                var shouldRtl = false;
+                                let shouldRtl = false;
                                 if (_self.baseName(bundle.bundle[type]) === 'style.bundle') {
                                     shouldRtl = true;
                                 }
-                                var rtlOutput = _self.pathOnly(bundle.bundle[type]) + '/' + _self.baseName(bundle.bundle[type]) + '.rtl.css';
+                                let rtlOutput = _self.pathOnly(bundle.bundle[type]) + '/' + _self.baseName(bundle.bundle[type]) + '.rtl.css';
                                 stream = gulp.src(toRtlFiles, {allowEmpty: true}).pipe(_self.cssRewriter(bundle.bundle[type])()).pipe(concat(_self.baseName(bundle.bundle[type]) + '.rtl.css')).pipe(_self.cssChannel(shouldRtl)());
-                                var output = _self.outputChannel(rtlOutput, _self.baseName(bundle.bundle[type]) + '.rtl.css', type)();
+                                let output = _self.outputChannel(rtlOutput, _self.baseName(bundle.bundle[type]) + '.rtl.css', type)();
                                 if (output) {
                                     stream.pipe(output);
                                 }
@@ -458,7 +457,7 @@ module.exports = {
 
                             // default css bundle
                             stream = gulp.src(bundle.src[type], {allowEmpty: true}).pipe(_self.cssRewriter(bundle.bundle[type])()).pipe(concat(outputFile)).pipe(_self.cssChannel()());
-                            var output = _self.outputChannel(bundle.bundle[type], outputFile, type)();
+                            let output = _self.outputChannel(bundle.bundle[type], outputFile, type)();
                             if (output) {
                                 stream.pipe(output);
                             }
@@ -469,7 +468,7 @@ module.exports = {
                     case 'scripts':
                         if (bundle.bundle.hasOwnProperty(type)) {
                             stream = gulp.src(bundle.src[type], {allowEmpty: true}).pipe(concat(outputFile)).pipe(_self.jsChannel()());
-                            var output = _self.outputChannel(bundle.bundle[type], outputFile, type)();
+                            let output = _self.outputChannel(bundle.bundle[type], outputFile, type)();
                             if (output) {
                                 stream.pipe(output);
                             }
@@ -481,7 +480,7 @@ module.exports = {
                     case 'images':
                         if (bundle.bundle.hasOwnProperty(type)) {
                             stream = gulp.src(bundle.src[type], {allowEmpty: true});
-                            var output = _self.outputChannel(bundle.bundle[type], undefined, type)();
+                            let output = _self.outputChannel(bundle.bundle[type], undefined, type)();
                             if (output) {
                                 stream.pipe(output);
                             }
@@ -500,31 +499,32 @@ module.exports = {
      * @param bundle
      */
     output: function (bundle) {
-        var _self = this;
-        var stream;
-        var streams = [];
+        let _self = this;
+        let stream;
+        let streams = [];
 
         if (bundle.hasOwnProperty('src') && bundle.hasOwnProperty('output')) {
-            for (var type in bundle.src) {
+            for (let type in bundle.src) {
                 if (!bundle.src.hasOwnProperty(type)) {
                     continue;
                 }
 
                 _self.dotPaths(bundle.src[type]);
 
+                let output;
+				let shouldRtl = false;
                 if (bundle.output.hasOwnProperty(type)) {
                     switch (type) {
                         case 'styles':
                             // non rtl styles
                             stream = gulp.src(bundle.src[type], {allowEmpty: true}).pipe(_self.cssChannel()());
-                            var output = _self.outputChannel(bundle.output[type], undefined, type)();
+                            output = _self.outputChannel(bundle.output[type], undefined, type)();
                             if (output) {
                                 stream.pipe(output);
                             }
                             streams.push(stream);
 
                             // rtl styles for scss
-                            var shouldRtl = false;
                             if (build.config.compile.rtl.enabled) {
                                 bundle.src[type].forEach(function (output) {
                                     if (output.indexOf('.scss') !== -1) {
@@ -532,14 +532,14 @@ module.exports = {
                                     }
                                 });
                                 stream = gulp.src(bundle.src[type], {allowEmpty: true}).pipe(_self.cssChannel(shouldRtl)()).pipe(rename({suffix: '.rtl'}));
-                                var output = _self.outputChannel(bundle.output[type], undefined, type)();
+                                let output = _self.outputChannel(bundle.output[type], undefined, type)();
                                 if (output) {
                                     stream.pipe(output);
                                 }
                                 streams.push(stream);
                             }
                             break;
-                        case 'styles-by-demo':
+                        /*case 'styles-by-demo':
                             // custom scss with suffix demos
                             module.exports.getDemos().forEach(function (demo) {
                                 // custom page scss
@@ -549,14 +549,12 @@ module.exports = {
                                     '../src/sass/theme/demos/' + demo + '/', // release angular package
                                 ])());// pipe(rename({ suffix: '.' + demo })).
 
-                                var output = _self.outputChannel(bundle.output[type], undefined, type)();
+                                let output = _self.outputChannel(bundle.output[type], undefined, type)();
                                 if (output) {
                                     stream.pipe(output);
                                 }
                                 streams.push(stream);
 
-                                // rtl styles for scss
-                                var shouldRtl = false;
                                 if (build.config.compile.rtl.enabled) {
                                     bundle.src[type].forEach(function (output) {
                                         if (output.indexOf('.scss') !== -1) {
@@ -568,17 +566,18 @@ module.exports = {
                                         '../src/assets/sass/theme/demos/' + demo + '/', // release default package
                                         '../src/sass/theme/demos/' + demo + '/', // release angular package
                                     ])()).pipe(rename({suffix: '.rtl'}));
-                                    var output = _self.outputChannel(bundle.output[type], undefined, type)();
+                                    let output = _self.outputChannel(bundle.output[type], undefined, type)();
                                     if (output) {
                                         stream.pipe(output);
                                     }
                                     streams.push(stream);
                                 }
                             });
-                            break;
+                            break;*/
                         case 'scripts':
+                        	console.log(bundle.src[type]);
                             stream = gulp.src(bundle.src[type], {allowEmpty: true}).pipe(_self.jsChannel()());
-                            var output = _self.outputChannel(bundle.output[type], undefined, type)();
+                            output = _self.outputChannel(bundle.output[type], undefined, type)();
                             if (output) {
                                 stream.pipe(output);
                             }
@@ -586,7 +585,7 @@ module.exports = {
                             break;
                         default:
                             stream = gulp.src(bundle.src[type], {allowEmpty: true});
-                            var output = _self.outputChannel(bundle.output[type], undefined, type)();
+                            output = _self.outputChannel(bundle.output[type], undefined, type)();
                             if (output) {
                                 stream.pipe(output);
                             }
@@ -600,8 +599,9 @@ module.exports = {
         return streams;
     },
 
+	/*
     getDemos: function () {
-        var demos = Object.keys(build.build.demos);
+        let demos = Object.keys(build.build.demos);
         // build by demo, leave demo empty to generate all demos
         if (typeof build.config.demo !== 'undefined' && build.config.demo !== '') {
             demos = build.config.demo.split(',').map(function (item) {
@@ -609,7 +609,7 @@ module.exports = {
             });
         }
         return demos;
-    },
+    },*/
 
     getFolders: function (dir) {
         return fs.readdirSync(dir).filter(function (file) {

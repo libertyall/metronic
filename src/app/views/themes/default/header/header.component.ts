@@ -14,6 +14,8 @@ import { HtmlClassService } from '../html-class.service';
 export class HeaderComponent implements OnInit, AfterViewInit {
 
 	menuHeaderDisplay: boolean;
+	fluid: boolean;
+
 	@ViewChild('ktHeader', { static: true }) ktHeader: ElementRef;
 
 	constructor(private router: Router,
@@ -39,11 +41,12 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
 	ngOnInit(): void {
 		this.menuHeaderDisplay = this.layoutConfigService.getConfigValue('header.menu.self.display');
+		this.fluid = this.layoutConfigService.getConfigValue('header.self.width') === 'fluid';
 
-		if (this.layoutConfigService.getConfigValue('header.self.fixed.desktop.enabled') || this.layoutConfigService.getConfigValue('header.self.fixed.desktop')) {
+		/*if (this.layoutConfigService.getConfigValue('header.self.fixed.desktop.enabled') || this.layoutConfigService.getConfigValue('header.self.fixed.desktop')) {
 			// header minimize on scroll down
 			this.ktHeader.nativeElement.setAttribute('data-ktheader-minimize', '1');
-		}
+		}*/
 	}
 
 	ngAfterViewInit(): void {

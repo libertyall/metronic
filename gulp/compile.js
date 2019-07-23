@@ -1,23 +1,22 @@
-var gulp = require('gulp');
-var yargs = require('yargs');
-var build = require('./build');
-var func = require('./helpers');
-var rename = require('gulp-rename');
-var rtlcss = require('gulp-rtlcss');
-var glob = require('glob');
-var fs = require('fs');
-var pretty = require('pretty');
-var sass = require('gulp-sass');
-var merge = require('merge-stream');
-var del = require('del');
+let gulp = require('gulp');
+let yargs = require('yargs');
+let build = require('./build');
+let func = require('./helpers');
+let rename = require('gulp-rename');
+let rtlcss = require('gulp-rtlcss');
+let glob = require('glob');
+let fs = require('fs');
+let pretty = require('pretty');
+let sass = require('gulp-sass');
+let merge = require('merge-stream');
+let del = require('del');
 
 // merge with default parameters
-var args = Object.assign({
+let args = Object.assign({
     prod: false,
     rtl: '',
     exclude: '',
     theme: '',
-    demo: '',
     path: '',
 }, yargs.argv);
 
@@ -36,21 +35,17 @@ if (args.rtl !== '') {
     build.config.compile.rtl.enabled = (args.rtl === 'true');
 }
 
-if (args.demo !== '') {
-    build.config.demo = args.demo;
-}
-
 gulp.task('rtl', function (cb) {
-    var streams = [];
-    var stream = null;
-    func.objectWalkRecursive(build.build, function (val, key, userdata) {
-        if (userdata.indexOf(key) === -1 && typeof val.styles !== 'undefined' && key !== 'bundle') {
+    let streams = [];
+    let stream = null;
+    func.objectWalkRecursive(build.build, function (val, key, userData) {
+        if (userData.indexOf(key) === -1 && typeof val.styles !== 'undefined' && key !== 'bundle') {
             // rtl conversion in each plugins
-            for (var i in val.styles) {
+            for (let i in val.styles) {
                 if (!val.styles.hasOwnProperty(i)) {
                     continue;
                 }
-                var toRtlFile = func.dotPath(val.styles[i]);
+                let toRtlFile = func.dotPath(val.styles[i]);
 
                 // exclude scss file for now
                 if (toRtlFile.indexOf('.scss') === -1) {
@@ -70,35 +65,11 @@ gulp.task('rtl', function (cb) {
     return merge(streams);
 });
 
-console.log(build.config);
-
 // task to bundle js/css
 gulp.task('build-bundle', function (cb) {
-    // build by demo, leave demo empty to generate all demos
-    if (typeof build.config.demo !== 'undefined' && build.config.demo !== '') {
-        for (var demo in build.build.demos) {
-            if (!build.build.demos.hasOwnProperty(demo)) {
-                continue;
-            }
 
-            var splitDemos = build.config.demo.split(',').map(function (item) {
-                return item.trim();
-            });
-            if (splitDemos.indexOf(demo) === -1) {
-                delete build.build.demos[demo];
-            }
-        }
-    }
+    func.objectWalkRecursive(build.build,  (val) => {
 
-    //exclude by demo
-    if (args.exclude !== '' && typeof args.exclude === 'string') {
-        var exclude = args.exclude.split(',');
-        exclude.forEach(function (demo) {
-            delete build.build.demos[demo];
-        });
-    }
-
-    func.objectWalkRecursive(build.build, function (val, key) {
         if (val.hasOwnProperty('src')) {
             if (val.hasOwnProperty('bundle')) {
                 func.bundle(val);
@@ -111,7 +82,7 @@ gulp.task('build-bundle', function (cb) {
     cb();
 });
 
-var tasks = ['clean'];
+let tasks = ['clean'];
 if (build.config.compile.rtl.enabled) {
     tasks.push('rtl');
 }
@@ -122,7 +93,7 @@ gulp.task('default', gulp.series(tasks));
 
 // html formatter
 gulp.task('html-formatter', function (cb) {
-    var dir = args.path;
+    let dir = args.path;
     if (dir === '') {
         console.log('The option --path is required');
         cb();
@@ -137,7 +108,7 @@ gulp.task('html-formatter', function (cb) {
                     if (err) {
                         throw err;
                     }
-                    var formatted = pretty(data, {
+                    let formatted = pretty(data, {
                         ocd: true,
                         indent_size: 1,
                         indent_char: '\t',
@@ -155,15 +126,15 @@ gulp.task('html-formatter', function (cb) {
     cb();
 });
 
-// copy demo from src to dist folder
+// copy from src to dist folder
 gulp.task('html', function (cb) {
-    gulp.src(process.cwd() + '/src/**')
-        .pipe(gulp.dest(process.cwd() + './dist'));
+    gulp.src(process.cwd() + '/../src/**')
+        .pipe(gulp.dest('../dist'));
     cb();
 });
 
 // build default and copy demo from src to dist folder
-var buildTasks = ['html'];
+let buildTasks = ['html'];
 if (build.config.compile.rtl.enabled) {
     buildTasks.push('rtl');
 }

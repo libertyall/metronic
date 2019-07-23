@@ -1,13 +1,12 @@
 // load base demo styles. for demo purpose, the style will be loaded here
 // for production, include the demo base style in /src/index.html file to load the css earlier
-@import "../../../../../assets/base/style.bundle.css";
+// @import "../../../../../assets/css/base/style.bundle.css";
 
 // static skins css
-@import "../../../../../assets/base/skins/header/base/light.css";
-@import "../../../../../assets/base/skins/header/menu/light.css";
-@import "../../../../../assets/base/skins/brand/dark.css";
-@import "../../../../../assets/base/skins/aside/dark.css";
-
+@import "../../../../../assets/sass/theme/themes/default/header/skins/base/light.scss";
+@import "../../../../../assets/sass/theme/themes/default/header/skins/menu/light.scss";
+@import "../../../../../assets/sass/theme/themes/default/brand/skins/dark.scss";
+@import "../../../../../assets/sass/theme/themes/default/aside/skins/dark.scss";
 
 kt-base {
 	opacity: 0;

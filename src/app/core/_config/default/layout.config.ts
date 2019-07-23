@@ -278,7 +278,7 @@ export class LayoutConfig {
 					key: 'content.fit-top.key',
 					templateOptions: { label: 'content.fit-top' },
 					type: 'checkbox',
-					defaultValue: true
+					defaultValue: false
 				},
 				{
 					key: 'content.width.key',
@@ -302,7 +302,7 @@ export class LayoutConfig {
 							key: 'footer.self.fixed.key',
 							templateOptions: { label: 'footer.self.fixed' },
 							type: 'checkbox',
-							defaultValue: true
+							defaultValue: false
 						}
 					]
 				}

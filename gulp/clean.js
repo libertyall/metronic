@@ -1,38 +1,14 @@
-var gulp = require('gulp');
-var del = require('del');
-var build = require('./build');
-var func = require('./helpers');
+let gulp = require('gulp');
+let del = require('del');
+let build = require('./build');
 
-// task to clean and delete dist directory content
-var getPaths = function(outPaths) {
-	if (typeof outPaths === 'undefined') outPaths = [];
-	var paths = [];
-	var outputs = build.config.dist;
-	outputs.forEach(function(output) {
-		// has demo placeholder
-		if (output.indexOf('**') !== -1) {
-			func.getDemos().forEach(function(demo) {
-				paths.push(output.replace('**', demo));
-			});
-		} else {
-			if (outPaths.length === 0) {
-				paths.push(output);
-			}
-			outPaths.forEach(function(path) {
-				paths.push(output + '/' + path);
-			});
-		}
+let getPaths = () => {
+	let realPaths = [];
+	build.config['dist'].forEach((path) => {
+		realPaths.push(path + '/*');
+		realPaths.push('!' + path + '/lib');
 	});
-
-	var realpaths = [];
-	paths.forEach(function(path) {
-		realpaths.push(path + '/*');
-		realpaths.push('!' + path + '/lib');
-	});
-
-	return realpaths;
+	return realPaths;
 };
 
-gulp.task('clean', function() {
-	return del(getPaths(), {force: true});
-});
+gulp.task('clean', () => del(getPaths(), {force: true}));

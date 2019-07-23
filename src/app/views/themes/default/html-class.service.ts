@@ -48,7 +48,6 @@ export class HtmlClassService {
 	}
 
 	getClasses(path?: string, toString?: boolean): ClassType | string[] | string {
-		console.log(this.classes);
 		if (path) {
 			const classes = objectPath.get(this.classes, path) || '';
 			if (toString && Array.isArray(classes)) {
@@ -140,7 +139,6 @@ export class HtmlClassService {
 		if (this.layoutConfigService.getConfigValue('aside.self.fixed') !== true && this.layoutConfigService.getConfigValue('aside.menu.dropdown')) {
 			objectPath.push(this.classes, 'aside_menu', 'kt-aside-menu--dropdown');
 		}
-		console.log(this.classes);
 	}
 
 	/*

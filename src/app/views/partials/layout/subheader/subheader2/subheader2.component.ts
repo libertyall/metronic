@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {SubheaderService} from '../../../../../core/_base/layout';
 import {Breadcrumb} from '../../../../../core/_base/layout/services/subheader.service';
@@ -9,6 +9,9 @@ import {Breadcrumb} from '../../../../../core/_base/layout/services/subheader.se
 	styleUrls: ['./subheader2.component.scss']
 })
 export class Subheader2Component implements OnInit, OnDestroy, AfterViewInit {
+
+	@Input() fluid: boolean;
+	@Input() clear: boolean;
 
 	today: number = Date.now();
 	title: string = '';
