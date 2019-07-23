@@ -204,6 +204,16 @@ export const locale = {
 			}
 		},
 		comments: 'Kommentare',
+		cssClasses: {
+			danger: 'rot',
+			dark: 'dunkel',
+			info: 'blau',
+			light: 'hell',
+			primary: 'Primär',
+			secondary: 'Sekundär',
+			success: 'grün',
+			warning: 'orange',
+		},
 		date: {
 			allTime: 'Gesamt',
 			month: 'dieser Monat',
@@ -327,6 +337,20 @@ export const locale = {
 		saveToList: 'Speichern und zur Übersicht',
 		saveToListDescription: 'Speichern und zur Listenansicht zurückkehren',
 		settings: {
+			calendars: {
+				add: 'Kalender hinzufügen',
+				delete: 'Kalender löschen',
+				hints: {
+					link: 'Der Link zum Kalender',
+				},
+				placeholder: {
+					cssClass: 'CSS-Klasse (Farbgebung der Termine)',
+					isActive: 'Termine anzeigen?',
+					link: 'Google-Kalender-ID',
+					title: 'Name des Kalenders'
+				},
+				title: 'Verknüpfte Kalender',
+			},
 			layout: {
 				options: {
 					backend: {
@@ -442,12 +466,44 @@ export const locale = {
 				},
 				title: 'Layout-Optionen'
 			},
+			links: {
+				add: 'Link hinzufügen',
+				delete: 'Link löschen',
+				hints: {
+					noUrl: 'Dies ist keine gültige URL',
+					url: 'Die URL des Links'
+				},
+				placeholder: {
+					displayInFooter: 'Anzeige im Footer?',
+					displayInHeader: 'Anzeige im Header?',
+					icon: 'Soll ein Icon angezeigt werden?',
+					isActive: 'Link anzeigen?',
+					isMailLink: 'Ist es eine E-Mail Adresse?',
+					target: 'Wie soll der Link geöffnet werden?',
+					url: 'URL des Links',
+					title: 'Name des Links',
+				},
+				target_blank: 'Neues Fenster',
+				target_self: 'Selbes Fenster',
+				title: 'Links'
+			},
+			mailing: {
+				add: 'Neuer Verteiler',
+				delete: 'Liste löschen',
+				placeholder: {
+					emails: 'E-Mail Empfängerliste',
+					isActive: 'Verteiler aktiv?',
+					title: 'Name der E-Mail-Liste'
+				},
+				title: 'E-Mail Verteiler'
+			},
 			main: {
 				downtime: 'Wartungsmodus',
 				hints: {
 					email: 'E-Mail Adresse für Benachrichtigungen',
 					subTitle: 'Untertitel für die Statuszeile',
-					title: 'Der Titel, der in der Statuszeile angezeigt wird'
+					title: 'Der Titel, der in der Statuszeile angezeigt wird',
+					link: 'Link {{moreText}}'
 				},
 				placeholder: {
 					assignedKeywords: {

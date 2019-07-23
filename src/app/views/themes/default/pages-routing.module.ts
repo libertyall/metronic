@@ -2,18 +2,18 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {BaseComponent} from './base/base.component';
 import {ErrorPageComponent} from './content/error-page/error-page.component';
-import {AuthGuard} from '../../../core/auth/_guards/auth.guard';
+import {AngularFireAuthGuard} from "@angular/fire/auth-guard";
 
 const routes: Routes = [
 	{
 		path: '',
 		component: BaseComponent,
-		canActivate: [AuthGuard],
+		canActivate: [AngularFireAuthGuard],
 		children: [
-			/* {
-			 path: 'dashboard',
-			 loadChildren: () => import('app/views/pages/dashboard/dashboard.module').then(m => m.DashboardModule)
-			 },*/
+			{
+				path: 'dashboard',
+				loadChildren: () => import('app/modules/dashboard/dashboard.module').then(m => m.DashboardModule)
+			},
 			{
 				path: 'articles',
 				loadChildren: () => import('app/modules/article/article.module').then(m => m.ArticleModule)
@@ -73,8 +73,8 @@ const routes: Routes = [
 			 }
 			 },*/
 			{path: 'error/:type', component: ErrorPageComponent},
-			{path: '', redirectTo: 'articles', pathMatch: 'full'},
-			{path: '**', redirectTo: 'articles', pathMatch: 'full'}
+			{path: '', redirectTo: 'dashboard', pathMatch: 'full'},
+			{path: '**', redirectTo: 'dashboard', pathMatch: 'full'}
 		]
 	}
 ];

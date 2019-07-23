@@ -1,0 +1,112 @@
+<kt-portlet [formGroup]="form">
+	<kt-portlet-body formArrayName="links">
+		<div *ngFor="let control of form.get('links')['controls']; let i = index">
+
+			<ng-container [formGroupName]="i">
+
+				<div class="row pt-5">
+
+					<div class="col-lg-2">
+						<mat-form-field class="mat-form-field-fluid">
+							<input matInput
+								   minlength="{{minLength10}}"
+								   maxLength="{{maxLength50}}"
+								   placeholder="{{'settings.links.placeholder.title' | translate}}"
+								   formControlName="title">
+							<mat-error
+								*ngIf="form.get('links')['controls'][i]['controls']['title'].errors?.minlength">{{'forms.errors.minLength' |translate: minLength10}}</mat-error>
+							<mat-error
+								*ngIf="form.get('links')['controls'][i]['controls']['title'].errors?.maxlength">{{'forms.errors.minLength' |translate: maxLength50}}</mat-error>
+							<mat-hint align="start"
+									  *ngIf="!form.get('links')['controls'][i]['controls']['title'].value">{{'settings.main.hints.title' | translate}}</mat-hint>
+							<mat-hint
+								align="end">{{form.get('links')[ 'controls' ][ i ][ 'controls' ][ 'title' ].value.length || 0}}
+								/{{maxLength50}}</mat-hint>
+						</mat-form-field>
+					</div>
+
+					<div class="col-lg-4">
+						<mat-form-field class="mat-form-field-fluid">
+							<input matInput type="url"
+								   minlength="{{minLength10}}"
+								   maxLength="{{maxLength255}}"
+								   pattern="https?://.+"
+								   placeholder="{{'settings.links.placeholder.url' | translate}}"
+								   formControlName="url">
+							<mat-error
+								*ngIf="form.get('links')['controls'][i]['controls']['url'].errors?.minlength"
+								[translate]="'forms.errors.minLength'"
+								[translateParams]="{minLength: minLength10}">
+							</mat-error>
+							<mat-error
+								*ngIf="form.get('links')['controls'][i]['controls']['url'].errors?.maxlength">{{'forms.errors.minLength' |translate: maxLength255}}</mat-error>
+							<mat-error
+								*ngIf="form.get('links')['controls'][i]['controls']['url'].errors?.pattern">{{'settings.links.hints.noUrl' |translate: maxLength50}}</mat-error>
+							<mat-hint align="start"
+									  *ngIf="!form.get('links')['controls'][i]['controls']['url'].value">{{'settings.links.hints.url' | translate}}</mat-hint>
+							<mat-hint
+								align="end">{{form.get('links')[ 'controls' ][ i ][ 'controls' ][ 'url' ].value.length || 0}}
+								/{{maxLength255}}</mat-hint>
+						</mat-form-field>
+					</div>
+
+					<div class="col-lg-2">
+						<mat-form-field class="mat-form-field-fluid">
+							<mat-select placeholder="{{'settings.links.placeholder.target' | translate}}"
+										formControlName="target">
+								<mat-option *ngFor="let target of linkTargets"
+											[value]="target">{{'settings.links.target' + target | translate}}</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+
+					<div class="col-lg-2">
+						<mat-form-field class="mat-form-field-fluid">
+							<input matInput
+								   placeholder="{{'settings.links.placeholder.icon' | translate}}"
+								   formControlName="icon">
+						</mat-form-field>
+					</div>
+
+
+					<div class="col-lg-2 text-right">
+						<button class="btn btn-danger" type="button"
+								(click)="deleteLink(i)">{{'settings.links.delete' | translate}}</button>
+					</div>
+
+				</div>
+
+				<div class="row pt-3 pb-5">
+					<div class="col-lg-2">
+						<mat-checkbox formControlName="isActive">
+							{{'settings.links.placeholder.isActive' | translate}}
+						</mat-checkbox>
+					</div>
+
+					<div class="col-lg-2">
+						<mat-checkbox formControlName="displayInHeader">
+							{{'settings.links.placeholder.displayInHeader' | translate}}
+						</mat-checkbox>
+					</div>
+
+					<div class="col-lg-2">
+						<mat-checkbox formControlName="displayInFooter">
+							{{'settings.links.placeholder.displayInFooter' | translate}}
+						</mat-checkbox>
+					</div>
+
+					<div class="col-lg-2">
+						<mat-checkbox formControlName="isMailLink">
+							{{'settings.links.placeholder.isMailLink' | translate}}
+						</mat-checkbox>
+					</div>
+				</div>
+
+			</ng-container>
+		</div>
+	</kt-portlet-body>
+	<kt-portlet-footer class="text-right mr-4">
+		<button class="mt-4 btn btn-primary" type="button"
+				(click)="addLink()">{{'settings.links.add' | translate}}</button>
+	</kt-portlet-footer>
+</kt-portlet>

@@ -22,10 +22,6 @@ export class HtmlClassService {
 		this.onClassesUpdated$ = new BehaviorSubject(this.classes);
 	}
 
-	/**
-	 * Build html element classes from layout config
-	 * @param layoutConfig
-	 */
 	setConfig(layoutConfig: FormlyFieldConfig[]) {
 		this.config = layoutConfig;
 
@@ -38,7 +34,6 @@ export class HtmlClassService {
 
 		this.initLayout();
 		this.initLoader();
-		// this.initAsideSecondary();
 		this.initHeader();
 		this.initSubheader();
 		this.initAside();
@@ -71,7 +66,6 @@ export class HtmlClassService {
 	}
 
 	private initHeader() {
-		// Fixed header
 		if (this.layoutConfigService.getConfigValue('header.self.fixed.desktop')) {
 			document.body.classList.add('kt-header--fixed');
 			objectPath.push(this.classes, 'header', 'kt-header--fixed');
@@ -90,7 +84,6 @@ export class HtmlClassService {
 	}
 
 	private initSubheader() {
-		// Fixed content head
 		if (this.layoutConfigService.getConfigValue('subheader.fixed')) {
 			document.body.classList.add('kt-subheader--fixed');
 		}
@@ -111,7 +104,6 @@ export class HtmlClassService {
 
 		document.body.classList.add('kt-aside--enabled');
 
-
 		if (this.layoutConfigService.getConfigValue('aside.self.skin')) {
 			objectPath.push(this.classes, 'aside', 'kt-aside--skin-' + this.layoutConfigService.getConfigValue('aside.self.skin'));
 			document.body.classList.add('kt-aside--skin-' + this.layoutConfigService.getConfigValue('aside.self.skin'));
@@ -121,7 +113,6 @@ export class HtmlClassService {
 			objectPath.push(this.classes, 'brand', 'kt-aside__brand--skin-' + this.layoutConfigService.getConfigValue('aside.self.skin'));
 		}
 
-		// Fixed Aside
 		if (this.layoutConfigService.getConfigValue('aside.self.fixed')) {
 			document.body.classList.add('kt-aside--fixed');
 			objectPath.push(this.classes, 'aside', 'kt-aside--fixed');
@@ -129,40 +120,15 @@ export class HtmlClassService {
 			document.body.classList.add('kt-aside--static');
 		}
 
-		// Default fixed
 		if (this.layoutConfigService.getConfigValue('aside.self.minimize.default')) {
 			document.body.classList.add('kt-aside--minimize');
 		}
 
-		// Menu
-		// Dropdown Submenu
 		if (this.layoutConfigService.getConfigValue('aside.self.fixed') !== true && this.layoutConfigService.getConfigValue('aside.menu.dropdown')) {
 			objectPath.push(this.classes, 'aside_menu', 'kt-aside-menu--dropdown');
 		}
 	}
 
-	/*
-	private initAsideSecondary() {
-		if (objectPath.get(this.config, 'backend.aside-secondary.self.display.selected')) {
-			document.body.classList.add('kt-aside-secondary--enabled');
-		}
-
-		// tslint:disable-next-line:max-line-length
-		if (objectPath.get(this.config, 'backend.aside-secondary.self.expanded.selected') === true && objectPath.get(this.config, 'backend.aside-secondary.self.layout.selected') !== 'layout-2') {
-			document.body.classList.add('kt-aside-secondary--expanded');
-		}
-
-		if (objectPath.get(this.config, 'backend.aside-secondary.self.layout.selected') === 'layout-3') {
-			document.body.classList.add('kt-aside-secondary--static');
-		}
-	} */
-
-	private initContent() {
-	}
-
-	/**
-	 * Init Footer
-	 */
 	private initFooter() {
 		if (this.layoutConfigService.getConfigValue('footer.self.fixed')) {
 			document.body.classList.add('kt-footer--fixed');

@@ -17,8 +17,8 @@ import {
 import {UserInterface} from '../../../../core/auth/_interfaces/user.interface';
 import {currentUser, isLoading, isLoggedIn, selectAuthMessage} from '../../../../core/auth/_selectors/auth.selectors';
 import {map, takeUntil} from 'rxjs/operators';
-import {ApplicationService} from '../../../../modules/application/services/application.service';
 import {AppState} from '../../../../app.state';
+import {ApplicationService} from "../../../../modules/settings/_services/application.service";
 
 @Component({
 	selector: 'kt-login',

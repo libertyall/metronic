@@ -19,7 +19,6 @@ import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/fi
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { NgxPermissionsModule } from 'ngx-permissions';
-import { ApplicationService } from './modules/application/services/application.service';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { UserService } from './core/auth/_services/user.service';
 import { AuthModule } from './views/pages/auth/auth.module';
@@ -29,6 +28,7 @@ import { RouterState, StoreRouterConnectingModule } from '@ngrx/router-store';
 import { appMetaReducers, appReducer } from './app.state';
 import { RouterEffects } from './views/state/router.effects';
 import { AuthEffects } from './core/auth/_effects/auth.effects';
+import {ApplicationService} from "./modules/settings/_services/application.service";
 
 /* export function storageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
 	return storageSync<AppState>({

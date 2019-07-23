@@ -1,5 +1,12 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { SubheaderService } from '../../../core/_base/layout';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {SubheaderService} from '../../../core/_base/layout';
+import {Application} from "../_model/application.model";
+import {Observable} from "rxjs";
+import {select, Store} from "@ngrx/store";
+import {AppState} from "../../../app.state";
+import {getCurrentApplication} from "../_selectors/settings.selectors";
+import {loadCurrentApplication, saveApplication} from "../_actions/settings.actions";
+import {credentialsLogin, startLogin} from "../../../core/auth/_actions/auth.actions";
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -9,109 +16,41 @@ import { SubheaderService } from '../../../core/_base/layout';
 export class SettingsComponent implements OnInit, OnDestroy {
 
 	selectedTab: number = 0;
+	application$: Observable<Application>;
+	hasFormErrors: boolean = false;
 
-	/* @Input() application: IApplication;
-	 oldApplication: IApplication;
-	 loading$: Observable<boolean>;
-	 private subscriptions: Subscription[] = [];*/
-
-	constructor(private subheaderService: SubheaderService) {
+	constructor(private store: Store<AppState>,
+				private subheaderService: SubheaderService) {
 	}
 
 	ngOnInit(): void {
-
 		this.subheaderService.setTitle({
 			title: 'settings.subheader.title',
 			desc: 'settings.subheader.desc'
 			// showToolbar: true
 		});
-		// this.loading$ = this.store.pipe(select(selectApplicationActionLoading));
+		// this.loading$ = this.store.pipe(select(selectSettingsPageLoading));
+		this.application$ = this.store.pipe(select(getCurrentApplication));
+		this.store.dispatch(loadCurrentApplication());
+	}
 
-		/* const routeSubscription = this.activatedRoute.params.subscribe(params => {
-		 const id = params['id'];
-		 console.log(id);
-		 if (id && id > 0) {
-		 this.store.pipe(select(selectApplicationById(id))).subscribe(res => {
-		 if (res) {
-		 console.log(res);
-		 this.application = res;
-		 this.oldApplication = Object.assign({}, this.application);
-		 }
-		 });
-		 } else {
-		 this.application = {
-		 isCurrentApplication: true,
-		 urlShortening: null,
-		 page: {
-		 title: '',
-		 description: '',
-		 email: '',
-		 isEnabled: false,
-		 name: ''
-		 },
-		 registration: '',
-		 downtime: {
-		 isEnabled: false,
-		 message: ''
-		 }
-		 };
-
-		 this.oldApplication = Object.assign({}, this.application);
-		 this.initApplication();
-		 }
-		 });
-		 this.subscriptions.push(routeSubscription);*/
+	onAlertClose(): void {
+		this.hasFormErrors = false;
 	}
 
 	ngOnDestroy() {
 		// this.subscriptions.forEach(sb => sb.unsubscribe());
 	}
 
-	/*
-	 initApplication() {
-	 this.createForm();
-	 if (!this.application.id) {
-	 this.subheaderService.setTitle('settings.createTitle');
-	 this.subheaderService.setBreadcrumbs([
-	 {title: 'User Management', page: `user-management`},
-	 {title: 'Users', page: `user-management/users`},
-	 {title: 'Create user', page: `user-management/users/add`}
-	 ]);
-	 return;
-	 }
-	 this.subheaderService.setTitle('settings.editTitle');
-	 this.subheaderService.setBreadcrumbs([
-	 {title: 'User Management', page: `user-management`},
-	 {title: 'Users', page: `user-management/users`},
-	 {title: 'Edit user', page: `user-management/users/edit`, queryParams: {id: this.application.id}}
-	 ]);
-	 }
+	setFormErrors($event: boolean): void {
+		this.hasFormErrors = $event;
+	}
 
-	 createForm() {
-	 this.form = this.fb.group({});
-	 }
+	saveApplication(application: Application) {
 
-	 /* public application: IApplication;
-	 public categories$: Observable<ICategory[]>;
+		this.store.dispatch(saveApplication({application}));
 
-	 constructor(private fb: FormBuilder,
-	 private route: ActivatedRoute,
-	 public alertService: AlertService,
-	 private title: Title,
-	 private translateService: TranslateService,
-	 private categoryService: CategoryService,
-	 private applicationService: ApplicationService) {
-	 this.categories$ = categoryService.getCategoriesByCategoryType('static.types');
-	 }
-
-	 ngOnInit() {
-	 this.route.data.subscribe((data: { application: IApplication }) => {
-	 this.application = data.application;
-	 });
-	 }
-
-	 saveApplication(application: IApplication) {
-	 this.application = Object.assign({}, this.application, application);
+		/*this.application = Object.assign({}, this.application, application);
 	 this.applicationService.updateApplication(application.id, application)
 	 .then(() => {
 	 // set Page Title
@@ -121,7 +60,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
 	 this.alertService.showSnackBar('success', 'general.applications.updateMessage');
 	 },
-	 (error: any) => this.alertService.showSnackBar('error', error.message));
-	 } */
+	 (error: any) => this.alertService.showSnackBar('error', error.message));*/
+	}
 
 }

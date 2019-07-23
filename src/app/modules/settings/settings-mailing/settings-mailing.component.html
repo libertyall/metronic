@@ -1,0 +1,48 @@
+<kt-portlet [formGroup]="form">
+	<kt-portlet-header [title]="'settings.mailing.title' | translate"></kt-portlet-header>
+	<kt-portlet-body formArrayName="mailing">
+		<p *ngIf="form.get('mailing')['controls'].length === 0">
+			{{'general.applications.mailing.noMailLists' | translate}}
+		</p>
+
+		<div *ngFor="let control of form.get('mailing')['controls']; let i = index" class="row py-5">
+			<ng-container [formGroupName]="i">
+
+				<div class="col-lg-3">
+					<mat-form-field class="mat-form-field-fluid">
+						<input matInput
+							   placeholder="{{'settings.mailing.placeholder.title' | translate}}"
+							   formControlName="title"/>
+					</mat-form-field>
+				</div>
+
+				<div class="col-lg-2">
+					<mat-checkbox formControlName="isActive">
+						{{'settings.mailing.placeholder.isActive' | translate}}
+					</mat-checkbox>
+				</div>
+
+				<div class="col-lg-5">
+					<tag-input placeholder="{{'settings.mailing.placeholder.emails' | translate}}"
+							   formControlName="emails"
+							   [modelAsStrings]="true"
+							   [editable]="true">
+					</tag-input>
+				</div>
+
+				<div class="col-lg-2 text-right">
+					<button class="btn btn-danger" type="button"
+							(click)="deleteMailer(i)">{{'settings.mailing.delete' | translate}}</button>
+				</div>
+
+			</ng-container>
+		</div>
+	</kt-portlet-body>
+
+
+	<kt-portlet-footer class="text-right mr-4">
+		<button class="mt-4 btn btn-primary" type="button"
+				(click)="addMailer()">{{'settings.mailing.add' | translate}}</button>
+	</kt-portlet-footer>
+
+</kt-portlet>

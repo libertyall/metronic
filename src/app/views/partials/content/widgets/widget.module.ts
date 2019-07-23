@@ -1,22 +1,29 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatButtonModule, MatIconModule, MatPaginatorModule, MatProgressSpinnerModule, MatSortModule, MatTableModule, } from '@angular/material';
-import { CoreModule } from '../../../../core/core.module';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { DataTableComponent } from './general/data-table/data-table.component';
-import { Widget1Component } from './widget1/widget1.component';
-import { Widget4Component } from './widget4/widget4.component';
-import { Widget5Component } from './widget5/widget5.component';
-import { Widget12Component } from './widget12/widget12.component';
-import { Widget14Component } from './widget14/widget14.component';
-import { Widget26Component } from './widget26/widget26.component';
-import { Timeline2Component } from './timeline2/timeline2.component';
-import { SparklineChartDirective } from '../../../../core/_base/layout/directives/sparkline-chart.directive';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {
+	MatButtonModule,
+	MatIconModule,
+	MatPaginatorModule,
+	MatProgressSpinnerModule,
+	MatSortModule,
+	MatTableModule,
+} from '@angular/material';
+import {CoreModule} from '../../../../core/core.module';
+import {PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
+import {DataTableComponent} from './general/data-table/data-table.component';
+import {Widget1Component} from './widget1/widget1.component';
+import {Widget4Component} from './widget4/widget4.component';
+import {Widget5Component} from './widget5/widget5.component';
+import {Widget12Component} from './widget12/widget12.component';
+import {Widget14Component} from './widget14/widget14.component';
+import {Widget26Component} from './widget26/widget26.component';
+import {Timeline2Component} from './timeline2/timeline2.component';
+import {DataTableService} from "../../../../core/_base/layout/services/datatable.service";
 
 @NgModule({
 	declarations: [
 		DataTableComponent,
-		SparklineChartDirective,
+		// SparklineChartDirective,
 		Widget1Component,
 		Widget4Component,
 		Widget5Component,
@@ -46,6 +53,9 @@ import { SparklineChartDirective } from '../../../../core/_base/layout/directive
 		MatProgressSpinnerModule,
 		MatPaginatorModule,
 		MatSortModule,
+	],
+	providers: [
+		DataTableService
 	]
 })
 export class WidgetModule {

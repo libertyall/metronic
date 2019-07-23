@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 import { settingsRoutes } from './settings-routing.module';
 import { SettingsComponent } from './settings/settings.component';
 import {
+	MatButtonModule,
 	MatCheckboxModule, MatFormFieldModule, MatIconModule, MatInputModule, MatOptionModule, MatRadioModule,
 	MatSelectModule, MatTabsModule
 } from '@angular/material';
@@ -19,6 +20,13 @@ import { ColorPickerModule } from 'ngx-color-picker';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 import { PanelWrapperComponent } from './settings/settings-layout/panel-wrapper/panel-wrapper.component';
+import {SettingsCalendarsComponent} from "./settings-calendars/settings-calendars.component";
+import {EffectsModule} from "@ngrx/effects";
+import {StoreModule} from "@ngrx/store";
+import {settingsReducer} from "./_reducers/settings.reducers";
+import {SettingsEffects} from "./_effects/settings.effects";
+import {SettingsMailingComponent} from "./settings-mailing/settings-mailing.component";
+import { SettingsLinksComponent } from './settings-links/settings-links.component';
 
 @NgModule({
 	imports: [
@@ -30,7 +38,9 @@ import { PanelWrapperComponent } from './settings/settings-layout/panel-wrapper/
 			],
 		}),
 		FormlyBootstrapModule,
-		// MatButtonModule,
+		EffectsModule.forFeature([SettingsEffects]),
+		StoreModule.forFeature('settings', settingsReducer),
+		MatButtonModule,
 		MatCheckboxModule,
 		MatFormFieldModule,
 		MatIconModule, //
@@ -53,20 +63,10 @@ import { PanelWrapperComponent } from './settings/settings-layout/panel-wrapper/
 		PanelWrapperComponent,
 		SettingsComponent,
 		SettingsMainComponent,
-		SettingsLayoutComponent
-		// SettingsCalendarsComponent
-		/* SettingsComponent,
-		 SettingsSocialDataComponent,
-		 StaticPagesComponent,
-		 StaticPageFormComponent,
-		 SettingsMainComponent,
-		 SettingsMailingComponent,
-		 SettingsDowntimeComponent,
-		 SettingsUrlshorteningComponent,
-		 SettingsCalendarsComponent,
-		 SettingsRegistrationComponent,
-		 SettingsSocialSignInComponent,
-		 SettingsSocialNetworksComponent */
+		SettingsLayoutComponent,
+		SettingsMailingComponent,
+		SettingsCalendarsComponent,
+		SettingsLinksComponent
 	],
 	providers: [
 		KeyValuePipe

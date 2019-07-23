@@ -1,4 +1,4 @@
-<kt-portlet>
+<kt-portlet *ngIf="application$ | async as application">
 	<!--<kt-portlet-header [title]="getComponentTitle()" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
 		<ng-container ktPortletTools>
 			<a [routerLink]="['/categories']" class="btn btn-secondary kt-margin-r-10" mat-raised-button
@@ -45,89 +45,76 @@
 	</kt-portlet-header>-->
 
 	<kt-portlet-body>
-		<mat-tab-group [(selectedIndex)]="selectedTab">
-			<mat-tab>
-				<ng-template mat-tab-label>
-					<i class="mat-tab-label-icon fa fa-calendar"></i>
-					{{'settings.layout.title' | translate}}
-				</ng-template>
-				<ng-template matTabContent>
-					<kt-settings-layout></kt-settings-layout>
-					<!-- (saveApplication)="saveApplication($event)"
-                                        [application]="application"
-					<settings-calendars></settings-calendars>-->
-				</ng-template>
-			</mat-tab>
 
+		<kt-alert *ngIf="hasFormErrors"
+				  type="warning"
+				  [showCloseButton]="true"
+				  [duration]="10000"
+				  (close)="onAlertClose()">
+			{{'forms.errors.title' | translate}}!
+			{{'forms.errors.description' | translate}}
+		</kt-alert>
+
+		<mat-tab-group [(selectedIndex)]="selectedTab">
 			<mat-tab>
 				<ng-template mat-tab-label>
 					<i class="mat-tab-label-icon fa fa-info"></i>
 					{{'settings.main.title' | translate}}
 				</ng-template>
 				<ng-template matTabContent>
-					<kt-settings-main></kt-settings-main>
-					<!--
-					<settings-downtime (saveApplication)="saveApplication($event)"
-                                   [application]="application">
-                </settings-downtime>-->
-
-					<!--<settings-main (saveApplication)="saveApplication($event)"
-                                    [application]="application">
-                     </settings-main>
-
-
-                   </div>
-
-                   <div fxFlex="40">
-                     <settings-mailing (saveApplication)="saveApplication($event)"
-                                       [application]="application">
-                     </settings-mailing>
-
-                     <settings-urlshortening (saveApplication)="saveApplication($event)"
-                                             [application]="application">
-                     </settings-urlshortening>
-
-                     <settings-registration (saveApplication)="saveApplication($event)"
-                                            [application]="application">
-                     </settings-registration>
-
-					-->
+					<kt-settings-main [application]="application"
+									  (setFormErrors)="setFormErrors($event)"
+									  (saveApplication)="saveApplication($event)">
+					</kt-settings-main>
 				</ng-template>
 			</mat-tab>
 
 			<mat-tab>
 				<ng-template mat-tab-label>
-					<i class="mat-tab-label-icon fa fa-calendar"></i>
+					<i class="mat-tab-label-icon fa fa-layer-group"></i>
+					{{'settings.layout.title' | translate}}
+				</ng-template>
+				<ng-template matTabContent>
+					<kt-settings-layout></kt-settings-layout>
+				</ng-template>
+			</mat-tab>
+
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<i class="mat-tab-label-icon fa fa-calendar-day"></i>
 					{{'settings.calendars.title' | translate}}
 				</ng-template>
 				<ng-template matTabContent>
-					Kalender
-					<!--<settings-calendars (saveApplication)="saveApplication($event)"
-                                        [application]="application">
-                    </settings-calendars>-->
+					<settings-calendars [application]="application"
+										(setFormErrors)="setFormErrors($event)"
+										(saveApplication)="saveApplication($event)">
+					</settings-calendars>
 				</ng-template>
 			</mat-tab>
 
 			<mat-tab>
 				<ng-template mat-tab-label>
-					<i class="mat-tab-label-icon fa fa-calendar"></i>
+					<i class="mat-tab-label-icon fa fa-envelope"></i>
+					{{'settings.mailing.title' | translate}}
+				</ng-template>
+				<ng-template matTabContent>
+					<settings-mailing  [application]="application"
+									   (setFormErrors)="setFormErrors($event)"
+									   (saveApplication)="saveApplication($event)">
+					</settings-mailing>
+				</ng-template>
+			</mat-tab>
+
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<i class="mat-tab-label-icon fa fa-link"></i>
 					{{'settings.links.title' | translate}}
 				</ng-template>
 				<ng-template matTabContent>
-					Linkverwaltung z.B. für soziale Medien
-					<!--<settings-social-data (saveApplication)="saveApplication($event)"
-                                      [application]="application">
-                </settings-social-data>
-              </div>
-              <div fxFlex="40">
-                <settings-social-sign-in (saveApplication)="saveApplication($event)"
-                                         [application]="application">
-                </settings-social-sign-in>
-              </div>
-              <div fxFlex="100">
-                <settings-socialPublishingFunction-networks (saveApplication)="saveApplication($event)"
-                                          [application]="application">
-                </settings-socialPublishingFunction-networks>-->
+					<settings-links [application]="application"
+									(setFormErrors)="setFormErrors($event)"
+									(saveApplication)="saveApplication($event)">
+					</settings-links>
 				</ng-template>
 			</mat-tab>
 

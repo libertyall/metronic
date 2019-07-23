@@ -1,56 +1,61 @@
-<mat-card [formGroup]="form">
-  <mat-card-title>{{'general.applications.calendars.title' | translate}}</mat-card-title>
-  <hr/>
-  <mat-card-content formArrayName="assignedCalendars">
+<kt-portlet [formGroup]="form">
+	<kt-portlet-body formArrayName="assignedCalendars">
+		<div *ngFor="let control of form.get('assignedCalendars')['controls']; let i = index">
 
-    <div *ngFor="let control of form.get('assignedCalendars')['controls']; let i = index">
-      <div fxLayout="column"
-           fxLayout.gt-sm="row"
-           fxLayoutGap="10px"
-           [formGroupName]="i">
+			<div class="row py-3"
+				 [formGroupName]="i">
 
-        <!--<mat-form-field fxFlex="15">
-          <input matInput
-                 placeholder="{{'general.applications.calendars.fieldTitle' | translate}}"
-                 formControlName="title"/>
-        </mat-form-field>
+				<div class="col-lg-3">
+					<mat-form-field class="mat-form-field-fluid">
+						<input matInput
+							   minlength="{{minLength15}}"
+							   placeholder="{{'settings.calendars.placeholder.title' | translate}}"
+							   formControlName="title">
+						<mat-error *ngIf="form.get('assignedCalendars')['controls'][i]['controls']['title'].errors?.minlength">{{'forms.errors.minLength' |translate: minLength15}}</mat-error>
+						<mat-hint align="start"
+								  *ngIf="!form.get('assignedCalendars')['controls'][i]['controls']['title'].value">{{'settings.main.hints.title' | translate}}</mat-hint>
+						<mat-hint align="end">{{form.get('assignedCalendars')['controls'][i]['controls']['title'].value.length || 0}}/{{maxLength255}}</mat-hint>
+					</mat-form-field>
+				</div>
 
-        <mat-form-field fxFlex="15">
-          <input matInput
-                 placeholder="{{'general.applications.calendars.cssTitle' | translate}}"
-                 formControlName="cssTitle"/>
-        </mat-form-field>
+				<div class="col-lg-2">
+					<mat-form-field class="mat-form-field-fluid">
+						<mat-select placeholder="{{'settings.calendars.placeholder.cssClass' | translate}}"
+									formControlName="cssTitle">
+							<mat-option *ngFor="let class of cssClasses"
+										[value]="class">{{'cssClasses.' + class | translate}}</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
 
-        <div fxFlex="10">
-          <mat-checkbox formControlName="isActive">
-            {{'general.applications.calendars.isActive' | translate}}
-          </mat-checkbox>
-        </div>
+				<div class="col-lg-2">
+					<mat-checkbox formControlName="isActive">
+						{{'settings.calendars.placeholder.isActive' | translate}}
+					</mat-checkbox>
+				</div>
 
-        <mat-form-field fxFlex="40">
-          <input matInput
-                 placeholder="{{'general.applications.calendars.link' | translate}}"
-                 formControlName="link"/>
-        </mat-form-field>-->
+				<div class="col-lg-3">
+					<mat-form-field class="mat-form-field-fluid">
+						<input matInput
+							   minlength="{{minLength15}}"
+							   placeholder="{{'settings.calendars.placeholder.link' | translate}}"
+							   formControlName="link">
+						<mat-error *ngIf="form.get('assignedCalendars')['controls'][i]['controls']['link'].errors?.minlength">{{'forms.errors.minLength' |translate: minLength15}}</mat-error>
+						<mat-hint align="start"
+								  *ngIf="!form.get('assignedCalendars')['controls'][i]['controls']['link'].value">{{'settings.calendars.hints.link' | translate}}</mat-hint>
+						<mat-hint align="end">{{form.get('assignedCalendars')['controls'][i]['controls']['link'].value.length || 0}}/{{maxLength255}}</mat-hint>
+					</mat-form-field>
+				</div>
 
-        <div fxFlex="25">
-          <button mat-raised-button
-                  type="button"
-                  color="warn"
-                  (click)="deleteCalendar(i)">
-            {{'general.applications.calendars.deleteCalendar' | translate}}
-          </button>
-        </div>
 
-      </div>
-    </div>
-  </mat-card-content>
-  <mat-card-actions>
-      <button mat-raised-button
-              type="button"
-              color="primary"
-              (click)="addCalendar()">
-        {{'general.applications.calendars.addCalendar' | translate}}
-      </button>
-  </mat-card-actions>
-</mat-card>
+				<div class="col-lg-2 text-right">
+					<button class="btn btn-danger" type="button" (click)="deleteCalendar(i)">{{'settings.calendars.delete' | translate}}</button>
+				</div>
+
+			</div>
+		</div>
+	</kt-portlet-body>
+	<kt-portlet-footer class="text-right mr-4">
+		<button class="mt-4 btn btn-primary" type="button" (click)="addCalendar()">{{'settings.calendars.add' | translate}}</button>
+	</kt-portlet-footer>
+</kt-portlet>

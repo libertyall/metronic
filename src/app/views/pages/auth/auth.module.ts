@@ -19,7 +19,6 @@ import {ForgotPasswordComponent} from './forgot-password/forgot-password.compone
 import {AuthNoticeComponent} from './auth-notice/auth-notice.component';
 import {UnAuthGuard} from '../../../core/auth/_guards/unauth.guard';
 import {AuthService} from '../../../core/auth/_services';
-import {AuthGuard} from '../../../core/auth/_guards/auth.guard';
 import {authRoutes} from './auth.routes';
 import {authReducer} from '../../../core/auth/_reducers/auth.reducers';
 import {AuthEffects} from '../../../core/auth/_effects/auth.effects';
@@ -27,6 +26,7 @@ import {usersReducer} from '../../../core/auth/_reducers/user.reducers';
 import {UserEffects} from '../../../core/auth/_effects/user.effects';
 import {SplashScreenComponent} from '../../partials/layout';
 import {EntityDataModule} from '@ngrx/data';
+import {AngularFireAuthGuard} from "@angular/fire/auth-guard";
 
 @NgModule({
 	imports: [
@@ -70,8 +70,8 @@ export class AuthModule {
 			ngModule: AuthModule,
 			providers: [
 				AuthService,
-				AuthGuard,
-				UnAuthGuard
+				UnAuthGuard,
+				AngularFireAuthGuard
 			]
 		};
 	}

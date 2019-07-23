@@ -24,7 +24,7 @@ import { NgPipesModule } from 'ngx-pipes';
 @NgModule({
 	declarations: [
 		QuickPanelComponent,
-		StickyToolbarComponent,
+		// StickyToolbarComponent,
 		ScrollTopComponent,
 		// SplashScreenComponent,
 		// topbar components

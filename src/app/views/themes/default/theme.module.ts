@@ -27,7 +27,7 @@ import {PermissionEffects} from '../../../core/auth/_effects/permission.effects'
 import {permissionsReducer} from '../../../core/auth/_reducers/permission.reducers';
 import {NgxPermissionsModule} from 'ngx-permissions';
 import {
-	SearchDropdownComponent,
+	SearchDropdownComponent, StickyToolbarComponent,
 	Subheader1Component,
 	Subheader2Component,
 	Subheader3Component
@@ -54,6 +54,7 @@ import {
 		AsideLeftComponent,
 		MenuHorizontalComponent,
 		ErrorPageComponent,
+		StickyToolbarComponent,
 	],
 	exports: [
 		BaseComponent,
@@ -63,6 +64,7 @@ import {
 		HeaderMobileComponent,
 		SubheaderComponent,
 		TopbarComponent,
+		StickyToolbarComponent,
 		AsideLeftComponent,
 		MenuHorizontalComponent,
 		ErrorPageComponent

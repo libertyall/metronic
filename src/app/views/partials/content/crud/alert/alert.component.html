@@ -1,4 +1,4 @@
-<div class="kt-mat-alert  kt-mat-alert--{{type}}" role="alert">
+<!--div class="kt-mat-alert  kt-mat-alert--{{type}}" role="alert">
 	<div class="kt-mat-alert__icon">
 		<i class="la la-warning"></i>
 	</div>
@@ -6,11 +6,16 @@
 		<ng-content></ng-content>
 	</div>
 	<div class="kt-mat-alert__close" *ngIf="showCloseButton">
-		<button type="button" 
-			mat-icon-button 
-			color="warn" 
+		<button class="btn btn-danger" type="button"
 			(click)="closeAlert()">
 			<mat-icon class="material-icons">clear</mat-icon>
 		</button>
 	</div>
+</div>-->
+
+<div class="alert alert-{{type}} alert-dismissible fade show" role="alert">
+	<ng-content></ng-content>
+	<button *ngIf="showCloseButton" type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="closeAlert()">
+		<span aria-hidden="true">&times;</span>
+	</button>
 </div>

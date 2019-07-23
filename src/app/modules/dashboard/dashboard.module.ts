@@ -3,27 +3,31 @@ import {RouterModule} from '@angular/router';
 import {DashboardComponent} from './dashboard.component';
 import {MatDividerModule, MatListModule} from '@angular/material';
 import {BirthdayListComponent} from "./birthday-list/birthday-list.component";
+import {PortletModule} from "../../views/partials/content/general/portlet/portlet.module";
+import {WidgetModule} from "../../views/partials/content/widgets/widget.module";
+import {CommonModule} from "@angular/common";
 
 @NgModule({
 	imports: [
-		// CommonModule,
+		CommonModule,
 		// PartialsModule,
 		// CoreModule,
 		// NgbModule,
 		MatListModule,
 		MatDividerModule,
-		// PortletModule,
+		PortletModule,
 		RouterModule.forChild([
 			{
 				path: '',
 				component: DashboardComponent
 			}
 		]),
+		WidgetModule
 		// SharedModule,
 		// SharedMediaModule,
-		// WidgetModule
 	],
-	providers: [],
+	providers: [
+	],
 	declarations: [
 		BirthdayListComponent,
 		DashboardComponent

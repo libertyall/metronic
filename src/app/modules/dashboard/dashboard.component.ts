@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { shuffle } from 'lodash';
-// import { LayoutConfigService } from '../../../core/_base/layout';
-// import { SparklineChartOptions } from '../../../core/_base/metronic';
-// import { Widget4Data } from '../../partials/content/widgets/widget4/widget4.component';
+import {SparklineChartOptions} from "../../core/_base/layout/directives/sparkline-chart.directive";
+import {Widget4Data} from "../../views/partials/content/widgets/widget4/widget4.component";
+import {LayoutConfigService} from "../../core/_base/layout";
 
 @Component({
 	selector: 'kt-dashboard',
 	templateUrl: './dashboard.component.html',
 	styleUrls: ['dashboard.component.scss'],
 })
-export class DashboardComponent /*implements OnInit*/ {
+export class DashboardComponent implements OnInit {
 
-	/* chartOptions1: SparklineChartOptions;
+	chartOptions1: SparklineChartOptions;
 	chartOptions2: SparklineChartOptions;
 	chartOptions3: SparklineChartOptions;
 	chartOptions4: SparklineChartOptions;
@@ -26,22 +26,22 @@ export class DashboardComponent /*implements OnInit*/ {
 	ngOnInit(): void {
 		this.chartOptions1 = {
 			data: [10, 14, 18, 11, 9, 12, 14, 17, 18, 14],
-			color: this.layoutConfigService.getConfig('backend.colors.state.brand'),
+			color: this.layoutConfigService.getConfigValue('colors.state.brand'),
 			border: 3
 		};
 		this.chartOptions2 = {
 			data: [11, 12, 18, 13, 11, 12, 15, 13, 19, 15],
-			color: this.layoutConfigService.getConfig('backend.colors.state.danger'),
+			color: this.layoutConfigService.getConfigValue('colors.state.danger'),
 			border: 3
 		};
 		this.chartOptions3 = {
 			data: [12, 12, 18, 11, 15, 12, 13, 16, 11, 18],
-			color: this.layoutConfigService.getConfig('backend.colors.state.success'),
+			color: this.layoutConfigService.getConfigValue('colors.state.success'),
 			border: 3
 		};
 		this.chartOptions4 = {
 			data: [11, 9, 13, 18, 13, 15, 14, 13, 18, 15],
-			color: this.layoutConfigService.getConfig('backend.colors.state.primary'),
+			color: this.layoutConfigService.getConfigValue('colors.state.primary'),
 			border: 3
 		};
 
@@ -73,7 +73,6 @@ export class DashboardComponent /*implements OnInit*/ {
 				url: 'https://keenthemes.com.my/metronic',
 			},
 		]);
-
 		// @ts-ignore
 		this.widget4_2 = shuffle([
 			{
@@ -124,7 +123,7 @@ export class DashboardComponent /*implements OnInit*/ {
 				valueColor: 'kt-font-success'
 			}, {
 				icon: 'flaticon2-line-chart kt-font-danger',
-				title: 'Metronic Angular 7 version will be landing soon..',
+				title: 'Metronic Angular 8 version will be landing soon..',
 				url: 'https://keenthemes.com.my/metronic',
 				value: '+$1080',
 				valueColor: 'kt-font-danger'
@@ -193,5 +192,5 @@ export class DashboardComponent /*implements OnInit*/ {
 				valueColor: 'kt-font-brand'
 			},
 		]);
-	} */
+	}
 }
