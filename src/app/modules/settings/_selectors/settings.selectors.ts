@@ -1,10 +1,7 @@
 import {createFeatureSelector, createSelector} from '@ngrx/store';
 import {SettingsState} from "../_reducers/settings.reducers";
-import set = Reflect.set;
-import {ɵSetterFn} from "@angular/core";
 
 export const selectSettingsState = createFeatureSelector<SettingsState>('settings');
-
 
 export const selectSettingsPageLoading = createSelector(
 	selectSettingsState,
@@ -16,14 +13,12 @@ export const selectSettingsShowInitWaitingMessage = createSelector(
 	settingsState => settingsState.showInitWaitingMessage
 );
 
-export const selectSettingsInStore = createSelector(
+export const getCurrentApplication = createSelector(
 	selectSettingsState,
 	settingsState => settingsState.currentApplication
 );
 
-export const getCurrentApplication = createSelector(
+export const backendMessage = createSelector(
 	selectSettingsState,
-	settingsState => {
-		return settingsState.currentApplication;
-	}
+	settingsState => settingsState.message
 );

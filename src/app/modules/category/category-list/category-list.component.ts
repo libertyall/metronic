@@ -115,7 +115,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
 			}
 
 			// this.store.dispatch(deleteCategory({category: _item}));
-			this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Delete);
+			this.layoutUtilsService.showActionNotification(_deleteMessage, 'danger', MessageType.Delete);
 		});
 	}
 

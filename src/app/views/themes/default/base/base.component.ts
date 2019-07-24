@@ -1,14 +1,17 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
-import { PermissionClass } from '../../../../core/auth/_interfaces/permission.interface';
-import { LayoutConfigService, MenuConfigService, PageConfigService } from '../../../../core/_base/layout';
-import { HtmlClassService } from '../html-class.service';
-import { select, Store } from '@ngrx/store';
-import { NgxPermissionsService } from 'ngx-permissions';
-import { MenuConfig } from '../../../../core/_config/default/menu.config';
-import { PageConfig } from '../../../../core/_config/default/page.config';
-import { currentUserPermissions } from '../../../../core/auth/_selectors/auth.selectors';
-import { AppState } from '../../../../app.state';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {Observable, Subscription} from 'rxjs';
+import {PermissionClass} from '../../../../core/auth/_interfaces/permission.interface';
+import {LayoutConfigService, MenuConfigService, PageConfigService} from '../../../../core/_base/layout';
+import {HtmlClassService} from '../html-class.service';
+import {select, Store} from '@ngrx/store';
+import {NgxPermissionsService} from 'ngx-permissions';
+import {MenuConfig} from '../../../../core/_config/default/menu.config';
+import {PageConfig} from '../../../../core/_config/default/page.config';
+import {currentUserPermissions} from '../../../../core/auth/_selectors/auth.selectors';
+import {AppState} from '../../../../app.state';
+import {backendMessage} from "../../../../modules/settings/_selectors/settings.selectors";
+import {LayoutUtilsService} from "../../../../core/_base/crud";
+import {unsetBackendMessage} from "../../../../modules/settings/_actions/settings.actions";
 
 @Component({
 	selector: 'kt-base',
@@ -31,6 +34,7 @@ export class BaseComponent implements OnInit, OnDestroy {
 
 	constructor(private layoutConfigService: LayoutConfigService,
 				private menuConfigService: MenuConfigService,
+				private layoutUtilsService: LayoutUtilsService,
 				private pageConfigService: PageConfigService,
 				private htmlClassService: HtmlClassService,
 				private store: Store<AppState>,
@@ -47,6 +51,15 @@ export class BaseComponent implements OnInit, OnDestroy {
 			this.htmlClassService.setConfig(layoutConfig);
 		});
 		this.unsubscribe.push(layoutSubscription);
+
+		const backendMsgSubscription = this.store.select(backendMessage).subscribe((message) => {
+			// console.log(message);
+			if (message) {
+				// this.store.dispatch(unsetBackendMessage());
+				return this.layoutUtilsService.showActionNotification(message.code, message.color);
+			}
+		});
+		this.unsubscribe.push(backendMsgSubscription);
 	}
 
 	ngOnInit(): void {

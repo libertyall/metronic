@@ -1,5 +1,15 @@
-<div class="kt-mat-snackbar">
-	<div class="kt-mat-snackbar__message">{{data.message}}</div>
+<div *ngIf="data.color !== ''" class="alert alert-{{data.color}} alert-dismissible fade show" role="alert">
+	{{data.message}}
+	<button *ngIf="data.showCloseButton" type="button" class="close" data-dismiss="alert" aria-label="Close"
+			(click)="onDismiss()">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+
+<div class="kt-mat-snackbar" *ngIf="data.color === ''">
+	<div class="kt-mat-snackbar__message">
+		{{data.message}}
+	</div>
 	<div class="kt-mat-snackbar__btn">
 		<button *ngIf="data.showUndoButton"
 				type="button"
@@ -9,10 +19,10 @@
 		</button>
 	</div>
 	<div class="kt-mat-snackbar__close">
-		<button *ngIf="data.showCloseButton" 
-			mat-icon-button 
-			(click)="onDismiss()"
-			color="warn">
+		<button *ngIf="data.showCloseButton"
+				mat-icon-button
+				(click)="onDismiss()"
+				color="warn">
 			<mat-icon>clear</mat-icon>
 		</button>
 	</div>

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {from, Observable, of} from 'rxjs';
+import {from, Observable, of, throwError} from 'rxjs';
 import {AngularFirestore} from '@angular/fire/firestore';
-import {map, take} from 'rxjs/operators';
+import {catchError, map, take} from 'rxjs/operators';
 import {LayoutConfigService} from '../../../core/_base/layout';
 import * as _ from 'lodash';
 import {LayoutConfig} from '../../../core/_config/default/layout.config';
@@ -55,16 +55,15 @@ export class ApplicationService {
 		} else {
 			return of(this.applicationConfig);
 		}
-
 	}
 
 	createApplication(application: Application):  Observable<Application> {
 		application.id = this.afs.createId();
-		return from(this.afs.collection(this.path).doc(application.id).set(application).then(() => application));
+		return from(this.afs.collection(this.path).doc(application.id).set(application).then(() => application)).pipe(catchError(e => throwError(e)));
 	}
 
 	updateApplication(application: Application): Observable<Application> {
-		return from(this.afs.collection(this.path).doc(application.id).update(application).then(() => application));
+		return from(this.afs.collection(this.path).doc(application.id).update(application).then(() => application)).pipe(catchError(e => throwError(e)));
 	}
 
 	getWeekdays(): number[] {

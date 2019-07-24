@@ -2,11 +2,11 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {debounceTime, distinctUntilChanged} from "rxjs/operators";
-import {Application} from "../../_model/application.model";
 import {Observable} from "rxjs";
-import {RoleClass} from "../../../../core/auth/_interfaces/role.interface";
 import {Store} from "@ngrx/store";
-import {AppState} from "../../../../app.state";
+import {Application} from "../_model/application.model";
+import {RoleClass} from "../../../core/auth/_interfaces/role.interface";
+import {AppState} from "../../../app.state";
 
 @Component({
 	selector: 'kt-settings-main',
@@ -82,32 +82,9 @@ export class SettingsMainComponent implements OnInit {
 				return;
 			}
 
-			// if (this.form.valid) {
-			console.log(changes);
-			// this.application = Object.assign({}, this.application, changes);
-			// this.saveApplication.emit(this.application);
-			// }
+			this.application = Object.assign({}, this.application, changes);
+			this.saveApplication.emit(this.application);
 		});
 	}
-
-	/* initLinks(): FormArray {
-		const formArray: FormArray = this.fb.array([]);
-		if (this.application.socialNetworks && this.application.socialNetworks.length > 0) {
-			this.application.socialNetworks.forEach((socialNetwork: ISocialNetwork) => {
-				formArray.push(this.initSocialNetwork(socialNetwork));
-			});
-		}
-		console.log('ToDo');
-		return formArray;
-	}
-
-	initLink(externalLink?: ExternalLinkModel): FormGroup {
-		return this.fb.group({
-			title: [externalLink ? externalLink.title : '', [Validators.required, Validators.minLength(3)]],
-			isEnabled: [externalLink ? externalLink.isEnabled : true],
-			target: [externalLink ? externalLink.target : 'blank'],
-			link: [externalLink ? externalLink.link : '', [Validators.required, Validators.minLength(5), Validators.maxLength(255)]],
-		});
-	} */
 
 }

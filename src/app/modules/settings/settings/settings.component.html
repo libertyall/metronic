@@ -1,49 +1,5 @@
 <kt-portlet *ngIf="application$ | async as application">
-	<!--<kt-portlet-header [title]="getComponentTitle()" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
-		<ng-container ktPortletTools>
-			<a [routerLink]="['/categories']" class="btn btn-secondary kt-margin-r-10" mat-raised-button
-			   [matTooltip]="'category.backToList' | translate">
-				<i class="la la-arrow-left"></i>
-				<span class="kt-hidden-mobile">{{'back' | translate}}</span>
-			</a>
-			<a class="btn btn-secondary kt-margin-r-10" (click)="reset()"
-			   [disabled]="selectedTab!== 0"
-			   mat-raised-button
-			   matTooltip="{{'resetDescription' | translate}}">
-				<i class="la la-cog"></i>
-				<span class="kt-hidden-mobile">{{'reset' | translate}}</span>
-			</a>
-
-			<button class="btn btn-primary kt-margin-r-10"
-					color="primary"
-					(click)="onSubmit(false)"
-					mat-raised-button
-					matTooltip="{{'saveDescription' | translate}}">
-				<span class="kt-hidden-mobile">{{'save' | translate}}</span>
-			</button>
-			<button mat-icon-button [matMenuTriggerFor]="menu" color="primary">
-				<mat-icon>more_vert</mat-icon>
-			</button>
-			<mat-menu #menu="matMenu">
-				<a mat-menu-item
-				   matTooltip="{{'saveToListDescription' | translate}}"
-				   (click)="onSubmit(true)">
-					<span class="kt-hidden-mobile">{{'saveToList' | translate}}</span>
-				</a>
-				<a mat-menu-item
-				   matTooltip="{{ 'category.list.delete' | translate}}"
-				   (click)="deleteCategory(category)">
-					{{ 'category.list.delete' | translate}}
-				</a>
-				<a mat-menu-item
-				   matTooltip="{{ 'category.edit.goToList' | translate}}"
-				   (click)="goBackToList()">
-					{{ 'category.edit.goToList' | translate}}
-				</a>
-			</mat-menu>
-		</ng-container>
-	</kt-portlet-header>-->
-
+	<pre>{{application.page | json}}</pre>
 	<kt-portlet-body>
 
 		<kt-alert *ngIf="hasFormErrors"

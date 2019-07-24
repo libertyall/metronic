@@ -22,6 +22,7 @@ export class LayoutUtilsService {
 
 	showActionNotification(
 		_message: string,
+		_color: string,
 		_type: MessageType = MessageType.Create,
 		_duration: number = 10000,
 		_showCloseButton: boolean = true,
@@ -31,6 +32,7 @@ export class LayoutUtilsService {
 	) {
 		const _data = {
 			message: _message,
+			color: _color,
 			snackBar: this.snackBar,
 			showCloseButton: _showCloseButton,
 			showUndoButton: _showUndoButton,

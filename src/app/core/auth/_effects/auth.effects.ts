@@ -146,7 +146,7 @@ export class AuthEffects {
 	init = createEffect(() => this.actions$.pipe(
 		ofType(ROOT_EFFECTS_INIT),
 		exhaustMap(() => this.authService.authUser$.pipe(
-			map((user) =>  setAuthUser({user, isLoggedIn: !!user}))
+			map((user) => setAuthUser({user, isLoggedIn: !!user}))
 		))
 	));
 

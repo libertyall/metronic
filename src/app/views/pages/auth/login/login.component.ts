@@ -54,7 +54,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 				map((m: { code: string; color: string }) => m)
 			)
 			.subscribe((message) => this.authNoticeService.setNotice(message.code, message.color));
-		this.isLoading$ = this.store.select(isLoading);
 	}
 
 	logout() {

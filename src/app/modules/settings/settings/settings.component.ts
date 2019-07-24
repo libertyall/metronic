@@ -5,8 +5,7 @@ import {Observable} from "rxjs";
 import {select, Store} from "@ngrx/store";
 import {AppState} from "../../../app.state";
 import {getCurrentApplication} from "../_selectors/settings.selectors";
-import {loadCurrentApplication, saveApplication} from "../_actions/settings.actions";
-import {credentialsLogin, startLogin} from "../../../core/auth/_actions/auth.actions";
+import {updateApplication} from "../_actions/settings.actions";
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -29,9 +28,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 			desc: 'settings.subheader.desc'
 			// showToolbar: true
 		});
-		// this.loading$ = this.store.pipe(select(selectSettingsPageLoading));
 		this.application$ = this.store.pipe(select(getCurrentApplication));
-		this.store.dispatch(loadCurrentApplication());
 	}
 
 	onAlertClose(): void {
@@ -47,8 +44,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 	}
 
 	saveApplication(application: Application) {
-
-		this.store.dispatch(saveApplication({application}));
+		this.store.dispatch(updateApplication({application}));
 
 		/*this.application = Object.assign({}, this.application, application);
 	 this.applicationService.updateApplication(application.id, application)

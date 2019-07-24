@@ -115,7 +115,7 @@ export class ArticleListComponent implements OnInit, OnDestroy {
 			}
 
 			// this.store.dispatch(deleteCategory({article: _item}));
-			this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Delete);
+			this.layoutUtilsService.showActionNotification(_deleteMessage, 'danger' ,MessageType.Delete);
 		});
 	}
 

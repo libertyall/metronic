@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LayoutConfigService } from '../../../../core/_base/layout';
+import { LayoutConfigService } from '../../../core/_base/layout';
 import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 

@@ -166,7 +166,7 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
 		};
 		// this.store.dispatch(new CategoryUpdated({ partialCategory: updatedCategory, category: _category }));
 		const message = `category.messages.updated`;
-		this.layoutUtilsService.showActionNotification(message, MessageType.Update, 5000, true, true);
+		this.layoutUtilsService.showActionNotification(message, 'warning', MessageType.Update, 5000, true, true);
 		if (goToList) {
 			this.goBackToList();
 		}
@@ -203,7 +203,7 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
 			}
 
 			// this.store.dispatch(new CategoryDeleted({ id: _item.id }));
-			this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Delete);
+			this.layoutUtilsService.showActionNotification(_deleteMessage, 'danger', MessageType.Delete);
 			this.goBackToList();
 		});
 	}

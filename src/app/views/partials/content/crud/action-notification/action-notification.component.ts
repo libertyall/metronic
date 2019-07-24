@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
-import { MAT_SNACK_BAR_DATA } from '@angular/material';
+import {MAT_SNACK_BAR_DATA, MatSnackBar} from '@angular/material';
 import { delay } from 'rxjs/operators';
 import { of } from 'rxjs';
+import {MessageType} from "../../../../../core/_base/crud";
 
 @Component({
 	selector: 'kt-action-natification',
@@ -11,7 +12,17 @@ import { of } from 'rxjs';
 })
 export class ActionNotificationComponent implements OnInit {
 
-	constructor(@Inject(MAT_SNACK_BAR_DATA) public data: any) {
+	constructor(@Inject(MAT_SNACK_BAR_DATA) public data: {
+		color: string;
+		showUndoButton: boolean;
+		duration: number;
+		undoButtonDuration: number;
+		snackBar: MatSnackBar;
+		message: string;
+		type: MessageType;
+		showCloseButton: boolean;
+		verticalPosition: string;
+	}) {
 	}
 
 	ngOnInit() {

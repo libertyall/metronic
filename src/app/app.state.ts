@@ -7,6 +7,7 @@ import { storeFreeze } from 'ngrx-store-freeze';
 import { IRouterStateUrl } from './shared/utils/utils';
 import { routerReducer, RouterReducerState } from '@ngrx/router-store';
 import { uploadReducer, UploadState } from './shared/modules/upload/_reducers/upload.reducer';
+import {settingsReducer, SettingsState} from "./modules/settings/_reducers/settings.reducers";
 
 export function logger(reducer: any) {
 	return (state: any, action: any) => {
@@ -20,6 +21,7 @@ export interface IAppState {
 	auth: AuthState;
 	logger: LoggerState;
 	router: RouterReducerState<IRouterStateUrl>;
+	settings: SettingsState;
 	uploader: UploadState;
 	// users: UserState;
 }
@@ -32,6 +34,7 @@ export const appReducer: ActionReducerMap<AppState> = {
 	auth: authReducer,
 	logger: loggerReducer,
 	router: routerReducer,
+	settings: settingsReducer,
 	uploader: uploadReducer
 	// users: usersReducer
 };

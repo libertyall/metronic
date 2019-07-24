@@ -41,6 +41,7 @@ import {
 	MenuHorizontalService,
 	PageConfigService, SubheaderService
 } from "../../../core/_base/layout";
+import {LayoutUtilsService} from "../../../core/_base/crud";
 
 @NgModule({
 	declarations: [
@@ -75,6 +76,7 @@ import {
 		PageConfigService,
 		MenuAsideService,
 		LayoutRefService,
+		LayoutUtilsService,
 		MenuHorizontalService,
 		SubheaderService
 	],

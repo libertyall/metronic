@@ -42,8 +42,8 @@ import { NgPipesModule } from 'ngx-pipes';
 		UserProfileComponent,
 		ErrorComponent,
 		AlertComponent,
-		/* ActionNotificationComponent,
-		DeleteEntityDialogComponent
+		ActionNotificationComponent,
+		/* DeleteEntityDialogComponent
 		 NoticeComponent,
 		 FetchEntityDialogComponent,
 		 UpdateStatusDialogComponent,
@@ -75,11 +75,11 @@ import { NgPipesModule } from 'ngx-pipes';
 		UserProfileComponent,
 		ErrorComponent,
 		AlertComponent,
+		ActionNotificationComponent,
 		/* DeleteEntityDialogComponent,
 		/*WidgetModule,
 		 PortletModule,
 		 NoticeComponent,
-		 ActionNotificationComponent,
 		 FetchEntityDialogComponent,
 		 UpdateStatusDialogComponent,
 
@@ -93,6 +93,7 @@ import { NgPipesModule } from 'ngx-pipes';
 		CommonModule,
 		CoreModule,
 		InlineSVGModule,
+		MatButtonModule,
 		MatIconModule,
 		NgbModule,
 		PerfectScrollbarModule,
@@ -101,7 +102,6 @@ import { NgPipesModule } from 'ngx-pipes';
 		/* MatProgressBarModule,
 		MatProgressSpinnerModule,
 		// Suheader-Includes
-		MatButtonModule,
 		MatDialogModule,
 		MatIconModule,
 		MatSnackBarModule,
@@ -126,7 +126,7 @@ import { NgPipesModule } from 'ngx-pipes';
 	],
 	entryComponents: [
 		// AlertComponent,
-		// ActionNotificationComponent,
+		ActionNotificationComponent,
 		// DeleteEntityDialogComponent
 	]
 })
