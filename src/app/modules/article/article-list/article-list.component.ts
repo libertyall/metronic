@@ -5,7 +5,7 @@ import { MatPaginator, MatSort, MatSortable } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { fromEvent, merge, Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AppState } from '../../../app.state';
+import { AppState } from '../../../store/app.state';
 import { select, Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { SubheaderService } from '../../../core/_base/layout';

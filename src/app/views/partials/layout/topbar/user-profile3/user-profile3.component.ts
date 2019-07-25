@@ -4,7 +4,7 @@ import { select, Store } from '@ngrx/store';
 import { currentUser } from '../../../../../core/auth/_selectors/auth.selectors';
 import { logout } from '../../../../../core/auth/_actions/auth.actions';
 import { UserInterface } from '../../../../../core/auth/_interfaces/user.interface';
-import { AppState } from '../../../../../app.state';
+import { AppState } from '../../../../../store/app.state';
 
 @Component({
 	selector: 'kt-user-profile3',

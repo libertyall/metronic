@@ -134,7 +134,7 @@ export class LayoutConfigService {
 		const config = this.getConfig();
 		let returnValue: any = false;
 		_.filterDeep(config, (value, key, parentValue) => {
-			if (value === configKey + '.key') {
+			if (value === configKey) {
 				returnValue = parentValue;
 			}
 		});

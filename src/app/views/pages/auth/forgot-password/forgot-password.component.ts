@@ -8,7 +8,7 @@ import { AuthService } from '../../../../core/auth/_services';
 import { Store } from '@ngrx/store';
 import { forgotPassword, logout } from '../../../../core/auth/_actions/auth.actions';
 import { isLoading, selectAuthMessage } from '../../../../core/auth/_selectors/auth.selectors';
-import { AppState } from '../../../../app.state';
+import { AppState } from '../../../../store/app.state';
 
 @Component({
 	selector: 'kt-forgot-password',

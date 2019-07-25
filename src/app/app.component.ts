@@ -10,7 +10,7 @@ import { locale as deLang } from './core/_config/i18n/de';
 import { locale as frLang } from './core/_config/i18n/fr';
 import { Title } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
-import { AppState } from './app.state';
+import { AppState } from './store/app.state';
 import { TranslationService } from './core/_base/layout/services/translation.service';
 import {ApplicationService} from "./modules/settings/_services/application.service";
 

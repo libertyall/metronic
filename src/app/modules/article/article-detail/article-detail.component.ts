@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { Article } from '../_model/article.model';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../app.state';
+import { AppState } from '../../../store/app.state';
 
 @Component({
 	selector: 'kt-article-detail',

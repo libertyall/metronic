@@ -17,7 +17,7 @@ import {
 	PermissionsPageToggleLoading,
 	PermissionUpdated
 } from '../_actions/permission.actions';
-import { AppState } from '../../../app.state';
+import { AppState } from '../../../store/app.state';
 import {QueryParamsModel, QueryResultsModel} from '../../_base/crud';
 import {UserService} from '../_services/user.service';
 

@@ -17,7 +17,7 @@ import {
 import {UserInterface} from '../../../../core/auth/_interfaces/user.interface';
 import {currentUser, isLoading, isLoggedIn, selectAuthMessage} from '../../../../core/auth/_selectors/auth.selectors';
 import {map, takeUntil} from 'rxjs/operators';
-import {AppState} from '../../../../app.state';
+import {AppState} from '../../../../store/app.state';
 import {ApplicationService} from "../../../../modules/settings/_services/application.service";
 
 @Component({

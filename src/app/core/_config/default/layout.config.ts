@@ -6,51 +6,51 @@ export class LayoutConfig {
 
 	public backendDefaults: FormlyFieldConfig[] = [
 		{
-			key: 'aside.key',
+			key: 'aside',
 			wrappers: ['panel'],
 			templateOptions: { label: 'aside' },
 			fieldGroup: [
 				{
-					key: 'aside.self.key',
-					templateOptions: { label: 'aside.self' },
+					key: 'aside.self',
+					templateOptions: { label: 'asideSelf' },
 					wrappers: ['panel'],
 					fieldGroup: [
 						{
-							key: 'aside.self.skin.key',
+							key: 'aside.self.skin',
 							type: 'radio',
 							templateOptions: {
-								label: 'aside.self.skin',
+								label: 'asideSelfSkin',
 								options: [{ value: 'dark', label: 'dark' }, { value: 'light', label: 'light' }]
 							},
 							defaultValue: 'dark'
 						},
 						{
-							key: 'aside.self.display.key',
+							key: 'aside.self.display',
 							type: 'checkbox',
-							templateOptions: { label: 'aside.self.display' },
+							templateOptions: { label: 'asideSelfDisplay' },
 							defaultValue: true
 						},
 						{
-							key: 'aside.self.fixed.key',
+							key: 'aside.self.fixed',
 							type: 'checkbox',
-							templateOptions: { label: 'aside.self.fixed' },
+							templateOptions: { label: 'asideSelfFixed' },
 							defaultValue: true
 						},
 						{
-							key: 'aside.self.minimize.key',
-							templateOptions: { label: 'aside.self.minimize' },
+							key: 'aside.self.minimize',
+							templateOptions: { label: 'asideSelfMinimize' },
 							wrappers: ['panel'],
 							fieldGroup: [
 								{
-									key: 'aside.self.minimize.toggle.key',
+									key: 'aside.self.minimize.toggle',
 									type: 'checkbox',
-									templateOptions: { label: 'aside.self.minimize.toggle' },
+									templateOptions: { label: 'asideSelfMinimizeToggle' },
 									defaultValue: true
 								},
 								{
-									key: 'aside.self.minimize.default.key',
+									key: 'aside.self.minimize.default',
 									type: 'checkbox',
-									templateOptions: { label: 'aside.self.minimize.default' },
+									templateOptions: { label: 'asideSelfMinimizeDefault' },
 									defaultValue: false
 								}
 							]
@@ -58,19 +58,19 @@ export class LayoutConfig {
 					]
 				},
 				{
-					key: 'aside.footer.key',
-					templateOptions: { label: 'aside.footer' },
+					key: 'aside.footer',
+					templateOptions: { label: 'asideFooter' },
 					wrappers: ['panel'],
 					fieldGroup: [
 						{
-							key: 'aside.footer.self.key',
-							templateOptions: { label: 'aside.footer.self' },
+							key: 'aside.footer.self',
+							templateOptions: { label: 'asideFooterSelf' },
 							wrappers: ['panel'],
 							fieldGroup: [
 								{
-									key: 'aside.footer.self.display.key',
+									key: 'aside.footer.self.display',
 									type: 'checkbox',
-									templateOptions: { label: 'aside.footer.self.display' },
+									templateOptions: { label: 'asideFooterSelfDisplay' },
 									defaultValue: true
 								}
 							]
@@ -78,49 +78,49 @@ export class LayoutConfig {
 					]
 				},
 				{
-					key: 'aside.menu.key',
-					templateOptions: { label: 'aside.menu' },
+					key: 'aside.menu',
+					templateOptions: { label: 'asideMenu' },
 					wrappers: ['panel'],
 					fieldGroup: [
 						{
-							key: 'aside.menu.dropdown.key',
+							key: 'aside.menu.dropdown',
 							type: 'checkbox',
-							templateOptions: { label: 'aside.menu.dropdown' },
+							templateOptions: { label: 'asideMenuDropdown' },
 							defaultValue: true
 						},
 						{
-							key: 'aside.menu.scroll.key',
+							key: 'aside.menu.scroll',
 							type: 'checkbox',
-							templateOptions: { label: 'aside.menu.scroll' },
+							templateOptions: { label: 'asideMenuScroll' },
 							defaultValue: true
 						},
 						{
-							key: 'aside.menu.submenu.key',
-							templateOptions: { label: 'aside.menu.submenu' },
+							key: 'aside.menu.submenu',
+							templateOptions: { label: 'asideMenuSubmenu' },
 							wrappers: ['panel'],
 							fieldGroup: [
 								{
-									key: 'aside.menu.submenu.accordion.key',
+									key: 'aside.menu.submenu.accordion',
 									type: 'checkbox',
-									templateOptions: { label: 'aside.menu.submenu.accordion' },
+									templateOptions: { label: 'asideMenuSubmenuAccordion' },
 									defaultValue: true
 								},
 								{
-									key: 'aside.menu.submenu.dropdown.key',
-									templateOptions: { label: 'aside.menu.submenu.dropdown' },
+									key: 'aside.menu.submenu.dropdown',
+									templateOptions: { label: 'asideMenuSubmenuDropdown' },
 									wrappers: ['panel'],
 									fieldGroup: [
 										{
-											key: 'aside.menu.submenu.dropdown.arrow.key',
+											key: 'aside.menu.submenu.dropdown.arrow',
 											type: 'checkbox',
-											templateOptions: { label: 'aside.menu.submenu.dropdown.arrow' },
+											templateOptions: { label: 'asideMenuSubmenuDropdownArrow' },
 											defaultValue: true
 										},
 										{
-											key: 'aside.menu.submenu.dropdown.hover-timeout.key',
+											key: 'aside.menu.submenu.dropdown.hover-timeout',
 											type: 'input',
 											templateOptions: {
-												label: 'aside.menu.submenu.dropdown.arrow',
+												label: 'asideMenuSubmenuDropdownHover-timeout',
 												type: 'number'
 											},
 											defaultValue: 500
@@ -134,20 +134,20 @@ export class LayoutConfig {
 			]
 		},
 		{
-			key: 'brand.key',
+			key: 'brand',
 			wrappers: ['panel'],
 			templateOptions: { label: 'brand' },
 			fieldGroup: [
 				{
-					key: 'brand.self.key',
-					templateOptions: { label: 'brand.self' },
+					key: 'brand.self',
+					templateOptions: { label: 'brandSelf' },
 					wrappers: ['panel'],
 					fieldGroup: [
 						{
-							key: 'brand.self.skin.key',
+							key: 'brand.self.skin',
 							type: 'radio',
 							templateOptions: {
-								label: 'brand.self.skin',
+								label: 'brandSelfSkin',
 								options: [{ value: 'dark', label: 'dark' }, { value: 'light', label: 'light' }]
 							},
 							defaultValue: 'dark'
@@ -157,20 +157,20 @@ export class LayoutConfig {
 			]
 		},
 		{
-			key: 'colors.key',
+			key: 'colors',
 			wrappers: ['panel'],
-			templateOptions: { label: 'Colours' },
+			templateOptions: { label: 'colors' },
 			fieldGroup: [
 				{
-					key: 'colors.base.key',
+					key: 'colors.base',
 					wrappers: ['panel'],
-					templateOptions: { label: 'Colours.base' },
+					templateOptions: { label: 'colorsBase' },
 					fieldGroup: [
 						{
-							key: 'colors.base.key',
+							key: 'colors.base',
 							type: 'select',
 							templateOptions: {
-								label: 'colors.base',
+								label: 'colorsBase',
 								multiple: true,
 								options: [
 									{ value: '#f0f3ff', label: '#f0f3ff' },
@@ -185,10 +185,10 @@ export class LayoutConfig {
 							defaultValue: ['#c5cbe3', '#a1a8c3', '#3d4465', '#3e4466']
 						},
 						{
-							key: 'colors.base.shape.key',
+							key: 'colors.base.shape',
 							type: 'select',
 							templateOptions: {
-								label: 'colors.base.shape',
+								label: 'colorsBaseShape',
 								multiple: true,
 								options: [
 									{ value: '#f0f3ff', label: '#f0f3ff' },
@@ -205,63 +205,63 @@ export class LayoutConfig {
 					]
 				},
 				{
-					key: 'colors.state.key',
+					key: 'colors.state',
 					wrappers: ['panel'],
-					templateOptions: { label: 'Colours.state' },
+					templateOptions: { label: 'colorsState' },
 					fieldGroup: [
 						{
-							key: 'colors.state.brand.key',
+							key: 'colors.state.brand',
 							type: 'input',
 							templateOptions: {
-								label: 'colors.state.brand'
+								label: 'colorsStateBrand'
 							},
 							defaultValue: '#5d78ff'
 						},
 						{
-							key: 'colors.state.dark.key',
+							key: 'colors.state.dark',
 							type: 'input',
 							templateOptions: {
-								label: 'colors.state.dark'
+								label: 'colorsStateDark'
 							},
 							defaultValue: '#282a3c'
 						},
 						{
-							key: 'colors.state.light.key',
+							key: 'colors.state.light',
 							type: 'input',
 							templateOptions: {
-								label: 'colors.state.light'
+								label: 'colorsStateLight'
 							},
 							defaultValue: '#ffffff'
 						},
 						{
-							key: 'colors.state.primary.key',
+							key: 'colors.state.primary',
 							type: 'input',
 							templateOptions: {
-								label: 'colors.state.primary'
+								label: 'colorsStatePrimary'
 							},
 							defaultValue: '#5867dd'
 						},
 						{
-							key: 'colors.state.success.key',
+							key: 'colors.state.success',
 							type: 'input',
 							templateOptions: {
-								label: 'colors.state.success'
+								label: 'colorsStateSuccess'
 							},
 							defaultValue: '#34bfa3'
 						},
 						{
-							key: 'colors.state.warning.key',
+							key: 'colors.state.warning',
 							type: 'input',
 							templateOptions: {
-								label: 'colors.state.warning'
+								label: 'colorsStateWarning'
 							},
 							defaultValue: '#ffb822'
 						},
 						{
-							key: 'colors.state.danger.key',
+							key: 'colors.state.danger',
 							type: 'input',
 							templateOptions: {
-								label: 'colors.state.danger'
+								label: 'colorsStateDanger'
 							},
 							defaultValue: '#fd3995'
 						}
@@ -270,37 +270,37 @@ export class LayoutConfig {
 			]
 		},
 		{
-			key: 'content.key',
+			key: 'content',
 			wrappers: ['panel'],
 			templateOptions: { label: 'content' },
 			fieldGroup: [
 				{
-					key: 'content.fit-top.key',
-					templateOptions: { label: 'content.fit-top' },
+					key: 'content.fit-top',
+					templateOptions: { label: 'contentFit-top' },
 					type: 'checkbox',
 					defaultValue: false
 				},
 				{
-					key: 'content.width.key',
-					templateOptions: { label: 'content.width' },
+					key: 'content.width',
+					templateOptions: { label: 'contentWidth' },
 					type: 'checkbox',
 					defaultValue: true
 				}
 			]
 		},
 		{
-			key: 'footer.key',
+			key: 'footer',
 			wrappers: ['panel'],
 			templateOptions: { label: 'footer' },
 			fieldGroup: [
 				{
-					key: 'footer.self.key',
-					templateOptions: { label: 'footer.self' },
+					key: 'footer.self',
+					templateOptions: { label: 'footerSelf' },
 					wrappers: ['panel'],
 					fieldGroup: [
 						{
-							key: 'footer.self.fixed.key',
-							templateOptions: { label: 'footer.self.fixed' },
+							key: 'footer.self.fixed',
+							templateOptions: { label: 'footerSelfFixed' },
 							type: 'checkbox',
 							defaultValue: false
 						}
@@ -309,38 +309,38 @@ export class LayoutConfig {
 			]
 		},
 		{
-			key: 'header.key',
+			key: 'header',
 			wrappers: ['panel'],
 			templateOptions: { label: 'header' },
 			fieldGroup: [
 				{
-					key: 'header.self.key',
+					key: 'header.self',
 					wrappers: ['panel'],
-					templateOptions: { label: 'header.self' },
+					templateOptions: { label: 'headerSelf' },
 					fieldGroup: [
 						{
-							key: 'header.self.skin.key',
+							key: 'header.self.skin',
 							templateOptions: {
-								label: 'header.self.skin',
+								label: 'headerSelfSkin',
 								options: [{ value: 'dark', label: 'dark' }, { value: 'light', label: 'light' }]
 							},
 							type: 'select',
 							defaultValue: 'light'
 						},
 						{
-							key: 'header.self.fixed.key',
+							key: 'header.self.fixed',
 							wrappers: ['panel'],
-							templateOptions: { label: 'header.self.fixed' },
+							templateOptions: { label: 'headerSelfFixed' },
 							fieldGroup: [
 								{
-									key: 'header.self.fixed.desktop.key',
-									templateOptions: { label: 'header.self.fixed.desktop' },
+									key: 'header.self.fixed.desktop',
+									templateOptions: { label: 'headerSelfFixedDesktop' },
 									type: 'checkbox',
 									defaultValue: true
 								},
 								{
-									key: 'header.self.fixed.mobile.key',
-									templateOptions: { label: 'header.self.fixed.mobile' },
+									key: 'header.self.fixed.mobile',
+									templateOptions: { label: 'headerSelfFixedMobile' },
 									type: 'checkbox',
 									defaultValue: true
 								}
@@ -349,26 +349,26 @@ export class LayoutConfig {
 					]
 				},
 				{
-					key: 'header.topbar.key',
+					key: 'header.topbar',
 					wrappers: ['panel'],
-					templateOptions: { label: 'header.topbar' },
+					templateOptions: { label: 'headerTopbar' },
 					fieldGroup: [
 						{
-							key: 'header.topbar.search.key',
+							key: 'header.topbar.search',
 							wrappers: ['panel'],
-							templateOptions: { label: 'header.topbar.search' },
+							templateOptions: { label: 'headerTopbarSearch' },
 							fieldGroup: [
 								{
-									key: 'header.topbar.search.display.key',
-									templateOptions: { label: 'header.topbar.search.display' },
+									key: 'header.topbar.search.display',
+									templateOptions: { label: 'headerTopbarSearchDisplay' },
 									type: 'checkbox',
 									defaultValue: true
 								},
 								{
-									key: 'header.topbar.search.layout.key',
+									key: 'header.topbar.search.layout',
 									type: 'select',
 									templateOptions: {
-										label: 'header.topbar.search.layout',
+										label: 'headerTopbarSearchLayout',
 										options: [
 											{ value: 'offcanvas', label: 'offcanvas' },
 											{ value: 'dropdown', label: 'dropdown' }
@@ -379,21 +379,21 @@ export class LayoutConfig {
 							]
 						},
 						{
-							key: 'header.topbar.notifications.key',
+							key: 'header.topbar.notifications',
 							wrappers: ['panel'],
-							templateOptions: { label: 'header.topbar.notifications' },
+							templateOptions: { label: 'headerTopbarNotifications' },
 							fieldGroup: [
 								{
-									key: 'header.topbar.notifications.display.key',
-									templateOptions: { label: 'header.topbar.notifications.display' },
+									key: 'header.topbar.notifications.display',
+									templateOptions: { label: 'headerTopbarNotificationsDisplay' },
 									type: 'checkbox',
 									defaultValue: true
 								},
 								{
-									key: 'header.topbar.notifications.layout.key',
+									key: 'header.topbar.notifications.layout',
 									type: 'select',
 									templateOptions: {
-										label: 'header.topbar.notifications.layout',
+										label: 'headerTopbarNotificationsLayout',
 										options: [
 											{ value: 'offcanvas', label: 'offcanvas' },
 											{ value: 'dropdown', label: 'dropdown' }
@@ -402,15 +402,15 @@ export class LayoutConfig {
 									defaultValue: 'dropdown'
 								},
 								{
-									key: 'header.topbar.notifications.dropdown.key',
+									key: 'header.topbar.notifications.dropdown',
 									wrappers: ['panel'],
-									templateOptions: { label: 'header.topbar.notifications.dropdown' },
+									templateOptions: { label: 'headerTopbarNotificationsDropdown' },
 									fieldGroup: [
 										{
-											key: 'header.topbar.notifications.dropdown.style.key',
+											key: 'header.topbar.notifications.dropdown.style',
 											type: 'select',
 											templateOptions: {
-												label: 'header.topbar.notifications.dropdown.style',
+												label: 'headerTopbarNotificationsStyle',
 												options: [
 													{ value: 'light', label: 'light' },
 													{ value: 'dark', label: 'dark' }
@@ -423,21 +423,21 @@ export class LayoutConfig {
 							]
 						},
 						{
-							key: 'header.topbar.quick-actions.key',
+							//  key: 'header.topbar.quick-actions',
 							wrappers: ['panel'],
-							templateOptions: { label: 'header.topbar.quick-actions' },
+							templateOptions: { label: 'headerTopbarQuick-actions' },
 							fieldGroup: [
 								{
-									key: 'header.topbar.quick-actions.display.key',
-									templateOptions: { label: 'header.topbar.quick-actions.display' },
+									key: 'header.topbar.quick-actions.display',
+									templateOptions: { label: 'headerTopbarQuick-actionsDisplay' },
 									type: 'checkbox',
 									defaultValue: true
 								},
 								{
-									key: 'header.topbar.quick-actions.layout.key',
+									key: 'header.topbar.quick-actions.layout',
 									type: 'select',
 									templateOptions: {
-										label: 'header.topbar.quick-actions.layout',
+										label: 'headerTopbarQuick-actionsLayout',
 										options: [
 											{ value: 'offcanvas', label: 'offcanvas' },
 											{ value: 'dropdown', label: 'dropdown' }
@@ -446,15 +446,15 @@ export class LayoutConfig {
 									defaultValue: 'dropdown'
 								},
 								{
-									key: 'header.topbar.quick-actions.dropdown.key',
+									key: 'header.topbar.quick-actions.dropdown',
 									wrappers: ['panel'],
-									templateOptions: { label: 'header.topbar.quick-actions.dropdown' },
+									templateOptions: { label: 'headerTopbarQuick-actionsDropdown' },
 									fieldGroup: [
 										{
-											key: 'header.topbar.quick-actions.dropdown.style.key',
+											key: 'header.topbar.quick-actions.dropdown.style',
 											type: 'select',
 											templateOptions: {
-												label: 'header.topbar.quick-actions.dropdown.style',
+												label: 'headerTopbarQuick-actionsStyle',
 												options: [
 													{ value: 'light', label: 'light' },
 													{ value: 'dark', label: 'dark' }
@@ -467,21 +467,21 @@ export class LayoutConfig {
 							]
 						},
 						{
-							key: 'header.topbar.user.key',
+							//  key: 'header.topbar.user',
 							wrappers: ['panel'],
-							templateOptions: { label: 'header.topbar.user' },
+							templateOptions: { label: 'headerTopbarUser' },
 							fieldGroup: [
 								{
-									key: 'header.topbar.user.display.key',
-									templateOptions: { label: 'header.topbar.user.display' },
+									key: 'header.topbar.user.display',
+									templateOptions: { label: 'headerTopbarUserDisplay' },
 									type: 'checkbox',
 									defaultValue: true
 								},
 								{
-									key: 'header.topbar.user.layout.key',
+									key: 'header.topbar.user.layout',
 									type: 'select',
 									templateOptions: {
-										label: 'header.topbar.user.layout',
+										label: 'headerTopbarUserLayout',
 										options: [
 											{ value: 'offcanvas', label: 'offcanvas' },
 											{ value: 'dropdown', label: 'dropdown' }
@@ -490,15 +490,15 @@ export class LayoutConfig {
 									defaultValue: 'dropdown'
 								},
 								{
-									key: 'header.topbar.user.dropdown.key',
+									key: 'header.topbar.user.dropdown',
 									wrappers: ['panel'],
-									templateOptions: { label: 'header.topbar.user.dropdown' },
+									templateOptions: { label: 'headerTopbarUserDropdown' },
 									fieldGroup: [
 										{
-											key: 'header.topbar.user.dropdown.style.key',
+											key: 'header.topbar.user.dropdown.style',
 											type: 'select',
 											templateOptions: {
-												label: 'header.topbar.user.dropdown.style',
+												label: 'headerTopbarUserDropdownStyle',
 												options: [
 													{ value: 'light', label: 'light' },
 													{ value: 'dark', label: 'dark' }
@@ -511,34 +511,34 @@ export class LayoutConfig {
 							]
 						},
 						{
-							key: 'header.topbar.languages.key',
+							key: 'header.topbar.languages',
 							wrappers: ['panel'],
-							templateOptions: { label: 'header.topbar.user' },
+							templateOptions: { label: 'headerTopbarLanguages' },
 							fieldGroup: [
 								{
-									key: 'header.topbar.languages.display.key',
-									templateOptions: { label: 'header.topbar.languages.display' },
+									key: 'header.topbar.languages.display',
+									templateOptions: { label: 'headerTopbarLanguagesDisplay' },
 									type: 'checkbox',
 									defaultValue: true
 								}
 							]
 						},
 						{
-							key: 'header.topbar.my-cart.key',
+							//  key: 'header.topbar.my-cart',
 							wrappers: ['panel'],
-							templateOptions: { label: 'header.topbar.my-cart' },
+							templateOptions: { label: 'headerTopbarMy-cart' },
 							fieldGroup: [
 								{
-									key: 'header.topbar.my-cart.display.key',
-									templateOptions: { label: 'header.topbar.my-cart.display' },
+									key: 'header.topbar.my-cart.display',
+									templateOptions: { label: 'headerTopbarMy-cartDisplay' },
 									type: 'checkbox',
 									defaultValue: false
 								},
 								{
-									key: 'header.topbar.my-cart.layout.key',
+									key: 'header.topbar.my-cart.layout',
 									type: 'select',
 									templateOptions: {
-										label: 'header.topbar.my-cart.layout',
+										label: 'headerTopbarMy-cartLayout',
 										options: [
 											{ value: 'offcanvas', label: 'offcanvas' },
 											{ value: 'dropdown', label: 'dropdown' }
@@ -547,15 +547,15 @@ export class LayoutConfig {
 									defaultValue: 'dropdown'
 								},
 								{
-									key: 'header.topbar.notifications.dropdown.key',
+									key: 'header.topbar.notifications.dropdown',
 									wrappers: ['panel'],
-									templateOptions: { label: 'header.topbar.notifications.dropdown' },
+									templateOptions: { label: 'headerTopbarNotificationsDropdown' },
 									fieldGroup: [
 										{
-											key: 'header.topbar.notifications.dropdown.style.key',
+											key: 'header.topbar.notifications.dropdown.style',
 											type: 'select',
 											templateOptions: {
-												label: 'header.topbar.notifications.dropdown.style',
+												label: 'headerTopbarNotificationsDropdownStyle',
 												options: [
 													{ value: 'light', label: 'light' },
 													{ value: 'dark', label: 'dark' }
@@ -568,13 +568,13 @@ export class LayoutConfig {
 							]
 						},
 						{
-							key: 'header.topbar.quick-panel.key',
+							//  key: 'header.topbar.quick-panel',
 							wrappers: ['panel'],
-							templateOptions: { label: 'header.topbar.quick-panel' },
+							templateOptions: { label: 'headerTopbarQuick-panel' },
 							fieldGroup: [
 								{
-									key: 'header.topbar.quick-panel.display.key',
-									templateOptions: { label: 'header.topbar.quick-panel.display' },
+									key: 'header.topbar.quick-panel.display',
+									templateOptions: { label: 'headerTopbarQuick-panelDisplay' },
 									type: 'checkbox',
 									defaultValue: true
 								}
@@ -583,61 +583,61 @@ export class LayoutConfig {
 					]
 				},
 				{
-					key: 'header.menu.key',
+					key: 'header.menu',
 					wrappers: ['panel'],
-					templateOptions: { label: 'header.menu' },
+					templateOptions: { label: 'headerMenu' },
 					fieldGroup: [
 						{
-							key: 'header.menu.self.key',
+							key: 'header.menu.self',
 							wrappers: ['panel'],
-							templateOptions: { label: 'header.menu.self' },
+							templateOptions: { label: 'headerMenuSelf' },
 							fieldGroup: [
 								{
-									key: 'header.menu.self.display.key',
-									templateOptions: { label: 'header.menu.self.display' },
+									key: 'header.menu.self.display',
+									templateOptions: { label: 'headerMenuSelfDisplay' },
 									type: 'checkbox',
 									defaultValue: true
 								},
 								{
-									key: 'header.menu.self.layout.key',
-									templateOptions: { label: 'header.menu.self.layout' },
+									key: 'header.menu.self.layout',
+									templateOptions: { label: 'headerMenuSelfLayout' },
 									type: 'input',
 									defaultValue: 'default'
 								},
 								{
-									key: 'header.menu.self.root-arrow.key',
-									templateOptions: { label: 'header.menu.self.root-arrow' },
+									key: 'header.menu.self.root-arrow',
+									templateOptions: { label: 'headerMenuSelfRoot-arrow' },
 									type: 'checkbox',
 									defaultValue: false
 								}
 							]
 						},
 						{
-							key: 'header.menu.desktop.key',
+							key: 'header.menu.desktop',
 							wrappers: ['panel'],
-							templateOptions: { label: 'header.menu.desktop' },
+							templateOptions: { label: 'headerMenuDesktop' },
 							fieldGroup: [
 								{
-									key: 'header.menu.desktop.toggle.key',
-									templateOptions: { label: 'header.menu.desktop.toggle' },
+									key: 'header.menu.desktop.toggle',
+									templateOptions: { label: 'headerMenuDesktopToggle' },
 									type: 'input',
 									defaultValue: 'click'
 								},
 								{
-									key: 'header.menu.desktop.arrow.key',
-									templateOptions: { label: 'header.menu.desktop.arrow' },
+									key: 'header.menu.desktop.arrow',
+									templateOptions: { label: 'headerMenuDesktopArrow' },
 									type: 'checkbox',
 									defaultValue: true
 								},
 								{
-									key: 'header.menu.desktop.submenu.key',
+									key: 'header.menu.desktop.submenu',
 									wrappers: ['panel'],
-									templateOptions: { label: 'header.menu.desktop.submenu' },
+									templateOptions: { label: 'headerMenuDesktopSubmenu' },
 									fieldGroup: [
 										{
-											key: 'header.menu.desktop.submenu.skin.key',
+											key: 'header.menu.desktop.submenu.skin',
 											templateOptions: {
-												label: 'header.menu.desktop.submenu.skin',
+												label: 'headerMenuDesktopSubmenuSkin',
 												options: [
 													{ value: 'dark', label: 'dark' },
 													{ value: 'light', label: 'light' }
@@ -647,8 +647,8 @@ export class LayoutConfig {
 											defaultValue: 'light'
 										},
 										{
-											key: 'header.menu.desktop.submenu.arrow.key',
-											templateOptions: { label: 'header.menu.desktop.submenu.arrow' },
+											key: 'header.menu.desktop.submenu.arrow',
+											templateOptions: { label: 'headerMenuDesktopSubmenuArrow' },
 											type: 'checkbox',
 											defaultValue: true
 										}
@@ -657,19 +657,19 @@ export class LayoutConfig {
 							]
 						},
 						{
-							key: 'header.menu.mobile.key',
+							key: 'header.menu.mobile',
 							wrappers: ['panel'],
-							templateOptions: { label: 'header.menu.mobile' },
+							templateOptions: { label: 'headerMenuMobile' },
 							fieldGroup: [
 								{
-									key: 'header.menu.mobile.submenu.key',
+									key: 'header.menu.mobile.submenu',
 									wrappers: ['panel'],
-									templateOptions: { label: 'header.menu.mobile.submenu' },
+									templateOptions: { label: 'headerMenuMobileSubmenu' },
 									fieldGroup: [
 										{
-											key: 'header.menu.mobile.submenu.skin.key',
+											key: 'header.menu.mobile.submenu.skin',
 											templateOptions: {
-												label: 'header.menu.mobile.submenu',
+												label: 'headerMenuMobileSubmenuSkin',
 												options: [
 													{ value: 'light', label: 'light' },
 													{ value: 'dark', label: 'dark' }
@@ -679,8 +679,8 @@ export class LayoutConfig {
 											defaultValue: 'dark'
 										},
 										{
-											key: 'header.menu.mobile.submenu.accordion.key',
-											templateOptions: { label: 'header.menu.mobile.submenu.accordion' },
+											key: 'header.menu.mobile.submenu.accordion',
+											templateOptions: { label: 'headerMenuMobileSubmenuAccordion' },
 											type: 'checkbox',
 											defaultValue: true
 										}
@@ -693,18 +693,18 @@ export class LayoutConfig {
 			]
 		},
 		{
-			key: 'loader.key',
+			key: 'loader',
 			wrappers: ['panel'],
 			templateOptions: { label: 'Loader' },
 			fieldGroup: [
 				{
-					key: 'loader.enabled.key',
+					key: 'loader.enabled',
 					templateOptions: { label: 'loader.enabled' },
 					type: 'checkbox',
 					defaultValue: true
 				},
 				{
-					key: 'loader.type.key',
+					key: 'loader.type',
 					type: 'select',
 					templateOptions: {
 						label: 'loader.type',
@@ -714,10 +714,10 @@ export class LayoutConfig {
 							{value: 'spinner-message-logo', label: 'spinner-message-logo'}
 						]
 					},
-					defaultValue: 'spinner-message-logo'
+					defaultValue: 'spinner-logo'
 				},
 				{
-					key: 'loader.logo.key',
+					key: 'loader.logo',
 					type: 'input',
 					templateOptions: {
 						label: 'loader.logo'
@@ -725,7 +725,7 @@ export class LayoutConfig {
 					defaultValue: './assets/media/logos/logo-mini-md.png'
 				},
 				{
-					key: 'loader.message.key',
+					key: 'loader.message',
 					type: 'input',
 					templateOptions: {
 						label: 'loader.message'
@@ -735,17 +735,17 @@ export class LayoutConfig {
 			]
 		},
 		{
-			key: 'portlet.key',
+			key: 'portlet',
 			wrappers: ['panel'],
 			templateOptions: { label: 'portlet' },
 			fieldGroup: [
 				{
-					key: 'portlet.sticky.key',
+					key: 'portlet.sticky',
 					wrappers: ['panel'],
 					templateOptions: { label: 'portlet.sticky' },
 					fieldGroup: [
 						{
-							key: 'portlet.sticky.offset.key',
+							key: 'portlet.sticky.offset',
 							type: 'input',
 							templateOptions: {
 								type: 'number',
@@ -758,17 +758,17 @@ export class LayoutConfig {
 			]
 		},
 		{
-			key: 'self.key',
+			key: 'self',
 			wrappers: ['panel'],
 			templateOptions: { label: 'self' },
 			fieldGroup: [
 				{
-					key: 'self.body.key',
+					key: 'self.body',
 					wrappers: ['panel'],
 					templateOptions: { label: 'self.body' },
 					fieldGroup: [
 						{
-							key: 'self.body.background-image.key',
+							key: 'self.body.background-image',
 							wrappers: ['panel'],
 							type: 'select',
 							templateOptions: {
@@ -781,7 +781,7 @@ export class LayoutConfig {
 							defaultValue: './assets/media/misc/bg-2.jpg'
 						},
 						{
-							key: 'self.body.class.key',
+							key: 'self.body.class',
 							type: 'input',
 							templateOptions: {
 								label: 'self.body.class'
@@ -791,7 +791,7 @@ export class LayoutConfig {
 					]
 				},
 				{
-					key: 'self.layout.key',
+					key: 'self.layout',
 					type: 'select',
 					templateOptions: {
 						label: 'self.layout',
@@ -804,30 +804,30 @@ export class LayoutConfig {
 					defaultValue: 'fixed'
 				},
 				{
-					key: 'self.logo.key',
+					key: 'self.logo',
 					wrappers: ['panel'],
 					templateOptions: { label: 'self.logo' },
 					fieldGroup: [
 						{
-							key: 'self.logo.dark.key',
+							key: 'self.logo.dark',
 							type: 'input',
 							templateOptions: { label: 'self.logo.dark' },
 							defaultValue: './assets/media/logos/logo-light.png'
 						},
 						{
-							key: 'self.logo.brand.key',
+							key: 'self.logo.brand',
 							type: 'input',
 							templateOptions: { label: 'self.logo.brand' },
 							defaultValue: './assets/media/logos/logo-light.png'
 						},
 						{
-							key: 'self.logo.green.key',
+							key: 'self.logo.green',
 							type: 'input',
 							templateOptions: { label: 'self.logo.green' },
 							defaultValue: './assets/media/logos/logo-light.png'
 						},
 						{
-							key: 'self.logo.light.key',
+							key: 'self.logo.light',
 							type: 'input',
 							templateOptions: { label: 'self.logo.light' },
 							defaultValue: './assets/media/logos/logo-dark.png'
@@ -835,11 +835,11 @@ export class LayoutConfig {
 					]
 				},
 				{
-					key: 'self.mainLogo.key',
+					key: 'self.mainLogo',
 					wrappers: ['panel'],
 					type: 'select',
 					templateOptions: {
-						label: 'self.mainLogo',
+						label: 'self.mainLogo.label',
 						options: [
 							{
 								value: './assets/media/logos/logo-dark.png', label: './assets/media/logos/logo-dark.png'
@@ -864,7 +864,7 @@ export class LayoutConfig {
 					defaultValue: './assets/media/logos/logo-light.png'
 				},
 				{
-					key: 'self.stickyLogo.key',
+					key: 'self.stickyLogo',
 					wrappers: ['panel'],
 					type: 'select',
 					templateOptions: {
@@ -895,24 +895,24 @@ export class LayoutConfig {
 			]
 		},
 		{
-			key: 'subheader.key',
+			key: 'subheader',
 			wrappers: ['panel'],
 			templateOptions: { label: 'Subheader' },
 			fieldGroup: [
 				{
-					key: 'subheader.display.key',
+					key: 'subheader.display',
 					templateOptions: { label: 'subheader.display' },
 					type: 'checkbox',
 					defaultValue: true
 				},
 				{
-					key: 'subheader.fixed.key',
+					key: 'subheader.fixed',
 					templateOptions: { label: 'subheader.fixed' },
 					type: 'checkbox',
 					defaultValue: true
 				},
 				{
-					key: 'subheader.layout.key',
+					key: 'subheader.layout',
 					type: 'select',
 					templateOptions: {
 						label: 'subheader.layout.title',
@@ -927,7 +927,7 @@ export class LayoutConfig {
 					defaultValue: 'subheader-v1'
 				},
 				{
-					key: 'subheader.style.key',
+					key: 'subheader.style',
 					type: 'select',
 					templateOptions: {
 						label: 'subheader.layout.title',

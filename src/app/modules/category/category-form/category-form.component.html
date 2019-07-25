@@ -12,8 +12,7 @@
 			   matTooltip="{{'resetDescription' | translate}}">
 				<i class="la la-cog"></i>
 				<span class="kt-hidden-mobile">{{'reset' | translate}}</span>
-			</a>
-			<!-- [disabled]="form.invalid" -->
+			</a>-
 			<button class="btn btn-primary kt-margin-r-10"
 					color="primary"
 					(click)="onSubmit(false)"
@@ -54,7 +53,7 @@
 				</ng-template>
 				<ng-template matTabContent>
 					<div>
-						<form [formGroup]="form" class="kt-form kt-form--group-seperator-dashed">
+						<form [formGroup]="form" class="kt-form kt-form--group-separator-dashed">
 
 							<kt-alert *ngIf="hasFormErrors"
 									  type="warn"
@@ -68,7 +67,7 @@
 							<div class="kt-form__section kt-form__section--first">
 								<div class="form-group kt-form__group row">
 
-									<div class="col-lg-4 kt-margin-bottom-20-mobile">
+									<div class="col-lg-12 kt-margin-bottom-20-mobile">
 										<mat-form-field class="mat-form-field-fluid">
 											<input id="title" matInput
 												   minlength="{{titleParams.minLength}}"
@@ -87,7 +86,7 @@
 										</mat-form-field>
 									</div>
 
-									<div class="col-lg-4 kt-margin-bottom-20-mobile">
+									<!--<div class="col-lg-4 kt-margin-bottom-20-mobile">
 										<mat-form-field class="mat-form-field-fluid">
 											<mat-select
 												placeholder="{{'category.edit.inputs.categoryType' | translate}}"
@@ -105,8 +104,9 @@
 												{{'category.edit.hints.assignedCategoryType' | translate }}
 											</mat-hint>
 										</mat-form-field>
-									</div>
-									<div class="col-lg-4 kt-margin-bottom-20-mobile">
+									</div>-->
+
+									<div class="col-lg-12 mt-5 kt-margin-bottom-20-mobile">
 										<label>{{'category.edit.hints.mainCategory' | translate }}</label>
 										<div class="mat-form-field-fluid">
 											<mat-checkbox formControlName="isMainCategory">
@@ -118,7 +118,7 @@
 
 								<div class="form-group kt-form__group row">
 
-									<div class="col-lg-8 kt-margin-bottom-20-mobile">
+									<div class="col-lg-12 kt-margin-bottom-20-mobile">
 										<label>{{'category.edit.hints.description' | translate }}</label>
 										<div class="mat-form-field-fluid">
 											<textarea formControlName="description" class="mat-form-field-flex">
@@ -127,7 +127,7 @@
 										</div>
 									</div>
 
-									<div class="col-lg-4 kt-margin-bottom-20-mobile">
+									<div class="col-lg-12 mt-5 kt-margin-bottom-20-mobile">
 										<label>{{'category.edit.hints.isImported' | translate }}</label>
 										<div class="mat-form-field-fluid">
 											<mat-checkbox formControlName="isImported">

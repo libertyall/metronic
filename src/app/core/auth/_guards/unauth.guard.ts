@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { select, Store } from '@ngrx/store';
-import { AppState } from '../../../app.state';
+import { AppState } from '../../../store/app.state';
 import { catchError, map, take, tap } from 'rxjs/operators';
 import { User } from 'firebase';
 import { AuthService } from '../_services';

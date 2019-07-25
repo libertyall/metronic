@@ -6,7 +6,7 @@ import * as firebase from 'firebase/app';
 import { from, Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { switchMap } from 'rxjs/operators';
-import { AppState } from '../../../app.state';
+import { AppState } from '../../../store/app.state';
 import UserCredential = firebase.auth.UserCredential;
 
 @Injectable()

@@ -3,7 +3,7 @@ import {SubheaderService} from '../../../core/_base/layout';
 import {Application} from "../_model/application.model";
 import {Observable} from "rxjs";
 import {select, Store} from "@ngrx/store";
-import {AppState} from "../../../app.state";
+import {AppState} from "../../../store/app.state";
 import {getCurrentApplication} from "../_selectors/settings.selectors";
 import {updateApplication} from "../_actions/settings.actions";
 

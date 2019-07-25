@@ -4,7 +4,7 @@ import {filter, map, mergeMap, tap, withLatestFrom} from 'rxjs/operators';
 import {Actions, Effect, ofType} from '@ngrx/effects';
 import {Action, select, Store} from '@ngrx/store';
 import {QueryParamsModel, QueryResultsModel} from '../../_base/crud';
-import { AppState } from '../../../app.state';
+import { AppState } from '../../../store/app.state';
 import {allRolesLoaded} from '../_selectors/role.selectors';
 import {
 	AllRolesLoaded,

@@ -6,7 +6,7 @@ import { logout } from '../../../../../core/auth/_actions/auth.actions';
 import { Router } from '@angular/router';
 import { AuthNoticeService } from '../../../../../core/auth/auth-notice/auth-notice.service';
 import { TranslateService } from '@ngx-translate/core';
-import { AppState } from '../../../../../app.state';
+import { AppState } from '../../../../../store/app.state';
 import { currentUser } from '../../../../../core/auth/_selectors/auth.selectors';
 
 @Component({

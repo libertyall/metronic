@@ -1,28 +1,30 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
-import { MatSnackBar } from '@angular/material';
-import { TranslateService } from '@ngx-translate/core';
-import { Category } from '../_model/category.model';
-import { SubheaderService } from '../../../core/_base/layout';
-import { AppState } from '../../../app.state';
-import { Store } from '@ngrx/store';
-import { LayoutUtilsService, MessageType } from '../../../core/_base/crud';
-import { Update } from '@ngrx/entity';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Observable} from 'rxjs';
+import {MatSnackBar} from '@angular/material';
+import {TranslateService} from '@ngx-translate/core';
+import {Category} from '../_model/category.model';
+import {SubheaderService} from '../../../core/_base/layout';
+import {AppState} from '../../../store/app.state';
+import {Store} from '@ngrx/store';
+import {LayoutUtilsService, MessageType} from '../../../core/_base/crud';
+import {Update} from '@ngrx/entity';
 
 @Component({
 	selector: 'kt-category-form',
-	templateUrl: 'category-form.component.html'
+	templateUrl: 'category-form.component.html',
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class CategoryFormComponent implements OnInit, OnDestroy {
+
+	@Input() category: Category;
 
 	public selectedTab: number = 0;
 	public loading$: Observable<boolean>;
 	public hasFormErrors: boolean = false;
 
-	public category: Category;
 	public oldCategory: Category;
 	public form: FormGroup;
 	public titleMaxLength = 50;
@@ -36,32 +38,23 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
 	// private subscriptions: Subscription[] = [];
 
 	constructor(// private categoryService: CategoryService,
-				private snackBar: MatSnackBar,
-				// private alertService: AlertServic,
-				private translateService: TranslateService,
-				// private categoryTypeService: CategoryTypeService,
-				private fb: FormBuilder,
-				private subheaderService: SubheaderService,
-				private store: Store<AppState>,
-				private activatedRoute: ActivatedRoute,
-				private layoutUtilsService: LayoutUtilsService,
-				private router: Router) {
+		private snackBar: MatSnackBar,
+		// private alertService: AlertServic,
+		private translateService: TranslateService,
+		// private categoryTypeService: CategoryTypeService,
+		private fb: FormBuilder,
+		private subheaderService: SubheaderService,
+		private store: Store<AppState>,
+		private activatedRoute: ActivatedRoute,
+		private layoutUtilsService: LayoutUtilsService,
+		private router: Router) {
 	}
 
 	ngOnInit() {
-		/* this.loading$ = this.store.pipe(select(selectCategoriesActionLoading));
-
-		const routeSubscription = this.activatedRoute.data.subscribe((data: { category: ICategory; categoryTypes: ICategoryType[] }) => {
-			this.categoryTypes = data.categoryTypes;
-			this.category = data.category;
-			this.oldCategory = Object.assign({}, this.category);
-			this.initCategory();
-		});
-		this.subscriptions.push(routeSubscription); */
+		this.initCategory()
 	}
 
 	ngOnDestroy() {
-		// this.subscriptions.forEach(sb => sb.unsubscribe());
 	}
 
 	initCategory() {
@@ -69,15 +62,15 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
 		if (!this.category.id) {
 			this.subheaderService.setTitle('Create category');
 			this.subheaderService.setBreadcrumbs([
-				{ title: 'Category List', page: `categories` },
-				{ title: 'Create category', page: `categories/edit` }
+				{title: 'Category List', page: `categories`},
+				{title: 'Create category', page: `categories/edit`}
 			]);
 			return;
 		}
 		this.subheaderService.setTitle('Edit category');
 		this.subheaderService.setBreadcrumbs([
-			{ title: 'Category List', page: `categories` },
-			{ title: 'Edit category', page: `categories/edit`, queryParams: { id: this.category.id } }
+			{title: 'Category List', page: `categories`},
+			{title: 'Edit category', page: `categories/edit`, queryParams: {id: this.category.id}}
 		]);
 	}
 
@@ -87,8 +80,8 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
 			parentCategoryId: [this.category ? this.category.parentCategoryId : '', [Validators.required]],
 			description: this.category ? this.category.description : '',
 			creation: this.fb.group({
-				by: this.category ? this.category.creation.by : '',
-				at: this.category ? this.category.creation.at : '',
+				by: this.category.creation ? this.category.creation.by : '',
+				at: this.category.creation ? this.category.creation.at : '',
 			}),
 			isMainCategory: this.category ? this.category.isMainCategory : false,
 			isImported: this.category ? this.category.isImported : false
@@ -191,7 +184,7 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
 	}
 
 	deleteCategory(_item: Category) {
-		const _title: string = this.translateService.instant('category.delete.title', { title: _item.title });
+		const _title: string = this.translateService.instant('category.delete.title', {title: _item.title});
 		const _description: string = this.translateService.instant('category.delete.description');
 		const _waitDescription: string = this.translateService.instant('category.deleteInProgress');
 		const _deleteMessage = this.translateService.instant('category.deleted');

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { LayoutConfigService } from '../../../core/_base/layout';
-import { FormGroup } from '@angular/forms';
-import { FormlyFieldConfig } from '@ngx-formly/core';
+import {Component, OnInit} from '@angular/core';
+import {LayoutConfigService} from '../../../core/_base/layout';
+import {FormGroup} from '@angular/forms';
+import {FormlyFieldConfig} from '@ngx-formly/core';
+import {debounceTime, distinctUntilChanged} from "rxjs/operators";
 
 @Component({
 	selector: 'kt-settings-layout',
@@ -21,6 +22,13 @@ export class SettingsLayoutComponent implements OnInit {
 
 	ngOnInit() {
 		this.form = new FormGroup({});
+
+		this.form.valueChanges.pipe(
+			debounceTime(1000),
+			distinctUntilChanged()
+		).subscribe((changes: any) => {
+			console.log(changes);
+		});
 	}
 
 }

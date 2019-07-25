@@ -28,6 +28,7 @@ export const reducer = createReducer(
 	initialState,
 
 	on(backendMessage, (state, action) => {
+		console.log(action.color);
 		return {...state, message: {code: action.code, color: action.color}};
 	}),
 
@@ -40,12 +41,12 @@ export const reducer = createReducer(
 		return {...state, isLoading: true};
 	}),
 
-	on(updateApplication, (state, action) => {
-		return {...state, currentApplication: action.application, isLoading: true};
+	on(updateApplication, (state) => {
+		return {...state, isLoading: true};
 	}),
 
-	on(updateApplicationSuccess, (state) => {
-		return {...state, isLoading: false};
+	on(updateApplicationSuccess, (state, action) => {
+		return {...state, isLoading: false, currentApplication: action.application, message: undefined};
 	}),
 
 	on(applicationLoaded, (state, action) => {

@@ -9,7 +9,7 @@ import { Article } from '../_model/article.model';
 import { AuthService } from '../../../core/auth/_services';
 import { isEmpty } from 'lodash';
 import { select, Store } from '@ngrx/store';
-import { AppState } from '../../../app.state';
+import { AppState } from '../../../store/app.state';
 import { currentUser } from '../../../core/auth/_selectors/auth.selectors';
 
 const SMALL_WIDTH_BREAKPOINT = 768;

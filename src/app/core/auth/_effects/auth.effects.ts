@@ -26,7 +26,7 @@ import {of} from 'rxjs';
 import {UserService} from '../_services/user.service';
 import {UserInterface} from '../_interfaces/user.interface';
 import {Store} from '@ngrx/store';
-import { AppState } from '../../../app.state';
+import { AppState } from '../../../store/app.state';
 import UserCredential = firebase.auth.UserCredential;
 
 @Injectable()

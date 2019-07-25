@@ -1,13 +1,14 @@
 import { ActionReducerMap, MetaReducer } from '@ngrx/store';
-import { authReducer, AuthState } from './core/auth/_reducers/auth.reducers';
-import { LoggerState } from './modules/logger/logger.state';
-import { loggerReducer } from './modules/logger/logger.reducers';
-import { environment } from '../environments/environment';
+import { authReducer, AuthState } from '../core/auth/_reducers/auth.reducers';
+import { LoggerState } from '../modules/logger/logger.state';
+import { loggerReducer } from '../modules/logger/logger.reducers';
+import { environment } from '../../environments/environment';
 import { storeFreeze } from 'ngrx-store-freeze';
-import { IRouterStateUrl } from './shared/utils/utils';
+import { IRouterStateUrl } from '../shared/utils/utils';
 import { routerReducer, RouterReducerState } from '@ngrx/router-store';
-import { uploadReducer, UploadState } from './shared/modules/upload/_reducers/upload.reducer';
-import {settingsReducer, SettingsState} from "./modules/settings/_reducers/settings.reducers";
+import { uploadReducer, UploadState } from '../shared/modules/upload/_reducers/upload.reducer';
+import {settingsReducer, SettingsState} from "../modules/settings/_reducers/settings.reducers";
+import {sessionReducer, SessionState} from "../modules/settings/_reducers/session.reducer";
 
 export function logger(reducer: any) {
 	return (state: any, action: any) => {
@@ -21,6 +22,7 @@ export interface IAppState {
 	auth: AuthState;
 	logger: LoggerState;
 	router: RouterReducerState<IRouterStateUrl>;
+	session: SessionState;
 	settings: SettingsState;
 	uploader: UploadState;
 	// users: UserState;
@@ -30,10 +32,10 @@ export type AppState = IAppState;
 
 export const appReducer: ActionReducerMap<AppState> = {
 	// application: applicationReducer,
-	// category: categoryReducer,
 	auth: authReducer,
 	logger: loggerReducer,
 	router: routerReducer,
+	session: sessionReducer,
 	settings: settingsReducer,
 	uploader: uploadReducer
 	// users: usersReducer

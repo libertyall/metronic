@@ -10,7 +10,7 @@ import {AuthService} from '../../../../core/auth/_services';
 import {UserInterface} from '../../../../core/auth/_interfaces/user.interface';
 import {acceptTerms, register, startRegister} from '../../../../core/auth/_actions/auth.actions';
 import {isLoading, selectAuthMessage} from '../../../../core/auth/_selectors/auth.selectors';
-import { AppState } from '../../../../app.state';
+import { AppState } from '../../../../store/app.state';
 
 @Component({
 	selector: 'kt-register',

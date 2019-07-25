@@ -8,7 +8,7 @@ import {NgxPermissionsService} from 'ngx-permissions';
 import {MenuConfig} from '../../../../core/_config/default/menu.config';
 import {PageConfig} from '../../../../core/_config/default/page.config';
 import {currentUserPermissions} from '../../../../core/auth/_selectors/auth.selectors';
-import {AppState} from '../../../../app.state';
+import {AppState} from '../../../../store/app.state';
 import {backendMessage} from "../../../../modules/settings/_selectors/settings.selectors";
 import {LayoutUtilsService} from "../../../../core/_base/crud";
 import {unsetBackendMessage} from "../../../../modules/settings/_actions/settings.actions";
@@ -53,10 +53,9 @@ export class BaseComponent implements OnInit, OnDestroy {
 		this.unsubscribe.push(layoutSubscription);
 
 		const backendMsgSubscription = this.store.select(backendMessage).subscribe((message) => {
-			// console.log(message);
 			if (message) {
-				// this.store.dispatch(unsetBackendMessage());
-				return this.layoutUtilsService.showActionNotification(message.code, message.color);
+				this.layoutUtilsService.showActionNotification(message.code, message.color);
+				this.store.dispatch(unsetBackendMessage());
 			}
 		});
 		this.unsubscribe.push(backendMsgSubscription);

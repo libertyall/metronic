@@ -1,15 +1,16 @@
 <kt-portlet>
 	<kt-portlet-header [title]="'category.list.title' | translate"
 					   [class]="'kt-portlet__head--lg'"
-					   [viewLoading$]="dataSource.loading$">
+					   [viewLoading$]="categoryService.loading$">
 		<ng-container ktPortletTools>
-			<button [routerLink]="['./create']"
+			<button (click)="editCategory(null)"
 					mat-raised-button color="primary"
 					matTooltip="{{ 'category.list.add.full' | translate}}">
 				{{ 'category.list.add.short' | translate}}
 			</button>
 		</ng-container>
 	</kt-portlet-header>
+
 	<kt-portlet-body>
 		<div class="kt-form">
 			<div class="kt-form__filtration">
@@ -105,10 +106,10 @@
 
 				<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
 			</mat-table>
+			<!--<div class="mat-table__message"
+				 *ngIf="!dataSource.hasItems">{{ 'category.list.noEntries' | translate}}</div>-->
 			<div class="mat-table__message"
-				 *ngIf="!dataSource.hasItems">{{ 'category.list.noEntries' | translate}}</div>
-			<div class="mat-table__message"
-				 *ngIf="dataSource.isPreloadTextViewed$ | async">{{ 'pleaseWait' | translate}}</div>
+				 *ngIf="dataSource.loading$ | async">{{ 'pleaseWait' | translate}}</div>
 		</div>
 
 		<div class="mat-table__bottom">
@@ -121,3 +122,4 @@
 		</div>
 	</kt-portlet-body>
 </kt-portlet>
+

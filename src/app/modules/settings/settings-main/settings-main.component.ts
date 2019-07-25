@@ -6,7 +6,7 @@ import {Observable} from "rxjs";
 import {Store} from "@ngrx/store";
 import {Application} from "../_model/application.model";
 import {RoleClass} from "../../../core/auth/_interfaces/role.interface";
-import {AppState} from "../../../app.state";
+import {AppState} from "../../../store/app.state";
 
 @Component({
 	selector: 'kt-settings-main',

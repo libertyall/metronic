@@ -6,7 +6,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
 	GestureConfig,
 	MatDialog,
-	MatDialogModule, MatIconModule,
+	MatDialogModule,
 	MatProgressSpinnerModule,
 	MatSnackBarModule
 } from '@angular/material';
@@ -31,13 +31,16 @@ import {AuthModule} from './views/pages/auth/auth.module';
 import {StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
 import {RouterState, StoreRouterConnectingModule} from '@ngrx/router-store';
-import {appMetaReducers, appReducer} from './app.state';
+import {appMetaReducers, appReducer} from './store/app.state';
 import {RouterEffects} from './views/state/router.effects';
 import {AuthEffects} from './core/auth/_effects/auth.effects';
 import {ApplicationService} from "./modules/settings/_services/application.service";
 import {SettingsEffects} from "./modules/settings/_effects/settings.effects";
-import {ActionNotificationComponent} from "./views/partials/content/crud/action-natification/action-notification.component";
 import {PartialsModule} from "./views/partials/partials.module";
+import {entityConfig} from "./store/entity-metadata";
+import {EntityDataModule} from "@ngrx/data";
+import {AppSelectors} from "./modules/settings/_selectors/app.selectors";
+import {AppEntityServices} from "./store/app-entity-services";
 
 /* export function storageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
 	return storageSync<AppState>({
@@ -104,6 +107,7 @@ export function hljsLanguages(): HighlightLanguage[] {
 			metaReducers: appMetaReducers
 		}),
 		EffectsModule.forRoot([RouterEffects, AuthEffects, SettingsEffects]),
+		EntityDataModule.forRoot(entityConfig),
 		StoreDevtoolsModule.instrument({logOnly: environment.production}),
 		// StateModule,
 		// EntityDataModule.forRoot(entityConfig),
@@ -115,6 +119,8 @@ export function hljsLanguages(): HighlightLanguage[] {
 		MatSnackBarModule
 	],
 	providers: [
+		AppEntityServices,
+		AppSelectors,
 		ApplicationService,
 		MatDialog,
 		// AuthService,

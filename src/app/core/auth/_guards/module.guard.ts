@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from
 import { Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { select, Store } from '@ngrx/store';
-import { AppState } from '../../../app.state';
+import { AppState } from '../../../store/app.state';
 import { find } from 'lodash';
 import { currentUserPermissions } from '../_selectors/auth.selectors';
 import { PermissionClass } from '../_interfaces/permission.interface';

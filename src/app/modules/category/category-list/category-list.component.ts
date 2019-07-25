@@ -1,15 +1,17 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Category } from '../_model/category.model';
-import { LayoutUtilsService, MessageType, QueryParamsModel } from '../../../core/_base/crud';
-import { MatPaginator, MatSort, MatSortable } from '@angular/material';
-import { SelectionModel } from '@angular/cdk/collections';
-import { fromEvent, merge, Subscription } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AppState } from '../../../app.state';
-import { select, Store } from '@ngrx/store';
-import { TranslateService } from '@ngx-translate/core';
-import { SubheaderService } from '../../../core/_base/layout';
-import { debounceTime, distinctUntilChanged, skip, tap } from 'rxjs/operators';
+import {Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {Category} from '../_model/category.model';
+import {LayoutUtilsService, MessageType, QueryParamsModel} from '../../../core/_base/crud';
+import {MatPaginator, MatSort, MatSortable} from '@angular/material';
+import {SelectionModel} from '@angular/cdk/collections';
+import {fromEvent, merge, Subscription} from 'rxjs';
+import {ActivatedRoute, Router} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
+import {SubheaderService} from '../../../core/_base/layout';
+import {debounceTime, distinctUntilChanged, skip, tap} from 'rxjs/operators';
+import {CategoryService} from "../_services/category.service";
+import {CategoriesDataSource} from "../_data-sources/categories.data-source";
+import {QueryParams} from "@ngrx/data";
+import {AppEntityServices} from "../../../store/app-entity-services";
 
 @Component({
 	selector: 'kt-category-list',
@@ -18,8 +20,10 @@ import { debounceTime, distinctUntilChanged, skip, tap } from 'rxjs/operators';
 })
 export class CategoryListComponent implements OnInit, OnDestroy {
 
-	// dataSource: CategoriesDataSource;
+	dataSource: CategoriesDataSource;
 	displayedColumns = ['select', 'id', 'title', 'actions'];
+
+	@Output() selectedCategory: EventEmitter<Category> = new EventEmitter<Category>(false);
 
 	@ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 	@ViewChild('sort1', {static: true}) sort: MatSort;
@@ -27,8 +31,8 @@ export class CategoryListComponent implements OnInit, OnDestroy {
 	@ViewChild('searchInput', {static: true}) searchInput: ElementRef;
 
 	selection = new SelectionModel<Category>(true, []);
-	categorysResult: Category[] = [];
-	allCategorys: Category[] = [];
+	categoriesResult: Category[] = [];
+	allCategories: Category[] = [];
 
 	pageSizes: number[] = [3, 5, 10];
 	selectedPageSize: number = 10;
@@ -36,7 +40,8 @@ export class CategoryListComponent implements OnInit, OnDestroy {
 	private subscriptions: Subscription[] = [];
 
 	constructor(private activatedRoute: ActivatedRoute,
-				private store: Store<AppState>,
+				private appEntityService: AppEntityServices,
+				public categoryService: CategoryService,
 				private translateService: TranslateService,
 				private router: Router,
 				private layoutUtilsService: LayoutUtilsService,
@@ -46,7 +51,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
 	ngOnInit() {
 		this.sort.sort(({id: 'title', start: 'asc'}) as MatSortable);
 
-		const categoriesSubscription = this.store.pipe(select(null)).subscribe((res: Category[]) => this.allCategorys = res);
+		const categoriesSubscription = this.categoryService.getAll().subscribe((res: Category[]) => this.allCategories = res);
 		this.subscriptions.push(categoriesSubscription);
 
 		const sortSubscription = this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
@@ -66,17 +71,18 @@ export class CategoryListComponent implements OnInit, OnDestroy {
 			.subscribe();
 		this.subscriptions.push(searchSubscription);
 
-		this.subheaderService.setTitle( 'category.subheader.title');
+		this.subheaderService.setTitle('category.subheader.title');
 
-		// this.dataSource = new CategoriesDataSource(this.store);
-		/* const entitiesSubscription = this.dataSource.entitySubject.pipe(
-		 skip(1),
-		 distinctUntilChanged()
-		 ).subscribe(res => {
-		 this.categorysResult = res;
-		 });
-		 this.subscriptions.push(entitiesSubscription);*/
+		this.dataSource = new CategoriesDataSource(this.categoryService);
+		/* const entitiesSubscription = this.categoryService.entities$.pipe(
+			skip(1),
+			distinctUntilChanged()
+		).subscribe(res => {
+			this.categoriesResult = res;
+		});
+		this.subscriptions.push(entitiesSubscription);
 		this.loadCategoryList();
+		*/
 	}
 
 	ngOnDestroy() {
@@ -85,14 +91,14 @@ export class CategoryListComponent implements OnInit, OnDestroy {
 
 	loadCategoryList() {
 		this.selection.clear();
-		const queryParams = new QueryParamsModel(
-			this.filterConfiguration(),
-			this.sort.direction,
-			this.sort.active,
-			this.paginator.pageIndex,
-			this.paginator.pageSize
-		);
-		// this.store.dispatch(loadCategoryPage({page: queryParams}));
+		const query: QueryParams = {
+			filterConfiguration: this.filterConfiguration(),
+			direction: this.sort.direction,
+			active: this.sort.active,
+			pageIndex: String(this.paginator.pageIndex),
+			pageSize: String(this.paginator.pageSize)
+		};
+		this.categoryService.getWithQuery(query);
 		this.selection.clear();
 	}
 
@@ -133,20 +139,25 @@ export class CategoryListComponent implements OnInit, OnDestroy {
 
 	isAllSelected(): boolean {
 		const numSelected = this.selection.selected.length;
-		const numRows = this.categorysResult.length;
+		const numRows = this.categoriesResult.length;
 		return numSelected === numRows;
 	}
 
 	masterToggle() {
-		if (this.selection.selected.length === this.categorysResult.length) {
+		if (this.selection.selected.length === this.categoriesResult.length) {
 			this.selection.clear();
 		} else {
-			this.categorysResult.forEach(row => this.selection.select(row));
+			this.categoriesResult.forEach(row => this.selection.select(row));
 		}
 	}
 
 	editCategory(category: Category): void {
-		this.router.navigate(['/categories/edit', category.id]).then();
+		if(!category) {
+			category = {
+				title: ''
+			};
+		}
+		this.selectedCategory.emit(category);
 	}
 
 	showCategory(category: Category): void {
