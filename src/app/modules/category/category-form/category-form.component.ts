@@ -1,15 +1,21 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Observable} from 'rxjs';
-import {MatSnackBar} from '@angular/material';
-import {TranslateService} from '@ngx-translate/core';
-import {Category} from '../_model/category.model';
-import {SubheaderService} from '../../../core/_base/layout';
-import {AppState} from '../../../store/app.state';
-import {Store} from '@ngrx/store';
-import {LayoutUtilsService, MessageType} from '../../../core/_base/crud';
-import {Update} from '@ngrx/entity';
+import {
+	ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output,
+	SimpleChanges, ViewChild
+} from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable, Subject } from 'rxjs';
+import { MatSnackBar } from '@angular/material';
+import { TranslateService } from '@ngx-translate/core';
+import { Category } from '../_model/category.model';
+import { SubheaderService } from '../../../core/_base/layout';
+import { AppState } from '../../../store/app.state';
+import { Store } from '@ngrx/store';
+import { LayoutUtilsService, MessageType } from '../../../core/_base/crud';
+import { Update } from '@ngrx/entity';
+import { AppEntityServices } from '../../../store/entity/app-entity-services';
+import * as _ from 'lodash';
+import { EntityServices } from '@ngrx/data';
 
 @Component({
 	selector: 'kt-category-form',
@@ -20,6 +26,10 @@ import {Update} from '@ngrx/entity';
 export class CategoryFormComponent implements OnInit, OnDestroy {
 
 	@Input() category: Category;
+	@Output() cancelEdit: EventEmitter<boolean> = new EventEmitter<boolean>(false);
+
+	allCategories$: Observable<Category[]>;
+	destroy$ = new Subject();
 
 	public selectedTab: number = 0;
 	public loading$: Observable<boolean>;
@@ -37,40 +47,44 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
 
 	// private subscriptions: Subscription[] = [];
 
-	constructor(// private categoryService: CategoryService,
-		private snackBar: MatSnackBar,
-		// private alertService: AlertServic,
-		private translateService: TranslateService,
-		// private categoryTypeService: CategoryTypeService,
-		private fb: FormBuilder,
-		private subheaderService: SubheaderService,
-		private store: Store<AppState>,
-		private activatedRoute: ActivatedRoute,
-		private layoutUtilsService: LayoutUtilsService,
-		private router: Router) {
+	constructor(private snackBar: MatSnackBar,
+				private translateService: TranslateService,
+				private fb: FormBuilder,
+				private subheaderService: SubheaderService,
+				private store: Store<AppState>,
+				private activatedRoute: ActivatedRoute,
+				private layoutUtilsService: LayoutUtilsService,
+				private entityServices: EntityServices,
+				private router: Router) {
 	}
 
 	ngOnInit() {
-		this.initCategory()
+		this.initCategory();
+		this.allCategories$ = this.entityServices.getEntityCollectionService('Category').getAll();
+		this.loading$ = this.entityServices.getEntityCollectionService('Category').loading$;
 	}
 
 	ngOnDestroy() {
+		this.destroy$.next();
 	}
 
 	initCategory() {
+		this.oldCategory = _.clone(this.category);
+
 		this.createForm();
+
 		if (!this.category.id) {
 			this.subheaderService.setTitle('Create category');
 			this.subheaderService.setBreadcrumbs([
-				{title: 'Category List', page: `categories`},
-				{title: 'Create category', page: `categories/edit`}
+				{ title: 'Category List', page: `categories` },
+				{ title: 'Create category', page: `categories/edit` }
 			]);
 			return;
 		}
 		this.subheaderService.setTitle('Edit category');
 		this.subheaderService.setBreadcrumbs([
-			{title: 'Category List', page: `categories`},
-			{title: 'Edit category', page: `categories/edit`, queryParams: {id: this.category.id}}
+			{ title: 'Category List', page: `categories` },
+			{ title: 'Edit category', page: `categories/edit`, queryParams: { id: this.category.id } }
 		]);
 	}
 
@@ -81,7 +95,7 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
 			description: this.category ? this.category.description : '',
 			creation: this.fb.group({
 				by: this.category.creation ? this.category.creation.by : '',
-				at: this.category.creation ? this.category.creation.at : '',
+				at: this.category.creation ? this.category.creation.at : ''
 			}),
 			isMainCategory: this.category ? this.category.isMainCategory : false,
 			isImported: this.category ? this.category.isImported : false
@@ -89,7 +103,7 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
 	}
 
 	goBackToList() {
-		this.router.navigate(['/categories']).then();
+		this.router.navigate(['/categories']);
 	}
 
 	reset() {
@@ -115,13 +129,13 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
 		}
 
 		const editedCategory = this.prepareCategory();
+		console.log(editedCategory);
+		/* if (editedCategory.id !== '') {
+		 this.updateCategory(editedCategory, withBack);
+		 return;
+		 }
 
-		if (editedCategory.id !== '') {
-			this.updateCategory(editedCategory, withBack);
-			return;
-		}
-
-		this.addCategory(editedCategory, withBack);
+		 this.addCategory(editedCategory, withBack); */
 	}
 
 	prepareCategory(): Category {
@@ -132,9 +146,10 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
 			description: controls['description'].value,
 			isImported: controls['isImported'].value,
 			isMainCategory: controls['isMainCategory'].value,
+			parentCategoryId: controls['parentCategoryId'].value,
 			creation: {
 				by: controls['creation']['by'].value,
-				at: controls['creation']['at'].value,
+				at: controls['creation']['at'].value
 			}
 		};
 	}
@@ -142,14 +157,14 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
 	addCategory(_category: Category, goToList: boolean = false) {
 		console.log(_category);
 		/* this.store.dispatch(new CategoryOnServerCreated({ category: _category }));
-		const addSubscription = this.store.pipe(select(selectLastCreatedCategoryId)).subscribe(categoryId => {
-			const message = `category.messages.created`;
-			this.layoutUtilsService.showActionNotification(message, MessageType.Create, 5000, true, true);
-			if (categoryId && goToList) {
-				this.goBackToList();
-			}
-		});
-		this.subscriptions.push(addSubscription); */
+		 const addSubscription = this.store.pipe(select(selectLastCreatedCategoryId)).subscribe(categoryId => {
+		 const message = `category.messages.created`;
+		 this.layoutUtilsService.showActionNotification(message, MessageType.Create, 5000, true, true);
+		 if (categoryId && goToList) {
+		 this.goBackToList();
+		 }
+		 });
+		 this.subscriptions.push(addSubscription); */
 	}
 
 	updateCategory(_category: Category, goToList: boolean = false) {
@@ -184,7 +199,7 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
 	}
 
 	deleteCategory(_item: Category) {
-		const _title: string = this.translateService.instant('category.delete.title', {title: _item.title});
+		const _title: string = this.translateService.instant('category.delete.title', { title: _item.title });
 		const _description: string = this.translateService.instant('category.delete.description');
 		const _waitDescription: string = this.translateService.instant('category.deleteInProgress');
 		const _deleteMessage = this.translateService.instant('category.deleted');

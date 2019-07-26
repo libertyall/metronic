@@ -166,11 +166,11 @@ export const locale = {
 					description: 'Eine kurze Info / Beschreibung dieser Kategorie',
 					isImported: 'Wurde diese Kategorie durch ein Skript importiert?',
 					mainCategory: 'Soll die Kategorie als Hauptkategorie (z.B. im Menü) angezeigt werden?',
+					parentCategory: 'Zu welcher übergeordneten Kategorie gehört der Eintrag?',
 					title: 'Bitte den Namen der Kategorie eingeben',
-					assignedCategoryType: 'Zu welcher übergeordneten Kategorie gehört der Eintrag?'
 				},
 				inputs: {
-					categoryType: 'Hauptkategorie',
+					parentCategory: 'Übergeordnete Kategorie',
 					title: 'Name der Kategorie'
 				},
 				tabs: {

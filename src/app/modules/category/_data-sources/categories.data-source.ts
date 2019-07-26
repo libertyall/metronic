@@ -1,17 +1,23 @@
-import {BaseDataSource} from "../../../core/_base/crud";
-import {CategoryService} from "../_services/category.service";
-import {Category} from "../_model/category.model";
+import { BaseDataSource } from '../../../core/_base/crud';
+import { Category } from '../_model/category.model';
+import { delay } from 'rxjs/operators';
+import { EntityCollectionService, EntityServices, QueryParams } from '@ngrx/data';
 
 export class CategoriesDataSource extends BaseDataSource {
 
-	constructor(private categoryService: CategoryService) {
+	constructor(private categoryService: any) {
 		super();
 
-		this.loading$ = categoryService.loading$;
+		this.loading$ = this.categoryService.loading$;
 
-		// this.isPreloadTextViewed$ = categoryService;
+		this.loading$.subscribe(t => console.log(t));
 
-		categoryService.getAll().subscribe((categories: Category[]) => {
+		// this.isPreloadTextViewed$ = categoryService.loading$;
+
+		this.categoryService.getAll().pipe(
+			delay(2500)
+		).subscribe((categories: Category[]) => {
+			console.log(categories);
 			this.paginatorTotalSubject.next(categories.length);
 			this.entitySubject.next(categories);
 		});

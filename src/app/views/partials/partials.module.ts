@@ -43,8 +43,8 @@ import { NgPipesModule } from 'ngx-pipes';
 		ErrorComponent,
 		AlertComponent,
 		ActionNotificationComponent,
-		/* DeleteEntityDialogComponent
-		 NoticeComponent,
+		DeleteEntityDialogComponent,
+		/* NoticeComponent,
 		 FetchEntityDialogComponent,
 		 UpdateStatusDialogComponent,
 		 ContextMenu2Component,
@@ -76,7 +76,8 @@ import { NgPipesModule } from 'ngx-pipes';
 		ErrorComponent,
 		AlertComponent,
 		ActionNotificationComponent,
-		/* DeleteEntityDialogComponent,
+		DeleteEntityDialogComponent,
+		MatDialogModule,
 		/*WidgetModule,
 		 PortletModule,
 		 NoticeComponent,
@@ -93,14 +94,15 @@ import { NgPipesModule } from 'ngx-pipes';
 		CommonModule,
 		CoreModule,
 		InlineSVGModule,
+		MatDialogModule,
 		MatButtonModule,
 		MatIconModule,
 		NgbModule,
 		PerfectScrollbarModule,
 		TranslateModule.forChild(),
 		RouterModule,
-		/* MatProgressBarModule,
-		MatProgressSpinnerModule,
+		MatProgressBarModule,
+		/* MatProgressSpinnerModule,
 		// Suheader-Includes
 		MatDialogModule,
 		MatIconModule,
@@ -127,7 +129,7 @@ import { NgPipesModule } from 'ngx-pipes';
 	entryComponents: [
 		// AlertComponent,
 		ActionNotificationComponent,
-		// DeleteEntityDialogComponent
+		DeleteEntityDialogComponent
 	]
 })
 export class PartialsModule {

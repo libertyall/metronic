@@ -41,6 +41,6 @@ export const appReducer: ActionReducerMap<AppState> = {
 	// users: usersReducer
 };
 
-export const appMetaReducers: MetaReducer<AppState>[] = !environment.production
-	? [storeFreeze]
-	: [];
+export const appMetaReducers: MetaReducer<AppState>[] = environment.production
+	? []
+	: []; // storeFreeze

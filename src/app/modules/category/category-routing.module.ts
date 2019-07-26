@@ -6,23 +6,18 @@ export const categoryRoutes: Routes = [
 		path: '',
 		component: CategoriesComponent
 	},/*
-	{
-		path: 'list',
-		component: ArticleListComponent,
-	},
-	{
-		path: 'detail/:id',
-		component: ArticleDetailComponent,
-	},
-	/*,
+	 {
+	 path: 'list',
+	 component: ArticleListComponent,
+	 },
+	 {
+	 path: 'detail/:id',
+	 component: ArticleDetailComponent,
+	 },
 	 {
 	 path: 'create',
-	 component: ArticleEditComponent,
-	 /* resolve: {
-	 article: ArticleResolver
-	 }
-	 },
-	 /*
+	 component: CategoryFormComponent
+	 },,
 	 {
 	 path: 'create',
 	 component: ArticleEditComponent,

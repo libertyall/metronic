@@ -1,6 +1,6 @@
 import {EntityMetadataMap, PropsFilterFnFactory} from '@ngrx/data';
 
-const entityMetadata: EntityMetadataMap = {
+export const entityMetadata: EntityMetadataMap = {
 	Category: {
 		filterFn: titleFilter,
 		sortComparer: sortByTitle
@@ -30,7 +30,7 @@ export function sortByTitle(a: { title: string }, b: { title: string }): number 
 	return a.title.localeCompare(b.title);
 }
 
-/** Filter for entities whose name or saying matches the case-insensitive pattern *
+/* Filter for entities whose name or saying matches the case-insensitive pattern *
 export function nameAndSayingFilter<T extends { name: string; saying: string }>(
 	entities: T[],
 	pattern: string
