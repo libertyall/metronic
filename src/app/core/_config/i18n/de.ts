@@ -204,6 +204,15 @@ export const locale = {
 			}
 		},
 		comments: 'Kommentare',
+		contact: {
+			email: 'E-Mail',
+			fax: 'Fax-Nummer',
+			name: 'Ansprechpartner',
+			phone: 'Telefon',
+			phoneHome: 'Tel. (zu Hause)',
+			phoneMobile: 'Handy',
+			phoneWork: 'Tel. (dienstl.)',
+		},
 		cssClasses: {
 			danger: 'rot',
 			dark: 'dunkel',
@@ -295,6 +304,7 @@ export const locale = {
 			PAGES: 'Seiten',
 			SETTINGS: {
 				ANALYTICS: 'Auswertungen',
+				CRONJOBS: 'Geplante Aufgaben',
 				SECTION: 'Seiten-Administration',
 				SETTINGS: 'Einstellungen',
 				USER: 'Benutzer'
@@ -664,6 +674,64 @@ export const locale = {
 				title: 'Einstellungen',
 				desc: ''
 			}
+		},
+		sponsors: {
+			create: {
+				button: 'Neuer Sponsor',
+				tooltip: 'Einen neuen Sponsor erstellen',
+				title: 'Sponsor erstellen'
+			},
+			deleteAll: {
+				button: 'Alle löschen',
+				question: 'Sollen wirklich <strong>alle</strong> Sponsoren unwiderruflich gelöscht werden?',
+				title: 'Alle Sponsoren löschen?',
+				tooltip: 'Alle Sponsoren löschen'
+			},
+			delete: {
+				button: 'Sponsor löschen',
+				question: 'Soll der Sponsor unwiderruflich gelöscht werden?',
+				success: 'Der Sponsor wurde gelöscht.',
+				title: 'Sponsor &bdquo;{{title}}&rdquo; löschen'
+			},
+			detail: {
+				assignedArticles: 'Verknüpfte Artikel',
+				assignedCategories: 'Sponsoring-Art',
+				assignedGalleries: 'Verknüpfte Foto-Sammlungen',
+				contact: {
+					title: 'Kontaktdaten / Ansprechpartner'
+				},
+				description: 'Infotext zum Sponsor',
+				endDate: 'Sponsoring-Ende',
+				files: 'Verknüpfte Dateien',
+				imageUrl: 'Logo des Sponsors',
+				internalInfo: 'Interne Informationen zum Sponsor',
+				link: 'Homepage',
+				mainTitle: 'Hauptinformationen',
+				name: 'Name des Sponsors',
+				startDate: 'Beginn des Sponsorings',
+				title: 'Detailanzeige für Sponsoren'
+			},
+			edit: {
+				button: 'Sponsor editieren',
+				placeholder: {
+					assignedCategories: 'Sponsoring-Art',
+					endDate: 'Ende',
+					externalLink: 'Homepage',
+					startDate: 'Beginn des Sponsorings',
+					title: 'Name des Sponsors'
+				}
+			},
+			list: {
+				button: 'Zur Sponsorliste'
+			},
+			noFilteredSponsorsFound: "Es wurden keine Sponsoren mit diesen Suchkriterien gefunden",
+			noSponsorsFound: "Es wurden noch keine Sponsoren angelegt.",
+			resetForm: 'Formular zurücksetzen',
+			revenue: 'Einnahmen',
+			save: {
+				button: 'Sponsor speichern'
+			},
+			title: 'Sponsoren'
 		},
 		TRANSLATOR: {
 			SELECT: 'Wähle deine Sprache'

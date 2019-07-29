@@ -20,7 +20,7 @@ export class Widget5Component implements OnInit {
 	@Input() data: Widget5Data[];
 
 	ngOnInit() {
-		/* if (!this.data) {
+		if (!this.data) {
 			this.data = shuffle([
 				{
 					pic: './assets/media/products/product6.jpg',
@@ -68,7 +68,7 @@ export class Widget5Component implements OnInit {
 						' </div>'
 				},
 			]);
-		} */
+		}
 	}
 
 }

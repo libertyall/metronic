@@ -1,5 +1,4 @@
 <kt-portlet *ngIf="application$ | async as application">
-	<pre>{{application.page | json}}</pre>
 	<kt-portlet-body>
 
 		<kt-alert *ngIf="hasFormErrors"

@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from
 import { Observable, of } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.state';
-import { catchError, map, take, tap } from 'rxjs/operators';
+import {catchError, map, take, takeLast, tap} from 'rxjs/operators';
 import { User } from 'firebase';
 import { AuthService } from '../_services';
 import { accountNotVerified, authMessage } from '../_actions/auth.actions';
@@ -22,11 +22,9 @@ export class UnAuthGuard implements CanActivate {
 	}
 
 	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-		return this.store.pipe(
-			select(currentUser),
-			tap((u) => console.log(u)),
+		return this.store.select(currentUser).pipe(
 			map((user: User) => {
-				console.log('authUser', user);
+				console.log(user);
 				if (user && (user.emailVerified || user.providerId !== 'password')) {
 					console.log('already logged in ... redirecting');
 					// this.router.navigateByUrl('/dashboard').then(() => console.log('already logged in'));

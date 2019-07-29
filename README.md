@@ -25,3 +25,39 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+
+### removed from build.json
+- mandatory
+
+```
+"perfect-scrollbar": {
+                            "styles": [
+                                "{$config.path.node_modules}/perfect-scrollbar/css/perfect-scrollbar.css"
+                            ],
+                            "scripts": [
+                                "{$config.path.node_modules}/perfect-scrollbar/dist/perfect-scrollbar.js"
+                            ]
+                        }```
+
+- optional
+
+```
+
+                        "flaticon": {
+                            "styles": [
+                                "{$config.path.src}/vendors/flaticon/flaticon.css"
+                            ],
+                            "fonts": [
+                                "{$config.path.src}/vendors/flaticon/font/**"
+                            ]
+                        },
+                        "flaticon2": {
+                            "styles": [
+                                "{$config.path.src}/vendors/flaticon2/flaticon.css"
+                            ],
+                            "fonts": [
+                                "{$config.path.src}/vendors/flaticon2/font/**"
+                            ]
+                        },
+```

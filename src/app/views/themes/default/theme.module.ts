@@ -42,6 +42,7 @@ import {
 	PageConfigService, SubheaderService
 } from "../../../core/_base/layout";
 import {LayoutUtilsService} from "../../../core/_base/crud";
+import {AuthGuard} from "../../../core/auth/_guards/auth.guard";
 
 @NgModule({
 	declarations: [
@@ -71,6 +72,7 @@ import {LayoutUtilsService} from "../../../core/_base/crud";
 		ErrorPageComponent
 	],
 	providers: [
+		AuthGuard,
 		HtmlClassService,
 		MenuConfigService,
 		PageConfigService,

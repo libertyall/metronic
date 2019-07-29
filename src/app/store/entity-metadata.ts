@@ -5,7 +5,8 @@ const entityMetadata: EntityMetadataMap = {
 		filterFn: titleFilter,
 		sortComparer: sortByTitle
 	},
-	Club: {}
+	Club: {},
+	Sponsor: {}
 };
 
 const pluralNames = { Category: 'Categories' };
@@ -30,7 +31,7 @@ export function sortByTitle(a: { title: string }, b: { title: string }): number 
 	return a.title.localeCompare(b.title);
 }
 
-/** Filter for entities whose name or saying matches the case-insensitive pattern *
+/* Filter for entities whose name or saying matches the case-insensitive pattern *
 export function nameAndSayingFilter<T extends { name: string; saying: string }>(
 	entities: T[],
 	pattern: string

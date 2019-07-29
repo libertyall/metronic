@@ -1,7 +1,8 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { environment } from '../environments/environment';
-import { UnAuthGuard } from './core/auth/_guards/unauth.guard';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {environment} from '../environments/environment';
+import {UnAuthGuard} from './core/auth/_guards/unauth.guard';
+import {AuthGuard} from "./core/auth/_guards/auth.guard";
 
 const routes: Routes = [
 	{
@@ -22,7 +23,7 @@ const routes: Routes = [
 
 @NgModule({
 	imports: [
-		RouterModule.forRoot(routes, { enableTracing: environment.routerTracing })
+		RouterModule.forRoot(routes, {enableTracing: environment.routerTracing})
 	],
 	exports: [RouterModule]
 })

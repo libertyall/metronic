@@ -595,6 +595,13 @@ export class MenuConfig {
 					translate: 'MENU.SETTINGS.ANALYTICS'
 				},
 				{
+					title: 'CronJobs',
+					root: true,
+					page: '/cronjobs',
+					icon: ' flaticon2-time',
+					translate: 'MENU.SETTINGS.CRONJOBS'
+				},
+				{
 					title: 'Users',
 					root: true,
 					translate: 'MENU.SETTINGS.USER',

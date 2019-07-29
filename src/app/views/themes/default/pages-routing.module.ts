@@ -2,13 +2,13 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {BaseComponent} from './base/base.component';
 import {ErrorPageComponent} from './content/error-page/error-page.component';
-import {AngularFireAuthGuard} from "@angular/fire/auth-guard";
+import {AuthGuard} from "../../../core/auth/_guards/auth.guard";
 
 const routes: Routes = [
 	{
 		path: '',
 		component: BaseComponent,
-		canActivate: [AngularFireAuthGuard],
+		canActivate: [AuthGuard],
 		children: [
 			{
 				path: 'dashboard',
@@ -49,11 +49,11 @@ const routes: Routes = [
 			{
 				path: 'settings',
 				loadChildren: () => import('app/modules/settings/settings.module').then(m => m.SettingsModule)
-			},/*,
-			 {
-			 path: 'sponsors',
-			 loadChildren: () => import('app/views/pages/sponsor/sponsor.module').then(m => m.SponsorModule)
-			 },
+			},
+			{
+				path: 'sponsors',
+				loadChildren: () => import('app/modules/sponsor/sponsor.module').then(m => m.SponsorModule)
+			}, /*
 			 {
 			 path: 'teams',
 			 loadChildren: () => import('app/views/pages/team/team.module').then(m => m.TeamModule)

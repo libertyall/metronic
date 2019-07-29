@@ -5,7 +5,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { ClipboardModule } from 'ngx-clipboard';
+// import { ClipboardModule } from 'ngx-clipboard';
 // NgBootstrap
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // Perfect ScrollBar
@@ -25,7 +25,7 @@ import { HighlightModule } from 'ngx-highlightjs';
 		HighlightModule,
 		PerfectScrollbarModule,
 		PortletModule,
-		ClipboardModule,
+		// ClipboardModule,
 
 		// material modules
 		MatTabsModule,

@@ -1,8 +1,7 @@
 import { Creation } from '../../../_models/creation.class';
+import {BaseModel} from "../../../../core/_base/crud";
 
-export class MediaItem {
-
-  id?: string;
+export class MediaItem extends BaseModel {
 
   itemId?: string; // id from parent object
   assignedObjects?: {};
@@ -23,6 +22,5 @@ export class MediaItem {
   isExternal?: boolean;
 
   creation?: Creation;
-
   // thumbnailSizes?: IThumbnail[];
 }

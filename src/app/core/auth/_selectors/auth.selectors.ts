@@ -32,7 +32,8 @@ export const isLoading = createSelector(
 export const currentUser = createSelector(
 	selectAuthState,
 	auth => {
-		return auth.user || null;
+		console.log(auth);
+		return auth.user;
 	}
 );
 

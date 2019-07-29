@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {Subject} from 'rxjs';
 import * as objectPath from 'object-path';
-import { merge } from 'lodash';
-import { FormlyFieldConfig } from '@ngx-formly/core';
+import {merge} from 'lodash';
+import {FormlyFieldConfig} from '@ngx-formly/core';
 import lodash from 'lodash-es';
 import filterDeep from 'deepdash-es';
 
@@ -90,8 +90,7 @@ export class LayoutConfigService {
 			try {
 				const logos = this.getConfigValue('self.mainLogo');
 				logo = logos[Object.keys(logos)[0]];
-			}
-			catch (e) {
+			} catch (e) {
 				console.log(e);
 			}
 		}

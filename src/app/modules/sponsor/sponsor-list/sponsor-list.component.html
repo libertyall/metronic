@@ -1,0 +1,44 @@
+<kt-portlet>
+	<kt-portlet-header [title]="'sponsors.title' | translate" [icon]="'fa fa-euro-sign'">
+		<ng-container ktPortletTools>
+			<sponsor-filter *ngIf="categories$ | async as categories"
+							(setFilters)="setFilters($event)"
+							[categories]="categories">
+			</sponsor-filter>
+			<button type="button" class="btn btn-danger mr-1"
+					[ngbTooltip]="'sponsors.deleteAll.tooltip' | translate"
+					(click)="deleteAllSponsors()">
+						<span class="fa fa-trash"
+							  aria-hidden="true"> {{'sponsors.deleteAll.button' | translate }}</span>
+			</button>
+			<button type="button" class="btn btn-primary"
+					[ngbTooltip]="'sponsors.create.tooltip' | translate"
+					[routerLink]="['/sponsors/create']">
+						<span class="fa fa-pencil-alt"
+							  aria-hidden="true"> {{'sponsors.create.button' | translate }}</span>
+			</button>
+		</ng-container>
+	</kt-portlet-header>
+	<hr/>
+	<kt-portlet-body>
+		<ng-container *ngIf="sponsors$ | async as sponsors;">
+
+			<div class="alert alert-info" *ngIf="!sponsors || sponsors.length === 0">
+				<p>{{'sponsors.noSponsorsFound' | translate}}</p>
+			</div>
+
+			<div class="alert alert-warning"
+				 *ngIf="sponsors.length > 0 && !(sponsors | categoryFilter: 'assignedCategories' : categoryFilter).length">
+				<p>{{'sponsors.noFilteredSponsorsFound' | translate}}</p>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-4"
+					 *ngFor="let sponsor of sponsors | categoryFilter: 'assignedCategories' : categoryFilter">
+					<sponsor-item (removeSponsor)="removeSponsor($event)" [sponsor]="sponsor"></sponsor-item>
+				</div>
+			</div>
+		</ng-container>
+	</kt-portlet-body>
+
+</kt-portlet>

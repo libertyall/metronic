@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {
 	MatButtonModule,
 	MatIconModule,
-	MatPaginatorModule,
+	MatPaginatorModule, MatProgressBarModule,
 	MatProgressSpinnerModule,
 	MatSortModule,
 	MatTableModule,

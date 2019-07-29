@@ -42,14 +42,6 @@
                             "scripts": [
                                 "{$config.path.node_modules}/tooltip.js/dist/umd/tooltip.min.js"
                             ]
-                        },
-                        "perfect-scrollbar": {
-                            "styles": [
-                                "{$config.path.node_modules}/perfect-scrollbar/css/perfect-scrollbar.css"
-                            ],
-                            "scripts": [
-                                "{$config.path.node_modules}/perfect-scrollbar/dist/perfect-scrollbar.js"
-                            ]
                         }
                     },
                     "optional": {
@@ -67,22 +59,6 @@
                             ],
                             "fonts": [
                                 "{$config.path.node_modules}/line-awesome/fonts/**"
-                            ]
-                        },
-                        "flaticon": {
-                            "styles": [
-                                "{$config.path.src}/vendors/flaticon/flaticon.css"
-                            ],
-                            "fonts": [
-                                "{$config.path.src}/vendors/flaticon/font/**"
-                            ]
-                        },
-                        "flaticon2": {
-                            "styles": [
-                                "{$config.path.src}/vendors/flaticon2/flaticon.css"
-                            ],
-                            "fonts": [
-                                "{$config.path.src}/vendors/flaticon2/font/**"
                             ]
                         },
                         "@fortawesome": {

@@ -1,0 +1,17 @@
+<div [formGroup]="form">
+
+  <mat-form-field>
+    <mat-select placeholder="{{'general.sponsors.edit.chooseAssignedCategories' | translate}}"
+                formControlName="assignedCategories"
+                multiple>
+      <mat-option *ngFor="let category of categories | orderBy: ['title']"
+                  [value]="category">
+        {{category.title}}
+      </mat-option>
+    </mat-select>
+    <mat-hint align="end" *ngIf="!form.controls['assignedCategories']">
+      {{'general.sponsors.edit.chooseCategories' | translate}}
+    </mat-hint>
+  </mat-form-field>
+
+</div>
