@@ -68,9 +68,8 @@ import { DeIntl } from '../../shared/intl/owl-datetime.i18n';
 		ArticleDashboardComponent,
 		ArticleListComponent,
 		ArticleDetailComponent,
-		ArticleCreateComponent
-		/* ArticleDetailComponent,
-		 ArticleEditComponent,
+		ArticleCreateComponent,
+		/* ArticleEditComponent,
 		 ArticleEditSidebarComponent,
 		 ArticleMatchesComponent,
 		 ArticlesComponent,

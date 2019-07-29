@@ -1,14 +1,11 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {environment} from '../environments/environment';
-import {UnAuthGuard} from './core/auth/_guards/unauth.guard';
-import {AuthGuard} from "./core/auth/_guards/auth.guard";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { environment } from '../environments/environment';
 
 const routes: Routes = [
 	{
 		path: 'auth',
-		loadChildren: () => import('app/views/pages/auth/auth.module').then(m => m.AuthModule),
-		canActivate: [UnAuthGuard]
+		loadChildren: () => import('app/views/pages/auth/auth.module').then(m => m.AuthModule)
 	},
 	{
 		path: '',
@@ -23,7 +20,7 @@ const routes: Routes = [
 
 @NgModule({
 	imports: [
-		RouterModule.forRoot(routes, {enableTracing: environment.routerTracing})
+		RouterModule.forRoot(routes, { enableTracing: environment.routerTracing })
 	],
 	exports: [RouterModule]
 })

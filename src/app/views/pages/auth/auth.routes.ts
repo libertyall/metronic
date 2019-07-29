@@ -3,11 +3,15 @@ import { AuthComponent } from './auth.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { AngularFireAuthGuard, emailVerified, loggedIn, redirectLoggedInTo } from '@angular/fire/auth-guard';
+
+const redirectLoggedInToDashboard = () => redirectLoggedInTo(['/dashboard']);
 
 export const authRoutes: Routes = [
 	{
 		path: '',
 		component: AuthComponent,
+		canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToDashboard },
 		children: [
 			{
 				path: '',

@@ -31,7 +31,7 @@ import { HighlightModule } from 'ngx-highlightjs';
 		MatTabsModule,
 		MatExpansionModule,
 		MatCardModule,
-		MatIconModule,
+		MatIconModule
 	],
 	exports: [MaterialPreviewComponent],
 	declarations: [MaterialPreviewComponent]

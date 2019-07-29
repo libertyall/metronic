@@ -3,12 +3,11 @@ import { authReducer, AuthState } from '../core/auth/_reducers/auth.reducers';
 import { LoggerState } from '../modules/logger/logger.state';
 import { loggerReducer } from '../modules/logger/logger.reducers';
 import { environment } from '../../environments/environment';
-import { storeFreeze } from 'ngrx-store-freeze';
 import { IRouterStateUrl } from '../shared/utils/utils';
 import { routerReducer, RouterReducerState } from '@ngrx/router-store';
 import { uploadReducer, UploadState } from '../shared/modules/upload/_reducers/upload.reducer';
-import {settingsReducer, SettingsState} from "../modules/settings/_reducers/settings.reducers";
-import {sessionReducer, SessionState} from "../modules/settings/_reducers/session.reducer";
+import { settingsReducer, SettingsState } from '../modules/settings/_reducers/settings.reducers';
+import { sessionReducer, SessionState } from '../modules/settings/_reducers/session.reducer';
 
 export function logger(reducer: any) {
 	return (state: any, action: any) => {
@@ -41,6 +40,4 @@ export const appReducer: ActionReducerMap<AppState> = {
 	// users: usersReducer
 };
 
-export const appMetaReducers: MetaReducer<AppState>[] = environment.production
-	? []
-	: []; // storeFreeze
+export const appMetaReducers: MetaReducer<AppState>[] = environment.production ? [] : []; // storeFreeze

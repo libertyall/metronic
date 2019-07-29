@@ -172,11 +172,10 @@ module.exports = {
             // console.log(build.config.dist);
             outputs.forEach(function (output) {
                 if (output.indexOf('/**/') !== -1) {
-                    module.exports.getDemos().forEach(function (demo) {
-                        let outputPath = path.replace('**', demo).replace(matched[0], output.replace('**', demo)).replace(outputFile, '');
+                    module.exports.getFiles().forEach(function (theme) {
+                        let outputPath = path.replace('**', theme).replace(matched[0], output.replace('**', theme)).replace(outputFile, '');
                         // exclude unrelated demo assets
-                        if (outputPath.indexOf('/assets/demo/') !== -1 && outputPath.indexOf('/assets/demo/' + demo) === -1) {
-                        	console.log('test');
+                        if (outputPath.indexOf('/assets/theme/') !== -1 && outputPath.indexOf('/assets/' + theme) === -1) {
                             let f = filter(outputPath, {restore: true});
                             piping = piping.pipe(function () {
                                 return f;
@@ -199,8 +198,8 @@ module.exports = {
                     });
                 } else {
                     if (path.indexOf('/**/') !== -1) {
-                        module.exports.getDemos().forEach(function (demo) {
-                            let outputPath = path.replace('**', demo).replace(matched[0], output).replace(outputFile, '');
+                        module.exports.getFiles().forEach(function (theme) {
+                            let outputPath = path.replace('**', theme).replace(matched[0], output).replace(outputFile, '');
                             (function (_output) {
                                 piping = piping.pipe(function () {
                                     return gulp.dest(_output);
@@ -513,6 +512,7 @@ module.exports = {
 
                 let output;
 				let shouldRtl = false;
+
                 if (bundle.output.hasOwnProperty(type)) {
                     switch (type) {
                         case 'styles':
@@ -539,15 +539,12 @@ module.exports = {
                                 streams.push(stream);
                             }
                             break;
-                        /*case 'styles-by-demo':
-                            // custom scss with suffix demos
-                            module.exports.getDemos().forEach(function (demo) {
+                        case 'sfw-styles':
+                            module.exports.getFiles().forEach(function (theme) {
                                 // custom page scss
                                 stream = gulp.src(bundle.src[type], {allowEmpty: true}).pipe(_self.cssChannel(false, [
-                                    '../themes/themes/' + module.exports.config.theme + '/src/sass/theme/demos/' + demo + '/', //  development
-                                    '../src/assets/sass/theme/demos/' + demo + '/', // release default package
-                                    '../src/sass/theme/demos/' + demo + '/', // release angular package
-                                ])());// pipe(rename({ suffix: '.' + demo })).
+                                    '../src/assets/sass/theme/themes/default', // release default package
+                                ])());
 
                                 let output = _self.outputChannel(bundle.output[type], undefined, type)();
                                 if (output) {
@@ -562,10 +559,8 @@ module.exports = {
                                         }
                                     });
                                     stream = gulp.src(bundle.src[type], {allowEmpty: true}).pipe(_self.cssChannel(shouldRtl, [
-                                        '../themes/themes/' + module.exports.config.theme + '/src/sass/theme/demos/' + demo + '/', //  development
-                                        '../src/assets/sass/theme/demos/' + demo + '/', // release default package
-                                        '../src/sass/theme/demos/' + demo + '/', // release angular package
-                                    ])()).pipe(rename({suffix: '.rtl'}));
+                                        '../src/sass/theme/themes/default/',
+									])()).pipe(rename({suffix: '.rtl'}));
                                     let output = _self.outputChannel(bundle.output[type], undefined, type)();
                                     if (output) {
                                         stream.pipe(output);
@@ -573,9 +568,8 @@ module.exports = {
                                     streams.push(stream);
                                 }
                             });
-                            break;*/
+                            break;
                         case 'scripts':
-                        	console.log(bundle.src[type]);
                             stream = gulp.src(bundle.src[type], {allowEmpty: true}).pipe(_self.jsChannel()());
                             output = _self.outputChannel(bundle.output[type], undefined, type)();
                             if (output) {
@@ -599,17 +593,15 @@ module.exports = {
         return streams;
     },
 
-	/*
-    getDemos: function () {
-        let demos = Object.keys(build.build.demos);
-        // build by demo, leave demo empty to generate all demos
-        if (typeof build.config.demo !== 'undefined' && build.config.demo !== '') {
-            demos = build.config.demo.split(',').map(function (item) {
+    getFiles: function () {
+        let files = Object.keys(build.build.default);
+        if (typeof build.config.default !== 'undefined' && build.config.default !== '') {
+            files = build.config.default.split(',').map(function (item) {
                 return item.trim();
             });
         }
-        return demos;
-    },*/
+        return files;
+    },
 
     getFolders: function (dir) {
         return fs.readdirSync(dir).filter(function (file) {

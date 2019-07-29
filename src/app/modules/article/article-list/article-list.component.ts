@@ -10,6 +10,7 @@ import { select, Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { SubheaderService } from '../../../core/_base/layout';
 import { debounceTime, distinctUntilChanged, skip, tap } from 'rxjs/operators';
+import { ArticlesDataSource } from '../_data-sources/articles.data-source';
 
 @Component({
   selector: 'kt-article-list',
@@ -18,7 +19,7 @@ import { debounceTime, distinctUntilChanged, skip, tap } from 'rxjs/operators';
 })
 export class ArticleListComponent implements OnInit, OnDestroy {
 
-	// dataSource: CategoriesDataSource;
+	dataSource: ArticlesDataSource;
 	displayedColumns = ['select', 'id', 'title', 'actions'];
 
 	@ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -117,18 +118,6 @@ export class ArticleListComponent implements OnInit, OnDestroy {
 			// this.store.dispatch(deleteCategory({article: _item}));
 			this.layoutUtilsService.showActionNotification(_deleteMessage, 'danger' ,MessageType.Delete);
 		});
-	}
-
-	fetchCategories() {
-		const messages = [];
-		this.selection.selected.forEach(elem => {
-			messages.push({
-				text: `${elem.title}`, // ${ elem.email }, ${ elem.lastName }, ${ elem.displayName }
-				id: elem.id.toString(),
-				status: elem.title
-			});
-		});
-		this.layoutUtilsService.fetchElements(messages);
 	}
 
 	isAllSelected(): boolean {

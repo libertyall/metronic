@@ -136,7 +136,7 @@
 			},
 			"pages": {
 				"src": {
-					"styles-by-demo": [
+					"sfw-styles": [
 						"{$config.path.src}/sass/theme/pages/**/*.scss"
 					],
 					"scripts": [
@@ -144,7 +144,7 @@
 					]
 				},
 				"output": {
-					"styles-by-demo": "{$config.dist}/css/default/pages/",
+					"sfw-styles": "{$config.dist}/css/default/pages/",
 					"scripts": "{$config.dist}/js/default/pages/"
 				}
 			}

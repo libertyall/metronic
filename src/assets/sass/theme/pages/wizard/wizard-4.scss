@@ -2,20 +2,11 @@
 // Wizard v3
 //
 
-
-
-
-// Custom pages SASS files are compiled per demo as 
-// each demo has own config settings that may override the global theme config
-// and pages may slighty different on demos
-
-
-// Global theme config(sass/theme/core/config.scss)
 @import "../../config";
 
-// Demo config(e.g: sass/theme/demos/demo1/config.scss) that overrides global theme config. 
-// Do not change this path, build tool automatically finds current demo's config file.    
-@import "config.scss";
+// Demo config(e.g: sass/theme/demos/demo1/config.scss) that overrides global theme config.
+// Do not change this path, build tool automatically finds current demo's config file.
+@import "../../themes/default/config.scss";
 
 // Variables
 $kt-wizard-v4-step-label: #959cb6;
@@ -31,7 +22,7 @@ $kt-wizard-v4-form-bg: #f9fafc;
 	flex-direction: column;
 	// Nav
 	.kt-wizard-v4__nav {
-	
+
 		.kt-wizard-v4__nav-items{
 			display: flex;
 			align-items: flex-end;
@@ -128,7 +119,7 @@ $kt-wizard-v4-form-bg: #f9fafc;
 				}
 			}
 		}
-	} 
+	}
 
 	.kt-wizard-v4__wrapper{
 		display: flex;
@@ -142,7 +133,7 @@ $kt-wizard-v4-form-bg: #f9fafc;
 				padding-bottom: 2rem;
 				margin-bottom: 2rem;
 				border-bottom: 1px solid $kt-wizard-v4-step-border;
-		
+
 				.kt-wizard-v4__form{
 					margin-top: 3rem;
 				}
@@ -205,7 +196,7 @@ $kt-wizard-v4-form-bg: #f9fafc;
 					}
 				}
 			}
-		}	
+		}
 
 		@include kt-mobile{
 			padding: 2rem;
@@ -216,21 +207,21 @@ $kt-wizard-v4-form-bg: #f9fafc;
 			}
 		}
 	}
-	
+
 
 	// Step
 	[data-ktwizard-type="step"] {
-		
+
 		&[data-ktwizard-state="current"] {
-			
+
 		}
 
 		&[data-ktwizard-state="done"] {
-			
+
 		}
 
 		&[data-ktwizard-state="pending"] {
-			
+
 		}
 	}
 
@@ -246,7 +237,7 @@ $kt-wizard-v4-form-bg: #f9fafc;
 	// Content states
 	[data-ktwizard-type="step-content"] {
 		display: none;
-		
+
 		&[data-ktwizard-state="current"] {
 			display: block;
 		}
@@ -267,7 +258,7 @@ $kt-wizard-v4-form-bg: #f9fafc;
 			display: none;
 		}
 	}
- 	
+
 	&[data-ktwizard-state="first"] {
 		[data-ktwizard-type="action-prev"]{
 			display: none;
@@ -315,20 +306,20 @@ $kt-wizard-v4-form-bg: #f9fafc;
 // Above 1200px
 @include kt-media-above(xl) {
 	.kt-wizard-v4 {
-		
+
 	}
 }
 
 // Above 1024px and below 1200px
 @include kt-media-range(lg, xl) {
 	.kt-wizard-v4 {
-	
+
 	}
 }
 
 // Below 1024px
 @include kt-media-below(lg) {
 	.kt-wizard-v4 {
-	
+
 	}
 } */

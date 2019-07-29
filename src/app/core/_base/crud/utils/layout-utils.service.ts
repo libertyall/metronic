@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { ActionNotificationComponent,
 	DeleteEntityDialogComponent,
-	FetchEntityDialogComponent,
 	UpdateStatusDialogComponent
 } from '../../../../views/partials/content/crud';
 
@@ -55,12 +54,12 @@ export class LayoutUtilsService {
 		});
 	}
 
-	fetchElements(_data) {
+	/* fetchElements(_data) {
 		return this.dialog.open(FetchEntityDialogComponent, {
 			data: _data,
 			width: '400px'
 		});
-	}
+	} */
 
 	updateStatusForEntities(title, statuses, messages) {
 		return this.dialog.open(UpdateStatusDialogComponent, {

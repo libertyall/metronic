@@ -5,31 +5,30 @@ import {first, map, switchAll, switchMap, tap} from 'rxjs/operators';
 import {AuthService} from "../_services";
 import {AngularFireAuth} from "@angular/fire/auth";
 import {User} from "firebase";
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../store/app.state';
+import { redirectLoggedInTo, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+import { isLoggedIn } from '../_selectors/auth.selectors';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
 
 	constructor(private router: Router,
-				private authService: AuthService,
-				private auth: AngularFireAuth,
-				/* private alertService: AlertService */) {
+				private store: Store<AppState>,) {
 	}
 
 	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
 
-		return this.auth.user.pipe(
-			first(),
-			map((user: User) => {
-				if (!user) {
-					this.router.navigate(['/auth/login']).then(() => 'redirect to login');
-				}
-				/*if (user && !user.emailVerified) {
-					this.alertService.showSnackBar('error', 'Global.Login.notVerified');
-				  return this.authService.signOut();
-				}*/
-				return !!user;
-			})
-		);
+		const observable = this.store.select(isLoggedIn);
+
+		// redirect to sign in page if user is not authenticated
+		observable.subscribe(authenticated => {
+			if (!authenticated) {
+				redirectUnauthorizedTo(['login']);
+			}
+		});
+
+		return observable;
 	}
 
 }

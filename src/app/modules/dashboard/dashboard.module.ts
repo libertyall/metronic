@@ -6,6 +6,7 @@ import {BirthdayListComponent} from "./birthday-list/birthday-list.component";
 import {PortletModule} from "../../views/partials/content/general/portlet/portlet.module";
 import {WidgetModule} from "../../views/partials/content/widgets/widget.module";
 import {CommonModule} from "@angular/common";
+import { DashboardArticleListComponent } from './dashboard-article-list/dashboard-article-list.component';
 
 @NgModule({
 	imports: [
@@ -30,7 +31,8 @@ import {CommonModule} from "@angular/common";
 	],
 	declarations: [
 		BirthdayListComponent,
-		DashboardComponent
+		DashboardComponent,
+		DashboardArticleListComponent
 	]
 })
 export class DashboardModule {

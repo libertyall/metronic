@@ -1,14 +1,14 @@
-<kt-portlet [ngClass]="'kt-portlet--ngviewer'" *ngIf="viewItem">
+<!--<kt-portlet [ngClass]="'kt-portlet--ngviewer'" *ngIf="viewItem">
 	<kt-portlet-header [title]="viewItem.beforeCodeTitle">
 		<ng-container ktPortletTools>
-			<!-- <ul class="kt-portlet__nav">
+			 <ul class="kt-portlet__nav">
 				<li class="kt-portlet__nav-item">
 					<a href="javascript:;" *ngIf="hasExampleSource()" (click)="changeCodeVisibility()" class="kt-portlet__nav-link kt-portlet__nav-link--icon"
 						title="View Source">
 						<i class="la la-code"></i>
 					</a>
 				</li>
-			</ul> -->
+			</ul>
 			<div class="kt-portlet__head-group">
 				<button type="button"
 					*ngIf="hasExampleSource()"
@@ -73,22 +73,16 @@
 			</mat-tab-group>
 		</div>
 
-		<!-- view -->
 		<div class="kt-portlet__preview">
 			<ng-content></ng-content>
 		</div>
-		<!-- / view -->
 
-		<!-- after Code Title -->
 		<div *ngIf="viewItem.afterCodeTitle" class="kt-portlet__preview" [innerHTML]="viewItem.afterCodeTitle | safe: 'html'">
 		</div>
-		<!-- / after Code Title -->
 
-		<!-- after Code Description -->
 		<div *ngIf="viewItem.afterCodeDescription" class="kt-portlet__preview" [innerHTML]="viewItem.afterCodeDescription | safe: 'html'">
 		</div>
-		<!-- / after Code Description -->
 	</kt-portlet-body>
 
 	<kt-portlet-footer></kt-portlet-footer>
-</kt-portlet>
+</kt-portlet>-->

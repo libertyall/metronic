@@ -2,18 +2,11 @@
 // Invoice 1
 //
 
-
-
-
-// Custom pages SASS files are compiled per demo as 
-// each demo has own config settings that may override the global theme config
-// and pages may slighty different on demos
-// Global theme config(sass/theme/core/config.scss)
 @import "../../config";
 
-// Demo config(e.g: sass/theme/demos/demo1/config.scss) that overrides global theme config. 
-// Do not change this path, build tool automatically finds current demo's config file.    
-@import "config.scss";
+// Demo config(e.g: sass/theme/demos/demo1/config.scss) that overrides global theme config.
+// Do not change this path, build tool automatically finds current demo's config file.
+@import "../../themes/default/config.scss";
 
 .kt-invoice-2 {
 	@include kt-rounded {
@@ -48,7 +41,7 @@
             display: flex;
 			justify-content: space-between;
 			flex-wrap: wrap;
-						
+
 			.kt-invoice__title {
 				font-weight: 700;
 				font-size: 2.7rem;
@@ -81,7 +74,7 @@
 
 		.kt-invoice__items {
 			display: flex;
-			flex-wrap: wrap;			
+			flex-wrap: wrap;
 			margin-top: 50px;
             width: 100%;
             border-top: 1px solid kt-base-color(grey, 2);
@@ -106,7 +99,7 @@
 				.kt-invoice__text {
 					font-weight: 400;
                     color: kt-base-color(label, 2);
-                }				
+                }
             }
         }
     }
@@ -141,12 +134,12 @@
                         font-weight: 700;
                         font-size: 1.1rem;
 						color: kt-base-color(label, 3);
-						
+
                         &:not(:first-child) {
                             text-align: right;
                         }
 					}
-					
+
                     &:first-child td {
                         padding-top: 1.8rem;
                     }
@@ -154,18 +147,18 @@
             }
         }
 	}
-	
+
     .kt-invoice__footer {
 		padding: 3rem 0;
 		background-color: kt-base-color(grey, 1);
-	
+
 		.kt-invoice__container {
             display: flex;
             flex-direction: row;
 			justify-content: space-between;
 			flex-wrap: wrap;
 		}
-		
+
 		.table {
 			background-color: transparent;
 			padding: 0;
@@ -199,16 +192,16 @@
 			}
 		}
     }
-	
+
 	.kt-invoice__actions {
         padding: 2rem 0;
-	
+
 		.kt-invoice__container {
             display: flex;
             flex-direction: row;
             justify-content: space-between;
         }
-	}	
+	}
 }
 
 @include kt-desktop {
@@ -230,47 +223,47 @@
 
         .kt-invoice__head {
 			padding: 20px 0;
-	
+
 			.kt-invoice__brand {
 				display: flex;
 				flex-direction: column;
-							
+
 				.kt-invoice__title {
 					font-weight: 700;
 					font-size: 2rem;
 					margin-bottom: 30px;
 				}
-	
+
 				.kt-invoice__logo {
 					text-align: left;
-	
+
 					img {
 						text-align: left;
 					}
-	
+
 					.kt-invoice__desc {
 						text-align: left;
 					}
 				}
 			}
-	
-			.kt-invoice__items {			
+
+			.kt-invoice__items {
 				margin-top: 20px;
-	
-				.kt-invoice__item {	
+
+				.kt-invoice__item {
 					.kt-invoice__subtitle {
 					}
-	
+
 					.kt-invoice__text {
-					}				
+					}
 				}
 			}
 		}
-	
+
 		.kt-invoice__body {
 			padding: 2rem 0;
 		}
-		
+
 		.kt-invoice__footer {
 			padding: 2rem 0;
 		}
@@ -301,7 +294,7 @@
 
 		.kt-invoice__actions {
 			display: none !important;
-		}		
+		}
 
 		.kt-invoice__footer {
 			background-color: transparent !important;

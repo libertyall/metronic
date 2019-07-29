@@ -2,20 +2,11 @@
 // Support Center/Home 2
 //
 
-
-
-
-// Custom pages SASS files are compiled per demo as 
-// each demo has own config settings that may override the global theme config
-// and pages may slighty different on demos
-
-
-// Global theme config(sass/theme/core/config.scss)
 @import "../../config";
 
-// Demo config(e.g: sass/theme/demos/demo1/config.scss) that overrides global theme config. 
-// Do not change this path, build tool automatically finds current demo's config file.	
-@import "config.scss";
+// Demo config(e.g: sass/theme/demos/demo1/config.scss) that overrides global theme config.
+// Do not change this path, build tool automatically finds current demo's config file.
+@import "../../themes/default/config.scss";
 
 // Base
 .kt-sc-2 {
@@ -50,7 +41,7 @@
 			.kt-svg-icon{
 				height: auto;
 				width: 100%;
-				fill: kt-base-color(grey, 1);	
+				fill: kt-base-color(grey, 1);
 			}
 		}
 	}
@@ -63,10 +54,10 @@
 			left:0;
 			width: 100%;
 			height: auto;
-			
+
 			z-index:1;
 		}
-		
+
 	}
 
 	.kt-sc__top{
@@ -118,7 +109,7 @@
 		padding: 25px 25px 0;
 		position: relative;
 		z-index: 1;
-		
+
 		.nav-tabs{
 			margin-bottom: -25px;
 
@@ -148,7 +139,7 @@
 						color: kt-state-color(brand, base);
 					}
 				}
-			}			
+			}
 		}
 	}
 
@@ -173,7 +164,7 @@
 
 		.kt-sc__top{
 			min-height: auto;
-		
+
 			.kt-sc__content{
 				padding: 4rem 0;
 				margin-right: 0;

@@ -2,33 +2,24 @@
 // User Login v6
 //
 
-
-
-
-// Custom pages SASS files are compiled per demo as 
-// each demo has own config settings that may override the global theme config
-// and pages may slighty different on demos
-
-
-// Global theme config(sass/theme/core/config.scss)
 @import "../../config";
 
-// Demo config(e.g: sass/theme/demos/demo1/config.scss) that overrides global theme config. 
-// Do not change this path, build tool automatically finds current demo's config file.    
-@import "config.scss";
+// Demo config(e.g: sass/theme/demos/demo1/config.scss) that overrides global theme config.
+// Do not change this path, build tool automatically finds current demo's config file.
+@import "../../themes/default/config.scss";
 
 // Login Base
 .kt-login.kt-login--v6 {
-    background: #fff; 
-    
+    background: #fff;
+
     // Page Aside
     .kt-login__aside {
         padding: 2rem;
         background: #fff;
         width: 600px;
-    
+
         .kt-login__wrapper {
-            flex: 1;  
+            flex: 1;
             display: flex;
             flex-direction: column;
             padding: 2rem;
@@ -50,7 +41,7 @@
                     text-align: center;
                     margin: 1rem auto 4rem auto;
                 }
-        
+
                 .kt-login__head {
                     margin-top: 1rem;
                     text-align: center;
@@ -70,7 +61,7 @@
                         margin-top: 1rem;
                     }
                 }
-        
+
                 .kt-login__form {
                     margin-top: 4rem;
 
@@ -79,7 +70,7 @@
                         padding: 0;
                         position: relative;
                     }
-                    
+
                     .form-control {
                         height: 46px;
                         border-radius: 0;
@@ -95,12 +86,12 @@
                         }
                     }
                 }
-        
+
                 .kt-login__actions {
                     margin: 3rem 0;
                     text-align: center;
                 }
-        
+
                 .kt-login__extra {
                     margin-top: 2rem;
                     display: flex;
@@ -123,7 +114,7 @@
                     }
                 }
             }
-    
+
             .kt-login__account {
                 text-align: center;
 
@@ -132,7 +123,7 @@
                     font-weight: 500;
                     color: kt-base-color(label, 2);
                 }
-                
+
                 .kt-login__account-link {
                     font-size: 1rem;
                     font-weight: 500;
@@ -145,9 +136,9 @@
                     }
                 }
             }
-        }  
-    } 
-           
+        }
+    }
+
     // Button
     .btn {
         height: 46px;
@@ -158,7 +149,7 @@
             margin-left: 0.5rem;
         }
     }
-    
+
     // Page Content
     .kt-login__content {
         background-size: cover;
@@ -176,17 +167,17 @@
                 font-weight: 500;
                 margin-bottom: 2rem;
             }
-            
+
             .kt-login__desc {
                 color: rgba(#ffffff, 0.8);
                 font-size: 1.1rem;
                 font-weight: 400;
             }
-        }        
+        }
     }
 }
 
-// Login Modes        
+// Login Modes
 .kt-login.kt-login--v6 {
     &.kt-login--signin {
         .kt-login__signup {
@@ -251,12 +242,12 @@
                         margin: 20px 0;
                     }
                 }
-            
+
                 .kt-login__logo {
                     margin: 20px auto;
                 }
             }
-            
+
             .kt-login__account {
                 margin-top: 1.5rem;
             }
@@ -273,7 +264,7 @@
                     font-size: 1.3rem;
                     margin-bottom: 1rem;
                 }
-                
+
                 .kt-login__desc {
                     font-size: 1rem;
                     margin: 0;

@@ -29,14 +29,14 @@ export class LoginComponent implements OnInit, OnDestroy {
 
 	loginForm: FormGroup;
 
-	user$: Observable<UserInterface | null>;
+	// user$: Observable<UserInterface | null>;
 	isLoggedIn$: Observable<boolean>;
 	isLoading$: Observable<boolean>;
 
 	private unsubscribe: Subject<void> = new Subject();
 
-	private isLoading = false;
-	private applications$: Observable<any>;
+	// private isLoading = false;
+	// private applications$: Observable<any>;
 
 	constructor(private router: Router,
 				private auth: AuthService,
@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 				private store: Store<AppState>,
 				private fb: FormBuilder) {
 		this.isLoggedIn$ = this.store.select(isLoggedIn);
-		this.user$ = this.store.select(currentUser);
+		// this.user$ = this.store.select(currentUser);
 		this.isLoading$ = this.store.select(isLoading);
 		this.store.select(selectAuthMessage)
 			.pipe(

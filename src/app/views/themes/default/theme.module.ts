@@ -43,6 +43,7 @@ import {
 } from "../../../core/_base/layout";
 import {LayoutUtilsService} from "../../../core/_base/crud";
 import {AuthGuard} from "../../../core/auth/_guards/auth.guard";
+import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
 
 @NgModule({
 	declarations: [

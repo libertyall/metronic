@@ -104,12 +104,6 @@ export const locale = {
 				SUCCESS: 'Eine E-Mail wurde zum Zurücksetzen wurde versendet.',
 				SUBMIT_BUTTON: 'Erinnerung senden'
 			},
-			REGISTER: {
-				TITLE: 'Registrierung',
-				DESC: 'Fülle das Formular zur Anmeldung aus.',
-				SUCCESS: 'Du hast Dich erfolgreich registriert. Bitte überprüfe Dein E-Mail Postfach.'
-			},
-			REMEMBERME: 'An mich erinnern?',
 			INPUT: {
 				EMAIL: 'E-Mail',
 				DISPLAYNAME: 'Anzeigename',
@@ -120,6 +114,13 @@ export const locale = {
 				CONFIRM_PASSWORD: 'Passwort bestätigen',
 				USERNAME: 'Nutzername'
 			},
+			REGISTER: {
+				TITLE: 'Registrierung',
+				DESC: 'Fülle das Formular zur Anmeldung aus.',
+				SUCCESS: 'Du hast Dich erfolgreich registriert. Bitte überprüfe Dein E-Mail Postfach.'
+			},
+			REMEMBERME: 'An mich erinnern?',
+			TERMSANDCONDITIONS: 'Datenschutz- und Nutzungsbedinungen',
 			VALIDATION: {
 				ACCEPTTERMS: 'Du musst noch den Nutzungs- und Datenschutzbestimmungen zustimmen.',
 				INVALID: '{{name}} is not valid',

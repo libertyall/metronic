@@ -178,7 +178,7 @@ export class AccordionControlComponent implements AfterContentChecked {
 			}
 
 			this.panelChange.emit(
-				{ panelId: panelId, nextState: !panel.isOpen, preventDefault: () => { defaultPrevented = true; } });
+				{ panelId, nextState: !panel.isOpen, preventDefault: () => { defaultPrevented = true; } });
 
 			if (!defaultPrevented) {
 				panel.isOpen = !panel.isOpen;

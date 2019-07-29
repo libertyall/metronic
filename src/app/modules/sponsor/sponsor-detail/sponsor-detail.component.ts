@@ -15,17 +15,12 @@ import {EventEmitterService} from "../../../shared/services/event-emitter.servic
 export class SponsorDetailComponent implements OnInit {
 
 	public sponsor: Sponsor;
-	public categories$: Observable<Category[]>;
 	public sponsorLogo$: Observable<MediaItem>;
 
 	constructor(private route: ActivatedRoute,
 				private eventEmitterService: EventEmitterService,
 				// private sponsorService: SponsorService,
-				private router: Router,
-				/* private alertService: AlertService,
-				private mediaItemService: MediaItemService,
-				private categoryService: CategoryService */) {
-		// this.categories$ = categoryService.categories$;
+				private router: Router) {
 	}
 
 	ngOnInit() {

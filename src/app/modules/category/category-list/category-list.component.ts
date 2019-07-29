@@ -124,18 +124,6 @@ export class CategoryListComponent implements OnInit, OnDestroy {
 		});
 	}
 
-	fetchCategories() {
-		const messages = [];
-		this.selection.selected.forEach(elem => {
-			messages.push({
-				text: `${ elem.title }`, // ${ elem.email }, ${ elem.lastName }, ${ elem.displayName }
-				id: elem.id.toString(),
-				status: elem.title
-			});
-		});
-		this.layoutUtilsService.fetchElements(messages);
-	}
-
 	isAllSelected(): boolean {
 		const numSelected = this.selection.selected.length;
 		const numRows = this.categoriesResult.length;

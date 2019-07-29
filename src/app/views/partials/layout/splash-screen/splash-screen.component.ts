@@ -22,7 +22,6 @@ export class SplashScreenComponent implements OnInit {
 		this.loaderLogo = this.layoutConfigService.getConfigValue('loader.logo');
 		this.loaderType = this.layoutConfigService.getConfigValue('loader.type');
 		this.loaderMessage = this.layoutConfigService.getConfigValue('loader.message');
-		console.log(this.loaderLogo, this.loaderType, this.loaderMessage);
 
 		this.splashScreenService.init(this.splashScreen);
 	}

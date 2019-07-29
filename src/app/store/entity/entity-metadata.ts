@@ -1,12 +1,16 @@
 import {EntityMetadataMap, PropsFilterFnFactory} from '@ngrx/data';
 
 export const entityMetadata: EntityMetadataMap = {
+	Article: {},
 	Category: {
 		filterFn: titleFilter,
 		sortComparer: sortByTitle
 	},
 	Club: {},
-	Sponsor: {}
+	Location: {},
+	Match: {},
+	Sponsor: {},
+	Team: {}
 };
 
 const pluralNames = { Category: 'Categories' };

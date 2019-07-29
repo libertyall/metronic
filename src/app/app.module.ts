@@ -26,6 +26,9 @@ import { AuthModule } from './views/pages/auth/auth.module';
 import { ApplicationService } from './modules/settings/_services/application.service';
 import { PartialsModule } from './views/partials/partials.module';
 import { AppStoreModule } from './store/app-store.module';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthEffects } from './core/auth/_effects/auth.effects';
+import { AngularFireAuthGuardModule } from '@angular/fire/auth-guard';
 
 /* export function storageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
  return storageSync<AppState>({
@@ -74,9 +77,11 @@ export function hljsLanguages(): HighlightLanguage[] {
 		// CoreModule,
 		// OverlayModule,
 		AuthModule.forRoot(),
+		EffectsModule.forRoot([AuthEffects]),
 		AngularFireModule.initializeApp(environment.firebaseConfig),
 		AngularFirestoreModule.enablePersistence(),
 		AngularFireAuthModule,
+		AngularFireAuthGuardModule,
 		TranslateModule.forRoot(),
 		MatProgressSpinnerModule
 		// InlineSVGModule.forRoot(),

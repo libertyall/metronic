@@ -3,16 +3,16 @@ import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/
 import { NavigationEnd, Router } from '@angular/router';
 import { LayoutConfigService, SplashScreenService } from './core/_base/layout';
 import { locale as enLang } from './core/_config/i18n/en';
-import { locale as chLang } from './core/_config/i18n/ch';
+import { locale as deLang } from './core/_config/i18n/de';
+/* import { locale as chLang } from './core/_config/i18n/ch';
 import { locale as esLang } from './core/_config/i18n/es';
 import { locale as jpLang } from './core/_config/i18n/jp';
 import { locale as deLang } from './core/_config/i18n/de';
-import { locale as frLang } from './core/_config/i18n/fr';
-import { Title } from '@angular/platform-browser';
+import { locale as frLang } from './core/_config/i18n/fr'; */
 import { Store } from '@ngrx/store';
 import { AppState } from './store/app.state';
 import { TranslationService } from './core/_base/layout/services/translation.service';
-import {ApplicationService} from "./modules/settings/_services/application.service";
+import { ApplicationService } from './modules/settings/_services/application.service';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -23,19 +23,16 @@ import {ApplicationService} from "./modules/settings/_services/application.servi
 })
 export class AppComponent implements OnInit, OnDestroy {
 
-	// pageTitle: string;
 	loader: boolean;
 
 	private unsubscribe: Subscription[] = [];
 
 	constructor(private translationService: TranslationService,
-				private applicationService: ApplicationService,
 				private store: Store<AppState>,
 				private router: Router,
 				private layoutConfigService: LayoutConfigService,
-				private title: Title,
 				private splashScreenService: SplashScreenService) {
-		this.translationService.loadTranslations(enLang, chLang, esLang, jpLang, deLang, frLang);
+		this.translationService.loadTranslations(enLang, deLang);
 		this.translationService.setLanguage('de');
 	}
 
@@ -54,9 +51,6 @@ export class AppComponent implements OnInit, OnDestroy {
 			}, 500);
 		});
 		this.unsubscribe.push(routerSubscription);
-
-		// this.pageTitle = objectPath.get(config, 'backend.self.page.title');
-		// this.title.setTitle(this.pageTitle);
 	}
 
 	ngOnDestroy() {

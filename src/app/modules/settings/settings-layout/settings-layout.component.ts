@@ -11,7 +11,7 @@ import {debounceTime, distinctUntilChanged} from "rxjs/operators";
 })
 export class SettingsLayoutComponent implements OnInit {
 
-	private readonly config: FormlyFieldConfig[];
+	public readonly config: FormlyFieldConfig[];
 
 	form: FormGroup;
 	configModel: any = {};

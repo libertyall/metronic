@@ -5,7 +5,7 @@ import { of } from 'rxjs';
 import {MessageType} from "../../../../../core/_base/crud";
 
 @Component({
-	selector: 'kt-action-natification',
+	selector: 'kt-action-notification',
 	templateUrl: './action-notification.component.html',
 	changeDetection: ChangeDetectionStrategy.Default
 

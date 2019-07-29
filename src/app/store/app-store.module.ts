@@ -7,17 +7,9 @@ import { appMetaReducers, appReducer } from './app.state';
 import { RouterEffects } from '../views/state/router.effects';
 import { AuthEffects } from '../core/auth/_effects/auth.effects';
 import { SettingsEffects } from '../modules/settings/_effects/settings.effects';
-import { EntityDataModule, EntityDataService, EntityServices } from '@ngrx/data';
+import { EntityDataModule, EntityDataService } from '@ngrx/data';
 import { entityConfig } from './entity/entity-metadata';
 import { RouterState, StoreRouterConnectingModule } from '@ngrx/router-store';
-import { EntityStoreModule } from './entity/entity-store.module';
-import { AppEntityServices } from './entity/app-entity-services';
-import { AppSelectors } from '../modules/settings/_selectors/app.selectors';
-// import { storeFreeze } from 'ngrx-store-freeze';
-
-export const metaReducers: MetaReducer<any>[] = environment.production
-	? []
-	: []; // [storeFreeze];
 
 @NgModule({
 	imports: [
@@ -38,14 +30,14 @@ export const metaReducers: MetaReducer<any>[] = environment.production
 		EntityDataModule.forRoot(entityConfig),
 		StoreRouterConnectingModule.forRoot({
 			routerState: RouterState.Minimal
-		}),
+		})
 		// EntityStoreModule,
 	],
 	providers: [
 		EntityDataService
 		/* AppEntityServices,
-		{ provide: EntityServices, useExisting: AppEntityServices },
-		AppSelectors */
+		 { provide: EntityServices, useExisting: AppEntityServices },
+		 AppSelectors */
 	]
 })
 export class AppStoreModule {
