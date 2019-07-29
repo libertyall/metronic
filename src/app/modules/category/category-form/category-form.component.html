@@ -1,29 +1,29 @@
 <kt-portlet>
 	<kt-portlet-header [title]="getComponentTitle()" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
 		<ng-container ktPortletTools>
-			<a [routerLink]="['/categories']" class="btn btn-secondary kt-margin-r-10" mat-raised-button
-			   [matTooltip]="'category.backToList' | translate">
-				<i class="la la-arrow-left"></i>
-				<span class="kt-hidden-mobile">{{'back' | translate}}</span>
-			</a>
-			<a class="btn btn-secondary kt-margin-r-10" (click)="reset()"
-			   [disabled]="selectedTab!== 0"
-			   mat-raised-button
-			   matTooltip="{{'resetDescription' | translate}}">
-				<i class="la la-cog"></i>
-				<span class="kt-hidden-mobile">{{'reset' | translate}}</span>
-			</a>-
-			<button class="btn btn-primary kt-margin-r-10"
-					color="primary"
-					(click)="onSubmit(false)"
-					mat-raised-button
-					matTooltip="{{'saveDescription' | translate}}">
-				<span class="kt-hidden-mobile">{{'save' | translate}}</span>
-			</button>
 			<button mat-icon-button [matMenuTriggerFor]="menu" color="primary">
 				<mat-icon>more_vert</mat-icon>
 			</button>
 			<mat-menu #menu="matMenu">
+				<a mat-menu-item
+				   (click)="cancelEdit.emit(true)"
+				   matTooltip="{{'backToList' | translate}}">
+					<span class="kt-hidden-mobile">{{'category.backToList' | translate}}</span>
+				</a>
+				<a mat-menu-item
+				   (click)="reset()"
+				   [disabled]="category === oldCategory"
+				   matTooltip="{{'resetDescription' | translate}}">
+					<i class="la la-cog"></i>
+					<span class="kt-hidden-mobile">{{'reset' | translate}}</span>
+				</a>
+				<a mat-menu-item
+				   (click)="onSubmit(false)"
+				   matTooltip="{{'saveDescription' | translate}}">
+					<span class="kt-hidden-mobile">{{'save' | translate}}</span>
+				</a>
+
+				<!--
 				<a mat-menu-item
 				   matTooltip="{{'saveToListDescription' | translate}}"
 				   (click)="onSubmit(true)">
@@ -38,14 +38,13 @@
 				   matTooltip="{{ 'category.edit.goToList' | translate}}"
 				   (click)="goBackToList()">
 					{{ 'category.edit.goToList' | translate}}
-				</a>
+				</a>-->
 			</mat-menu>
 		</ng-container>
 	</kt-portlet-header>
 
 	<kt-portlet-body>
-		<mat-tab-group *ngIf="category"
-					   [(selectedIndex)]="selectedTab">
+		<mat-tab-group [(selectedIndex)]="selectedTab">
 			<mat-tab>
 				<ng-template mat-tab-label>
 					<i class="mat-tab-label-icon fa fa-info"></i>
@@ -66,10 +65,9 @@
 
 							<div class="kt-form__section kt-form__section--first">
 								<div class="form-group kt-form__group row">
-
-									<div class="col-lg-12 kt-margin-bottom-20-mobile">
+									<div class="col-lg-6 kt-margin-bottom-20-mobile">
 										<mat-form-field class="mat-form-field-fluid">
-											<input id="title" matInput
+											<input id="title" matInput #categoryTitle
 												   minlength="{{titleParams.minLength}}"
 												   maxlength="{{titleParams.maxLength}}"
 												   placeholder="{{'category.edit.inputs.title' | translate}}"
@@ -81,32 +79,30 @@
 												{{'category.edit.hints.title' | translate}}
 											</mat-hint>
 											<mat-hint align="end">
-												{{form.get('title').value.length || 0}}/{{titleMaxLength}}
+												{{form.get('title').value?.length || 0}}/{{titleMaxLength}}
 											</mat-hint>
 										</mat-form-field>
 									</div>
 
-									<!--<div class="col-lg-4 kt-margin-bottom-20-mobile">
+									<div class="col-lg-6 kt-margin-bottom-20-mobile" *ngIf="allCategories$ | async as allCategories">
 										<mat-form-field class="mat-form-field-fluid">
 											<mat-select
-												placeholder="{{'category.edit.inputs.categoryType' | translate}}"
-												formControlName="assignedCategoryType">
-												<mat-option *ngFor="let categoryType of categoryTypes | orderBy: 'link'"
-															[value]="categoryType">
-													{{ 'general.menu.' + categoryType.link + '.main' | translate}}
-													{{categoryType | json}}
+												placeholder="{{'category.edit.inputs.parentCategory' | translate}}"
+												formControlName="parentCategoryId">
+												<mat-option *ngFor="let category of allCategories | orderBy: 'title'"
+															[value]="category.id">
+													{{ category.title }}
 												</mat-option>
 											</mat-select>
-											<mat-error *ngIf="form.get('assignedCategoryType').errors">
-												{{'category.edit.errors.noAssignedCategoryType' | translate}}
-											</mat-error>
 											<mat-hint align="start">
-												{{'category.edit.hints.assignedCategoryType' | translate }}
+												{{'category.edit.hints.parentCategory' | translate }}
 											</mat-hint>
 										</mat-form-field>
-									</div>-->
+									</div>
+								</div>
 
-									<div class="col-lg-12 mt-5 kt-margin-bottom-20-mobile">
+								<div class="form-group kt-form__group row my-5">
+									<div class="col-lg-6 kt-margin-bottom-20-mobile">
 										<label>{{'category.edit.hints.mainCategory' | translate }}</label>
 										<div class="mat-form-field-fluid">
 											<mat-checkbox formControlName="isMainCategory">
@@ -114,20 +110,8 @@
 											</mat-checkbox>
 										</div>
 									</div>
-								</div>
 
-								<div class="form-group kt-form__group row">
-
-									<div class="col-lg-12 kt-margin-bottom-20-mobile">
-										<label>{{'category.edit.hints.description' | translate }}</label>
-										<div class="mat-form-field-fluid">
-											<textarea formControlName="description" class="mat-form-field-flex">
-												{{'category.edit.description' | translate }}
-											</textarea>
-										</div>
-									</div>
-
-									<div class="col-lg-12 mt-5 kt-margin-bottom-20-mobile">
+									<div class="col-lg-6 kt-margin-bottom-20-mobile">
 										<label>{{'category.edit.hints.isImported' | translate }}</label>
 										<div class="mat-form-field-fluid">
 											<mat-checkbox formControlName="isImported">
@@ -138,6 +122,18 @@
 								</div>
 
 							</div>
+
+							<div class="form-group kt-form__group row">
+								<div class="col-lg-12 kt-margin-bottom-20-mobile">
+									<label>{{'category.edit.hints.description' | translate }}</label>
+									<div class="mat-form-field-fluid">
+											<textarea formControlName="description" class="mat-form-field-flex">
+												{{'category.edit.description' | translate }}
+											</textarea>
+									</div>
+								</div>
+							</div>
+
 						</form>
 					</div>
 				</ng-template>

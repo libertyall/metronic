@@ -1,62 +1,86 @@
-import {Injectable} from '@angular/core';
 import {
-	EntityActionOptions,
-	EntityCollectionServiceBase,
-	EntityCollectionServiceElementsFactory,
-	Logger,
+	EntityActionOptions, EntityCollectionServiceBase, EntityCollectionServiceElementsFactory, EntityOp, Logger,
 	QueryParams
 } from '@ngrx/data';
-import {Category} from "../_model/category.model";
-import {Observable} from "rxjs";
-import {AngularFirestore} from "@angular/fire/firestore";
-import {shareReplay, tap} from "rxjs/operators";
-import {AppSelectors} from '../../settings/_selectors/app.selectors';
-import OrderByDirection = firebase.firestore.OrderByDirection;
+import { Category } from '../_model/category.model';
+import { from, Observable, of, throwError } from 'rxjs';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { catchError, map, tap } from 'rxjs/operators';
+import { AppSelectors } from '../../settings/_selectors/app.selectors';
 import * as _ from 'lodash';
+import { UpdateNum } from '@ngrx/entity/src/models';
+import { Injectable } from '@angular/core';
+import OrderByDirection = firebase.firestore.OrderByDirection;
+import { select } from '@ngrx/store';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class CategoryService extends EntityCollectionServiceBase<Category> {
 
+	name: string;
 	private path = 'categories';
 
-	// filterObserver: FilterObserver;
 	constructor(serviceElementsFactory: EntityCollectionServiceElementsFactory,
 				private appSelectors: AppSelectors,
 				logger: Logger,
 				private afs: AngularFirestore) {
 		super('Category', serviceElementsFactory);
-		logger.log('Created custom Category EntityDataService');
-		/* this.filterObserver = {
-			filter$: this.filter$,
-			setFilter: this.setFilter.bind(this)
-		};*/
+		console.log(this.name);
 	}
 
-	getAllOnDataSourceChange = this.appSelectors.dataSource$.pipe(tap(_ => this.getAll()), shareReplay(1));
+	setLoading(isLoading: boolean): void {
+		this.loading$ = of(isLoading);
+	}
 
 	getAll(options?: EntityActionOptions): Observable<Category[]> {
-		return this.afs.collection<Category>(this.path).valueChanges();
+		return this.afs.collection<Category>(this.path).valueChanges().pipe(
+			tap(() => EntityOp.SET_LOADING), //  super.setLoading(false)),
+			map(categories => categories),
+			tap(() => EntityOp.SET_LOADED));
 	}
 
 	getWithQuery(queryParams: QueryParams | string, options?: EntityActionOptions): Observable<Category[]> {
-		const params = _.merge(queryParams,
-			{
-				direction: 'asc',
-				active: 'title',
-				pageIndex: 0,
-				pageSize: 10
-			});
+		const params = _.merge({
+			direction: 'desc',
+			active: 'parentCategoryId',
+			pageIndex: 0,
+			pageSize: 100
+		}, queryParams);
 		console.log(params);
 		return this.afs.collection<Category>(this.path, ref =>
 			ref.orderBy(params.direction, <OrderByDirection>params.direction)
-				.startAfter(params.pageIndex)
-				.limit(params.pageSize))
+				.startAfter(Number(params.pageIndex))
+				.limit(Number(params.pageSize)))
 			.valueChanges();
 		/*
-		.where('isStaticPage', '==', false)
-				.where('displayInFooter', '==', false)
-				.where('publicationStatus', '==', 1)
+		 .where('isStaticPage', '==', false)
+		 .where('displayInFooter', '==', false)
+		 .where('publicationStatus', '==', 1)
 		 */
+	}
+
+	getByKey(key: any, options?: EntityActionOptions): Observable<Category> {
+		return this.afs.collection<Category>(this.path).doc<Category>(key).valueChanges().pipe(catchError(e => throwError(e)));
+	}
+
+	add(entity: Category): Observable<Category> {
+		console.log('adding');
+		return of({
+			title: '123'
+		});
+	}
+
+	update(update: any | UpdateNum<Category>): Observable<Category> {
+		return of();
+	}
+
+	delete(entity: any, options?: EntityActionOptions): Observable<number | string> {
+		return from(this.afs.collection(this.path).doc(entity).delete()).pipe(
+			map(() => entity)
+		);
+	}
+
+	upsert(entity: Category): Observable<Category> {
+		return of();
 	}
 
 }

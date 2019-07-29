@@ -1,6 +1,6 @@
 import {EntityMetadataMap, PropsFilterFnFactory} from '@ngrx/data';
 
-const entityMetadata: EntityMetadataMap = {
+export const entityMetadata: EntityMetadataMap = {
 	Category: {
 		filterFn: titleFilter,
 		sortComparer: sortByTitle
