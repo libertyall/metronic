@@ -1,4 +1,4 @@
-let colors = require('colors/safe');
+let colors = require('colors');
 
 confPath = './../build.json';
 
