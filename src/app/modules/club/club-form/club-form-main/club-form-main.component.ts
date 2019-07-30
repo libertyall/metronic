@@ -16,6 +16,7 @@ export class ClubFormMainComponent implements OnInit {
 	titleMaxLength = 255;
 
 	members = [];
+	locations = [];
 	/* @Input() locations: ILocation[];
 	@Input() members: IMember[];
 

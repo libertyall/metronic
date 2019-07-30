@@ -34,7 +34,7 @@ export class ClubManagementFormComponent implements OnInit {
 	ngOnInit() {
 		this.route.parent.data.subscribe((data: { club: Club }) => this.club = data.club);
 
-		if(!this.managementPosition){
+		if (!this.managementPosition) {
 			this.managementPosition = new ClubManagement({
 				startDate: new Date()
 			});
@@ -55,22 +55,22 @@ export class ClubManagementFormComponent implements OnInit {
 		});
 	}
 
-	/* cancelForm() {
-	 this.form.reset();
-	 this.cancel.emit();
-	 }
+	cancelForm() {
+		// this.form.reset();
+		// this.cancel.emit();
+	}
 
-	 save() {
-	 if (this.club && this.club.positions) {
-	 this.club.positions.push(this.form.value);
-	 } else {
-	 this.club.positions = [this.form.value];
-	 }
-	 this.saveClub.emit(this.club);
-	 this.cancel.emit();
-	 }
+	save() {
+		/* if (this.club && this.club.positions) {
+		 this.club.positions.push(this.form.value);
+		 } else {
+		 this.club.positions = [this.form.value];
+		 }
+		 this.saveClub.emit(this.club);
+		 this.cancel.emit(); */
+	}
 
-	 /* initClubManagementPositions(): FormArray {
+	/* initClubManagementPositions(): FormArray {
 	 const formArray = [];
 	 if (this.club.management && this.club.management.positions) {
 	 for (let i = 0; i < this.club.management.positions.length; i++) {
