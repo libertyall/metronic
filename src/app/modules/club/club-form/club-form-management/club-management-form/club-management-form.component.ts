@@ -1,6 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Club } from '../../../_model/club.model';
+import { ClubManagement } from '../../../_model/club-management.class';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -9,15 +11,20 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ClubManagementFormComponent implements OnInit {
 
+	club: Club;
+	form: FormGroup;
+
+	members: [];
+	positions: [];
+	managementPosition: ClubManagement;
+
 	/* @Input() club: IClub;
-	@Input() positions: ICategory[];
-	@Input() members: IMember[];
-	@Input() selectedPosition: IClubManagement;
+	 @Input() positions: ICategory[];
+	 @Input() members: IMember[];
+	 @Input() selectedPosition: IClubManagement;
 
-	@Output() saveClub: EventEmitter<IClub> = new EventEmitter<IClub>(false);
-	@Output() cancel: EventEmitter<void> = new EventEmitter<void>(false);
-
-	public form: FormGroup; */
+	 @Output() saveClub: EventEmitter<IClub> = new EventEmitter<IClub>(false);
+	 @Output() cancel: EventEmitter<void> = new EventEmitter<void>(false); */
 
 	constructor(private route: ActivatedRoute,
 				private fb: FormBuilder) {
@@ -25,38 +32,45 @@ export class ClubManagementFormComponent implements OnInit {
 
 
 	ngOnInit() {
-		/* this.route.data.subscribe((data: { club: IClub }) => {
-			this.club = data.club;
-		});
+		this.route.parent.data.subscribe((data: { club: Club }) => this.club = data.club);
 
-		if (this.selectedPosition) {
-			console.log(this.selectedPosition.startDate);
+		if(!this.managementPosition){
+			this.managementPosition = new ClubManagement({
+				startDate: new Date()
+			});
 		}
 
+		this.initForm(this.managementPosition);
+		/*if (this.selectedPosition) {
+		 console.log(this.selectedPosition.startDate);
+		 } */
+	}
+
+	initForm(managementPosition: ClubManagement): void {
 		this.form = this.fb.group({
-			assignedMember: [this.selectedPosition ? this.selectedPosition.assignedMember : '', [Validators.required]],
-			assignedPosition: [this.selectedPosition ? this.selectedPosition.assignedPosition : '', [Validators.required]],
-			startDate: [this.selectedPosition ? new Date(this.selectedPosition.startDate.seconds * 1000) : new Date(), [Validators.required]],
-			endDate: [this.selectedPosition ? this.selectedPosition.endDate : '']
-		}); */
+			assignedMember: [managementPosition.assignedMember, [Validators.required]],
+			assignedPosition: [managementPosition.assignedPosition, [Validators.required]],
+			startDate: [managementPosition.startDate.seconds * 1000, [Validators.required]],
+			endDate: [managementPosition.endDate]
+		});
 	}
 
 	/* cancelForm() {
-		this.form.reset();
-		this.cancel.emit();
-	}
+	 this.form.reset();
+	 this.cancel.emit();
+	 }
 
-	save() {
-		if (this.club && this.club.positions) {
-			this.club.positions.push(this.form.value);
-		} else {
-			this.club.positions = [this.form.value];
-		}
-		this.saveClub.emit(this.club);
-		this.cancel.emit();
-	}
+	 save() {
+	 if (this.club && this.club.positions) {
+	 this.club.positions.push(this.form.value);
+	 } else {
+	 this.club.positions = [this.form.value];
+	 }
+	 this.saveClub.emit(this.club);
+	 this.cancel.emit();
+	 }
 
-	/* initClubManagementPositions(): FormArray {
+	 /* initClubManagementPositions(): FormArray {
 	 const formArray = [];
 	 if (this.club.management && this.club.management.positions) {
 	 for (let i = 0; i < this.club.management.positions.length; i++) {

@@ -1,5 +1,6 @@
 import {BaseModel} from "../../../core/_base/crud";
 import {ClubHonorary} from "./club-honorary.class";
+import { ClubManagement } from './club-management.class';
 
 export class Club extends BaseModel {
 
@@ -26,6 +27,5 @@ export class Club extends BaseModel {
 	honoraries?: ClubHonorary[];
 
 	photoDescription?: string;
-	// positions?: IClubManagement[];
-	// managementTimeLine?: ITimeLineEvent[];
+	positions?: ClubManagement[];
 }
