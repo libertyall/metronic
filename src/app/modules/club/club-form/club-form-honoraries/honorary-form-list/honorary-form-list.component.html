@@ -6,7 +6,8 @@
 			{{'clubs.detail.honoraries.noHonoraries' | translate}}
 		</div>
 
-		<club-honorary-table [articles]="articles"
+		<club-honorary-table *ngIf="club.honoraries.length > 0"
+							 [articles]="articles"
 							 [members]="members | orderBy: ['mainData.firstName', 'mainData.lastName', 'mainData.birthday']">
 		</club-honorary-table>
 

@@ -24,6 +24,11 @@ import {ClubFormHonorariesComponent} from "./club-form/club-form-honoraries/club
 import { HonoraryFormListComponent } from './club-form/club-form-honoraries/honorary-form-list/honorary-form-list.component';
 import {HonoraryFormComponent} from "./club-form/club-form-honoraries/honorary-form/honorary-form.component";
 import {ClubHonoraryTableComponent} from "./club-form/club-form-honoraries/club-honorary-table/club-honorary-table.component";
+import { ClubFormTimelineComponent } from './club-form/club-form-timeline/club-form-timeline.component';
+import { ClubFormManagementComponent } from './club-form/club-form-management/club-form-management.component';
+import { ClubManagementFormComponent } from './club-form/club-form-management/club-management-form/club-management-form.component';
+import { ClubManagementListComponent } from './club-form/club-form-management/club-management-list/club-management-list.component';
+import { ClubManagementPhotoComponent } from './club-form/club-management-photo/club-management-photo.component';
 
 @NgModule({
 	declarations: [
@@ -31,7 +36,12 @@ import {ClubHonoraryTableComponent} from "./club-form/club-form-honoraries/club-
 		ClubFormHistoryComponent,
 		ClubFormHonorariesComponent,
 		ClubFormMainComponent,
+		ClubFormTimelineComponent,
 		ClubHonoraryTableComponent,
+		ClubFormManagementComponent,
+		ClubManagementFormComponent,
+		ClubManagementListComponent,
+		ClubManagementPhotoComponent,
 		ClubsComponent,
 		HonoraryFormListComponent,
 		HonoraryFormComponent
