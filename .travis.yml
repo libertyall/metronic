@@ -18,9 +18,10 @@ addons:
 
 install:
   - npm install
+  - gulp
 
 script:
-  - npm build --prod
+  - ng build --prod
 
 notifications:
   email:
