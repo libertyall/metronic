@@ -1,0 +1,98 @@
+<div class="row" [formGroup]="form">
+	<div class="col-lg-6">
+		<kt-portlet>
+			<kt-portlet-header
+				[title]="'clubs.detail.mainTitle' | translate"></kt-portlet-header>
+			<kt-portlet-body>
+				<mat-form-field class="mat-form-field-fluid"
+								hintLabel="Max {{titleMaxLength}} characters">
+					<input matInput maxlength="{{titleMaxLength}}"
+						   placeholder="{{'clubs.edit.placeholder.title' | translate}}"
+						   formControlName="title">
+					<mat-hint align="end">{{form.get('title').value.length || 0}}
+						/{{titleMaxLength}}</mat-hint>
+				</mat-form-field>
+
+				<mat-form-field class="mat-form-field-fluid my-3">
+					<mat-select
+						placeholder="{{'clubs.edit.placeholder.assignedLocations' | translate}}"
+						formControlName="assignedLocations" multiple>
+						<mat-option *ngFor="let location of locations | orderBy: ['title']"
+									[value]="{ id: location.id, title: location.title}"
+									size="3">
+							{{location.title}}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+
+				<mat-form-field class="mat-form-field-fluid my-3">
+					<input matInput
+						   placeholder="{{'clubs.edit.placeholder.foundedIn' | translate}}"
+						   formControlName="founding">
+				</mat-form-field>
+
+				<mat-form-field class="mat-form-field-fluid my-3">
+					<input matInput
+						   placeholder="{{'clubs.edit.placeholder.clubColours' | translate}}"
+						   formControlName="clubColours">
+				</mat-form-field>
+
+				<mat-form-field class="mat-form-field-fluid my-3">
+					<input matInput
+						   placeholder="{{'clubs.edit.placeholder.homepage' | translate}}"
+						   formControlName="homepage">
+					<mat-hint align="end"><!-- *ngIf="isUrl(form.get('homepage').value)" -->
+						<a target="_blank" [href]="'http://' + form.get('homepage').value">
+							{{'clubs.edit.visitHomepage' | translate}}
+						</a>
+					</mat-hint>
+				</mat-form-field>
+
+				<mat-form-field class="mat-form-field-fluid my-3">
+					<input matInput
+						   placeholder="{{'clubs.edit.placeholder.fussballDeClubId' | translate}}"
+						   formControlName="fussballDeClubId"/>
+				</mat-form-field>
+
+				<mat-form-field class="mat-form-field-fluid my-3">
+					<input matInput
+						   placeholder="{{'clubs.edit.placeholder.fussballDeClubUrl' | translate}}"
+						   formControlName="fussballDeClubUrl"/>
+				</mat-form-field>
+
+				<mat-form-field class="mat-form-field-fluid my-3">
+					<mat-select placeholder="{{'clubs.edit.placeholder.assignedContact' | translate}}"
+								formControlName="assignedContact">
+						<mat-option
+							*ngFor="let member of members | orderBy: ['mainData.lastName', 'mainData.firstName', 'mainData.birthday.full']"
+							[value]="member.id">
+							{{member.mainData.lastName}} {{member.mainData.firstName}} {{ member.mainData.birthday.full |
+                            date: 'dd.MM.yy'}}
+						</mat-option>
+					</mat-select>
+					<mat-hint align="end">{{'clubs.hints.assignedContact' | translate}}</mat-hint>
+				</mat-form-field>
+			</kt-portlet-body>
+		</kt-portlet>
+	</div>
+	<div class="col-lg-6">
+		<kt-portlet>
+			<kt-portlet-header [title]="'clubs.detail.logoTitle' | translate"></kt-portlet-header>
+			<kt-portlet-body>
+				<!-- <media-uploader [uploaderConfig]="uploaderConfig"
+						[uploaderOptions]="uploaderOptions"></media-uploader> -->
+			</kt-portlet-body>
+		</kt-portlet>
+
+		<kt-portlet>
+			<kt-portlet-header [title]="'clubs.detail.description' | translate"></kt-portlet-header>
+			<kt-portlet-body>
+				<textarea formControlName="description"></textarea>
+			</kt-portlet-body>
+		</kt-portlet>
+	</div>
+</div>
+
+
+<!--<creation-form [form]="form.get('creation')"></creation-form>-->
+

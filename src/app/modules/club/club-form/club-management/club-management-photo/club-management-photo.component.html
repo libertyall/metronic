@@ -1,0 +1,18 @@
+<div fxLayout="column"
+     [formGroup]="form">
+
+  <div fxFlex="100">
+    <media-uploader [uploaderConfig]="uploaderConfig"
+                    [uploaderOptions]="uploaderOptions">
+    </media-uploader>
+  </div>
+
+  <div fxFlex="100"
+       style="margin-top: 50px;">
+    <label>{{'general.clubs.edit.management.current.description' | translate}}</label>
+    <div [froalaEditor]="froalaOptions"
+         formControlName="photoDescription">
+    </div>
+  </div>
+
+</div>

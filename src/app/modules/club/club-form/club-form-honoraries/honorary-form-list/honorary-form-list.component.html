@@ -1,0 +1,14 @@
+<kt-portlet>
+	<kt-portlet-header [title]="'clubs.detail.honoraries.title' | translate"></kt-portlet-header>
+	<kt-portlet-body>
+
+		<div class="alert alert-info" *ngIf="club.honoraries.length === 0">
+			{{'clubs.detail.honoraries.noHonoraries' | translate}}
+		</div>
+
+		<club-honorary-table [articles]="articles"
+							 [members]="members | orderBy: ['mainData.firstName', 'mainData.lastName', 'mainData.birthday']">
+		</club-honorary-table>
+
+	</kt-portlet-body>
+</kt-portlet>

@@ -30,7 +30,7 @@ export class MenuConfig {
 							},
 							{
 								'title': 'Team Manager',
-								'icon': 'flaticon-business',
+								'icon': 'fa fa-pen',
 								'submenu': {
 									'type': 'classic',
 									'alignment': 'right',
@@ -348,7 +348,7 @@ export class MenuConfig {
 				{
 					title: 'Dashboard',
 					root: true,
-					icon: 'flaticon2-architecture-and-city',
+					icon: 'fa fa-home',
 					page: '/dashboard',
 					translate: 'MENU.DASHBOARD',
 					bullet: 'dot'
@@ -358,13 +358,13 @@ export class MenuConfig {
 					root: true,
 					page: '/calendar',
 					translate: 'MENU.CALENDAR',
-					icon: 'flaticon-event-calendar-symbol'
+					icon: 'fa fa-calendar-alt'
 				},
 				{ section: 'Content', translate: 'MENU.CONTENT' },
 				{
 					title: 'Media-Upload',
 					root: true,
-					icon: 'flaticon-multimedia-3',
+					icon: 'fa fa-file-upload',
 					translate: 'MENU.UPLOAD.MAIN',
 					bullet: 'dot',
 					submenu: [
@@ -394,7 +394,7 @@ export class MenuConfig {
 				{
 					title: 'Articles',
 					root: true,
-					icon: 'flaticon2-open-text-book',
+					icon: 'fa fa-file-signature',
 					bullet: 'dot',
 					translate: 'MENU.ARTICLE.MAIN',
 					submenu: [
@@ -418,7 +418,7 @@ export class MenuConfig {
 				{
 					title: 'Matches',
 					root: true,
-					icon: 'flaticon2-calendar-4',
+					icon: 'fa fa-baseball-ball',
 					bullet: 'dot',
 					translate: 'MENU.MATCH.MAIN',
 					submenu: [
@@ -447,7 +447,7 @@ export class MenuConfig {
 				{
 					title: 'Newsletter',
 					root: true,
-					icon: 'flaticon2-new-email',
+					icon: 'fa fa-mail-bulk',
 					bullet: 'dot',
 					translate: 'MENU.NEWSLETTER.MAIN',
 					submenu: [
@@ -478,13 +478,13 @@ export class MenuConfig {
 					title: 'Club',
 					root: true,
 					page: '/clubs',
-					icon: 'flaticon-location',
+					icon: 'fa fa-school',
 				 	translate: 'MENU.CLUB.MAIN'
 				},
 				{
 					title: 'Members',
 					root: true,
-					icon: 'flaticon-user',
+					icon: 'fa fa-user-friends',
 					translate: 'MENU.MEMBER.MAIN',
 					submenu: [
 						{
@@ -512,7 +512,7 @@ export class MenuConfig {
 				{
 					title: 'Teams',
 					root: true,
-					icon: 'flaticon-users',
+					icon: 'fa fa-users',
 				 	translate: 'MENU.TEAM.MAIN',
 					submenu: [
 						{
@@ -540,7 +540,7 @@ export class MenuConfig {
 				{
 					title: 'Locations',
 					root: true,
-					icon: 'flaticon-map-location',
+					icon: 'fa fa-map-signs',
 					translate: 'MENU.LOCATION.MAIN',
 					submenu: [
 						{
@@ -569,14 +569,14 @@ export class MenuConfig {
 					title: 'Sponsors',
 					root: true,
 					page: '/sponsors',
-					icon: 'flaticon2-gift-1',
+					icon: 'fa fa-euro-sign',
 					translate: 'MENU.SPONSOR.MAIN'
 				},
 				{
 					title: 'Categories',
 					root: true,
 					page: '/categories',
-					icon: 'flaticon-layers',
+					icon: 'fa fa-folder',
 					translate: 'MENU.CATEGORY.MAIN'
 				},
 				{ section: 'Settings', translate: 'MENU.SETTINGS.SECTION' },
@@ -584,28 +584,28 @@ export class MenuConfig {
 					title: 'Settings',
 					root: true,
 					page: '/settings',
-					icon: 'flaticon2-console',
+					icon: 'fa  fa-wrench',
 					translate: 'MENU.SETTINGS.SETTINGS'
 				},
 				{
 					title: 'Analytics',
 					root: true,
 					page: '/analytics',
-					icon: 'flaticon-analytics',
+					icon: 'fa  fa-chart-area ',
 					translate: 'MENU.SETTINGS.ANALYTICS'
 				},
 				{
 					title: 'CronJobs',
 					root: true,
 					page: '/cronjobs',
-					icon: ' flaticon2-time',
+					icon: 'fa  fa-clock ',
 					translate: 'MENU.SETTINGS.CRONJOBS'
 				},
 				{
 					title: 'Users',
 					root: true,
 					translate: 'MENU.SETTINGS.USER',
-					icon: 'flaticon-users',
+					icon: 'fa fa-users-cog',
 					bullet: 'dot',
 					// permission: 'accessToUserManagementModule',
 					submenu: [

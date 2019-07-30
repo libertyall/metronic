@@ -204,6 +204,46 @@ export const locale = {
 				title: 'Alle Kategorien'
 			}
 		},
+		clubs: {
+			detail: {
+				createHonoraryTitle: 'Ehrenmitglied erstellen',
+				description: 'Beschreibung des Vereins',
+				historyTitle: 'Geschichte des Vereins',
+				honorariesTitle: 'Ehrenmitglieder',
+				honoraries: {
+					assignedArticle: 'Verknüpfter Artikel',
+					assignedMember: 'Mitglied',
+					noHonoraries: 'Es wurden noch keine Ehrenmitglieder ernannt',
+					startDate: 'Ernennung am',
+					title: 'Ehrenmitglieder des Vereins',
+				},
+				logoTitle: 'Vereinswappen',
+				mainTitle: 'Wichtigste Daten',
+				managementTitle: 'Vorstand',
+				mediaTitle: 'Verknüpfte Medien',
+				timeLineTitle: 'Zeitleiste'
+			},
+			edit: {
+				placeholder: {
+					assignedArticle: 'Bericht zur Ernennung',
+					assignedContact: 'Ansprechpartner',
+					assignedLocations: 'Heimspielstätten',
+					assignedMember: 'Mitglied',
+					clubColours: 'Vereinsfarben',
+					foundedIn: 'Gründungsjahr',
+					fussballDeClubId: 'Fussball.de Vereins-ID',
+					fussballDeClubUrl: 'Fussball.de Vereins-Url',
+					homepage: 'Internetseite des Vereins',
+					startDate: 'Ernennungsdatum',
+					title: 'Vereinsname'
+				},
+				title: 'Verein editieren',
+				visitHomepage: 'Homepage aufrufen'
+			},
+			hints: {
+				assignedContact: 'Wähle hier den ersten Ansprechpartner des Vereins'
+			}
+		},
 		comments: 'Kommentare',
 		contact: {
 			email: 'E-Mail',
@@ -256,6 +296,38 @@ export const locale = {
 			title: 'Administration'
 		},
 		ITEMS_PER_PAGE_LABEL: 'Einträge pro Seite',
+		locations: {
+			create: {
+				title: 'Neuen Treffpunkt erstellen'
+			},
+			detail: {
+				assignedArticles: 'Verknüpfte Artikel',
+				assignedGalleries: 'Fotogalerien',
+				assignedItems: 'Verknüpfte Objekte',
+				description: 'Freier Beschreibungstext',
+				files: 'Verknüpfte Dateien',
+				imageUrl: 'Foto des Treffpunktes',
+				mainTitle: 'Wichtigste Informationen',
+				mediaTitle: 'Media-Dateien',
+				opening: 'Öffnungszeiten'
+			},
+			edit: {
+				placeholder: {
+					assignedCategory: 'Verknüpfte Kategorie',
+					fupaLink: 'Link zu fupa.net',
+					isImported: 'Automatisch importiert?',
+					title: 'Name des Treffpunktes'
+				},
+				title: 'Treffpunkt editieren'
+			},
+			list: {
+				button: 'Zur Treffpunkt-Übersicht'
+			},
+			resetForm: 'Formular zurücksetzen',
+			save: {
+				button: 'Treffpunkt speichern'
+			}
+		},
 		LAST_PAGE_LABEL: 'Zur letzten Seite',
 		MENU: {
 			ARTICLE: {

@@ -19,3 +19,11 @@
 .position-static {
 	position: static;
 }
+
+ul.nav.md-tabs {
+	li.nav-item {
+		margin-left: 0 !important;
+		// margin-right: auto !important;
+		text-align: left !important;
+	}
+}

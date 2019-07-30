@@ -1,0 +1,40 @@
+<kt-portlet [formGroup]="form">
+	<kt-portlet-header
+		[title]="'clubs.detail.createHonoraryTitle' | translate"></kt-portlet-header>
+	<kt-portlet-body>
+		<mat-form-field class="mat-form-field-fluid my-3">
+			<mat-select
+				placeholder="{{'clubs.edit.placeholder.assignedMember' | translate}}"
+				formControlName="assignedMember" multiple>
+				<mat-option *ngFor="let member of members"
+							[value]="{id: member.id, firstName: member.mainData.firstName, lastName: member.mainData.lastName}" size="3">
+					{{member.mainData.lastName}} {{member.mainData.firstName}}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+
+		<mat-form-field class="mat-form-field-fluid my-3">
+			<mat-select
+				placeholder="{{'clubs.edit.placeholder.assignedArticle' | translate}}"
+				formControlName="assignedArticle" multiple>
+				<mat-option *ngFor="let article of articles | orderBy: ['title']"
+							[value]="{id: article.id, title: article.title}" size="3">
+					{{article.title}}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+
+		<mat-form-field class="mat-form-field-fluid">
+			<input matInput
+				   formControlName="startDate"
+				   [matDatepicker]="startPicker"
+				   placeholder="{{'clubs.edit.placeholder.startDate' | translate}}">
+			<mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+			<mat-datepicker disabled="false"
+							touchUi="true"
+                            #startPicker>
+			</mat-datepicker>
+		</mat-form-field>
+
+	</kt-portlet-body>
+</kt-portlet>

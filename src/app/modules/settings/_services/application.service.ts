@@ -57,7 +57,7 @@ export class ApplicationService {
 		}
 	}
 
-	createApplication(application: Application):  Observable<Application> {
+	createApplication(application: Application): Observable<Application> {
 		application.id = this.afs.createId();
 		return from(this.afs.collection(this.path).doc(application.id).set(application).then(() => application)).pipe(catchError(e => throwError(e)));
 	}

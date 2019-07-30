@@ -1,15 +1,14 @@
-import { RouterModule, Routes } from '@angular/router';
-import { ModuleWithProviders } from '@angular/core';
-import { LocationsComponent } from './locations/locations.component';
-import { LocationResolver } from './location.resolver';
-import { LocationStatisticsComponent } from './location-statistics/location-statistics.component';
-import { LocationMapComponent } from './location-map/location-map.component';
-import { LocationDetailComponent } from './location-detail/location-detail.component';
-import { LocationFormComponent } from './location-form/location-form.component';
-import { LocationListComponent } from './location-list/location-list.component';
-import { CategoriesResolver } from '../category/categories.resolver';
-import { LocationDashboardComponent } from './location-dashboard/location-dashboard.component';
-import { LocationsResolver } from './locations.resolver';
+import {RouterModule, Routes} from '@angular/router';
+import {ModuleWithProviders} from '@angular/core';
+import {LocationsComponent} from './locations/locations.component';
+import {LocationResolver} from './location.resolver';
+import {LocationMapComponent} from './location-map/location-map.component';
+import {LocationDetailComponent} from './location-detail/location-detail.component';
+import {LocationFormComponent} from './location-form/location-form.component';
+import {LocationListComponent} from './location-list/location-list.component';
+import {CategoriesResolver} from '../category/categories.resolver';
+import {LocationDashboardComponent} from './location-dashboard/location-dashboard.component';
+import {LocationsResolver} from './locations.resolver';
 
 export const routes: Routes = [
 	{
@@ -30,24 +29,28 @@ export const routes: Routes = [
 			},
 			{
 				path: 'edit/::locationId',
-				component: LocationFormComponent
+				component: LocationFormComponent,
+				resolve: {
+					location: LocationResolver
+				}
 			},
 			{
 				path: 'create',
-				component: LocationFormComponent
+				component: LocationFormComponent,
+				resolve: {
+					location: LocationResolver
+				}
 			},
 			{
 				path: 'detail/:locationId',
-				component: LocationDetailComponent
+				component: LocationDetailComponent,
+				resolve: {
+					location: LocationResolver
+				}
 			},
 			{
 				path: 'map',
 				component: LocationMapComponent
-			},
-			{
-				path: 'statistics',
-				component: LocationStatisticsComponent,
-				resolve: {}
 			},
 			{
 				path: '**',

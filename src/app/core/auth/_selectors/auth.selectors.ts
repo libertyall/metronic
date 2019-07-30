@@ -31,10 +31,7 @@ export const isLoading = createSelector(
 
 export const currentUser = createSelector(
 	selectAuthState,
-	auth => {
-		console.log(auth);
-		return auth.user;
-	}
+	auth => auth.user
 );
 
 export const currentUserRoleIds = createSelector(

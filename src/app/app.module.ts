@@ -29,16 +29,8 @@ import { AppStoreModule } from './store/app-store.module';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './core/auth/_effects/auth.effects';
 import { AngularFireAuthGuardModule } from '@angular/fire/auth-guard';
-
-/* export function storageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
- return storageSync<AppState>({
- features: [
- // { stateKey: 'router', storageForFeature: window.sessionStorage },
- { stateKey: 'auth' }
- ],
- storage: window.localStorage
- })(reducer);
- } */
+import {MDBBootstrapModulePro} from "ng-uikit-pro-standard";
+import {SettingsEffects} from "./modules/settings/_effects/settings.effects";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	wheelSpeed: 0.5,
@@ -53,15 +45,6 @@ export function initializeConfig(layoutConfigService: LayoutConfigService, appli
 	};
 }
 
-export function hljsLanguages(): HighlightLanguage[] {
-	return [
-		{ name: 'typescript', func: typescript },
-		{ name: 'scss', func: scss },
-		{ name: 'xml', func: xml },
-		{ name: 'json', func: json }
-	];
-}
-
 @NgModule({
 	declarations: [AppComponent],
 	imports: [
@@ -73,11 +56,11 @@ export function hljsLanguages(): HighlightLanguage[] {
 		NgxPermissionsModule.forRoot(),
 		MatSnackBarModule,
 		MatDialogModule,
+		MDBBootstrapModulePro.forRoot(),
 		PartialsModule,
 		// CoreModule,
 		// OverlayModule,
 		AuthModule.forRoot(),
-		EffectsModule.forRoot([AuthEffects]),
 		AngularFireModule.initializeApp(environment.firebaseConfig),
 		AngularFirestoreModule.enablePersistence(),
 		AngularFireAuthModule,

@@ -1,0 +1,203 @@
+<kt-portlet>
+	<kt-portlet-header [icon]="'fa fa-pen'"
+					   [title]="club.id ? ('clubs.edit.title' | translate) : ('clubs.create.title' | translate)">
+		<ng-container ktPortletTools>
+			<button type="button" class="btn btn-success mr-1"
+					(click)="createClub()">
+				<span class="fa fa-save"
+					  aria-hidden="true"> {{ club.id ? ('clubs.edit.button' | translate) : ('clubs.save.button' | translate) }}</span>
+			</button>
+			<div ngbDropdown>
+				<button class="btn btn-outline-secondary" id="dropdownConfig"
+						ngbDropdownToggle>{{'actions' | translate}}</button>
+				<div ngbDropdownMenu aria-labelledby="dropdownConfig">
+					<button class="dropdown-item"
+							[routerLink]="['/clubs']">{{'clubs.list.button' | translate }}</button>
+					<button *ngIf="club.id" class="dropdown-item"
+							(click)="removeClub(club, true)">{{'clubs.delete.button' | translate}}</button>
+					<button class="dropdown-item" (click)="resetForm()">{{'clubs.resetForm' | translate}}</button>
+				</div>
+			</div>
+		</ng-container>
+	</kt-portlet-header>
+
+	<kt-portlet-body [formGroup]="form">
+		<div class="row">
+
+			<div class="col-lg-12">
+				<mdb-tabset #staticTabs [vertical]="true" [buttonClass]="'md-tabs tabs-2 tabs-primary'">
+
+					<mdb-tab heading="{{'clubs.detail.mainTitle' | translate }}">
+						<club-form-main></club-form-main>
+					</mdb-tab>
+
+					<mdb-tab heading="{{'clubs.detail.historyTitle' | translate }}">
+						<club-form-history></club-form-history>
+					</mdb-tab>
+
+					<mdb-tab heading="{{'clubs.detail.honorariesTitle' | translate }}">
+						<club-form-honoraries></club-form-honoraries>
+					</mdb-tab>
+
+					<mdb-tab heading="{{'clubs.detail.managementTitle' | translate }}"><!-- (select)="onSelectAssignedItemsTab($event)"-->
+						Management
+					</mdb-tab>
+
+					<mdb-tab heading="{{'clubs.detail.timeLineTitle' | translate }}"><!-- (select)="onSelectAssignedItemsTab($event)"-->
+						TimeLine
+					</mdb-tab>
+
+					<mdb-tab heading="{{'clubs.detail.mediaTitle' | translate }}">
+						<div class="row">
+							<div class="col-lg-8">
+								<kt-portlet>
+									<kt-portlet-header [title]="'clubs.detail.imageUrl' | translate"></kt-portlet-header>
+									<kt-portlet-body>
+										<!--<media-uploader (uploadCompleted)="uploadCompleted($event)"
+														[uploaderConfig]="uploaderConfig"
+														[uploaderOptions]="uploaderOptions">
+										</media-uploader>-->
+									</kt-portlet-body>
+								</kt-portlet>
+							</div>
+							<div class="col-lg-4">
+								<kt-portlet>
+									<kt-portlet-header
+										[title]="'clubs.detail.files' | translate"></kt-portlet-header>
+									<kt-portlet-body>ToDo</kt-portlet-body>
+								</kt-portlet>
+							</div>
+						</div>
+					</mdb-tab>
+
+				</mdb-tabset>
+			</div>
+		</div>
+	</kt-portlet-body>
+
+	<kt-portlet-footer>
+		<div class="row">
+			<div class="col-lg-12 text-right py-3 px-5">
+				<div class="btn-group" role="group">
+					<button type="button" class="btn btn-success mr-1"
+							(click)="createClub()">
+				<span class="fa fa-save"
+					  aria-hidden="true"> {{ club.id ? ('clubs.edit.button' | translate) : ('clubs.save.button' | translate) }}</span>
+					</button>
+					<div ngbDropdown>
+						<button class="btn btn-outline-secondary" id="dropdownConfig2"
+								ngbDropdownToggle>{{'actions' | translate}}</button>
+						<div ngbDropdownMenu aria-labelledby="dropdownConfig">
+							<button class="dropdown-item"
+									[routerLink]="['/clubs']">{{'clubs.list.button' | translate }}</button>
+							<button *ngIf="club.id" class="dropdown-item"
+									(click)="removeClub(club, true)">{{'clubs.delete.button' | translate}}</button>
+							<button class="dropdown-item"
+									(click)="resetForm()">{{'clubs.resetForm' | translate}}</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</kt-portlet-footer>
+</kt-portlet>
+
+
+<!--
+<mat-card>
+  <mat-card-title>
+    <mat-icon>mode_edit</mat-icon>
+    {{ club.id ? ('general.menu.club.edit' | translate) : 'general.menu.club.create' | translate }}
+  </mat-card-title>
+  <mat-card-subtitle></mat-card-subtitle>
+
+  <mat-card-content *ngIf="club; else loadingTemplate">
+
+    <mat-tab-group [dynamicHeight]="true"
+                   *ngIf="members$ | async as members; else loadingTemplate">
+
+      <mat-tab label="{{'general.clubs.edit.mainTitle' | translate}}">
+        <club-edit-main [clubs]="clubs$ | async"
+                        [members]="members"
+                        (saveClub)="saveClub($event)">
+        </club-edit-main>
+      </mat-tab>
+
+      <mat-tab label="{{ 'general.clubs.edit.historyTitle' | translate }}">
+        <div fxLayout="column"
+             fxLayout.gt-sm="row"
+             fxLayoutGap="10px">
+          <div fxFlex.gt-sm="50">
+            <club-history (saveClub)="saveClub($event)"></club-history>
+          </div>
+          <div fxFlex.gt-sm="50">
+            <club-timeline [articles]="articles$ | async"
+                           (saveClub)="saveClub($event)">
+            </club-timeline>
+          </div>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="{{ 'general.clubs.edit.managementTitle' | translate }}">
+        <div fxLayout="column"
+             fxLayout.gt-sm="row"
+             fxLayoutGap="10px">
+          <div fxFlex.gt-sm="50">
+            <club-management-photo (saveClub)="saveClub($event)"></club-management-photo>
+          </div>
+
+          <div fxFlex.gt-sm="50">
+            <club-management *ngIf="positions$ | async as positions; else loadingTemplate"
+                             [members]="members"
+                             [showLinks]="true"
+                             [positions]="positions"
+                             (saveClub)="saveClub($event)">
+            </club-management>
+          </div>
+        </div>
+      </mat-tab>
+
+
+      <mat-tab label="{{ 'general.clubs.edit.honoraries.title' | translate}}">
+        <club-honoraries [articles]="articles$ | async"
+                         (saveClub)="saveClub($event)">
+        </club-honoraries>
+      </mat-tab>
+
+      <mat-tab label="{{ 'general.clubs.edit.mediaTitle' | translate }}">
+        <club-media></club-media>
+      </mat-tab>
+
+    </mat-tab-group>
+  </mat-card-content>
+  <mat-card-actions fxLayout.xs="column"
+                    fxLayoutGap="10px">
+    <span fxFlex></span>
+    <div>
+      <button type="button"
+              mat-raised-button
+              color="primary"
+              [routerLink]="['/clubs']">
+        {{'general.menu.club.list' | translate}}
+      </button>
+      <button type="button"
+              mat-raised-button
+              color="accent"
+              [routerLink]="['/clubs/detail', club.id]">
+        {{'general.detail' | translate }}
+      </button>
+      <button type="button"
+              mat-raised-button
+              color="warn"
+              (click)="removeClub(club)">
+        {{'general.delete' | translate }}
+      </button>
+    </div>
+  </mat-card-actions>
+
+</mat-card>
+
+
+<ng-template #loadingTemplate>
+  <loading-indicator></loading-indicator>
+</ng-template>-->

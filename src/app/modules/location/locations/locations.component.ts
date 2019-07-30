@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Category } from '../../category/_model/category.model';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -9,13 +8,7 @@ import { Category } from '../../category/_model/category.model';
 })
 export class LocationsComponent implements OnInit {
 
-	// public locations$: Observable<ILocation[]>;
-	// public categories$: Observable<Category[]>;
-
-	constructor(/* public categoryService: CategoryService,
-				 private locationService: LocationService */) {
-		// this.locations$ = locationService.locations$;
-		// this.categories$ = this.categoryService.getCategoriesByCategoryType('location.types');
+	constructor() {
 	}
 
 	ngOnInit() {

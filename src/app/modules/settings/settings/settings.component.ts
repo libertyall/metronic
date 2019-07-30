@@ -36,7 +36,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
-		// this.subscriptions.forEach(sb => sb.unsubscribe());
 	}
 
 	setFormErrors($event: boolean): void {
@@ -45,18 +44,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
 	saveApplication(application: Application) {
 		this.store.dispatch(updateApplication({application}));
-
-		/*this.application = Object.assign({}, this.application, application);
-	 this.applicationService.updateApplication(application.id, application)
-	 .then(() => {
-	 // set Page Title
-	 if (this.title.getTitle() !== application.page.title) {
-	 this.title.setTitle(application.page.title);
-	 }
-
-	 this.alertService.showSnackBar('success', 'general.applications.updateMessage');
-	 },
-	 (error: any) => this.alertService.showSnackBar('error', error.message));*/
 	}
 
 }

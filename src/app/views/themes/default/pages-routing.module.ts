@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { BaseComponent } from './base/base.component';
 import { ErrorPageComponent } from './content/error-page/error-page.component';
 import { AngularFireAuthGuard, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+import {importExpr} from "@angular/compiler/src/output/output_ast";
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['/auth/login']);
 
@@ -14,24 +15,32 @@ const routes: Routes = [
 		data: { authGuardPipe: redirectUnauthorizedToLogin },
 		children: [
 			{
-				path: 'dashboard',
-				loadChildren: () => import('app/modules/dashboard/dashboard.module').then(m => m.DashboardModule)
+				path: 'analytics',
+				loadChildren: () => import('app/modules/analytics/analytics.module').then(m => m.AnalyticsModule)
 			},
 			{
 				path: 'articles',
 				loadChildren: () => import('app/modules/article/article.module').then(m => m.ArticleModule)
 			},
 			{
-				path: 'categories',
-				loadChildren: () => import('app/modules/category/category.module').then(m => m.CategoryModule)
+				path: 'cronjobs',
+				loadChildren: () => import('app/modules/cronjob/cronjob.module').then(m => m.CronJobModule)
 			},
 			{
 				path: 'calendar',
 				loadChildren: () => import('app/modules/calendar/calendar.module').then(m => m.CalendarModule)
 			},
 			{
+				path: 'categories',
+				loadChildren: () => import('app/modules/category/category.module').then(m => m.CategoryModule)
+			},
+			{
 				path: 'clubs',
 				loadChildren: () => import('app/modules/club/club.module').then(m => m.ClubModule)
+			},
+			{
+				path: 'dashboard',
+				loadChildren: () => import('app/modules/dashboard/dashboard.module').then(m => m.DashboardModule)
 			},
 			{
 				path: 'locations',
@@ -46,8 +55,8 @@ const routes: Routes = [
 				loadChildren: () => import('app/modules/member/member.module').then(m => m.MemberModule)
 			},
 			{
-				path: 'uploader',
-				loadChildren: () => import('app/modules/uploader/uploader.module').then(m => m.UploaderModule)
+				path: 'newsletter',
+				loadChildren: () => import('app/modules/newsletter/newsletter.module').then(m => m.NewsletterModule)
 			},
 			{
 				path: 'settings',
@@ -60,7 +69,12 @@ const routes: Routes = [
 			{
 				path: 'teams',
 				loadChildren: () => import('app/modules/team/team.module').then(m => m.TeamModule)
-			},/* ,
+			},
+			{
+				path: 'uploader',
+				loadChildren: () => import('app/modules/uploader/uploader.module').then(m => m.UploaderModule)
+			},
+			/* ,
 			 {
 			 path: 'users',
 			 loadChildren: () => import('app/modules/user/user-management.module').then(m => m.UserManagementModule)

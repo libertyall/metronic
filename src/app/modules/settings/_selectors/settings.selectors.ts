@@ -15,7 +15,7 @@ export const selectSettingsShowInitWaitingMessage = createSelector(
 
 export const getCurrentApplication = createSelector(
 	selectSettingsState,
-	settingsState => settingsState.currentApplication
+	settingsState =>  settingsState.currentApplication
 );
 
 export const backendMessage = createSelector(

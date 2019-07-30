@@ -1,20 +1,19 @@
-import { BaseModel } from '../../../core/_base/crud';
-import { Address } from '../../../core/auth/_interfaces/address.interface';
-import { Creation } from '../../../shared/_models/creation.class';
+import {BaseModel} from '../../../core/_base/crud';
+import {Address} from '../../../core/auth/_interfaces/address.interface';
 
-export class Location extends BaseModel{
+export class Location extends BaseModel {
 
-  text?: string;
+	text?: string;
 
-  assignedCategory?: {
-  	id: string;
-  	title: string;
-  };
-  // assignedContacts?: ILocationContact[];
+	assignedCategory?: {
+		id: string;
+		title: string;
+	};
+	// assignedContacts?: ILocationContact[];
 
-  fupaLink?: string;
-  opening?: string;
-  prices?: string;
+	fupaLink?: string;
+	opening?: string;
+	// prices?: string;
 
-  address?: Address;
+	address?: Address;
 }
