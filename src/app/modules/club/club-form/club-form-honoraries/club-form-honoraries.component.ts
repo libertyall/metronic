@@ -1,7 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
-import {ActivatedRoute} from '@angular/router';
-import {Club} from "../../_model/club.model";
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Club } from '../../_model/club.model';
+import { ClubHonorary } from '../../_model/club-honorary.class';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -15,7 +15,7 @@ export class ClubFormHonorariesComponent implements OnInit {
 	// @Input() members$: Observable<IMember[]>;
 
 	constructor(// private memberService: MemberService,
-				private route: ActivatedRoute) {
+		private route: ActivatedRoute) {
 	}
 
 	ngOnInit() {
@@ -23,6 +23,15 @@ export class ClubFormHonorariesComponent implements OnInit {
 			this.club = data.club;
 			// this.members$ = this.memberService.getHonoraryList(this.club);
 		});
+	}
+
+	createHonorary($event: ClubHonorary) {
+		console.log('create or edit Honorary', $event);
+		this.club.honoraries.push($event);
+	}
+
+	deleteHonorary($event: number): void {
+		this.club.honoraries.splice($event, 1);
 	}
 
 }

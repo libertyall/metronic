@@ -1,9 +1,9 @@
 <div class="row">
 	<div class="col-lg-8">
-		<honorary-form-list></honorary-form-list>
+		<honorary-form-list (deleteHonorary)="deleteHonorary($event)"></honorary-form-list>
 	</div>
 	<div class="col-lg-4">
-		<honorary-form></honorary-form>
+		<honorary-form (createHonorary)="createHonorary($event)"></honorary-form>
 	</div>
 </div>
 

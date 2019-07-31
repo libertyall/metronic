@@ -1,6 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
-import {ClubHonorary} from "../../../_model/club-honorary.class";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { ClubHonorary } from '../../../_model/club-honorary.class';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -12,6 +12,7 @@ export class HonoraryFormComponent implements OnInit {
 
 	form: FormGroup;
 	@Input() honorary: ClubHonorary;
+	@Output() createHonorary: EventEmitter<ClubHonorary> = new EventEmitter<ClubHonorary>(false);
 
 	articles = [];
 	members = [];

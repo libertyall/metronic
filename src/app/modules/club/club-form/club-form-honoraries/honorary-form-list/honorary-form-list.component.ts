@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {Club} from "../../../_model/club.model";
 import {ActivatedRoute} from "@angular/router";
 
@@ -13,6 +13,8 @@ export class HonoraryFormListComponent implements OnInit {
 	club: Club;
 	articles = [];
 	members = [];
+
+	@Output() deleteHonorary: EventEmitter<number> = new EventEmitter<number>(false);
 
 	constructor(private route: ActivatedRoute) {
 	}
