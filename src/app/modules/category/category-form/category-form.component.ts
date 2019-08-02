@@ -91,7 +91,7 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
 	createForm() {
 		this.form = this.fb.group({
 			title: [this.category ? this.category.title : '', [Validators.required, Validators.minLength(3), Validators.maxLength(this.titleMaxLength)]],
-			parentCategoryId: [this.category ? this.category.parentCategoryId : '', [Validators.required]],
+			parentCategory: [this.category ? this.category.parentCategory : '', [Validators.required]],
 			description: this.category ? this.category.description : '',
 			creation: this.fb.group({
 				by: this.category.creation ? this.category.creation.by : '',
@@ -146,7 +146,7 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
 			description: controls['description'].value,
 			isImported: controls['isImported'].value,
 			isMainCategory: controls['isMainCategory'].value,
-			parentCategoryId: controls['parentCategoryId'].value,
+			parentCategory: controls['parentCategoryId'].value,
 			creation: {
 				by: controls['creation']['by'].value,
 				at: controls['creation']['at'].value

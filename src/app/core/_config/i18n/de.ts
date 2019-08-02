@@ -199,6 +199,7 @@ export const locale = {
 				table: {
 					actions: 'Aktionen',
 					id: 'ID',
+					parentCategory: 'Übergeordnete Kategorie',
 					title: 'Titel'
 				},
 				title: 'Alle Kategorien'

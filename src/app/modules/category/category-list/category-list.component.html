@@ -1,14 +1,14 @@
 <kt-portlet>
 	<kt-portlet-header [title]="'category.list.title' | translate"
 					   [class]="'kt-portlet__head--lg'"
-					   [viewLoading$]="categoryService.loading$">
-		<ng-container ktPortletTools>
+					   [viewLoading$]="dataSource.loading$">
+		<!--<ng-container ktPortletTools>
 			<button (click)="editCategory(null)"
 					mat-raised-button color="primary"
 					matTooltip="{{ 'category.list.add.full' | translate}}">
 				{{ 'category.list.add.short' | translate}}
 			</button>
-		</ng-container>
+		</ng-container>-->
 	</kt-portlet-header>
 
 	<kt-portlet-body>
@@ -30,10 +30,12 @@
 			</div>
 		</div>
 		<div class="mat-table__wrapper">
+		<!-- [trackBy]="trackByFnc" -->
+
 			<mat-table class="lmat-elevation-z8"
 					   [dataSource]="dataSource"
 					   matSort
-					   #sort1="matSort"
+					   #sort="matSort"
 					   matSortActive="title"
 					   matSortDirection="asc"
 					   matSortDisableClear>
@@ -64,6 +66,12 @@
 					<mat-cell *matCellDef="let category">{{category.title}}</mat-cell>
 				</ng-container>
 
+				<ng-container matColumnDef="parentCategory">
+					<mat-header-cell *matHeaderCellDef
+									 mat-sort-header>{{ 'category.list.table.parentCategory' | translate}}</mat-header-cell>
+					<mat-cell *matCellDef="let category">{{category.parentCategory ? category.parentCategory.title : ''}}</mat-cell>
+				</ng-container>
+
 				<ng-container matColumnDef="actions">
 					<mat-header-cell *matHeaderCellDef>{{ 'actions' | translate}}</mat-header-cell>
 					<mat-cell *matCellDef="let category">
@@ -81,18 +89,15 @@
 				</ng-container>
 
 				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-
 				<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
 			</mat-table>
-			<!--<div class="mat-table__message"
-				 *ngIf="!dataSource.hasItems">{{ 'category.list.noEntries' | translate}}</div>-->
-			<div class="mat-table__message"
-				 *ngIf="dataSource.loading$ | async">{{ 'pleaseWait' | translate}}</div>
+			<div class="mat-table__message" *ngIf="!dataSource.hasItems">{{ 'category.list.noEntries' | translate}}</div>
+			<div class="mat-table__message" *ngIf="dataSource.loading$ | async">{{ 'pleaseWait' | translate}}</div>
 		</div>
 
 		<div class="mat-table__bottom">
 			<mat-spinner [diameter]="20" *ngIf="dataSource.loading$ | async"></mat-spinner>
-			<mat-paginator [pageSize]="selectedPageSize"
+			<mat-paginator [pageSize]="paginator.pageSize"
 						   [pageSizeOptions]="pageSizes"
 						   [length]="dataSource.paginatorTotal$ | async"
 						   [showFirstLastButtons]="true">

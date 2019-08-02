@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { shuffle } from 'lodash';
+import {Component, OnInit} from '@angular/core';
+import {shuffle} from 'lodash';
 import {SparklineChartOptions} from "../../core/_base/layout/directives/sparkline-chart.directive";
 import {Widget4Data} from "../../views/partials/content/widgets/widget4/widget4.component";
 import {LayoutConfigService} from "../../core/_base/layout";

@@ -5,5 +5,8 @@ export class Category extends BaseModel {
 	description?: string;
 	isImported?: boolean;
 	isMainCategory?: boolean;
-	parentCategoryId?: string;
+	parentCategory?: {
+		id: string;
+		title: string;
+	};
 }

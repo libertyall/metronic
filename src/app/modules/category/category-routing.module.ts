@@ -1,10 +1,14 @@
 import { Routes } from '@angular/router';
 import { CategoriesComponent } from './categories/categories.component';
+// import {CategoriesResolver} from "./categories.resolver";
 
 export const categoryRoutes: Routes = [
 	{
 		path: '',
-		component: CategoriesComponent
+		component: CategoriesComponent,
+		/* resolve: {
+			categories: CategoriesResolver
+		} */
 	},/*
 	 {
 	 path: 'list',

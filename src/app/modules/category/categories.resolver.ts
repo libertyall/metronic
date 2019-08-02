@@ -1,21 +1,16 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 import {Category} from "./_model/category.model";
+import {EntityDataService} from "@ngrx/data";
 
 @Injectable()
 export class CategoriesResolver implements Resolve<Category[]> {
 
-	constructor(// private sponsorService: SponsorService,
-		private router: Router) {
+	constructor(private entityDataService: EntityDataService) {
 	}
 
 	resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Category[]> {
-		return of([
-			{id: '123', title: 'lala'},
-			{id: '43', title: 'puasd'},
-			{id: '173', title: 'ipjsef'},
-			{id: '1993', title: 'ipasdasdasdasdasdajsef'}
-		]);
+		return <Observable<Category[]>>this.entityDataService.getService('Category').getAll();
 	}
 }

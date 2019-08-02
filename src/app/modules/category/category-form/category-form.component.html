@@ -90,7 +90,7 @@
 												placeholder="{{'category.edit.inputs.parentCategory' | translate}}"
 												formControlName="parentCategoryId">
 												<mat-option *ngFor="let category of allCategories | orderBy: 'title'"
-															[value]="category.id">
+															[value]="{id: category.id, title: category.title}">
 													{{ category.title }}
 												</mat-option>
 											</mat-select>
