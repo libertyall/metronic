@@ -4,8 +4,8 @@ import {RouterModule} from '@angular/router';
 import {TranslateModule} from '@ngx-translate/core';
 import {CommonModule} from '@angular/common';
 import {CategoriesComponent} from './categories/categories.component';
-import {CategoryListComponent} from './category-list/category-list.component';
-import {CategoryFormComponent} from './category-form/category-form.component';
+import {CategoryListComponent} from './categories/category-list/category-list.component';
+import {CategoryFormComponent} from './categories/category-form/category-form.component';
 import {
 	MatButtonModule,
 	MatCheckboxModule,
@@ -28,6 +28,8 @@ import {LayoutUtilsService} from '../../core/_base/crud';
 import {ReactiveFormsModule} from '@angular/forms';
 import {PartialsModule} from '../../views/partials/partials.module';
 import {CategoriesResolver} from "./categories.resolver";
+import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
 	imports: [
@@ -47,9 +49,11 @@ import {CategoriesResolver} from "./categories.resolver";
 		MatTableModule,
 		MatTabsModule,
 		MatTooltipModule,
+		NgbDropdownModule,
 		PartialsModule,
 		PortletModule,
 		ReactiveFormsModule,
+		SharedModule,
 		RouterModule.forChild(categoryRoutes),
 		TranslateModule.forChild()
 	],

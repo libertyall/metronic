@@ -1,0 +1,12 @@
+{
+  "require": {
+    "google/cloud": "^0.86.0",
+    "google/apiclient": "^2.2",
+    "google/gax": "^0.37.0",
+    "google/cloud-firestore": "^0.15.5",
+    "google/cloud-storage": "^1.9",
+    "duzun/hquery": "^2.2",
+    "paragonie/random_compat": "~2",
+    "facebook/facebook-instant-articles-sdk-php": "^1.10"
+  }
+}

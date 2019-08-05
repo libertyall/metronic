@@ -1,10 +1,12 @@
 <span #list></span>
 <div class="row">
-	<div [ngClass]="(selectedCategory$ | async) ? 'col-lg-8' : 'col-lg-12'">
+	<div [ngClass]="selectedCategory ? 'col-lg-8' : 'col-lg-12'">
 		<kt-category-list (selectedCategory)="setSelectedCategory($event)"></kt-category-list>
 	</div>
-	<div class="col-lg-4" *ngIf="selectedCategory$ | async as selectedCategory">
-		<kt-category-form [category]="selectedCategory" (cancelEdit)="cancelEdit()"></kt-category-form>
+	<div class="col-lg-4" *ngIf="selectedCategory">
+		<kt-category-form [category]="selectedCategory"
+						  (setSelectedCategory)="setSelectedCategory($event)">
+		</kt-category-form>
 	</div>
 </div>
 

@@ -1,0 +1,178 @@
+<kt-portlet>
+	<kt-portlet-header [title]="getComponentTitle()" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+		<ng-container ktPortletTools>
+			<button mat-icon-button [matMenuTriggerFor]="menu" color="primary">
+				<mat-icon>more_vert</mat-icon>
+			</button>
+			<mat-menu #menu="matMenu">
+				<a mat-menu-item
+				   (click)="setSelectedCategory.emit()"
+				   matTooltip="{{'backToList' | translate}}">
+					<span class="kt-hidden-mobile">{{'category.backToList' | translate}}</span>
+				</a>
+				<a mat-menu-item
+				   (click)="reset()"
+				   [disabled]="category === oldCategory"
+				   matTooltip="{{'resetDescription' | translate}}">
+					<i class="la la-cog"></i>
+					<span class="kt-hidden-mobile">{{'reset' | translate}}</span>
+				</a>
+				<a mat-menu-item
+				   (click)="onSubmit(false)"
+				   matTooltip="{{'saveDescription' | translate}}">
+					<span class="kt-hidden-mobile">{{'save' | translate}}</span>
+				</a>
+
+				<!--
+				<a mat-menu-item
+				   matTooltip="{{'saveToListDescription' | translate}}"
+				   (click)="onSubmit(true)">
+					<span class="kt-hidden-mobile">{{'saveToList' | translate}}</span>
+				</a>
+				<a mat-menu-item
+				   matTooltip="{{ 'category.list.delete' | translate}}"
+				   (click)="deleteCategory(category)">
+					{{ 'category.list.delete' | translate}}
+				</a>
+				<a mat-menu-item
+				   matTooltip="{{ 'category.edit.goToList' | translate}}"
+				   (click)="goBackToList()">
+					{{ 'category.edit.goToList' | translate}}
+				</a>-->
+			</mat-menu>
+		</ng-container>
+	</kt-portlet-header>
+
+	<kt-portlet-body>
+		<mat-tab-group [(selectedIndex)]="selectedTab">
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<i class="mat-tab-label-icon fa fa-info"></i>
+					{{'category.edit.tabs.main.title' | translate}}
+				</ng-template>
+				<ng-template matTabContent>
+					<div>
+						<form [formGroup]="form" class="kt-form kt-form--group-separator-dashed">
+
+							<kt-alert *ngIf="hasFormErrors"
+									  type="warning"
+									  [showCloseButton]="true"
+									  [duration]="10000"
+									  (close)="onAlertClose()">
+								{{'forms.errors.title' | translate}}!
+								{{'forms.errors.description' | translate}}
+							</kt-alert>
+
+							<div class="kt-form__section kt-form__section--first">
+								<div class="form-group kt-form__group row">
+									<div class="col-lg-6 kt-margin-bottom-20-mobile">
+										<mat-form-field class="mat-form-field-fluid">
+											<input id="title" matInput #categoryTitle
+												   minlength="{{titleParams.minLength}}"
+												   maxlength="{{titleParams.maxLength}}"
+												   placeholder="{{'category.edit.inputs.title' | translate}}"
+												   formControlName="title">
+											<mat-error *ngIf="form.get('title').errors?.minlength">
+												{{'forms.errors.minLength' |translate: titleParams}}
+											</mat-error>
+											<mat-hint align="start" *ngIf="!form.get('title').value">
+												{{'category.edit.hints.title' | translate}}
+											</mat-hint>
+											<mat-hint align="end">
+												{{form.get('title').value?.length || 0}}/{{titleMaxLength}}
+											</mat-hint>
+										</mat-form-field>
+									</div>
+
+									<div class="col-lg-6 kt-margin-bottom-20-mobile" *ngIf="allCategories$ | async as allCategories">
+										<mat-form-field class="mat-form-field-fluid">
+											<mat-select
+												placeholder="{{'category.edit.inputs.parentCategory' | translate}}"
+												formControlName="parentCategoryId">
+												<mat-option *ngFor="let category of allCategories | orderBy: 'title'"
+															[value]="{id: category.id, title: category.title}">
+													{{ category.title }}
+												</mat-option>
+											</mat-select>
+											<mat-hint align="start">
+												{{'category.edit.hints.parentCategory' | translate }}
+											</mat-hint>
+										</mat-form-field>
+									</div>
+								</div>
+
+								<div class="form-group kt-form__group row my-5">
+									<div class="col-lg-6 kt-margin-bottom-20-mobile">
+										<label>{{'category.edit.hints.mainCategory' | translate }}</label>
+										<div class="mat-form-field-fluid">
+											<mat-checkbox formControlName="isMainCategory">
+												{{'category.edit.isMainCategory' | translate }}
+											</mat-checkbox>
+										</div>
+									</div>
+
+									<div class="col-lg-6 kt-margin-bottom-20-mobile">
+										<label>{{'category.edit.hints.isImported' | translate }}</label>
+										<div class="mat-form-field-fluid">
+											<mat-checkbox formControlName="isImported">
+												{{'category.edit.isImported' | translate }}
+											</mat-checkbox>
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="form-group kt-form__group row">
+								<div class="col-lg-12 kt-margin-bottom-20-mobile">
+									<label>{{'category.edit.hints.description' | translate }}</label>
+									<div class="mat-form-field-fluid">
+											<textarea formControlName="description" class="mat-form-field-flex">
+												{{'category.edit.description' | translate }}
+											</textarea>
+									</div>
+								</div>
+							</div>
+
+						</form>
+					</div>
+				</ng-template>
+			</mat-tab>
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<i class="mat-tab-label-icon fa fa-info"></i>
+					{{'category.edit.tabs.creation.title' | translate}}
+				</ng-template>
+				<ng-template matTabContent>
+					<!--<publication-form [form]="form.get('publication')"></publication-form>-->
+					<creation-form [form]="form.get('creation')"></creation-form>
+				</ng-template>
+			</mat-tab>
+		</mat-tab-group>
+	</kt-portlet-body>
+
+	<kt-portlet-footer>
+		<div class="row">
+			<div class="col-lg-12 text-right py-3 px-5">
+				<div class="btn-group" role="group">
+					<button type="button" class="btn btn-success mr-1" (click)="onSubmit()">
+				<span class="fa fa-save"
+					  aria-hidden="true"> {{ category.id ? ('category.edit.button' | translate) : ('category.save.button' |
+                    translate) }}</span>
+					</button>
+					<div ngbDropdown>
+						<button class="btn btn-outline-secondary" id="dropdownConfig2"
+								ngbDropdownToggle>{{'actions' | translate}}</button>
+						<div ngbDropdownMenu aria-labelledby="dropdownConfig">
+							<button class="dropdown-item"
+									(click)="setSelectedCategory.emit()">{{'category.list.button' | translate }}</button>
+							<button *ngIf="category.id" class="dropdown-item"
+									(click)="removeCategory(category, true)">{{'category.delete.button' | translate}}</button>
+							<button class="dropdown-item" (click)="reset()">{{'category.resetForm' | translate}}</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</kt-portlet-footer>
+</kt-portlet>

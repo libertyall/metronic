@@ -45,3 +45,8 @@ package-lock.json
 
 yarn-error.log
 yarn.lock
+
+functions-cron/appengine/vendor
+functions/lib
+functions/node_modules
+*.log

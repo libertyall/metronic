@@ -1,0 +1,29 @@
+<kt-portlet>
+	<kt-portlet-header [title]="'publication.title' | translate"></kt-portlet-header>
+	<kt-portlet-body>
+		<div class="form-group kt-form__group row my-5" [formGroup]="form">
+			<div class="col-lg-6 kt-margin-bottom-20-mobile">
+				<mat-form-field class="mat-form-field-fluid">
+					<mat-select placeholder="{{'publication.author' | translate}}"
+								formControlName="by">
+						<mat-option value="system">{{'publication.viaScript' | translate}}</mat-option>
+
+						<!--<mat-option *ngFor="let user of users| orderBy: ['firstName', 'lastName', 'email']"
+									[value]="user.id">
+							{{user.firstName && user.lastName ? user.firstName + ' ' + user.lastName : user.email}}
+						</mat-option>-->
+					</mat-select>
+				</mat-form-field>
+			</div>
+
+			<div class="col-lg-6 kt-margin-bottom-20-mobile">
+				<mat-form-field class="mat-form-field-fluid">
+					<input matInput
+						   placeholder="{{'publication.publicationDate' | translate}}"
+						   formControlName="at">
+				</mat-form-field>
+			</div>
+		</div>
+
+	</kt-portlet-body>
+</kt-portlet>

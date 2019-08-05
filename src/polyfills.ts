@@ -41,15 +41,16 @@ import 'core-js/es/set';
 /* import 'core-js/es/reflect';
 
 
-
-
 /*
  * Required to support Web Animations `@angular/platform-browser/animations`.
  * Needed for: All but Chrome, Firefox and Opera. http://caniuse.com/#feat=web-animation
 */
 // import 'web-animations-js';  // Run `npm install --save web-animations-js`.
 
-
+// added for algolia search
+(window as any).process = {
+	env: { DEBUG: undefined }
+};
 
 /***************************************************************************************************
  * Zone JS is required by default for Angular itself.

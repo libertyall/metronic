@@ -43,7 +43,6 @@ import {
 } from "../../../core/_base/layout";
 import {LayoutUtilsService} from "../../../core/_base/crud";
 import {AuthGuard} from "../../../core/auth/_guards/auth.guard";
-import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
 
 @NgModule({
 	declarations: [
@@ -85,20 +84,20 @@ import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
 	],
 	imports: [
 		CommonModule,
+		CoreModule,
 		// NgxPermissionsModule.forChild(),
 		// StoreModule.forFeature('roles', rolesReducer),
 		// StoreModule.forFeature('permissions', permissionsReducer),
 		// EffectsModule.forFeature([PermissionEffects, RoleEffects]),
-		PagesRoutingModule,
-		CoreModule,
-		// start
-		NgbDropdownModule,
-		// PagesModule,
-		PartialsModule,
 		InlineSVGModule,
-		PerfectScrollbarModule,
+		NgbDropdownModule,
 		NgbProgressbarModule,
 		NgbTooltipModule,
+		// start
+		// PagesModule,
+		PagesRoutingModule,
+		PartialsModule,
+		PerfectScrollbarModule,
 		// MatProgressBarModule,
 		// MatTabsModule,
 		// MatButtonModule,

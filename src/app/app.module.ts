@@ -31,6 +31,7 @@ import { AuthEffects } from './core/auth/_effects/auth.effects';
 import { AngularFireAuthGuardModule } from '@angular/fire/auth-guard';
 import {MDBBootstrapModulePro} from "ng-uikit-pro-standard";
 import {SettingsEffects} from "./modules/settings/_effects/settings.effects";
+import { NgAisModule } from 'angular-instantsearch';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	wheelSpeed: 0.5,
@@ -57,6 +58,7 @@ export function initializeConfig(layoutConfigService: LayoutConfigService, appli
 		MatSnackBarModule,
 		MatDialogModule,
 		MDBBootstrapModulePro.forRoot(),
+		NgAisModule.forRoot(),
 		PartialsModule,
 		// CoreModule,
 		// OverlayModule,

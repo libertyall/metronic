@@ -20,6 +20,7 @@ import { Subheader4Component } from './layout/subheader/subheader4/subheader4.co
 import { Subheader5Component } from './layout/subheader/subheader5/subheader5.component';
 import { NgPipesModule } from 'ngx-pipes';
 import { NoticeComponent } from './content/general/notice/notice.component';
+import { NgAisInstantSearchModule, NgAisModule } from 'angular-instantsearch';
 
 @NgModule({
 	declarations: [
@@ -71,6 +72,8 @@ import { NoticeComponent } from './content/general/notice/notice.component';
 		MatButtonModule,
 		MatIconModule,
 		MatProgressBarModule,
+		NgAisModule,
+		NgAisInstantSearchModule,
 		NgbModule,
 		PerfectScrollbarModule,
 		TranslateModule.forChild(),

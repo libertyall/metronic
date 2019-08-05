@@ -13,7 +13,7 @@ export class CategoriesComponent implements OnInit {
 
 	@ViewChild('list', { static: false, read: ElementRef }) listElement: ElementRef;
 
-	selectedCategory$: Observable<Category>;
+	selectedCategory: Category;
 	categories: Category[];
 
 	constructor(private route: ActivatedRoute) {
@@ -24,9 +24,10 @@ export class CategoriesComponent implements OnInit {
 	}
 
 	setSelectedCategory($event: Category): void {
+		this.selectedCategory = $event;
 	}
 
 	cancelEdit(): void {
-		this.selectedCategory$ = null;
+		this.selectedCategory = null;
 	}
 }

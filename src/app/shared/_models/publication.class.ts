@@ -1,10 +1,10 @@
 import { Moment } from 'moment';
 
 export interface Publication {
-	at: {
+	at?: {
 		seconds: number;
 		nanoseconds: number;
 	} | any;
-	status: number;
-	by: string;
+	status?: number;
+	by?: string;
 }

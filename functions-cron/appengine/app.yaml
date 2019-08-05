@@ -1,0 +1,59 @@
+runtime: php55
+
+api_version: 1
+service: default
+threadsafe: true
+
+instance_class: F4_1G
+
+runtime_config:
+  document_root: /
+
+#manual_scaling:
+#  instances: 3
+
+handlers:
+
+- url: /php/article/publish-article
+  script: /php/article/publish-article.php
+  secure: always
+  login: admin
+
+- url: /php/match/matchplan2gcal
+  script: /php/match/matchplan2gcal.php
+  secure: always
+  login: admin
+
+- url: /php/match/matchplan-import
+  script: /php/match/matchplan-import.php
+  secure: always
+  login: admin
+
+- url: /php/team/team-detail-import
+  script: /php/team/team-detail-import.php
+  secure: always
+  login: admin
+
+- url: /php/member/dfb-import
+  script: /php/member/dfb-import.php
+  secure: always
+  login: admin
+
+- url: /php/member/drive-import
+  script: /php/member/drive-import.php
+  secure: always
+  login: admin
+
+- url: /php/application/setup
+  script: /php/application/setup.php
+  secure: always
+  login: admin
+
+- url: /.*
+  script: /index.php
+
+
+#resources:
+#  cpu: 4
+#  memory_gb: 16
+#  disk_size_gb: 10

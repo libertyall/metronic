@@ -14,5 +14,9 @@ export const environment = {
 	},
 	routerTracing: false,
 	defaultSignInProviders: [ 'facebook', 'twitter', 'github' ],
-	urlShorteners: [ 'bit.ly' ]
+	urlShorteners: [ 'bit.ly' ],
+	algolia: {
+		appId: '47BAW426ZP',
+		apiKey: '1ec2398f5e5fdfb4f48aa22b081578cd'
+	}
 };

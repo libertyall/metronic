@@ -255,6 +255,11 @@ export const locale = {
 			phoneMobile: 'Handy',
 			phoneWork: 'Tel. (dienstl.)',
 		},
+		creation: {
+			author: 'Author',
+			creationDate: 'Erstellungsdatum',
+			title: 'Erstellung'
+		},
 		cssClasses: {
 			danger: 'rot',
 			dark: 'dunkel',
